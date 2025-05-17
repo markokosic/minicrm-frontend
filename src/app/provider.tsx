@@ -3,7 +3,6 @@ import queryClient from '@/lib/query-client';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { BrowserRouter } from 'react-router';
 
 type AppProviderProps = {
   children: React.ReactNode;
