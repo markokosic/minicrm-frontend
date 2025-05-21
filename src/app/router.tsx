@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import { Test } from '@/components/Test';
+import Login from './routes/auth/Login';
 
 const router = createBrowserRouter([
   {
@@ -10,12 +11,16 @@ const router = createBrowserRouter([
       { path: '*', element: <div>Not found</div> },
       { path: 'about', element: <Test /> },
       {
-        path: 'auth',
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'register',
+        element: <Login />,
+      },
+      {
+        path: 'register',
         element: <Test />,
-        children: [
-          { path: 'login', element: <Test /> },
-          { path: 'register', element: <Test /> },
-        ],
       },
       {
         path: 'concerts',
