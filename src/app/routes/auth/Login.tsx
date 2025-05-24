@@ -1,10 +1,12 @@
-import { Field } from '@/components/Form';
+import { AuthLayout } from '@/components/layout/AuthLayout';
+import { companyInfo } from '@/config/company';
+import { LoginForm } from '@/modules/auth/components/LoginForm';
 
 const Login = () => {
   return (
-    <>
-      <Field label="bla" placeholder="This is a test" />
-    </>
+    <AuthLayout title={`Anmelden - ${companyInfo.name}`}>
+      <LoginForm />
+    </AuthLayout>
   );
 };
 

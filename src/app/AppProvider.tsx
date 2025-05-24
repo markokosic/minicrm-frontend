@@ -8,7 +8,7 @@ type AppProviderProps = {
   children: React.ReactNode;
 };
 
-export const AppProvider = ({ children }: AppProviderProps) => {
+const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <Suspense fallback={<div className="flex h-screen w-screen items-center justify-center">loading...</div>}>
       <ErrorBoundary FallbackComponent={MainErrorFallback}>
@@ -17,3 +17,5 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     </Suspense>
   );
 };
+
+export { AppProvider };

@@ -3,7 +3,7 @@ type LabelProps = {
 } & React.LabelHTMLAttributes<HTMLLabelElement>;
 
 const Label = ({ children }: LabelProps) => {
-  return <label>{children}</label>;
+  return <label className="font-semibold">{children}</label>;
 };
 
 export { Label };
