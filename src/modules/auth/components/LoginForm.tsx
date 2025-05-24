@@ -13,8 +13,8 @@ const LoginForm = () => {
   });
 
   return (
-    <div className=" bg-base-200 rounded-lg p-4">
-      <div className="flex items-center justify-center">
+    <div className=" bg-base-200 rounded-lg px-6 py-12  max-w-lg w-full">
+      <div className="flex items-center justify-center mb-6">
         <Logo />
       </div>
       <Form
@@ -34,8 +34,8 @@ const LoginForm = () => {
           name="password"
         />
 
-        <Button className="w-full">Anmelden</Button>
-        <div className="text-sm space-y-2 text-center pt-4">
+        <Button className="w-full mt-6 ">Anmelden</Button>
+        <div className="text-sm space-y-2 text-center pt-6">
           <p>
             Du hast kein Konto?{' '}
             <Link
@@ -45,12 +45,7 @@ const LoginForm = () => {
               Jetzt registrieren
             </Link>
           </p>
-          <Link
-            className=""
-            to="/reset-password"
-          >
-            Passwort vergessen?
-          </Link>
+          <Link to="/reset-password">Passwort vergessen?</Link>
         </div>
       </Form>
     </div>

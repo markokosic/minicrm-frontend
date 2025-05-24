@@ -14,7 +14,7 @@ const Form = <T extends FieldValues>({ children, className, id, onSubmit, form }
   return (
     <FormProvider {...form}>
       <form
-        className={cn('p-4 space-y-4', className)}
+        className={cn('  space-y-4', className)}
         onSubmit={form.handleSubmit(onSubmit)}
         id={id}
       >
