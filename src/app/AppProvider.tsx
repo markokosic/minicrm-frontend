@@ -1,5 +1,5 @@
 import { MainErrorFallback } from '@/components/errors/main';
-import queryClient from '@/lib/query-client';
+import queryClient from '@/lib/queryClient';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';

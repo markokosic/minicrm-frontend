@@ -33,7 +33,6 @@ const LoginForm = () => {
           placeholder="Passwort eingeben"
           name="password"
         />
-
         <Button className="w-full mt-6 ">Anmelden</Button>
         <div className="text-sm space-y-2 text-center pt-6">
           <p>
