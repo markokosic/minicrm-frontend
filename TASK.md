@@ -10,8 +10,10 @@ User-Status verwalten: Nutze TanStack Query Cache als Single Source of Truth fü
 
 Fehler- und Ladezustände sauber handhaben, z. B. bei Session-Ablauf automatisch ausloggen oder auf Login umleiten.
 
-Optional: Baue einen Context oder Wrapper-Hook, um die Auth-Funktionen bequem in der UI zu nutzen.
-
 https://github.com/alan2207/react-query-auth/blob/master/src/index.tsx
 https://github.com/alan2207/bulletproof-react/blob/master/apps/react-vite/src/features/auth/components/login-form.tsx
 https://github.com/alan2207/bulletproof-react/blob/master/apps/react-vite/src/lib/auth.tsx#L1
+
+Momentan:
+InputWrapper wie bei Reparranty bauen damit ich Felder reusen kann
+Echte Login Logik implementieren

@@ -3,7 +3,7 @@ import { Input as BasicInput } from '@/components/ui/Input';
 import { FieldWrapper } from '@/components/ui/Form/FieldWrapper';
 import { useController, UseControllerProps, useFormContext } from 'react-hook-form';
 
-type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
   UseControllerProps & {
     label?: string;
     ref?: React.Ref<HTMLInputElement>;

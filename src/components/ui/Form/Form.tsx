@@ -6,16 +6,16 @@ type FormProps<T extends FieldValues> = {
   onSubmit: SubmitHandler<T>;
   className?: string;
   children: ReactNode;
-  form: UseFormReturn<T>;
+  methods: UseFormReturn<T>;
   id?: string;
 };
 
-const Form = <T extends FieldValues>({ children, className, id, onSubmit, form }: FormProps<T>) => {
+const Form = <T extends FieldValues>({ children, className, id, onSubmit, methods }: FormProps<T>) => {
   return (
-    <FormProvider {...form}>
+    <FormProvider {...methods}>
       <form
         className={cn('  space-y-4', className)}
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit(onSubmit)}
         id={id}
       >
         {children}
