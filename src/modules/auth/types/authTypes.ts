@@ -1,11 +1,19 @@
-export type LoginInput = {
-  email: string;
-  password: string;
+export type ApiResponse<T = undefined> = {
+  success: boolean;
+  message: string;
+  data?: T;
 };
 
-export type RegisterInput = {
+export type LoginResponseData = {
+  user: User;
+};
+
+export type User = {
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
-  password: string;
+  createdAt: string;
+  updatedAt: string;
+  tenantId: number;
 };
