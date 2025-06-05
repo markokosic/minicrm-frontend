@@ -15,5 +15,5 @@ https://github.com/alan2207/bulletproof-react/blob/master/apps/react-vite/src/fe
 https://github.com/alan2207/bulletproof-react/blob/master/apps/react-vite/src/lib/auth.tsx#L1
 
 Momentan:
-InputWrapper wie bei Reparranty bauen damit ich Felder reusen kann
 Echte Login Logik implementieren
+useAuth probleme lösen

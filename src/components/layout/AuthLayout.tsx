@@ -1,14 +1,10 @@
-type AuthLayoutProps = {
-  title: string;
-  children: React.ReactNode;
-};
+import { Outlet } from 'react-router';
 
-const AuthLayout = ({ title, children }: AuthLayoutProps) => {
+const AuthLayout = () => {
   return (
-    <div className="flex min-h-screen flex-col justify-center items-center bg-base-100 px-4">
-      <title>{title}</title>
-      {children}
-    </div>
+    <main className="flex min-h-screen flex-col justify-center items-center bg-base-100 px-4 ">
+      <Outlet />
+    </main>
   );
 };
 

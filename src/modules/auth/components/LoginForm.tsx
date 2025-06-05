@@ -6,9 +6,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema } from '@/validation/authSchema';
 import { EmailInput, PasswordInput } from '@/components/ui/Form/FormFields';
-import { useAuth } from '@/modules/auth/hooks/useAuth';
+import { useLogin } from '@/lib/auth';
+import { useNavigate } from 'react-router';
+import { paths } from '@/config/paths';
 
-const LoginForm = () => {
+export const LoginForm = () => {
+  const navigate = useNavigate();
   const methods = useForm({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -17,8 +20,12 @@ const LoginForm = () => {
     },
   });
 
-  const handleSubmit = (data: any) => {
-    console.log(data);
+  const { mutateAsync: loginMutate, isLoading, isSuccess } = useLogin();
+
+  const handleSubmit = async (data: any) => {
+    console.log(isSuccess);
+    await loginMutate({ email: 'john@doe2.com', password: 'Test1234' });
+    navigate(paths.app.dashboard.getHref());
   };
 
   return (
@@ -55,5 +62,3 @@ const LoginForm = () => {
     </div>
   );
 };
-
-export { LoginForm };

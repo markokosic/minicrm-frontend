@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -9,7 +9,9 @@ const api = axios.create({
 });
 
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response.data;
+  },
   (error) => {
     console.error('API call failed:', error);
     // Handle specific error cases

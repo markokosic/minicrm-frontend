@@ -1,42 +1,27 @@
 export const paths = {
-  // home: {
-  //   path: '/',
-  //   getHref: () => '/',
-  // },
-
   auth: {
+    root: {
+      path: '/',
+      getHref: () => '/',
+    },
     register: {
       path: '/register',
+      getHref: () => '/register',
     },
     login: {
       path: '/login',
+      getHref: () => '/login',
     },
   },
 
-  // app: {
-  //   root: {
-  //     path: '/app',
-  //     getHref: () => '/app',
-  //   },
-  //   dashboard: {
-  //     path: '',
-  //     getHref: () => '/app',
-  //   },
-  //   discussions: {
-  //     path: 'discussions',
-  //     getHref: () => '/app/discussions',
-  //   },
-  //   discussion: {
-  //     path: 'discussions/:discussionId',
-  //     getHref: (id: string) => `/app/discussions/${id}`,
-  //   },
-  //   users: {
-  //     path: 'users',
-  //     getHref: () => '/app/users',
-  //   },
-  //   profile: {
-  //     path: 'profile',
-  //     getHref: () => '/app/profile',
-  //   },
-  // },
+  app: {
+    root: {
+      path: '/',
+      getHref: () => '/',
+    },
+    dashboard: {
+      path: '',
+      getHref: () => '/',
+    },
+  },
 } as const;

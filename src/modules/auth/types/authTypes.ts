@@ -1,12 +1,10 @@
-export type ApiResponse<T = undefined> = {
-  success: boolean;
-  message: string;
-  data?: T;
-};
+import { ApiResponse } from '@/types/apiTypes';
 
 export type LoginResponseData = {
   user: User;
 };
+
+export type LoginResponse = ApiResponse<LoginResponseData>;
 
 export type User = {
   id: number;

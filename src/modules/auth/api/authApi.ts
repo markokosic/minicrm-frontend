@@ -1,8 +1,9 @@
 import { api } from '@/lib/apiClient';
-import { LoginInput, RegisterInput } from '../types/authTypes';
+import { LoginResponse } from '../types/authTypes';
+import { LoginInput, RegisterInput } from '@/lib/auth';
 
-export const login = (data: LoginInput) => {
-  return api.post('/auth/login', data);
+export const login = async (payload: LoginInput): Promise<LoginResponse> => {
+  return await api.post('/auth/login', payload);
 };
 
 export const register = (data: RegisterInput) => {
