@@ -9,8 +9,11 @@ import { EmailInput, PasswordInput } from '@/components/ui/Form/FormFields';
 import { useLogin } from '@/lib/auth';
 import { useNavigate } from 'react-router';
 import { paths } from '@/config/paths';
+import { Trans, useTranslation } from 'react-i18next';
+import { CustomTrans } from '@/components/translation/CustomTrans';
 
 export const LoginForm = () => {
+  const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const methods = useForm({
     resolver: zodResolver(loginFormSchema),
@@ -23,7 +26,6 @@ export const LoginForm = () => {
   const { mutateAsync: loginMutate, isLoading, isSuccess } = useLogin();
 
   const handleSubmit = async (data: any) => {
-    console.log(isSuccess);
     await loginMutate({ email: 'john@doe2.com', password: 'Test1234' });
     navigate(paths.app.dashboard.getHref());
   };
@@ -44,19 +46,24 @@ export const LoginForm = () => {
           type="submit"
           className="w-full mt-6 "
         >
-          Anmelden
+          {t('login')}
         </Button>
         <div className="text-sm space-y-2 text-center pt-6">
           <p>
-            Du hast kein Konto?{' '}
-            <Link
-              className="font-bold underline"
-              to="/reset-password"
+            <CustomTrans
+              i18nKey="noAccount"
+              ns="auth"
             >
-              Jetzt registrieren
-            </Link>
+              Du hast kein Konto?{' '}
+              <Link
+                to="/register"
+                className="font-bold underline"
+              >
+                Jetzt registrieren
+              </Link>
+            </CustomTrans>
           </p>
-          <Link to="/reset-password">Passwort vergessen?</Link>
+          <Link to="/reset-password">{t('forgotPassword')}</Link>
         </div>
       </Form>
     </div>

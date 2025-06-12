@@ -1,0 +1,10 @@
+{
+  "email": {
+    "label": "Email Address",
+    "placeholder": "Enter email address"
+  },
+  "password": {
+    "label": "Password",
+    "placeholder": "Enter password"
+  }
+}

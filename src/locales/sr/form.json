@@ -1,0 +1,10 @@
+{
+  "email": {
+    "label": "E-pošta",
+    "placeholder": "Unesite e-poštu"
+  },
+  "password": {
+    "label": "Lozinka",
+    "placeholder": "Unesite lozinku"
+  }
+}
