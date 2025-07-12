@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import { Form } from '@/components/ui/Form/Form';
 import { Link } from '@/components/ui/Link';
-import { Logo } from '@/components/ui/Logo/Logo';
+import { Logo } from '@/components/ui/Logo';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema } from '@/validation/authSchema';

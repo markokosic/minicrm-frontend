@@ -23,5 +23,21 @@ export const paths = {
       path: '',
       getHref: () => '/',
     },
+    customers: {
+      path: 'customers',
+      getHref: () => '/customers',
+    },
+    offers: {
+      path: 'offers',
+      getHref: () => '/offers',
+    },
+    orders: {
+      path: 'orders',
+      getHref: () => '/orders',
+    },
+    billing: {
+      path: 'billing',
+      getHref: () => '/billing',
+    },
   },
 } as const;
