@@ -5,7 +5,6 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-// import '@mantine/modals/styles.css';
 import { MantineProvider } from '@mantine/core';
 
 type AppProviderProps = {

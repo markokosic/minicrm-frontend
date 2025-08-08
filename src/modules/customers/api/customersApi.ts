@@ -1,0 +1,26 @@
+import { api } from '@/lib/apiClient';
+import { CompanyData, PersonData } from '../types/customersTypes';
+
+export const createCompany = async (payload: CompanyData): Promise<LoginResponse> => {
+  return await api.post('/customers', payload);
+};
+
+export const createPerson = async (payload: PersonData): Promise<LoginResponse> => {
+  return await api.post('/customers', payload);
+};
+
+export const getCustomers = async () => {
+  return await api.get('/customers?customerTypeId=2');
+};
+
+export const getCustomer = async ({ customerId }: { customerId: number }) => {
+  return await api.get(`/customers/${customerId}`);
+};
+
+export const getCustomerTypes = async () => {
+  return await api.get(`/customers/types`);
+};
+
+export const updateCustomer = async ({ customerId, payload }: { customerId: number; payload: any }) => {
+  return await api.get(`/customers/${customerId}`, payload);
+};

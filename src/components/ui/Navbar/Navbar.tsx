@@ -1,5 +1,3 @@
-import { Code, Group } from '@mantine/core';
-import { useEffect, useState } from 'react';
 import { DollarSign, File, House, LogOut, LucideWorkflow, PersonStanding } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
 import { paths } from '@/config/paths';
@@ -13,7 +11,11 @@ const data = [
   { id: 4, link: paths.app.billing.getHref(), labelKey: 'billing', icon: <DollarSign /> },
 ];
 
-const Navbar = () => {
+type NavbarProps = {
+  toggle: () => void;
+};
+
+const Navbar = ({ toggle }: NavbarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation('common');
@@ -27,6 +29,7 @@ const Navbar = () => {
       onClick={(event) => {
         event.preventDefault();
         navigate(item.link);
+        toggle();
       }}
     >
       {item.icon}
@@ -37,11 +40,14 @@ const Navbar = () => {
   return (
     <nav className={'flex h-full flex-col  justify-between items-between'}>
       <div className={''}>{links}</div>
+      <div className="h-[200px] bg-blue-300 rounded-md">CTA</div>
 
-      <div className={'bg-gray-200 rounded-md p-2 hover:bg-gray-300 cursor-pointer'}>
+      <div className={' border-t pt-4 border-t-gray-200'}>
         <a
           href="#"
-          className={'flex gap-2 items-center justify-center'}
+          className={
+            'flex gap-2 items-center justify-center bg-gray-200 rounded-md p-2 hover:bg-gray-300 cursor-pointer'
+          }
           onClick={(event) => event.preventDefault()}
         >
           <LogOut />

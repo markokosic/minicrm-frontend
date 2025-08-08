@@ -36,7 +36,7 @@ const AppLayout = () => {
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
-        <Navbar />
+        <Navbar toggle={toggle} />
       </AppShell.Navbar>
 
       <AppShell.Main>
