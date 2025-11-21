@@ -1,12 +1,15 @@
-import { useUser } from '@/lib/auth';
 import { Outlet } from 'react-router';
 
-import { AppShell, Burger, Group } from '@mantine/core';
+import { AppShell, Burger, Group, LoadingOverlay } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Logo } from '../ui/Logo';
 import Navbar from '../ui/Navbar/Navbar';
 
-const AppLayout = () => {
+type AppLayoutProps = {
+  overlayVisible: boolean;
+};
+
+const AppLayout = ({ overlayVisible }: AppLayoutProps) => {
   const [opened, { toggle }] = useDisclosure();
 
   // const user = useUser();
@@ -40,6 +43,12 @@ const AppLayout = () => {
       </AppShell.Navbar>
 
       <AppShell.Main>
+        <LoadingOverlay
+          visible={overlayVisible}
+          zIndex={1000}
+          overlayProps={{ radius: 'sm', blur: 2 }}
+          loaderProps={{ color: 'blue', type: 'bars' }}
+        />
         <Outlet />
       </AppShell.Main>
     </AppShell>

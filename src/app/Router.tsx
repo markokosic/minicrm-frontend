@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
 
 import { Test } from '@/components/Test';
 import { paths } from '@/config/paths';
@@ -11,7 +11,6 @@ import { CustomersPage } from './routes/app/CustomersPage';
 
 const router = createBrowserRouter([
   {
-    path: paths.auth.root.path,
     element: <AuthLayout />,
     children: [
       {
@@ -26,10 +25,9 @@ const router = createBrowserRouter([
   },
 
   {
-    path: paths.app.root.path,
     element: (
       <ProtectedRoute>
-        <AppLayout />
+        <Outlet />
       </ProtectedRoute>
     ),
     children: [

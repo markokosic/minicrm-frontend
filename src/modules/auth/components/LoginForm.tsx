@@ -12,6 +12,8 @@ import { paths } from '@/config/paths';
 import { useTranslation } from 'react-i18next';
 import { CustomTrans } from '@/components/translation/CustomTrans';
 import { useAuth } from '../hooks/useAuth';
+import toast from 'react-hot-toast';
+import { AxiosError } from 'axios';
 
 type LoginDataType = {
   email: string;
@@ -39,14 +41,13 @@ export const LoginForm = () => {
         upn: data?.email,
       };
 
-      localStorage.setItem('auth', JSON.stringify(authStatus));
-
       if (response.success) {
         navigate(paths.app.dashboard.getHref());
       }
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof AxiosError) {
         console.error(error.message);
+        toast.error(`${t(error?.response?.data.errorKey)}`);
       }
     }
   };
@@ -69,6 +70,7 @@ export const LoginForm = () => {
         >
           {t('login')}
         </Button>
+
         <div className="text-sm space-y-2 text-center pt-6">
           <p>
             <CustomTrans
