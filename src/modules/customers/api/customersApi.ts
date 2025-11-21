@@ -1,5 +1,6 @@
 import { api } from '@/lib/apiClient';
 import { CompanyData, PersonData } from '../types/customersTypes';
+import { LoginResponse } from '@/modules/auth/types/authTypes';
 
 export const createCompany = async (payload: CompanyData): Promise<LoginResponse> => {
   return await api.post('/customers', payload);
@@ -9,8 +10,8 @@ export const createPerson = async (payload: PersonData): Promise<LoginResponse> 
   return await api.post('/customers', payload);
 };
 
-export const getCustomers = async () => {
-  return await api.get('/customers?customerTypeId=2');
+export const getCompanies = async () => {
+  return await api.get('/companies');
 };
 
 export const getCustomer = async ({ customerId }: { customerId: number }) => {

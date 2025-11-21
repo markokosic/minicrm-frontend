@@ -1,9 +1,8 @@
 import { z } from 'zod';
 
 const emailSchema = z
-  .string()
-  .min(1, 'E-Mail Adresse ist erforderlich')
   .email('Dies ist keine gültige E-Mail Adresse')
+  .min(1, 'E-Mail Adresse ist erforderlich')
   .max(254, 'E-Mail Adresse ist zu lang');
 
 const passwordSchema = z
