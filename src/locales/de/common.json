@@ -1,1 +1,7 @@
-{}
+{
+  "dashboard": "Dashboard",
+  "customers": "Kunden",
+  "offers": "Angebote",
+  "billing": "Rechnungslegung",
+  "orders": "Aufträge"
+}

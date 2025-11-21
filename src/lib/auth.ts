@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { configureAuth } from '@/modules/auth/utils/configureAuth';
 import { ApiResponse } from '@/types/apiTypes';
 
-const getUser = async (): Promise<User> => {
+export const getUser = async (): Promise<User> => {
   const response = await api.get('/auth/me');
 
   return response?.data;

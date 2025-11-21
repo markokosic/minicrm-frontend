@@ -1,1 +1,7 @@
-{}
+{
+  "dashboard": "Kontrolna tabla",
+  "customers": "Kupci",
+  "offers": "Ponude",
+  "billing": "Fakturiranje",
+  "orders": "Nalozi"
+}

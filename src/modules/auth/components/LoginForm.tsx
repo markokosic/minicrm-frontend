@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import { Form } from '@/components/ui/Form/Form';
 import { Link } from '@/components/ui/Link';
-import { Logo } from '@/components/ui/Logo/Logo';
+import { Logo } from '@/components/ui/Logo';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginFormSchema } from '@/validation/authSchema';
@@ -9,10 +9,17 @@ import { EmailInput, PasswordInput } from '@/components/ui/Form/FormFields';
 import { useLogin } from '@/lib/auth';
 import { useNavigate } from 'react-router';
 import { paths } from '@/config/paths';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { CustomTrans } from '@/components/translation/CustomTrans';
+import { useAuth } from '../hooks/useAuth';
+
+type LoginDataType = {
+  email: string;
+  password: string;
+};
 
 export const LoginForm = () => {
+  const { loginUser } = useAuth();
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const methods = useForm({
@@ -23,11 +30,25 @@ export const LoginForm = () => {
     },
   });
 
-  const { mutateAsync: loginMutate, isLoading, isSuccess } = useLogin();
+  const handleSubmit = async (data: LoginDataType) => {
+    try {
+      const response = await loginUser({ email: data.email, password: data.password });
 
-  const handleSubmit = async (data: any) => {
-    await loginMutate({ email: 'john@doe2.com', password: 'Test1234' });
-    navigate(paths.app.dashboard.getHref());
+      const authStatus = {
+        authenticatedState: 1,
+        upn: data?.email,
+      };
+
+      localStorage.setItem('auth', JSON.stringify(authStatus));
+
+      if (response.success) {
+        navigate(paths.app.dashboard.getHref());
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    }
   };
 
   return (

@@ -7,6 +7,7 @@ import DashboardPage from './routes/app/DashboardPage';
 import { AppLayout } from '@/components/layout';
 import LoginPage from './routes/auth/LoginPage';
 import { ProtectedRoute } from '@/modules/auth/components';
+import { CustomersPage } from './routes/app/CustomersPage';
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <DashboardPage /> },
-      { path: 'test', element: <Test /> },
+      { path: paths.app.customers.path, element: <CustomersPage /> },
       { path: '*', element: <div>Not found</div> },
       // { path: 'about', element: <Test /> },
     ],

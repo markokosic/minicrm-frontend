@@ -4,9 +4,6 @@ import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router';
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const { data: user, isLoading } = useUser();
-  const location = useLocation();
-
   const authData = localStorage.getItem('auth');
   const parsedAuth = authData ? JSON.parse(authData) : null;
 
