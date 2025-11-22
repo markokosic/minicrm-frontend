@@ -8,6 +8,7 @@ import { AppLayout } from '@/components/layout';
 import LoginPage from './routes/auth/LoginPage';
 import { ProtectedRoute } from '@/modules/auth/components';
 import { CustomersPage } from './routes/app/CustomersPage';
+import RegisterPage from './routes/auth/RegisterPage';
 
 const router = createBrowserRouter([
   {
@@ -17,10 +18,10 @@ const router = createBrowserRouter([
         path: paths.auth.login.path,
         element: <LoginPage />,
       },
-      // {
-      //   path: paths.auth.register.path,
-      //   element: <Register />,
-      // },
+      {
+        path: paths.auth.register.path,
+        element: <RegisterPage />,
+      },
     ],
   },
 

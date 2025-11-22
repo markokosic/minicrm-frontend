@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router';
 import { paths } from '@/config/paths';
 import { useTranslation } from 'react-i18next';
 import { CustomTrans } from '@/components/translation/CustomTrans';
-import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 
@@ -21,7 +20,16 @@ type LoginDataType = {
 };
 
 export const LoginForm = () => {
-  const { loginUser } = useAuth();
+  const loginMutation = useLogin({
+    onSuccess: () => {
+      toast.success(t('loginSuccess') || 'Erfolgreich eingeloggt');
+      navigate(paths.app.dashboard.getHref());
+    },
+    onError: (error) => {
+      const errorMessage = error instanceof Error ? error.message : t('loginError') || 'Login fehlgeschlagen';
+      toast.error(errorMessage);
+    },
+  });
   const { t } = useTranslation('auth');
   const navigate = useNavigate();
   const methods = useForm({
@@ -34,16 +42,7 @@ export const LoginForm = () => {
 
   const handleSubmit = async (data: LoginDataType) => {
     try {
-      const response = await loginUser({ email: data.email, password: data.password });
-
-      const authStatus = {
-        authenticatedState: 1,
-        upn: data?.email,
-      };
-
-      if (response.success) {
-        navigate(paths.app.dashboard.getHref());
-      }
+      await loginMutation.mutateAsync({ email: data.email, password: data.password });
     } catch (error) {
       if (error instanceof AxiosError) {
         console.error(error.message);

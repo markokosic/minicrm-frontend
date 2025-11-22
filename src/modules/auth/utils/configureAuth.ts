@@ -35,7 +35,7 @@ export const configureAuth = <TUser, Error, LoginCredentials, RegisterCredential
   const useLogin = (options?: Omit<UseMutationOptions<TUser, Error, LoginCredentials>, 'mutationFn'>) => {
     const queryClient = useQueryClient();
 
-    const setUser = useCallback((data: User) => queryClient.setQueryData(userKey, data), [queryClient]);
+    const setUser = useCallback((data: TUser) => queryClient.setQueryData(userKey, data), [queryClient]);
 
     return useMutation({
       mutationFn: loginFn,
