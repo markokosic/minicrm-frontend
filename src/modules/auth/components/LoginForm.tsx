@@ -4,7 +4,7 @@ import { Link } from '@/components/ui/Link';
 import { Logo } from '@/components/ui/Logo';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginFormSchema } from '@/validation/authSchema';
+// import { loginFormSchema } from '@/validation/authSchema';
 import { EmailInput, PasswordInput } from '@/components/ui/Form/FormFields';
 import { useLogin } from '@/lib/auth';
 import { useNavigate } from 'react-router';
@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { CustomTrans } from '@/components/translation/CustomTrans';
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
+import { getLoginFormSchema } from '@/validation/authSchema';
 
 type LoginDataType = {
   email: string;
@@ -20,6 +21,9 @@ type LoginDataType = {
 };
 
 export const LoginForm = () => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const loginMutation = useLogin({
     onSuccess: () => {
       toast.success(t('loginSuccess') || 'Erfolgreich eingeloggt');
@@ -30,10 +34,9 @@ export const LoginForm = () => {
       toast.error(errorMessage);
     },
   });
-  const { t } = useTranslation('auth');
-  const navigate = useNavigate();
+
   const methods = useForm({
-    resolver: zodResolver(loginFormSchema),
+    resolver: zodResolver(getLoginFormSchema(t)),
     defaultValues: {
       email: '',
       password: '',

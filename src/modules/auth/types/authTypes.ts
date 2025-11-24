@@ -1,5 +1,5 @@
 import { ApiResponse } from '@/types/apiTypes';
-import { loginFormSchema, registerFormSchema } from '@/validation/authSchema';
+import { loginFormSchema, getRegisterFormSchema } from '@/validation/authSchema';
 import z from 'zod';
 
 export type LoginResponseData = {
@@ -8,7 +8,7 @@ export type LoginResponseData = {
 
 export type AuthCredentialsPayload = z.infer<typeof loginFormSchema>;
 
-export type RegisterTenantPayload = z.infer<typeof registerFormSchema>;
+export type RegisterTenantPayload = z.infer<typeof getRegisterFormSchema>;
 
 export type User = {
   id: number;

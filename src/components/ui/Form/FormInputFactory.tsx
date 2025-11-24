@@ -12,7 +12,7 @@ type Config<TFieldValues extends FieldValues = FieldValues> = {
   autoComplete?: HTMLInputAutoCompleteAttribute;
 };
 
-type Props = Omit<InputProps, 'label' | 'name' | 'placeholder' | 'rules' | 'type' | 'autoComplete'>;
+type Props = Omit<InputProps, 'label' | 'name' | 'placeholder' | 'rules' | 'type'>;
 
 export const createInputWrapper = <TFieldValues extends FieldValues>(config: Config<TFieldValues>) => {
   return function WrappedInput(props: Props) {
