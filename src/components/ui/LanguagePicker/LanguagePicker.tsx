@@ -1,44 +1,32 @@
 import { useState } from 'react';
-import { Group, Menu, UnstyledButton } from '@mantine/core';
-import classes from './LanguagePicker.module.css';
 import { ChevronDown } from 'lucide-react';
-import i18n from '@/lib/i18n';
-
-const data = [
-  { label: 'English', image: 'img' },
-  { label: 'German', image: 'img' },
-  { label: 'Italian', image: 'img' },
-  { label: 'French', image: 'img' },
-  { label: 'Polish', image: 'img' },
-];
+import { useTranslation } from 'react-i18next';
+import { Group, Menu, UnstyledButton } from '@mantine/core';
+import { DEFAULT_LANGUAGE, Language, SUPPORTED_LANGUAGES } from '@/lib/i18n/languages';
+import classes from './LanguagePicker.module.css';
 
 export const LanguagePicker = () => {
-  const [currentLanguage, setCurrentLanguage] = useState(i18n.resolvedLanguage);
+  const { i18n } = useTranslation();
   const [opened, setOpened] = useState(false);
-  const [selected, setSelected] = useState(data[0]);
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    SUPPORTED_LANGUAGES.find((language) => language.code === i18n.resolvedLanguage) ||
+      DEFAULT_LANGUAGE
+  );
 
-  function changeLanguage(lng: string) {
-    if (lng === currentLanguage) {
+  function changeLanguage(language: Language) {
+    if (i18n.resolvedLanguage === language.code) {
       return;
     }
-    i18n.changeLanguage(lng).then(() => setCurrentLanguage(lng));
+    i18n.changeLanguage(language.code);
+    setSelectedLanguage(language);
   }
 
-  const items = data.map((item) => (
+  const items = SUPPORTED_LANGUAGES.map((language) => (
     <Menu.Item
-      leftSection={
-        <p>left</p>
-
-        // <Image
-        //   src={item.image}
-        //   width={18}
-        //   height={18}
-        // />
-      }
-      onClick={() => setSelected(item)}
-      key={item.label}
+      onClick={() => changeLanguage(language)}
+      key={language.label}
     >
-      {item.label}
+      {language.label}
     </Menu.Item>
   ));
 
@@ -56,12 +44,7 @@ export const LanguagePicker = () => {
           data-expanded={opened || undefined}
         >
           <Group gap="xs">
-            {/* <Image
-              src={selected.image}
-              w={22}
-              h={22}
-            /> */}
-            <span className="">{selected.label}</span>
+            <span className="">{selectedLanguage.label}</span>
           </Group>
           <ChevronDown
             size={16}
