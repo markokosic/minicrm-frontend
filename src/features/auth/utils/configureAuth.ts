@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import {
   MutationFunction,
   QueryFunction,
@@ -8,8 +9,7 @@ import {
   useQueryClient,
   UseQueryOptions,
 } from '@tanstack/react-query';
-import { useCallback } from 'react';
-import { User } from '../types/authTypes';
+import { User } from '../types/auth.types';
 
 type AuthConfig<User, LoginCredentials, RegisterCredentials> = {
   userFn: QueryFunction<User, QueryKey>;
@@ -32,10 +32,15 @@ export const configureAuth = <TUser, Error, LoginCredentials, RegisterCredential
       ...options,
     });
 
-  const useLogin = (options?: Omit<UseMutationOptions<TUser, Error, LoginCredentials>, 'mutationFn'>) => {
+  const useLogin = (
+    options?: Omit<UseMutationOptions<TUser, Error, LoginCredentials>, 'mutationFn'>
+  ) => {
     const queryClient = useQueryClient();
 
-    const setUser = useCallback((data: TUser) => queryClient.setQueryData(userKey, data), [queryClient]);
+    const setUser = useCallback(
+      (data: TUser) => queryClient.setQueryData(userKey, data),
+      [queryClient]
+    );
 
     return useMutation({
       mutationFn: loginFn,
@@ -47,10 +52,15 @@ export const configureAuth = <TUser, Error, LoginCredentials, RegisterCredential
     });
   };
 
-  const useRegister = (options?: Omit<UseMutationOptions<TUser, Error, RegisterCredentials>, 'mutationFn'>) => {
+  const useRegister = (
+    options?: Omit<UseMutationOptions<TUser, Error, RegisterCredentials>, 'mutationFn'>
+  ) => {
     const queryClient = useQueryClient();
 
-    const setUser = useCallback((data: TUser) => queryClient.setQueryData(userKey, data), [queryClient]);
+    const setUser = useCallback(
+      (data: TUser) => queryClient.setQueryData(userKey, data),
+      [queryClient]
+    );
 
     return useMutation({
       mutationFn: registerFn,
@@ -65,7 +75,10 @@ export const configureAuth = <TUser, Error, LoginCredentials, RegisterCredential
   const useLogout = (options?: Omit<UseMutationOptions<unknown, Error, unknown>, 'mutationFn'>) => {
     const queryClient = useQueryClient();
 
-    const setUser = useCallback((data: TUser | null) => queryClient.setQueryData(userKey, data), [queryClient]);
+    const setUser = useCallback(
+      (data: TUser | null) => queryClient.setQueryData(userKey, data),
+      [queryClient]
+    );
 
     return useMutation({
       mutationFn: logoutFn,

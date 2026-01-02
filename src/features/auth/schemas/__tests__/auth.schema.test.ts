@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { getRegisterFormSchema } from '@/validation/authSchema';
 import { TFunction } from 'i18next';
+import { describe, expect, it } from 'vitest';
+import { getRegisterFormSchema } from '@/features/auth/schemas/auth.schema';
 
 const mockT = (key: string) => key; // liefert Keys statt echter Texte
 
@@ -36,7 +36,9 @@ describe('getRegisterFormSchema', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       // Fehler sitzt am confirmPassword-Feld und zeigt den erwarteten Key
-      expect(result.error.flatten().fieldErrors.confirmPassword).toContain('errors:validation.password_mismatch');
+      expect(result.error.flatten().fieldErrors.confirmPassword).toContain(
+        'errors:validation.password_mismatch'
+      );
     }
   });
 

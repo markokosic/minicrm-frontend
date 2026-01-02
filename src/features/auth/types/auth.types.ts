@@ -1,6 +1,5 @@
 import z from 'zod';
-import { ApiResponse } from '@/types/apiTypes';
-import { getLoginFormSchema, getRegisterFormSchema } from '@/validation/authSchema';
+import { getLoginFormSchema, getRegisterFormSchema } from '@/features/auth/schemas/auth.schema';
 
 export type LoginResponseData = {
   user: User;

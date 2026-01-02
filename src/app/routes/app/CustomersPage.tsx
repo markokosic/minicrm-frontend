@@ -1,6 +1,6 @@
-import { getUser } from '@/lib/auth';
-import { useGetCustomers } from '@/modules/customers/hooks/useGetCustomers';
 import { useTranslation } from 'react-i18next';
+import { useGetCustomers } from '@/features/customers/hooks/useGetCustomers';
+import { getUser } from '@/lib/auth';
 
 export const CustomersPage = () => {
   const { t } = useTranslation('common');

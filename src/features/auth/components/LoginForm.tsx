@@ -1,19 +1,21 @@
-import { Button } from '@/components/ui/Button';
-import { Form } from '@/components/ui/Form/Form';
-import { Link } from '@/components/ui/Link';
-import { Logo } from '@/components/ui/Logo';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { AxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+import { CustomTrans } from '@/components/translation/CustomTrans';
+import { Button } from '@/components/ui/Button';
+import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
+import { Form } from '@/components/ui/Form/Form';
 // import { loginFormSchema } from '@/validation/authSchema';
 import { EmailInput, PasswordInput } from '@/components/ui/Form/FormFields';
-import { useLogin } from '@/lib/auth';
-import { useNavigate } from 'react-router';
+import { Link } from '@/components/ui/Link';
+import { Logo } from '@/components/ui/Logo';
 import { paths } from '@/config/paths';
-import { useTranslation } from 'react-i18next';
-import { CustomTrans } from '@/components/translation/CustomTrans';
-import toast from 'react-hot-toast';
-import { AxiosError } from 'axios';
-import { getLoginFormSchema } from '@/validation/authSchema';
+import { FORM_FIELDS } from '@/constants/form-fields';
+import { getLoginFormSchema } from '@/features/auth/schemas/auth.schema';
+import { useLogin } from '@/lib/auth';
 
 type LoginDataType = {
   email: string;
@@ -30,7 +32,8 @@ export const LoginForm = () => {
       navigate(paths.app.dashboard.getHref());
     },
     onError: (error) => {
-      const errorMessage = error instanceof Error ? error.message : t('loginError') || 'Login fehlgeschlagen';
+      const errorMessage =
+        error instanceof Error ? error.message : t('loginError') || 'Login fehlgeschlagen';
       toast.error(errorMessage);
     },
   });
@@ -63,7 +66,12 @@ export const LoginForm = () => {
         methods={methods}
         onSubmit={handleSubmit}
       >
-        <EmailInput />
+        <ControlledTextInput
+          name={FORM_FIELDS.email.name}
+          label={t(FORM_FIELDS.email.labelKey)}
+          placeholder={t(FORM_FIELDS.email.placeholderKey)}
+          type={FORM_FIELDS.email.type}
+        />
         <PasswordInput />
 
         <Button

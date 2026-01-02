@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { renderHook, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { User } from '../../types/auth.types';
 import { configureAuth } from '../configureAuth';
-import { User } from '../../types/authTypes';
 
 const mockUser: User = {
   id: 1,
@@ -103,7 +103,10 @@ describe('configureAuth', () => {
         expect(result.current.isSuccess).toBe(true);
       });
 
-      expect(mockLoginFn).toHaveBeenCalledWith(expect.objectContaining(mockLoginCredentials), expect.any(Object));
+      expect(mockLoginFn).toHaveBeenCalledWith(
+        expect.objectContaining(mockLoginCredentials),
+        expect.any(Object)
+      );
       expect(mockLoginFn).toHaveBeenCalledTimes(1);
 
       const cachedUser = queryClient.getQueryData(['test-user']);
@@ -135,7 +138,10 @@ describe('configureAuth', () => {
         expect(result.current.isSuccess).toBe(true);
       });
 
-      expect(mockRegisterFn).toHaveBeenCalledWith(expect.objectContaining(mockRegisterCredentials), expect.any(Object));
+      expect(mockRegisterFn).toHaveBeenCalledWith(
+        expect.objectContaining(mockRegisterCredentials),
+        expect.any(Object)
+      );
       expect(mockRegisterFn).toHaveBeenCalledTimes(1);
 
       const cachedUser = queryClient.getQueryData(['test-user']);

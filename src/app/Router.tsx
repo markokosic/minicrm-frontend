@@ -1,13 +1,12 @@
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
-
+import { AppLayout } from '@/components/layout';
+import { AuthLayout } from '@/components/layout/AuthLayout';
+import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { Test } from '@/components/Test';
 import { paths } from '@/config/paths';
-import { AuthLayout } from '@/components/layout/AuthLayout';
-import DashboardPage from './routes/app/DashboardPage';
-import { AppLayout } from '@/components/layout';
-import LoginPage from './routes/auth/LoginPage';
-import { ProtectedRoute } from '@/modules/auth/components';
 import { CustomersPage } from './routes/app/CustomersPage';
+import DashboardPage from './routes/app/DashboardPage';
+import LoginPage from './routes/auth/LoginPage';
 import RegisterPage from './routes/auth/RegisterPage';
 
 const router = createBrowserRouter([

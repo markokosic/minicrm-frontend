@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { RegisterForm } from '../RegisterForm';
 import userEvent from '@testing-library/user-event';
+import { RegisterForm } from '../RegisterForm';
 
 describe('Register Form', () => {
   it('should render all form inputs, tenantName, email, password, firstName, lastName', () => {
