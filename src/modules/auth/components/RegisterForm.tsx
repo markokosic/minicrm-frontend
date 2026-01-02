@@ -16,11 +16,17 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { paths } from '@/config/paths';
 
-export const RegisterForm = () => {
+type Props = {
+  onSubmit: (values: any) => Promise<void> | void;
+};
+
+export const RegisterForm = ({ onSubmit }: Props) => {
   const { t } = useTranslation();
 
+  const schema = getRegisterFormSchema(t);
+
   const methods = useForm({
-    resolver: zodResolver(getRegisterFormSchema(t)),
+    resolver: zodResolver(schema),
     defaultValues: {
       tenantName: '',
       firstName: '',
@@ -29,11 +35,8 @@ export const RegisterForm = () => {
       password: '',
       confirmPassword: '',
     },
+    mode: 'onSubmit',
   });
-
-  const handleSubmit = () => {
-    console.log('submit');
-  };
 
   return (
     <div className=" bg-base-200 shadow rounded-lg px-6 py-12  max-w-lg w-full">
@@ -42,7 +45,7 @@ export const RegisterForm = () => {
       </div>
       <Form
         methods={methods}
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
       >
         <TenantNameInput />
         <FirstNameInput />
