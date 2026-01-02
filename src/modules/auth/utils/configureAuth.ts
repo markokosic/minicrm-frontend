@@ -28,30 +28,20 @@ export const configureAuth = <TUser, Error, LoginCredentials, RegisterCredential
     useQuery({
       queryKey: userKey,
       queryFn: userFn,
+      retry: false,
       ...options,
     });
 
   const useLogin = (options?: Omit<UseMutationOptions<TUser, Error, LoginCredentials>, 'mutationFn'>) => {
     const queryClient = useQueryClient();
 
-    const setUser = useCallback((data: User) => queryClient.setQueryData(userKey, data), [queryClient]);
-
-    const createAuthStatus = useCallback((data: User) => {
-      console.log(data, 'bla');
-      const authStatus = {
-        authenticatedState: 1,
-        upn: data?.email,
-      };
-
-      localStorage.setItem('auth', JSON.stringify(authStatus));
-    }, []);
+    const setUser = useCallback((data: TUser) => queryClient.setQueryData(userKey, data), [queryClient]);
 
     return useMutation({
       mutationFn: loginFn,
       ...options,
       onSuccess: (user, ...rest) => {
         setUser(user);
-        createAuthStatus(user);
         options?.onSuccess?.(user, ...rest);
       },
     });

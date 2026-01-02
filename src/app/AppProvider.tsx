@@ -6,6 +6,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { MantineProvider } from '@mantine/core';
+import { Toaster } from 'react-hot-toast';
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
         <QueryClientProvider client={queryClient}>
           <MantineProvider>
             {children}
+            <Toaster position="bottom-right" />
             <ReactQueryDevtools initialIsOpen={false} />
           </MantineProvider>
         </QueryClientProvider>
