@@ -38,6 +38,8 @@
   --border: 1px;
   --depth: 1;
   --noise: 0;
+
+  color-scheme: light dark;
 }
 
 @theme {

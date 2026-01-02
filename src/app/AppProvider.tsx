@@ -7,6 +7,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { MantineProvider } from '@mantine/core';
 import { Toaster } from 'react-hot-toast';
+import { theme } from '@/config/theme';
 
 type AppProviderProps = {
   children: React.ReactNode;
@@ -17,7 +18,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
     <Suspense fallback={<div className="flex h-screen w-screen items-center justify-center">loading...</div>}>
       <ErrorBoundary FallbackComponent={MainErrorFallback}>
         <QueryClientProvider client={queryClient}>
-          <MantineProvider>
+          <MantineProvider theme={theme}>
             {children}
             <Toaster position="bottom-right" />
             <ReactQueryDevtools initialIsOpen={false} />
