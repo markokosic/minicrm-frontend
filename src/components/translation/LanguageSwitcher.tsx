@@ -22,7 +22,9 @@ export default function LanguageSwitcher() {
   }, []);
 
   function changeLanguage(lng: string) {
-    if (lng === currentLng) return;
+    if (lng === currentLng) {
+      return;
+    }
     i18n.changeLanguage(lng).then(() => setCurrentLng(lng));
   }
 

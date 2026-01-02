@@ -18,7 +18,9 @@ export const LanguagePicker = () => {
   const [selected, setSelected] = useState(data[0]);
 
   function changeLanguage(lng: string) {
-    if (lng === currentLanguage) return;
+    if (lng === currentLanguage) {
+      return;
+    }
     i18n.changeLanguage(lng).then(() => setCurrentLanguage(lng));
   }
 
@@ -59,7 +61,7 @@ export const LanguagePicker = () => {
               w={22}
               h={22}
             /> */}
-            <span className={''}>{selected.label}</span>
+            <span className="">{selected.label}</span>
           </Group>
           <ChevronDown
             size={16}
