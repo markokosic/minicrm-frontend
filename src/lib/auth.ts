@@ -1,56 +1,53 @@
-import { LoginResponse, User } from '@/modules/auth/types/authTypes';
-import { api } from './apiClient';
-import { loginFormSchema, registerFormSchema } from '@/validation/authSchema';
-import { z } from 'zod';
+import { AuthCredentialsPayload, RegisterTenantPayload } from '@/modules/auth/types/authTypes';
 import { configureAuth } from '@/modules/auth/utils/configureAuth';
-import { ApiResponse } from '@/types/apiTypes';
+import { getAuthUser, login, logout, register } from '@/modules/auth/api/authApi';
 
-export const getUser = async (): Promise<User> => {
-  const response = await api.get('/auth/me');
+export const getUser = async () => {
+  const res = await getAuthUser();
 
-  return response?.data;
-};
-
-const logout = () => {
-  return api.post('/auth/logout');
-};
-
-export type LoginInput = z.infer<typeof loginFormSchema>;
-
-const login = async (payload: LoginInput): Promise<User> => {
-  try {
-    const res: LoginResponse = await api.post('/auth/login', payload);
-
-    if (!res.success) {
-      throw new Error(res.message);
-    }
-
-    return res?.data?.user;
-  } catch (error) {
-    if (error instanceof Error) {
-      throw error;
-    }
-    throw new Error(String(error));
+  if (!res.success) {
+    throw new Error(res.message);
   }
+
+  return res?.data;
 };
 
-export type RegisterInput = z.infer<typeof registerFormSchema>;
+//TODO refactor, logout also can be unsuccessful i guess
+const logoutUser = () => {
+  return logout();
+};
 
-const register = (payload: RegisterInput): Promise<ApiResponse> => {
-  return api.post('/auth/register', payload);
+const loginUser = async (payload: AuthCredentialsPayload) => {
+  const res = await login(payload);
+
+  if (!res.success) {
+    throw new Error(res.message);
+  }
+
+  return res?.data?.user;
+};
+
+const registerTenant = async (payload: RegisterTenantPayload) => {
+  const res = await register(payload);
+
+  if (!res.success) {
+    throw new Error(res.message);
+  }
+
+  return res?.data;
 };
 
 const authConfig = {
   userFn: getUser,
   userKey: ['authenticated-user'],
-  logoutFn: logout,
-  loginFn: async (data: LoginInput) => {
-    const user = await login(data);
+  logoutFn: logoutUser,
+  loginFn: async (data: AuthCredentialsPayload) => {
+    const user = await loginUser(data);
     return user;
   },
-  registerFn: async (data: RegisterInput) => {
-    const response = await register(data);
-    return response.data;
+  registerFn: async (data: RegisterTenantPayload) => {
+    const response = await registerTenant(data);
+    return response;
   },
 };
 

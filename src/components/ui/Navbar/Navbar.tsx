@@ -2,6 +2,8 @@ import { DollarSign, File, House, LogOut, LucideWorkflow, PersonStanding } from 
 import { useLocation, useNavigate } from 'react-router';
 import { paths } from '@/config/paths';
 import { useTranslation } from 'react-i18next';
+import { useLogout } from '@/lib/auth';
+import toast from 'react-hot-toast';
 
 const data = [
   { id: 0, link: paths.app.dashboard.getHref(), labelKey: 'dashboard', icon: <House /> },
@@ -19,6 +21,20 @@ const Navbar = ({ toggle }: NavbarProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation('common');
+
+  const logoutMutation = useLogout({
+    onSuccess: () => {
+      navigate(paths.auth.login.path);
+    },
+    onError: (error) => {
+      const errorMessage = error instanceof Error ? error.message : t('loginError') || 'Logout fehlgeschlagen';
+      toast.error(errorMessage);
+    },
+  });
+
+  const handleLogout = () => {
+    logoutMutation.mutate(undefined);
+  };
 
   const links = data.map((item) => (
     <a
@@ -42,9 +58,11 @@ const Navbar = ({ toggle }: NavbarProps) => {
       <div className={''}>{links}</div>
       <div className="h-[200px] bg-blue-300 rounded-md">CTA</div>
 
-      <div className={' border-t pt-4 border-t-gray-200'}>
-        <a
-          href="#"
+      <div
+        onClick={handleLogout}
+        className={' border-t pt-4 border-t-gray-200'}
+      >
+        <button
           className={
             'flex gap-2 items-center justify-center bg-gray-200 rounded-md p-2 hover:bg-gray-300 cursor-pointer'
           }
@@ -52,7 +70,7 @@ const Navbar = ({ toggle }: NavbarProps) => {
         >
           <LogOut />
           <span>Logout</span>
-        </a>
+        </button>
       </div>
     </nav>
   );

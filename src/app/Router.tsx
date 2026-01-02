@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router';
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
 
 import { Test } from '@/components/Test';
 import { paths } from '@/config/paths';
@@ -8,28 +8,27 @@ import { AppLayout } from '@/components/layout';
 import LoginPage from './routes/auth/LoginPage';
 import { ProtectedRoute } from '@/modules/auth/components';
 import { CustomersPage } from './routes/app/CustomersPage';
+import RegisterPage from './routes/auth/RegisterPage';
 
 const router = createBrowserRouter([
   {
-    path: paths.auth.root.path,
     element: <AuthLayout />,
     children: [
       {
         path: paths.auth.login.path,
         element: <LoginPage />,
       },
-      // {
-      //   path: paths.auth.register.path,
-      //   element: <Register />,
-      // },
+      {
+        path: paths.auth.register.path,
+        element: <RegisterPage />,
+      },
     ],
   },
 
   {
-    path: paths.app.root.path,
     element: (
       <ProtectedRoute>
-        <AppLayout />
+        <Outlet />
       </ProtectedRoute>
     ),
     children: [
