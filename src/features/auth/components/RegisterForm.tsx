@@ -1,28 +1,29 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { AxiosError } from 'axios';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
+import { Button } from '@/components/ui/Button';
+import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form/Form';
-import {
-  ConfirmPasswordInput,
-  EmailInput,
-  FirstNameInput,
-  LastNameInput,
-  PasswordInput,
-  TenantNameInput,
-} from '@/components/ui/Form/FormFields';
-import { Logo } from '@/components/ui/Logo';
-import { Button } from '@/components/ui/OldButton';
 import { paths } from '@/config/paths';
+import { FORM_FIELDS } from '@/constants/form-fields';
 import { getRegisterFormSchema } from '@/features/auth/schemas/auth.schema';
+import { useRegister } from '@/lib/auth';
 
-type Props = {
-  onSubmit: (values: any) => Promise<void> | void;
+type FormValues = {
+  tenantName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 };
 
-export const RegisterForm = ({ onSubmit }: Props) => {
-  const { t } = useTranslation();
-
+export const RegisterForm = () => {
+  const { t } = useTranslation(['auth', 'errors']);
+  const navigate = useNavigate();
   const schema = getRegisterFormSchema(t);
 
   const methods = useForm({
@@ -38,32 +39,59 @@ export const RegisterForm = ({ onSubmit }: Props) => {
     mode: 'onSubmit',
   });
 
-  return (
-    <div className=" bg-base-200 shadow rounded-lg px-6 py-12  max-w-lg w-full">
-      <div className="flex items-center justify-center mb-6">
-        <Logo />
-      </div>
-      <Form
-        methods={methods}
-        onSubmit={onSubmit}
-      >
-        <TenantNameInput />
-        <FirstNameInput />
-        <LastNameInput />
-        <EmailInput />
-        <PasswordInput />
-        <ConfirmPasswordInput />
-        <Button
-          type="submit"
-          className="w-full mt-6 "
-        >
-          {t('auth:register')}
-        </Button>
+  const registerMutation = useRegister({
+    onSuccess: () => {
+      navigate(paths.auth.login.path);
+      toast.success(t('registerSuccess'));
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError && error.response?.data?.errorKey) {
+        toast.error(t(error?.response?.data.errorKey, { ns: 'errors' }));
+      }
+    },
+  });
 
-        <div className="text-sm space-y-2 text-center pt-6">
-          <Link to={paths.auth.login.path}>{t('auth:backToLogin')}</Link>
-        </div>
-      </Form>
-    </div>
+  const handleSubmit: SubmitHandler<FormValues> = (data) => {
+    registerMutation.mutate({
+      tenantName: data.tenantName,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+    });
+  };
+
+  const fields = [
+    FORM_FIELDS.tenantName,
+    FORM_FIELDS.firstName,
+    FORM_FIELDS.lastName,
+    FORM_FIELDS.email,
+    FORM_FIELDS.password,
+    FORM_FIELDS.confirmPassword,
+  ];
+
+  return (
+    <Form
+      methods={methods}
+      onSubmit={handleSubmit}
+    >
+      {fields.map((field) => (
+        <ControlledTextInput
+          key={field.name}
+          name={field.name}
+          type={field.type}
+          label={t(field.labelKey)}
+          placeholder={t(field.placeholderKey)}
+          withAsterisk
+        />
+      ))}
+      <Button
+        type="submit"
+        fullWidth
+      >
+        {t('register.submit')}
+      </Button>
+    </Form>
   );
 };

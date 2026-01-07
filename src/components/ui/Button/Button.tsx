@@ -2,7 +2,7 @@ import { Button as $Button, ButtonProps as $ButtonProps, ElementProps } from '@m
 
 interface ButtonProps extends $ButtonProps, ElementProps<'button', keyof $ButtonProps> {}
 
-export const Button = ({ ...props }: ButtonProps) => {
+export const Button = ({ children, ...props }: ButtonProps) => {
   return (
     <$Button
       variant="filled"
@@ -10,7 +10,7 @@ export const Button = ({ ...props }: ButtonProps) => {
       radius="xl"
       {...props}
     >
-      Button
+      {children}
     </$Button>
   );
 };
