@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { Button } from '@/components/ui/Button';
 import { Form } from '@/components/ui/Form/Form';
 import {
   ConfirmPasswordInput,
@@ -13,6 +12,7 @@ import {
   TenantNameInput,
 } from '@/components/ui/Form/FormFields';
 import { Logo } from '@/components/ui/Logo';
+import { Button } from '@/components/ui/OldButton';
 import { paths } from '@/config/paths';
 import { getRegisterFormSchema } from '@/features/auth/schemas/auth.schema';
 

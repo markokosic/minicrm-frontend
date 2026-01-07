@@ -34,7 +34,7 @@ export const LanguagePicker = () => {
     <Menu
       onOpen={() => setOpened(true)}
       onClose={() => setOpened(false)}
-      radius="md"
+      radius="lg"
       width="target"
       withinPortal
     >

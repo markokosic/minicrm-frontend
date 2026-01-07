@@ -4,14 +4,12 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import { Box, Center, Container, Space, Text, Title } from '@mantine/core';
 import { CustomTrans } from '@/components/translation/CustomTrans';
 import { Button } from '@/components/ui/Button';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form/Form';
-// import { loginFormSchema } from '@/validation/authSchema';
-import { EmailInput, PasswordInput } from '@/components/ui/Form/FormFields';
 import { Link } from '@/components/ui/Link';
-import { Logo } from '@/components/ui/Logo';
 import { paths } from '@/config/paths';
 import { FORM_FIELDS } from '@/constants/form-fields';
 import { getLoginFormSchema } from '@/features/auth/schemas/auth.schema';
@@ -58,10 +56,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className=" bg-base-200 shadow rounded-lg px-6 py-12  max-w-lg w-full">
-      <div className="flex items-center justify-center mb-6">
-        <Logo />
-      </div>
+    <div className=" ">
       <Form
         methods={methods}
         onSubmit={handleSubmit}
@@ -72,11 +67,16 @@ export const LoginForm = () => {
           placeholder={t(FORM_FIELDS.email.placeholderKey)}
           type={FORM_FIELDS.email.type}
         />
-        <PasswordInput />
+        <ControlledTextInput
+          name={FORM_FIELDS.password.name}
+          label={t(FORM_FIELDS.password.labelKey)}
+          placeholder={t(FORM_FIELDS.password.placeholderKey)}
+          type={FORM_FIELDS.password.type}
+        />
 
         <Button
           type="submit"
-          className="w-full mt-6 "
+          fullWidth
         >
           {t('login')}
         </Button>
