@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { Center, Stack, Text, Title } from '@mantine/core';
-import { CustomTrans } from '@/components/translation/CustomTrans';
+import { Anchor, Center, Flex, Stack, Text, Title } from '@mantine/core';
+import { paths } from '@/config/paths';
 import { LoginForm } from '@/features/auth/components';
 
 const LoginPage = () => {
@@ -21,26 +21,39 @@ const LoginPage = () => {
         </Stack>
       </Center>
       <LoginForm />
-      <div className="text-sm space-y-2 text-center pt-6">
-        {/*  
-          //TODO Refactor tailwind to mantine
-          */}
-        <p>
-          <CustomTrans
-            i18nKey="login.no-account-hint"
-            ns="auth"
+
+      <Flex
+        pt="xl"
+        justify="center"
+        align="center"
+        direction="column"
+        gap="xs"
+      >
+        <Text
+          c="dimmed"
+          size="sm"
+        >
+          {t('login.no-account-hint')}{' '}
+          <Text
+            td="underline"
+            fw={700}
+            component={Link}
+            to={paths.auth.register.path}
           >
-            Du hast kein Konto?{' '}
-            <Link
-              to="/register"
-              className="font-bold underline"
-            >
-              {t('register.link-text')}
-            </Link>
-          </CustomTrans>
-        </p>
-        <Link to="/reset-password">{t('login.forgot-password')}</Link>
-      </div>
+            {t('register.link-text')}
+          </Text>
+        </Text>
+
+        <Text
+          component={Link}
+          td="underline"
+          c="dimmed"
+          size="sm"
+          to={paths.auth.resetPassword.path}
+        >
+          {t('login.forgot-password')}
+        </Text>
+      </Flex>
     </>
   );
 };

@@ -12,6 +12,9 @@ export const paths = {
       path: '/login',
       getHref: () => '/login',
     },
+    resetPassword: {
+      path: '/reset-password',
+    },
   },
 
   app: {
