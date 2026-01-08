@@ -33,14 +33,14 @@ const LoginPage = () => {
           c="dimmed"
           size="sm"
         >
-          {t('login.no-account-hint')}{' '}
+          {t('login.noAccountHint')}{' '}
           <Text
             td="underline"
             fw={700}
             component={Link}
             to={paths.auth.register.path}
           >
-            {t('register.link-text')}
+            {t('register.linkCta')}
           </Text>
         </Text>
 
@@ -51,7 +51,7 @@ const LoginPage = () => {
           size="sm"
           to={paths.auth.resetPassword.path}
         >
-          {t('login.forgot-password')}
+          {t('login.forgotPassword')}
         </Text>
       </Flex>
     </>

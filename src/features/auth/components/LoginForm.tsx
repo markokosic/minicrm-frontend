@@ -23,7 +23,7 @@ export const LoginForm = () => {
 
   const loginMutation = useLogin({
     onSuccess: () => {
-      toast.success(t('loginSuccess'));
+      toast.success(t('login.success'));
       navigate(paths.app.dashboard.getHref());
     },
     onError: (error) => {
