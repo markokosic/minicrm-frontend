@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
-import { Form } from '@/components/ui/Form/Form';
-import { paths } from '@/config/paths';
+import { Form } from '@/components/ui/Form';
+import { routes } from '@/config/routes';
 import { FORM_FIELDS } from '@/constants/form-fields';
 import { getRegisterFormSchema } from '@/features/auth/schemas/auth.schema';
 import { useRegister } from '@/lib/auth';
@@ -41,7 +41,7 @@ export const RegisterForm = () => {
 
   const registerMutation = useRegister({
     onSuccess: () => {
-      navigate(paths.auth.login.path);
+      navigate(routes.auth.login.path);
       toast.success(t('registerSuccess'));
     },
     onError: (error) => {
@@ -87,6 +87,7 @@ export const RegisterForm = () => {
         />
       ))}
       <Button
+        mt="xs"
         type="submit"
         fullWidth
       >

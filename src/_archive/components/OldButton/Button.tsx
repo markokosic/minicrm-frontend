@@ -1,8 +1,8 @@
-import { Spinner } from '@/components/ui/Spinner';
-import { focusStyle } from '@/lib/styles';
-import { cn } from '@/lib/utils';
 import React, { ButtonHTMLAttributes } from 'react';
 import { tv } from 'tailwind-variants';
+import { Spinner } from '@/_archive/components/Spinner';
+import { focusStyle } from '@/lib/styles';
+import { cn } from '@/lib/utils';
 
 type ButtonVariant = 'default' | 'ghost' | 'secondary';
 type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';

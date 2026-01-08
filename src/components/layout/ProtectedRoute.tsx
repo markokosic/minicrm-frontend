@@ -1,8 +1,8 @@
-import { paths } from '@/config/paths';
-import { useUser } from '@/lib/auth';
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router';
 import { AppLayout } from '@/components/layout';
+import { routes } from '@/config/routes';
+import { useUser } from '@/lib/auth';
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { data: user, status } = useUser();
@@ -10,7 +10,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   if (status === 'error') {
     return (
       <Navigate
-        to={paths.auth.login.path}
+        to={routes.auth.login.path}
         replace
       />
     );

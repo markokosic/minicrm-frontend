@@ -1,7 +1,10 @@
 {
-  "dashboard": "Dashboard",
-  "customers": "Customers",
-  "offers": "Offers",
-  "billing": "Billing",
-  "orders": "Orders"
+  "navigation": {
+    "dashboard": "Dashboard",
+    "customers": "Customers",
+    "offers": "Offers",
+    "billing": "Billing",
+    "orders": "Orders",
+    "settings": "Settings"
+  }
 }

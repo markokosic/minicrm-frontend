@@ -1,7 +1,7 @@
 import React from 'react';
-import { Input as BasicInput } from '@/components/ui/Input';
-import { FieldWrapper } from '@/components/ui/Form/FieldWrapper';
 import { useController, UseControllerProps, useFormContext } from 'react-hook-form';
+import { Input as BasicInput } from '@/_archive/components/Input';
+import { FieldWrapper } from '@/components/ui/Form/FieldWrapper';
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
   UseControllerProps & {

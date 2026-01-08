@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { Center, Stack, Text, Title } from '@mantine/core';
 import { Button } from '@/components/ui/Button';
-import { paths } from '@/config/paths';
+import { routes } from '@/config/routes';
 import { RegisterForm } from '@/features/auth/components/RegisterForm';
 
 const RegisterPage = () => {
@@ -34,7 +34,7 @@ const RegisterPage = () => {
             fullWidth
             variant="outline"
           >
-            <Link to={paths.auth.login.path}>{t('login.title')}</Link>
+            <Link to={routes.auth.login.path}>{t('login.title')}</Link>
           </Button>
         </Stack>
       </Center>

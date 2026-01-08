@@ -1,4 +1,4 @@
-export const paths = {
+export const routes = {
   auth: {
     root: {
       path: '/',
@@ -23,7 +23,7 @@ export const paths = {
       getHref: () => '/',
     },
     dashboard: {
-      path: '',
+      path: '/',
       getHref: () => '/',
     },
     customers: {
@@ -41,6 +41,10 @@ export const paths = {
     billing: {
       path: 'billing',
       getHref: () => '/billing',
+    },
+    settings: {
+      path: 'settings',
+      getHref: () => '/settings',
     },
   },
 } as const;

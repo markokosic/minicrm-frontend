@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
-import { Form } from '@/components/ui/Form/Form';
-import { paths } from '@/config/paths';
+import { Form } from '@/components/ui/Form';
+import { routes } from '@/config/routes';
 import { FORM_FIELDS } from '@/constants/form-fields';
 import { getLoginFormSchema } from '@/features/auth/schemas/auth.schema';
 import { useLogin } from '@/lib/auth';
@@ -24,7 +24,7 @@ export const LoginForm = () => {
   const loginMutation = useLogin({
     onSuccess: () => {
       toast.success(t('login.success'));
-      navigate(paths.app.dashboard.getHref());
+      navigate(routes.app.dashboard.getHref());
     },
     onError: (error) => {
       if (error instanceof AxiosError && error.response?.data?.errorKey) {
@@ -64,6 +64,7 @@ export const LoginForm = () => {
       <Button
         type="submit"
         fullWidth
+        mt="xs"
       >
         {t('login.submit')}
       </Button>
