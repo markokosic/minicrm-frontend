@@ -7,27 +7,38 @@ type Address = {
   country: string;
 };
 
-type CustomerBase<T> = {
-  customerTypeId: number;
-  customer: T;
-  addresses: Address[];
-};
+export enum CustomerType {
+  BUSINESS = 'BUSINESS',
+  CONSUMER = 'CONSUMER',
+}
 
-type PrivateCustomer = {
+interface CustomerBase {
+  id: number;
+  type: CustomerType;
+  tenantId: number;
+}
+
+interface Consumer {
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
-};
+}
 
-type CompanyCustomer = {
-  name: string;
+interface Company {
+  companyName: string;
   vat: string;
   email: string;
   phone: string;
   website: string;
-};
+}
 
-export type PersonData = CustomerBase<PrivateCustomer>;
+export interface ConsumerCustomer extends CustomerBase, Consumer {
+  type: CustomerType.CONSUMER;
+}
 
-export type CompanyData = CustomerBase<CompanyCustomer>;
+export interface BusinessCustomer extends CustomerBase, Company {
+  type: CustomerType.BUSINESS;
+}
+
+export type Customer = ConsumerCustomer | BusinessCustomer;

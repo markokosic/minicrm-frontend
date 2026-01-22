@@ -1,12 +1,19 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { getCompanies } from '../api/customersApi';
+import { getCustomers } from '../api/customersApi';
+import { Customer } from '../types/customersTypes';
 
-type useGetCustomersOptions = Omit<UseQueryOptions<any[], Error>, 'queryKey' | 'queryFn'>;
+type useGetCustomersOptions = Omit<UseQueryOptions<Customer[], Error>, 'queryKey' | 'queryFn'>;
 
-export function useGetCustomers({ ...options }: any = {}) {
-  return useQuery<any[], Error>({
-    queryKey: ['companies'],
-    queryFn: getCompanies,
+export function useGetCustomers(options: useGetCustomersOptions = {}) {
+  return useQuery<Customer[], Error>({
+    queryKey: ['customers'],
+    queryFn: async () => {
+      const resp = await getCustomers();
+      if (!resp.success) {
+        throw new Error(resp.message);
+      }
+      return resp.data;
+    },
     ...options,
   });
 }
