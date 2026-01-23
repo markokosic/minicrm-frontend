@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { Anchor, Center, Flex, Stack, Text, Title } from '@mantine/core';
-import { routes } from '@/config/routes';
+import { ROUTES } from '@/config/routes';
 import { LoginForm } from '@/features/auth/components';
 
 const LoginPage = () => {
@@ -38,7 +38,7 @@ const LoginPage = () => {
             td="underline"
             fw={700}
             component={Link}
-            to={routes.auth.register.path}
+            to={ROUTES.auth.register.path}
           >
             {t('register.linkCta')}
           </Text>
@@ -49,7 +49,7 @@ const LoginPage = () => {
           td="underline"
           c="dimmed"
           size="sm"
-          to={routes.auth.resetPassword.path}
+          to={ROUTES.auth.resetPassword.path}
         >
           {t('login.forgotPassword')}
         </Text>

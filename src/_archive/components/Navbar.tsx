@@ -2,15 +2,15 @@ import { DollarSign, File, House, LogOut, LucideWorkflow, PersonStanding } from 
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router';
-import { routes } from '@/config/routes';
+import { ROUTES } from '@/config/routes';
 import { useLogout } from '@/lib/auth';
 
 const data = [
-  { id: 0, link: routes.app.dashboard.getHref(), labelKey: 'dashboard', icon: <House /> },
-  { id: 1, link: routes.app.customers.getHref(), labelKey: 'customers', icon: <PersonStanding /> },
-  { id: 2, link: routes.app.offers.getHref(), labelKey: 'offers', icon: <File /> },
-  { id: 3, link: routes.app.orders.getHref(), labelKey: 'orders', icon: <LucideWorkflow /> },
-  { id: 4, link: routes.app.billing.getHref(), labelKey: 'billing', icon: <DollarSign /> },
+  { id: 0, link: ROUTES.app.dashboard.getHref(), labelKey: 'dashboard', icon: <House /> },
+  { id: 1, link: ROUTES.app.customers.getHref(), labelKey: 'customers', icon: <PersonStanding /> },
+  { id: 2, link: ROUTES.app.offers.getHref(), labelKey: 'offers', icon: <File /> },
+  { id: 3, link: ROUTES.app.orders.getHref(), labelKey: 'orders', icon: <LucideWorkflow /> },
+  { id: 4, link: ROUTES.app.billing.getHref(), labelKey: 'billing', icon: <DollarSign /> },
 ];
 
 type NavbarProps = {
@@ -24,7 +24,7 @@ const Navbar = ({ toggle }: NavbarProps) => {
   const navigate = useNavigate();
   const logoutMutation = useLogout({
     onSuccess: () => {
-      navigate(routes.auth.login.path);
+      navigate(ROUTES.auth.login.path);
     },
     onError: (error) => {
       const errorMessage =

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
-import { routes } from '@/config/routes';
+import { ROUTES } from '@/config/routes';
 import { FORM_FIELDS } from '@/constants/form-fields';
 import { getRegisterFormSchema } from '@/features/auth/schemas/auth.schema';
 import { useRegister } from '@/lib/auth';
@@ -41,7 +41,7 @@ export const RegisterForm = () => {
 
   const registerMutation = useRegister({
     onSuccess: () => {
-      navigate(routes.auth.login.path);
+      navigate(ROUTES.auth.login.path);
       toast.success(t('registerSuccess'));
     },
     onError: (error) => {

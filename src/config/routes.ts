@@ -1,4 +1,4 @@
-export const routes = {
+export const ROUTES = {
   auth: {
     root: {
       path: '/',
@@ -27,23 +27,27 @@ export const routes = {
       getHref: () => '/',
     },
     customers: {
-      path: 'customers',
+      path: '/customers',
       getHref: () => '/customers',
+      detail: {
+        path: '/customers/:customerId',
+        getHref: (customerId: number | string) => `/customers/${customerId}`,
+      },
     },
     offers: {
-      path: 'offers',
+      path: '/offers',
       getHref: () => '/offers',
     },
     orders: {
-      path: 'orders',
+      path: '/orders',
       getHref: () => '/orders',
     },
     billing: {
-      path: 'billing',
+      path: '/billing',
       getHref: () => '/billing',
     },
     settings: {
-      path: 'settings',
+      path: '/settings',
       getHref: () => '/settings',
     },
   },

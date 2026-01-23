@@ -7,7 +7,7 @@ import {
   PersonStanding,
   Settings,
 } from 'lucide-react';
-import { routes } from './routes';
+import { ROUTES } from './routes';
 
 export interface NavItem {
   id: string | number;
@@ -22,36 +22,36 @@ export const NAV_ITEMS: Record<string, NavItem[]> = {
   general: [
     {
       id: 0,
-      href: routes.app.dashboard.getHref(),
-      path: routes.app.dashboard.path,
+      href: ROUTES.app.dashboard.getHref(),
+      path: ROUTES.app.dashboard.path,
       labelKey: 'navigation.dashboard',
       icon: House,
     },
     {
       id: 1,
-      href: routes.app.customers.getHref(),
-      path: routes.app.customers.path,
+      href: ROUTES.app.customers.getHref(),
+      path: ROUTES.app.customers.path,
       labelKey: 'navigation.customers',
       icon: PersonStanding,
     },
     {
       id: 2,
-      href: routes.app.offers.getHref(),
-      path: routes.app.offers.path,
+      href: ROUTES.app.offers.getHref(),
+      path: ROUTES.app.offers.path,
       labelKey: 'navigation.offers',
       icon: File,
     },
     {
       id: 3,
-      href: routes.app.orders.getHref(),
-      path: routes.app.orders.path,
+      href: ROUTES.app.orders.getHref(),
+      path: ROUTES.app.orders.path,
       labelKey: 'navigation.orders',
       icon: LucideWorkflow,
     },
     {
       id: 4,
-      href: routes.app.billing.getHref(),
-      path: routes.app.billing.path,
+      href: ROUTES.app.billing.getHref(),
+      path: ROUTES.app.billing.path,
       labelKey: 'navigation.billing',
       icon: DollarSign,
     },
@@ -59,8 +59,8 @@ export const NAV_ITEMS: Record<string, NavItem[]> = {
   support: [
     {
       id: 5,
-      href: routes.app.settings.getHref(),
-      path: routes.app.settings.path,
+      href: ROUTES.app.settings.getHref(),
+      path: ROUTES.app.settings.path,
       labelKey: 'navigation.settings',
       icon: Settings,
     },

@@ -14,7 +14,11 @@ export const getCustomers = async (): Promise<ApiResponse<Customer[]>> => {
   return await api.get(`/customers`);
 };
 
-export const getCustomer = async ({ customerId }: { customerId: number }) => {
+export const getCustomer = async ({
+  customerId,
+}: {
+  customerId: number | string;
+}): Promise<ApiResponse<Customer>> => {
   return await api.get(`/customers/${customerId}`);
 };
 

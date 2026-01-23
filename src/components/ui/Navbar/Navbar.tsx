@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink as $NavLink, useLocation, useNavigate } from 'react-router';
 import { Box, Button, Divider, Menu, NavLink, Text } from '@mantine/core';
 import { NAV_ITEMS, NavItem } from '@/config/navigation';
-import { routes } from '@/config/routes';
+import { ROUTES } from '@/config/routes';
 import { useLogout } from '@/lib/auth';
 
 export const NavBar = () => {
@@ -13,7 +13,7 @@ export const NavBar = () => {
   const navigate = useNavigate();
   const logoutMutation = useLogout({
     onSuccess: () => {
-      navigate(routes.auth.login.path);
+      navigate(ROUTES.auth.login.path);
     },
     onError: (error) => {
       const errorMessage =

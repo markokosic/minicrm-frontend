@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
-import { routes } from '@/config/routes';
+import { ROUTES } from '@/config/routes';
 import { FORM_FIELDS } from '@/constants/form-fields';
 import { getLoginFormSchema } from '@/features/auth/schemas/auth.schema';
 import { useLogin } from '@/lib/auth';
@@ -24,7 +24,7 @@ export const LoginForm = () => {
   const loginMutation = useLogin({
     onSuccess: () => {
       toast.success(t('login.success'));
-      navigate(routes.app.dashboard.getHref());
+      navigate(ROUTES.app.dashboard.getHref());
     },
     onError: (error) => {
       if (error instanceof AxiosError && error.response?.data?.errorKey) {
