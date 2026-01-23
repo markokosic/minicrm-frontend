@@ -1,0 +1,43 @@
+import { useController, type FieldValues, type UseControllerProps } from 'react-hook-form';
+import { TextInput as $TextInput, type TextInputProps as $TextInputProps } from '@mantine/core';
+import classes from './ControlledTextInput.module.css';
+
+type TextInputProps<T extends FieldValues> = UseControllerProps<T> &
+  Omit<$TextInputProps, 'value' | 'defaultValue'>;
+
+export const ControlledTextInput = <T extends FieldValues>({
+  name,
+  control,
+  defaultValue,
+  rules,
+  shouldUnregister,
+  onChange,
+  ...props
+}: TextInputProps<T>) => {
+  const {
+    field: { value, onChange: fieldOnChange, ...field },
+    fieldState,
+  } = useController<T>({
+    name,
+    control,
+    defaultValue,
+    rules,
+    shouldUnregister,
+  });
+
+  return (
+    <$TextInput
+      {...field}
+      {...props}
+      value={value}
+      size="md"
+      radius="xl"
+      onChange={(e) => {
+        fieldOnChange(e);
+        onChange?.(e);
+      }}
+      error={fieldState.error?.message}
+      classNames={{ label: classes.label }}
+    />
+  );
+};

@@ -1,15 +1,13 @@
-import { getUser } from '@/lib/auth';
-import { useGetCustomers } from '@/modules/customers/hooks/useGetCustomers';
 import { useTranslation } from 'react-i18next';
+import { PageLayout } from '@/components/layout/PageLayout';
+import { CustomersList } from '@/features/customers/components/CustomersList';
 
 export const CustomersPage = () => {
   const { t } = useTranslation('common');
-  const { data } = useGetCustomers();
-  getUser();
 
   return (
-    <>
-      <title>{t('customers')}</title>
-    </>
+    <PageLayout title={t('navigation.customers')}>
+      <CustomersList />
+    </PageLayout>
   );
 };

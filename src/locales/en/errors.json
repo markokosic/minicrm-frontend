@@ -1,23 +1,28 @@
 {
-  "validation": {
-    "required_field": "This field is required",
-    "too_long_general": "The input is too long",
-    "password_mismatch": "Passwords do not match",
+  "required_field": "This field is required.",
+  "too_long_general": "The entered value is too long.",
+  "password_mismatch": "The passwords do not match.",
 
-    "email": {
-      "invalid": "This is not a valid email address",
-      "required": "Email address is required",
-      "too_long": "Email address is too long"
-    },
+  "email": {
+    "invalid": "Please enter a valid email address.",
+    "duplicate": "Email is already in use",
+    "required": "An email address is required.",
+    "too_long": "The email address is too long."
+  },
 
-    "password": {
-      "min_length": "Password must contain at least 8 characters",
-      "max_length": "Password must contain less than 72 characters"
-    },
+  "password": {
+    "min_length": "The password must contain at least 8 characters.",
+    "max_length": "The password must contain no more than 72 characters."
+  },
 
+  "name": {
+    "required": "A name is required.",
+    "too_long": "The name is too long."
+  },
+
+  "tenant": {
     "name": {
-      "required": "This field is required",
-      "too_long": "Name is too long"
+      "duplicate": "Tenant name is already in use"
     }
   }
 }

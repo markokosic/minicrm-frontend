@@ -1,25 +1,33 @@
-import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 import { FieldValues, FormProvider, SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { Box, BoxProps, ElementProps, Stack } from '@mantine/core';
 
-type FormProps<T extends FieldValues> = {
+interface FormProps<T extends FieldValues> extends BoxProps, ElementProps<'form', 'onSubmit'> {
   onSubmit: SubmitHandler<T>;
-  className?: string;
   children: ReactNode;
   methods: UseFormReturn<T>;
   id?: string;
-};
+  gap?: number | string;
+}
 
-const Form = <T extends FieldValues>({ children, className, id, onSubmit, methods }: FormProps<T>) => {
+const Form = <T extends FieldValues>({
+  children,
+  id,
+  onSubmit,
+  methods,
+  gap = 'md',
+  ...others
+}: FormProps<T>) => {
   return (
     <FormProvider {...methods}>
-      <form
-        className={cn('  space-y-4', className)}
+      <Box
+        component="form"
         onSubmit={methods.handleSubmit(onSubmit)}
         id={id}
+        {...others}
       >
-        {children}
-      </form>
+        <Stack gap={gap}>{children}</Stack>
+      </Box>
     </FormProvider>
   );
 };
