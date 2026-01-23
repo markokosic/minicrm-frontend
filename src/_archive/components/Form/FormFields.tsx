@@ -1,4 +1,3 @@
-import { useWatch, Watch } from 'react-hook-form';
 import { createInputWrapper } from './FormInputFactory';
 
 export const EmailInput = createInputWrapper({

@@ -1,6 +1,6 @@
 import { Building2 } from 'lucide-react';
 import { Avatar, Badge, Group, Text } from '@mantine/core';
-import { BusinessCustomer } from '../../types/customersTypes';
+import { BusinessCustomer } from '../../types/customers-types';
 
 interface BusinessCustomerCardProps {
   customer: BusinessCustomer;

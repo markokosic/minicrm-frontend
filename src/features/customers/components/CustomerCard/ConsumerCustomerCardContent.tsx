@@ -1,6 +1,6 @@
 import { CircleUser, Mail, Phone } from 'lucide-react';
 import { Anchor, Avatar, Group, Stack, Text } from '@mantine/core';
-import { ConsumerCustomer } from '../../types/customersTypes';
+import { ConsumerCustomer } from '../../types/customers-types';
 
 interface ConsumerCustomerCardProps {
   customer: ConsumerCustomer;

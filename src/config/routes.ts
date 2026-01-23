@@ -33,6 +33,14 @@ export const ROUTES = {
         path: '/customers/:customerId',
         getHref: (customerId: number | string) => `/customers/${customerId}`,
       },
+      add: {
+        path: '/customers/new',
+        getHref: () => '/customers/new',
+      },
+      edit: {
+        path: '/customers/:customerId/edit',
+        getHref: (customerId: number | string) => `/customers/${customerId}/edit`,
+      },
     },
     offers: {
       path: '/offers',

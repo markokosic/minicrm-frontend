@@ -1,5 +1,5 @@
 import { getAuthUser, login, logout, register } from '@/features/auth/api/auth.api';
-import { AuthCredentialsPayload, RegisterTenantPayload } from '@/features/auth/types/auth.types';
+import { AuthCredentialsPayload, RegisterTenantPayload } from '@/features/auth/types/auth-types';
 import { configureAuth } from '@/features/auth/utils/configureAuth';
 
 export const getUser = async () => {

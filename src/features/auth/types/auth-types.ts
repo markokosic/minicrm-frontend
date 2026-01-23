@@ -1,5 +1,5 @@
 import z from 'zod';
-import { getLoginFormSchema, getRegisterFormSchema } from '@/features/auth/schemas/auth.schema';
+import { getLoginFormSchema, getRegisterFormSchema } from '@/features/auth/schemas/auth-schema';
 
 export type LoginResponseData = {
   user: User;

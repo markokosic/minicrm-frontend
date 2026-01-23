@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { getCustomer } from '../api/customersApi';
-import { Customer } from '../types/customersTypes';
+import { Customer } from '../types/customers-types';
 
 interface UseGetCustomerParams {
   id: number | string;

@@ -4,7 +4,7 @@ import {
   ConsumerCustomer,
   Customer,
   CustomerType,
-} from '../../types/customersTypes';
+} from '../../types/customers-types';
 import { BusinessCustomerCardContent } from './BusinessCustomerCardContent';
 import { ConsumerCustomerCardContent } from './ConsumerCustomerCardContent';
 

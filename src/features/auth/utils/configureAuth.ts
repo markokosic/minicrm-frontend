@@ -9,7 +9,7 @@ import {
   useQueryClient,
   UseQueryOptions,
 } from '@tanstack/react-query';
-import { User } from '../types/auth.types';
+import { User } from '../types/auth-types';
 
 type AuthConfig<User, LoginCredentials, RegisterCredentials> = {
   userFn: QueryFunction<User, QueryKey>;

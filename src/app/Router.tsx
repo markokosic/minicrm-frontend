@@ -2,6 +2,8 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
 import { AuthLayout } from '@/components/layout/AuthLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { ROUTES } from '@/config/routes';
+import { CustomerAddPage } from './routes/app/CustomerAddPage';
+import { CustomerEditPage } from './routes/app/CustomerEditPage';
 import { CustomerPage } from './routes/app/CustomerPage';
 import { CustomersPage } from './routes/app/CustomersPage';
 import DashboardPage from './routes/app/DashboardPage';
@@ -31,10 +33,14 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <DashboardPage /> },
+      // CUSTOMER PAGES
       { path: ROUTES.app.customers.path, element: <CustomersPage /> },
       { path: ROUTES.app.customers.detail.path, element: <CustomerPage /> },
+      { path: ROUTES.app.customers.add.path, element: <CustomerAddPage /> },
+      { path: ROUTES.app.customers.edit.path, element: <CustomerEditPage /> },
+
+      // 404 NOT FOUND PAGE
       { path: '*', element: <div>Not found</div> },
-      // { path: 'about', element: <Test /> },
     ],
   },
 ]);

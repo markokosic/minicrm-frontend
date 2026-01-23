@@ -1,11 +1,11 @@
+import { ApiResponse, ApiSuccessResponse } from '@/common/types/api-types';
 import {
   AuthCredentialsPayload,
   LoginResponseData,
   RegisterTenantPayload,
   User,
-} from '@/features/auth/types/auth.types';
+} from '@/features/auth/types/auth-types';
 import { api } from '@/lib/apiClient';
-import { ApiResponse, ApiSuccessResponse } from '@/types/api.types';
 
 export const login = async (
   payload: AuthCredentialsPayload
