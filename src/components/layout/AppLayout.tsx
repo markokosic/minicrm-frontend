@@ -40,12 +40,12 @@ const AppLayout = ({ overlayVisible }: AppLayoutProps) => {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <LoadingOverlay
+        {/* <LoadingOverlay
           visible={overlayVisible}
           zIndex={1000}
           overlayProps={{ radius: 'sm', blur: 2 }}
           loaderProps={{ type: 'dots' }}
-        />
+        /> */}
         <Outlet />
       </AppShell.Main>
     </AppShell>

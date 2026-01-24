@@ -17,6 +17,7 @@ export function useGetCustomer({ id, options }: UseGetCustomerParams) {
       }
       return resp.data;
     },
+    enabled: !!id,
     ...options,
   });
 }

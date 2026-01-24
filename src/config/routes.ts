@@ -29,17 +29,17 @@ export const ROUTES = {
     customers: {
       path: '/customers',
       getHref: () => '/customers',
-      detail: {
+      view: {
         path: '/customers/:customerId',
         getHref: (customerId: number | string) => `/customers/${customerId}`,
-      },
-      add: {
-        path: '/customers/new',
-        getHref: () => '/customers/new',
       },
       edit: {
         path: '/customers/:customerId/edit',
         getHref: (customerId: number | string) => `/customers/${customerId}/edit`,
+      },
+      add: {
+        path: '/customers/new',
+        getHref: () => '/customers/new',
       },
     },
     offers: {

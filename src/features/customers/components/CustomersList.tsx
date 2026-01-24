@@ -1,34 +1,38 @@
 import { Flex, Group, Text } from '@mantine/core';
 import { AppLink } from '@/components/ui/AppLink';
+import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
 import { ROUTES } from '@/config/routes';
 import { useGetCustomers } from '../hooks/useGetCustomers';
 import { CustomerCard } from './CustomerCard/CustomerCard';
+import { CustomerCardSkeleton } from './CustomerCard/CustomerCardSkelleton';
 
 export const CustomersList = () => {
-  const { data } = useGetCustomers();
-
-  //todo loading state
-  if (!data || data.length === 0) {
-    return <Text>Lade Kunden...</Text>;
-  }
-
-  console.log(ROUTES.app.customers.path);
+  const { data, isLoading, error } = useGetCustomers();
 
   return (
     <>
-      <Flex
-        gap={24}
-        wrap="wrap"
+      <DataLoadingWrapper
+        isLoading={isLoading}
+        error={error}
+        isEmpty={data?.length === 0}
+        skeleton={<CustomerCardSkeleton />}
       >
-        {data.map((customer) => (
-          <AppLink to={`${ROUTES.app.customers.path}/${customer.id}`}>
-            <CustomerCard
-              key={customer.id}
-              customer={customer}
-            />
-          </AppLink>
-        ))}
-      </Flex>
+        {data && data?.length > 0 && (
+          <Flex
+            gap={24}
+            wrap="wrap"
+          >
+            {data.map((customer) => (
+              <AppLink
+                key={customer.id}
+                to={`${ROUTES.app.customers.path}/${customer.id}`}
+              >
+                <CustomerCard customer={customer} />
+              </AppLink>
+            ))}
+          </Flex>
+        )}
+      </DataLoadingWrapper>
     </>
   );
 };

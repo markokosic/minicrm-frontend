@@ -1,9 +1,9 @@
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { ActionIcon, Button } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { PageLayout } from '@/components/layout/PageLayout';
+import { Button, FloatingActionButton } from '@/components/ui/Button';
 import { ROUTES } from '@/config/routes';
 import { CustomersList } from '@/features/customers/components/CustomersList';
 
@@ -34,19 +34,9 @@ export const CustomersPage = () => {
       <CustomersList />
 
       {/* {isMobile && ( */}
-      <ActionIcon
-        size="xl"
-        radius="xl"
-        style={{
-          position: 'fixed',
-          bottom: 24,
-          right: 24,
-          zIndex: 1000,
-        }}
-        onClick={goToAddCustomer}
-      >
+      <FloatingActionButton onClick={goToAddCustomer}>
         <Plus size={24} />
-      </ActionIcon>
+      </FloatingActionButton>
       {/* )} */}
     </PageLayout>
   );

@@ -22,5 +22,26 @@
   "lastName": {
     "label": "Last name",
     "placeholder": "Enter your last name"
+  },
+  "companyName": {
+    "label": "Company name",
+    "placeholder": "Enter the company name"
+  },
+  "vat": {
+    "label": "VAT",
+    "placeholder": "Enter the vat"
+  },
+  "website": {
+    "label": "Website",
+    "placeholder": "Enter the URL"
+  },
+  "phone": {
+    "label": "Phone",
+    "placeholder": "Enter your phone number"
+  },
+
+  "groups": {
+    "general_information": "General Information",
+    "contact": "Contact"
   }
 }

@@ -1,11 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
 import { CUSTOMER_FORM_FIELDS } from '../../config/customers-form-fields';
 import { getBusinessCustomerSchema } from '../../schemas/customer-business-schema';
-import { BusinessCustomer } from '../../types/customers-types';
+import { BusinessCustomer, CustomerType } from '../../types/customers-types';
 
 interface BusinessCustomerFormProps {
   customer: BusinessCustomer;
@@ -23,28 +22,37 @@ export const BusinessCustomerFormContent = ({ customer }: BusinessCustomerFormPr
     },
   });
 
-  const fields = [
-    CUSTOMER_FORM_FIELDS.BUSINESS.companyName,
-    CUSTOMER_FORM_FIELDS.BUSINESS.vat,
-    CUSTOMER_FORM_FIELDS.common.phone,
-    CUSTOMER_FORM_FIELDS.common.email,
-    CUSTOMER_FORM_FIELDS.BUSINESS.website,
+  const BUSINESS_CUSTOMER_FORM_GROUPS = [
+    {
+      groupName: 'form:groups.general_information',
+      layout: { desktop: { columns: 2 }, mobile: { columns: 1 } },
+      fields: [
+        {
+          ...CUSTOMER_FORM_FIELDS[CustomerType.BUSINESS].companyName,
+          isDisabled: false,
+          allowedRoles: ['admin', 'mod'],
+        },
+        CUSTOMER_FORM_FIELDS[CustomerType.BUSINESS].vat,
+      ],
+    },
+    {
+      groupName: 'form:groups.contact',
+      layout: { desktop: { columns: 3 }, mobile: { columns: 1 } },
+      fields: [
+        CUSTOMER_FORM_FIELDS.common.email,
+        CUSTOMER_FORM_FIELDS.common.phone,
+        CUSTOMER_FORM_FIELDS[CustomerType.BUSINESS].website,
+      ],
+    },
   ];
+
+  console.log(BUSINESS_CUSTOMER_FORM_GROUPS);
 
   return (
     <Form
       methods={methods}
       onSubmit={() => null}
-    >
-      {fields.map((field) => (
-        <ControlledTextInput
-          key={field.name}
-          name={field.name}
-          type={field.type}
-          label={t(field.labelKey)}
-          placeholder={t(field.placeholderKey)}
-        />
-      ))}
-    </Form>
+      formFields={BUSINESS_CUSTOMER_FORM_GROUPS}
+    />
   );
 };

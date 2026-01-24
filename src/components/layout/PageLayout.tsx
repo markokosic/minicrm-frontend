@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
+import { MoveLeft } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
-import { Button, Container, Group, Title } from '@mantine/core';
+import { Group, Title } from '@mantine/core';
+import { Button } from '../ui/Button';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -31,13 +33,12 @@ export const PageLayout = ({
 
   return (
     <div>
+      <title>{title}</title>
       <Group
         justify="space-between"
         align="center"
         mb="md"
-        // noWrap
       >
-        {/* Linke Seite: Back-Button + Title */}
         <Group
           gap="sm"
           align="center"
@@ -45,16 +46,15 @@ export const PageLayout = ({
           {showBack && (
             <Button
               size="sm"
-              variant="outline"
+              variant="light"
               onClick={goBack}
             >
-              Zurück
+              <MoveLeft />
             </Button>
           )}
           <Title order={1}>{title}</Title>
         </Group>
 
-        {/* Rechte Seite: Actions */}
         <Group
           gap="sm"
           align="center"

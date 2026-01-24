@@ -3,7 +3,7 @@ import { TextInput as $TextInput, type TextInputProps as $TextInputProps } from 
 import classes from './ControlledTextInput.module.css';
 
 type TextInputProps<T extends FieldValues> = UseControllerProps<T> &
-  Omit<$TextInputProps, 'value' | 'defaultValue'>;
+  Omit<$TextInputProps, 'value' | 'defaultValue'> & {};
 
 export const ControlledTextInput = <T extends FieldValues>({
   name,
@@ -26,18 +26,20 @@ export const ControlledTextInput = <T extends FieldValues>({
   });
 
   return (
-    <$TextInput
-      {...field}
-      {...props}
-      value={value}
-      size="md"
-      radius="xl"
-      onChange={(e) => {
-        fieldOnChange(e);
-        onChange?.(e);
-      }}
-      error={fieldState.error?.message}
-      classNames={{ label: classes.label }}
-    />
+    <>
+      <$TextInput
+        {...field}
+        {...props}
+        value={value}
+        size="md"
+        radius="md"
+        onChange={(e) => {
+          fieldOnChange(e);
+          onChange?.(e);
+        }}
+        error={fieldState.error?.message}
+        classNames={{ label: classes.label }}
+      />
+    </>
   );
 };

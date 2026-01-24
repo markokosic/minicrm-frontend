@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Toaster } from 'react-hot-toast';
 import { MantineProvider } from '@mantine/core';
-import { MainErrorFallback } from '@/components/errors/main';
+import { MainErrorFallback } from '@/components/errors/MainErrorFallback';
 import { theme } from '@/config/theme';
 import queryClient from '@/lib/queryClient';
 
