@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router';
 import { AppLayout } from '@/components/layout';
-import { routes } from '@/config/routes';
+import { ROUTES } from '@/config/routes';
 import { useUser } from '@/lib/auth';
 
 export const ProtectedRoute = () => {
@@ -9,7 +9,7 @@ export const ProtectedRoute = () => {
   if (status === 'error') {
     return (
       <Navigate
-        to={routes.auth.login.path}
+        to={ROUTES.auth.login.path}
         replace
       />
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { User } from '../../types/auth.types';
+import { User } from '../../types/auth-types';
 import { configureAuth } from '../configureAuth';
 
 const mockUser: User = {

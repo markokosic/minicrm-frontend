@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
-import { routes } from '@/config/routes';
-import { FORM_FIELDS } from '@/constants/form-fields';
-import { getLoginFormSchema } from '@/features/auth/schemas/auth.schema';
+import { ROUTES } from '@/config/routes';
+import { getLoginFormSchema } from '@/features/auth/schemas/auth-schema';
 import { useLogin } from '@/lib/auth';
+import { AUTH_FORM_FIELDS } from '../config/auth-form-fields';
 
 type FormValues = {
   email: string;
@@ -24,7 +24,7 @@ export const LoginForm = () => {
   const loginMutation = useLogin({
     onSuccess: () => {
       toast.success(t('login.success'));
-      navigate(routes.app.dashboard.getHref());
+      navigate(ROUTES.app.dashboard.getHref());
     },
     onError: (error) => {
       if (error instanceof AxiosError && error.response?.data?.errorKey) {
@@ -45,7 +45,7 @@ export const LoginForm = () => {
     loginMutation.mutate({ email: data.email, password: data.password });
   };
 
-  const fields = [FORM_FIELDS.email, FORM_FIELDS.password];
+  const fields = [AUTH_FORM_FIELDS.email, AUTH_FORM_FIELDS.password];
 
   return (
     <Form

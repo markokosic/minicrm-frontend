@@ -24,5 +24,17 @@
     "name": {
       "duplicate": "Tenant name is already in use"
     }
+  },
+
+  "vat": {
+    "required": "VAT is required",
+    "too_long": "VAT is too long",
+    "invalid_format": "Format is wrong"
+  },
+
+  "phone": {
+    "required": "Phone number is required",
+    "too_long": "Phone number must not exceed 20 characters",
+    "invalid_format": "Phone number format is invalid"
   }
 }

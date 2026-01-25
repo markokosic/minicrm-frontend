@@ -6,6 +6,7 @@ interface AppLinkProps extends AnchorProps, Omit<LinkProps, 'color' | 'style' | 
 const AppLink = ({ to, children, ...props }: AppLinkProps) => {
   return (
     <Anchor
+      underline="never"
       component={Link}
       to={to}
       {...props}

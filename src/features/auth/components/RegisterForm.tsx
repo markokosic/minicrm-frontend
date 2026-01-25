@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/Button';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
-import { routes } from '@/config/routes';
-import { FORM_FIELDS } from '@/constants/form-fields';
-import { getRegisterFormSchema } from '@/features/auth/schemas/auth.schema';
+import { ROUTES } from '@/config/routes';
+import { getRegisterFormSchema } from '@/features/auth/schemas/auth-schema';
 import { useRegister } from '@/lib/auth';
+import { AUTH_FORM_FIELDS } from '../config/auth-form-fields';
 
 type FormValues = {
   tenantName: string;
@@ -41,7 +41,7 @@ export const RegisterForm = () => {
 
   const registerMutation = useRegister({
     onSuccess: () => {
-      navigate(routes.auth.login.path);
+      navigate(ROUTES.auth.login.path);
       toast.success(t('registerSuccess'));
     },
     onError: (error) => {
@@ -63,12 +63,12 @@ export const RegisterForm = () => {
   };
 
   const fields = [
-    FORM_FIELDS.tenantName,
-    FORM_FIELDS.firstName,
-    FORM_FIELDS.lastName,
-    FORM_FIELDS.email,
-    FORM_FIELDS.password,
-    FORM_FIELDS.confirmPassword,
+    AUTH_FORM_FIELDS.tenantName,
+    AUTH_FORM_FIELDS.firstName,
+    AUTH_FORM_FIELDS.lastName,
+    AUTH_FORM_FIELDS.email,
+    AUTH_FORM_FIELDS.password,
+    AUTH_FORM_FIELDS.confirmPassword,
   ];
 
   return (

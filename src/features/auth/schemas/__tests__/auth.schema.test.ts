@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next';
 import { describe, expect, it } from 'vitest';
-import { getRegisterFormSchema } from '@/features/auth/schemas/auth.schema';
+import { getRegisterFormSchema } from '@/features/auth/schemas/auth-schema';
 
 const mockT = (key: string) => key; // liefert Keys statt echter Texte
 

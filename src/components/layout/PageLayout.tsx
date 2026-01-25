@@ -1,16 +1,69 @@
 import { ReactNode } from 'react';
-import { Title } from '@mantine/core';
+import { MoveLeft } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router';
+import { Group, Title } from '@mantine/core';
+import { Button } from '../ui/Button';
 
 interface PageLayoutProps {
   children: ReactNode;
   title: string;
+  showBack?: boolean;
+  backFallback?: number;
+  actions?: ReactNode;
 }
 
-export const PageLayout = ({ children, title }: PageLayoutProps) => {
+export const PageLayout = ({
+  children,
+  title,
+  showBack = true,
+  backFallback = -1,
+  actions,
+}: PageLayoutProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const goBack = () => {
+    const previous = location.state?.from;
+    if (previous) {
+      navigate(previous);
+    } else {
+      navigate(backFallback);
+    }
+  };
+
   return (
-    <>
-      <Title order={1}>{title}</Title>
+    <div>
+      <title>{title}</title>
+      <Group
+        justify="space-between"
+        align="center"
+        mb="md"
+      >
+        <Group
+          gap="sm"
+          align="center"
+        >
+          {showBack && (
+            <Button
+              size="sm"
+              variant="light"
+              onClick={goBack}
+            >
+              <MoveLeft />
+            </Button>
+          )}
+          <Title order={1}>{title}</Title>
+        </Group>
+
+        <Group
+          gap="sm"
+          align="center"
+        >
+          {actions}
+        </Group>
+      </Group>
+
       {children}
-    </>
+    </div>
   );
 };

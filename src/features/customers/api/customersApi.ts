@@ -1,6 +1,6 @@
+import { ApiResponse } from '@/common/types/api-types';
 import { api } from '@/lib/apiClient';
-import { ApiResponse } from '@/types/api.types';
-import { Customer } from '../types/customersTypes';
+import { Customer } from '../types/customers-types';
 
 // export const createCompany = async (payload: CompanyData): Promise<LoginResponse> => {
 //   return await api.post('/customers', payload);
@@ -14,7 +14,11 @@ export const getCustomers = async (): Promise<ApiResponse<Customer[]>> => {
   return await api.get(`/customers`);
 };
 
-export const getCustomer = async ({ customerId }: { customerId: number }) => {
+export const getCustomer = async ({
+  customerId,
+}: {
+  customerId: number | string;
+}): Promise<ApiResponse<Customer>> => {
   return await api.get(`/customers/${customerId}`);
 };
 
