@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { getCustomer } from '../api/customersApi';
+import { getCustomer } from '../api/customers-api';
 import { Customer } from '../types/customers-types';
 
 interface UseGetCustomerParams {

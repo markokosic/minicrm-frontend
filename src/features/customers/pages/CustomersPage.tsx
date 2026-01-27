@@ -8,7 +8,7 @@ import { ROUTES } from '@/config/routes';
 import { CustomersList } from '@/features/customers/components/CustomersList';
 
 export const CustomersPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
@@ -21,13 +21,13 @@ export const CustomersPage = () => {
       leftSection={<Plus />}
       onClick={goToAddCustomer}
     >
-      Add Customer
+      {t('customers:actions.add_customer')}
     </Button>
   ) : null;
 
   return (
     <PageLayout
-      title={t('navigation.customers')}
+      title={t('common:navigation.customers')}
       showBack={false}
       actions={desktopActions}
     >

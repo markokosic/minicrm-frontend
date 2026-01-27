@@ -6,5 +6,9 @@
     "billing": "Billing",
     "orders": "Orders",
     "settings": "Settings"
+  },
+
+  "actions": {
+    "edit": "Edit"
   }
 }

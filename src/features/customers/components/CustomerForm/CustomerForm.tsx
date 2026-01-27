@@ -10,15 +10,22 @@ import { ConsumerCustomerFormContent } from './ConsumerCustomerFormContent';
 
 interface CustomerFormProps {
   customer: Customer;
+  isReadOnly: boolean;
 }
 
-export const CustomerForm = ({ customer }: CustomerFormProps) => {
+export const CustomerForm = ({ customer, isReadOnly }: CustomerFormProps) => {
   const contentMap = {
     [CustomerType.BUSINESS]: (
-      <BusinessCustomerFormContent customer={customer as BusinessCustomer} />
+      <BusinessCustomerFormContent
+        customer={customer as BusinessCustomer}
+        isReadOnly={isReadOnly}
+      />
     ),
     [CustomerType.CONSUMER]: (
-      <ConsumerCustomerFormContent customer={customer as ConsumerCustomer} />
+      <ConsumerCustomerFormContent
+        customer={customer as ConsumerCustomer}
+        isReadOnly={isReadOnly}
+      />
     ),
   };
 

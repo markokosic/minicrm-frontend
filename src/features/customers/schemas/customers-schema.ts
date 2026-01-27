@@ -6,14 +6,14 @@ import { CustomerType } from '../types/customers-types';
 export const getVatSchema = (t: TFunction) => {
   return z
     .string()
-    .min(1, t('errors:validation.vat.required'))
-    .max(20, t('errors:validation.vat.too_long'))
-    .regex(/^[A-Z0-9]+$/, t('errors:validation.vat.invalid_format'));
+    .min(1, t('errors:vat.required'))
+    .max(20, t('errors:vat.too_long'))
+    .regex(/^[A-Z0-9]+$/, t('errors:vat.invalid_format'));
 };
 
 export const getBaseCustomerSchema = () => {
   return z.object({
-    id: z.number(),
+    id: z.union([z.string(), z.number()]),
     type: z.enum(CustomerType),
     tenantId: z.number(),
   });
@@ -26,6 +26,7 @@ export const getBusinessCustomerSchema = (t: TFunction) => {
     vat: getVatSchema(t),
     email: getEmailSchema(t),
     phone: getPhoneSchema(t),
+    website: z.string(),
   });
 };
 

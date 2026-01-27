@@ -1,9 +1,25 @@
 import { useTranslation } from 'react-i18next';
 import { Paper, SimpleGrid, Stack, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+import { FieldConfig } from '@/common/types/common-types';
 import { ControlledTextInput } from '../ControlledTextInput/ControlledTextInput';
 
-export const FormRenderer = ({ formFields }: any) => {
+type FormRendererProps = {
+  formFields: FormFieldGroup[];
+};
+
+type FormFieldGroup = {
+  groupName?: string;
+  layout: { desktop: { columns: number }; mobile: { columns: number } };
+  fields: FormFieldConfigWithOptions[];
+};
+
+interface FormFieldConfigWithOptions extends FieldConfig {
+  isDisabled?: boolean;
+  allowedRoles?: string[]; //add enum later
+}
+
+export const FormRenderer = ({ formFields }: FormRendererProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
@@ -14,12 +30,14 @@ export const FormRenderer = ({ formFields }: any) => {
         gap="xs"
         p="xs"
       >
-        <Text
-          size="lg"
-          c="var(--mantine-primary-color-filled)"
-        >
-          {t(group.groupName)}
-        </Text>
+        {group.groupName && (
+          <Text
+            size="lg"
+            c="var(--mantine-primary-color-filled)"
+          >
+            {t(group.groupName)}
+          </Text>
+        )}
 
         <SimpleGrid cols={columns}>
           {group.fields.map((field: any) => {
@@ -30,6 +48,7 @@ export const FormRenderer = ({ formFields }: any) => {
                 type={field.type}
                 label={t(field.labelKey)}
                 placeholder={t(field.placeholderKey)}
+                readOnly={field.isDisabled}
               />
             );
           })}
@@ -38,16 +57,5 @@ export const FormRenderer = ({ formFields }: any) => {
     );
   });
 
-  return (
-    <>
-      <Paper
-        shadow="sm"
-        withBorder
-        radius="md"
-        p="lg"
-      >
-        <Stack gap="xl">{groups}</Stack>
-      </Paper>
-    </>
-  );
+  return <Stack gap="sm">{groups}</Stack>;
 };

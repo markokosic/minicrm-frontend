@@ -42,7 +42,7 @@ export const RegisterForm = () => {
   const registerMutation = useRegister({
     onSuccess: () => {
       navigate(ROUTES.auth.login.path);
-      toast.success(t('registerSuccess'));
+      toast.success(t('auth:register.success'));
     },
     onError: (error) => {
       if (error instanceof AxiosError && error.response?.data?.errorKey) {

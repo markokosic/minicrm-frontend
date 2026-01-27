@@ -11,9 +11,10 @@ export enum CustomerType {
   BUSINESS = 'BUSINESS',
   CONSUMER = 'CONSUMER',
 }
+export type CustomerId = string | number;
 
 interface CustomerBase {
-  id: number;
+  id: CustomerId;
   type: CustomerType;
   tenantId: number;
 }
