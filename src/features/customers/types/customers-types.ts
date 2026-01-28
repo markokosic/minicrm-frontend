@@ -11,12 +11,13 @@ export enum CustomerType {
   BUSINESS = 'BUSINESS',
   CONSUMER = 'CONSUMER',
 }
-export type CustomerId = string | number;
+export type CustomerId = number;
+export type TenantId = number;
 
 interface CustomerBase {
   id: CustomerId;
   type: CustomerType;
-  tenantId: number;
+  tenantId: TenantId;
 }
 
 interface Consumer {
@@ -43,3 +44,13 @@ export interface BusinessCustomer extends CustomerBase, Company {
 }
 
 export type Customer = ConsumerCustomer | BusinessCustomer;
+
+export type UpdateConsumerCustomer = Partial<
+  Pick<ConsumerCustomer, 'firstName' | 'lastName' | 'email' | 'phone'>
+>;
+
+export type UpdateBusinessCustomer = Partial<
+  Pick<BusinessCustomer, 'companyName' | 'vat' | 'email' | 'phone' | 'website'>
+>;
+
+export type UpdateCustomer = UpdateConsumerCustomer | UpdateBusinessCustomer;

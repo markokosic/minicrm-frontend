@@ -20,6 +20,6 @@ export const updateCustomer = async ({
 }: {
   customerId: CustomerId;
   payload: any;
-}) => {
+}): Promise<ApiResponse<Customer>> => {
   return await api.patch(`/customers/${customerId}`, payload);
 };

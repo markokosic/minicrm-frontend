@@ -15,7 +15,7 @@ type AppProviderProps = {
 };
 
 const AppProvider = ({ children }: AppProviderProps) => {
-  const [showDevtools, setShowDevtools] = useState(false);
+  const [showDevtools, setShowDevtools] = useState(true);
 
   return (
     <Suspense

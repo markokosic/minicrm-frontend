@@ -23,8 +23,10 @@ export function useUpdateCustomer(options?: UseUpdateCustomerOptions) {
       }
       return resp.data;
     },
-    onSuccess: (updatedCustomer, variables, context) => {
-      queryClient.setQueryData(['customer', variables.id], updatedCustomer);
+    onSuccess: (updatedCustomer, variables) => {
+      const id = variables.id;
+      queryClient.setQueryData(['customer', Number(id)], updatedCustomer);
+
       queryClient.invalidateQueries({ queryKey: ['customer', variables.id] });
       queryClient.invalidateQueries({ queryKey: ['customers'] });
       //   options?.onSuccess?.(updatedCustomer, variables, context);

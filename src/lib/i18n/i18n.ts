@@ -26,7 +26,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    debug: true,
+    debug: false,
     fallbackLng: DEFAULT_LANGUAGE.code,
     supportedLngs: ['de', 'sr', 'en'],
     interpolation: {

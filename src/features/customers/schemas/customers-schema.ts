@@ -13,7 +13,7 @@ export const getVatSchema = (t: TFunction) => {
 
 export const getBaseCustomerSchema = () => {
   return z.object({
-    id: z.union([z.string(), z.number()]),
+    id: z.number(),
     type: z.enum(CustomerType),
     tenantId: z.number(),
   });

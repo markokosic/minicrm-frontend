@@ -1,5 +1,10 @@
 {
   "actions": {
     "add_customer": "Add customer"
+  },
+  "notifications": {
+    "edit": { "success": "Successfully updated customer" },
+    "create": { "success": "Customer created successfully" },
+    "delete": { "success": "Customer deleted successfully" }
   }
 }

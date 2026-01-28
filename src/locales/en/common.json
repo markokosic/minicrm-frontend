@@ -9,6 +9,9 @@
   },
 
   "actions": {
-    "edit": "Edit"
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save"
   }
 }
