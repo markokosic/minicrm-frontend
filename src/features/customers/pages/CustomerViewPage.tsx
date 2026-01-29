@@ -1,11 +1,11 @@
-import { Edit, EllipsisVertical, Trash } from 'lucide-react';
+import { Edit, EllipsisVertical, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
-import { Menu } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { Button, FloatingActionButton } from '@/components/ui/Button';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper/DataLoadingWrapper';
+import { ActionMenu } from '@/components/ui/Menu';
+import { SpeedDial } from '@/components/ui/Menu/SpeedDial';
 import { ROUTES } from '@/config/routes';
 import { CustomerForm } from '@/features/customers/components/CustomerForm/CustomerForm';
 import { CustomerFormSkeleton } from '@/features/customers/components/CustomerForm/CustomerFormSkelleton';
@@ -27,50 +27,31 @@ export const CustomerViewPage = () => {
     throw new Error('customerId param must be a number');
   }
 
-  const navigateToCustomer = () => navigate(ROUTES.app.customers.edit.getHref(customerId));
+  const navigateToEditCustomer = () => navigate(ROUTES.app.customers.edit.getHref(cId));
 
   const { data, isLoading, error } = useGetCustomer({
     id: cId,
   });
+  const actions = [
+    {
+      label: t('common:actions.edit'),
+      onClick: navigateToEditCustomer,
+      icon: Edit,
+      color: 'default',
+    },
+    {
+      label: t('common:actions.delete'),
+      onClick: () => console.log('Delete clicked'),
+      icon: Trash2,
+      color: 'red',
+    },
+  ];
 
   const desktopActions = !isMobile ? (
-    <Menu
-      shadow="md"
-      width={200}
-    >
-      <Menu.Target>
-        <Button
-          radius="100%"
-          size="lg"
-          styles={{
-            root: {
-              width: 48,
-              height: 48,
-              padding: 0,
-            },
-          }}
-          variant="light"
-        >
-          <EllipsisVertical />
-        </Button>
-      </Menu.Target>
-
-      <Menu.Dropdown>
-        <Menu.Item
-          onClick={navigateToCustomer}
-          leftSection={<Edit size={14} />}
-        >
-          {t('common:actions.edit')}
-        </Menu.Item>
-        <Menu.Item
-          color="red"
-          onClick={() => null}
-          leftSection={<Trash size={14} />}
-        >
-          {t('common:actions.delete')}
-        </Menu.Item>
-      </Menu.Dropdown>
-    </Menu>
+    <ActionMenu
+      actions={actions}
+      isRound
+    />
   ) : null;
 
   return (
@@ -91,9 +72,13 @@ export const CustomerViewPage = () => {
           />
         )}
       </DataLoadingWrapper>
-      <FloatingActionButton onClick={navigateToCustomer}>
-        <Edit size={24} />
-      </FloatingActionButton>
+
+      {isMobile && (
+        <SpeedDial
+          Icon={EllipsisVertical}
+          actions={actions}
+        />
+      )}
     </PageLayout>
   );
 };

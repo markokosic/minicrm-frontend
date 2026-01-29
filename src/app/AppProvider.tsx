@@ -15,7 +15,7 @@ type AppProviderProps = {
 };
 
 const AppProvider = ({ children }: AppProviderProps) => {
-  const [showDevtools, setShowDevtools] = useState(true);
+  const [showDevtools, setShowDevtools] = useState(false);
 
   return (
     <Suspense
@@ -27,7 +27,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
         <QueryClientProvider client={queryClient}>
           <MantineProvider theme={theme}>
             {children}
-            <Toaster position="bottom-right" />
+            <Toaster position="top-center" />
             {showDevtools && <ReactQueryDevtools initialIsOpen={false} />}
           </MantineProvider>
         </QueryClientProvider>

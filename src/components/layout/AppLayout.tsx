@@ -34,7 +34,10 @@ const AppLayout = ({ overlayVisible }: AppLayoutProps) => {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar p="md">
+      <AppShell.Navbar
+        zIndex={99999}
+        p="md"
+      >
         {/* <Navbar toggle={toggle} /> */}
         <NavBar />
       </AppShell.Navbar>
