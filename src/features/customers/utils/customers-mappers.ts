@@ -1,13 +1,16 @@
 import {
-  BusinessCustomer,
-  ConsumerCustomer,
+  AddBusinessCustomer,
+  AddConsumerCustomer,
+  BusinessData,
+  ConsumerData,
+  CustomerType,
   UpdateBusinessCustomer,
   UpdateConsumerCustomer,
 } from '../types/customers-types';
 
 export const mapBusinessCustomerToUpdateDTO = (
-  customer: BusinessCustomer
-): UpdateBusinessCustomer => ({
+  customer: UpdateBusinessCustomer
+): Partial<BusinessData> => ({
   companyName: customer.companyName,
   vat: customer.vat,
   email: customer.email,
@@ -16,10 +19,26 @@ export const mapBusinessCustomerToUpdateDTO = (
 });
 
 export const mapConsumerCustomerToUpdateDTO = (
-  customer: ConsumerCustomer
-): UpdateConsumerCustomer => ({
+  customer: UpdateConsumerCustomer
+): Partial<ConsumerData> => ({
   firstName: customer.firstName,
   lastName: customer.lastName,
   email: customer.email,
   phone: customer.phone,
+});
+
+export const mapConsumerCustomerToAddDTO = (
+  customer: ConsumerData,
+  type: CustomerType.CONSUMER
+): AddConsumerCustomer => ({
+  ...customer,
+  type,
+});
+
+export const mapBusinessCustomerToAddDTO = (
+  customer: BusinessData,
+  type: CustomerType.BUSINESS
+): AddBusinessCustomer => ({
+  ...customer,
+  type,
 });

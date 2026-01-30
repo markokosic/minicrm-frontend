@@ -7,7 +7,7 @@ import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper/DataLoadi
 import { ActionMenu } from '@/components/ui/Menu';
 import { SpeedDial } from '@/components/ui/Menu/SpeedDial';
 import { ROUTES } from '@/config/routes';
-import { CustomerForm } from '@/features/customers/components/CustomerForm/CustomerForm';
+import { CustomerDetailsForm } from '@/features/customers/components/CustomerForm/CustomerDetailsForm';
 import { CustomerFormSkeleton } from '@/features/customers/components/CustomerForm/CustomerFormSkelleton';
 import { useGetCustomer } from '@/features/customers/hooks/useGetCustomer';
 
@@ -39,12 +39,12 @@ export const CustomerViewPage = () => {
       icon: Edit,
       color: 'default',
     },
-    {
-      label: t('common:actions.delete'),
-      onClick: () => console.log('Delete clicked'),
-      icon: Trash2,
-      color: 'red',
-    },
+    // {
+    //   label: t('common:actions.delete'),
+    //   onClick: () => console.log('Delete clicked'),
+    //   icon: Trash2,
+    //   color: 'red',
+    // },
   ];
 
   const desktopActions = !isMobile ? (
@@ -66,7 +66,7 @@ export const CustomerViewPage = () => {
         skeleton={<CustomerFormSkeleton />}
       >
         {data && (
-          <CustomerForm
+          <CustomerDetailsForm
             customer={data}
             isReadOnly
           />

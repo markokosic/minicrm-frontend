@@ -6,39 +6,30 @@ import { Box } from '@mantine/core';
 import { Button } from '@/components/ui/Button';
 import { Form } from '@/components/ui/Form';
 import { ROUTES } from '@/config/routes';
-import { CUSTOMER_FORM_CONFIG, CustomerFormConfig } from '../../config/customers-form-config';
+import { VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG } from '../../config/customers-form-config';
 import { useUpdateCustomer } from '../../hooks/useUpdateCustomer';
-import { Customer, CustomerType } from '../../types/customers-types';
+import { CustomerType, UpdateBusinessCustomer } from '../../types/customers-types';
 
-interface CustomerFormProps {
-  customer: Customer;
+interface Props {
+  customer: UpdateBusinessCustomer;
   isReadOnly: boolean;
 }
 
-export const CustomerForm = ({ customer, isReadOnly }: CustomerFormProps) => {
+export const BusinessCustomerDetailsForm = ({ customer, isReadOnly }: Props) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const { mutate, isPending } = useUpdateCustomer({});
 
-  let config: CustomerFormConfig<any>;
+  const config = VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS];
 
-  if (customer.type === CustomerType.BUSINESS) {
-    config = CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS];
-  } else {
-    config = CUSTOMER_FORM_CONFIG[CustomerType.CONSUMER];
-  }
-
-  const methods = useForm<typeof customer>({
+  const methods = useForm<UpdateBusinessCustomer>({
     resolver: config.getResolver(t),
     defaultValues: config.getDefaultValues(customer),
   });
 
-  const onSubmit = (data: typeof customer) => {
-    const updateDTO = config.mapper(data);
-
+  const onSubmit = (data: UpdateBusinessCustomer) => {
     mutate(
-      { id: customer.id, data: updateDTO },
+      { id: customer.id, data: config.mapper(data) },
       {
         onSuccess: () => {
           navigate(ROUTES.app.customers.view.getHref(customer.id));

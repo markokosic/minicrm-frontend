@@ -23,3 +23,11 @@ export const updateCustomer = async ({
 }): Promise<ApiResponse<Customer>> => {
   return await api.patch(`/customers/${customerId}`, payload);
 };
+
+export const addCustomer = async ({
+  payload,
+}: {
+  payload: any;
+}): Promise<ApiResponse<Customer>> => {
+  return await api.post(`/customers`, payload);
+};

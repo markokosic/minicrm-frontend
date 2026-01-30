@@ -1,12 +1,3 @@
-type Address = {
-  type: number;
-  name: string;
-  street: string;
-  zip: string;
-  city: string;
-  country: string;
-};
-
 export enum CustomerType {
   BUSINESS = 'BUSINESS',
   CONSUMER = 'CONSUMER',
@@ -14,20 +5,19 @@ export enum CustomerType {
 export type CustomerId = number;
 export type TenantId = number;
 
-interface CustomerBase {
+interface MetaData {
   id: CustomerId;
-  type: CustomerType;
   tenantId: TenantId;
 }
 
-interface Consumer {
+export interface ConsumerData {
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
 }
 
-interface Company {
+export interface BusinessData {
   companyName: string;
   vat: string;
   email: string;
@@ -35,22 +25,33 @@ interface Company {
   website: string;
 }
 
-export interface ConsumerCustomer extends CustomerBase, Consumer {
+export interface ConsumerCustomer extends MetaData, ConsumerData {
   type: CustomerType.CONSUMER;
 }
 
-export interface BusinessCustomer extends CustomerBase, Company {
+export interface BusinessCustomer extends MetaData, BusinessData {
   type: CustomerType.BUSINESS;
 }
 
-export type Customer = ConsumerCustomer | BusinessCustomer;
+export type Customer = AddCustomer & MetaData;
 
-export type UpdateConsumerCustomer = Partial<
-  Pick<ConsumerCustomer, 'firstName' | 'lastName' | 'email' | 'phone'>
->;
+//UPDATE
 
-export type UpdateBusinessCustomer = Partial<
-  Pick<BusinessCustomer, 'companyName' | 'vat' | 'email' | 'phone' | 'website'>
->;
+export type UpdateConsumerCustomer = Partial<ConsumerData> &
+  MetaData & {
+    type: CustomerType.CONSUMER;
+  };
+
+export type UpdateBusinessCustomer = Partial<BusinessData> &
+  MetaData & {
+    type: CustomerType.BUSINESS;
+  };
 
 export type UpdateCustomer = UpdateConsumerCustomer | UpdateBusinessCustomer;
+
+//ADD
+
+export type AddConsumerCustomer = ConsumerData & { type: CustomerType.CONSUMER };
+export type AddBusinessCustomer = BusinessData & { type: CustomerType.BUSINESS };
+
+export type AddCustomer = AddConsumerCustomer | AddBusinessCustomer;

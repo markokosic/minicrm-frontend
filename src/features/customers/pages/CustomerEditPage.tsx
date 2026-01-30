@@ -5,7 +5,7 @@ import { Menu } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/Button';
-import { CustomerForm } from '@/features/customers/components/CustomerForm/CustomerForm';
+import { CustomerDetailsForm } from '@/features/customers/components/CustomerForm/CustomerDetailsForm';
 import { useGetCustomer } from '@/features/customers/hooks/useGetCustomer';
 
 export const CustomerEditPage = () => {
@@ -34,7 +34,7 @@ export const CustomerEditPage = () => {
       // actions={desktopActions}
     >
       {data && (
-        <CustomerForm
+        <CustomerDetailsForm
           customer={data}
           isReadOnly={false}
         />

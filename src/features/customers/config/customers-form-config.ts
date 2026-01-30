@@ -1,35 +1,46 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TFunction } from 'i18next';
-import { Resolver } from 'react-hook-form';
-import { getBusinessCustomerSchema, getConsumerCustomerSchema } from '../schemas/customers-schema';
+import { FieldValues, Resolver } from 'react-hook-form';
 import {
-  BusinessCustomer,
-  ConsumerCustomer,
-  Customer,
+  getBusinessAddSchema,
+  getBusinessUpdateSchema,
+  getConsumerAddSchema,
+  getConsumerUpdateSchema,
+} from '../schemas/customers-schema';
+import {
+  AddBusinessCustomer,
+  AddConsumerCustomer,
+  BusinessData,
+  ConsumerData,
   CustomerType,
+  UpdateBusinessCustomer,
+  UpdateConsumerCustomer,
   UpdateCustomer,
 } from '../types/customers-types';
 import {
   mapBusinessCustomerToUpdateDTO,
+  mapConsumerCustomerToAddDTO,
   mapConsumerCustomerToUpdateDTO,
 } from '../utils/customers-mappers';
 import { CUSTOMER_FORM_FIELDS } from './customers-form-fields';
 
-export interface CustomerFormConfig<T extends Customer> {
+export interface CustomerFormConfig<T extends FieldValues> {
   getResolver: (t: TFunction) => Resolver<T>;
   getFields: (args: { isReadOnly: boolean; role?: string }) => any[];
-  mapper: (data: any) => UpdateCustomer;
+  mapper: (data: any) => Partial<BusinessData> | Partial<ConsumerData>;
   getDefaultValues: (customer: T) => T;
 }
 
-export type CustomerFormConfigMap = {
-  [CustomerType.BUSINESS]: CustomerFormConfig<BusinessCustomer>;
-  [CustomerType.CONSUMER]: CustomerFormConfig<ConsumerCustomer>;
+export type EditCustomerFormConfigMap = {
+  [CustomerType.BUSINESS]: CustomerFormConfig<UpdateBusinessCustomer>;
+  [CustomerType.CONSUMER]: CustomerFormConfig<UpdateConsumerCustomer>;
 };
 
-export const CUSTOMER_FORM_CONFIG: CustomerFormConfigMap = {
+//EXISTING CUSTOMER
+
+export const VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG: EditCustomerFormConfigMap = {
   [CustomerType.BUSINESS]: {
-    getResolver: (t) => zodResolver(getBusinessCustomerSchema(t)),
+    getResolver: (t) => zodResolver(getBusinessUpdateSchema(t)),
     getFields: ({ isReadOnly }) => [
       {
         groupName: 'form:groups.general_information',
@@ -50,7 +61,7 @@ export const CUSTOMER_FORM_CONFIG: CustomerFormConfigMap = {
       },
     ],
     mapper: mapBusinessCustomerToUpdateDTO,
-    getDefaultValues: (customer: BusinessCustomer) => ({
+    getDefaultValues: (customer: UpdateBusinessCustomer) => ({
       id: customer.id,
       type: customer.type,
       tenantId: customer.tenantId,
@@ -62,7 +73,7 @@ export const CUSTOMER_FORM_CONFIG: CustomerFormConfigMap = {
     }),
   },
   [CustomerType.CONSUMER]: {
-    getResolver: (t) => zodResolver(getConsumerCustomerSchema(t)),
+    getResolver: (t) => zodResolver(getConsumerUpdateSchema(t)),
     getFields: ({ isReadOnly }) => [
       {
         groupName: 'form:groups.general_information',
@@ -82,7 +93,7 @@ export const CUSTOMER_FORM_CONFIG: CustomerFormConfigMap = {
       },
     ],
     mapper: mapConsumerCustomerToUpdateDTO,
-    getDefaultValues: (customer: ConsumerCustomer) => ({
+    getDefaultValues: (customer: UpdateConsumerCustomer) => ({
       id: customer.id,
       type: customer.type,
       tenantId: customer.tenantId,
@@ -90,6 +101,82 @@ export const CUSTOMER_FORM_CONFIG: CustomerFormConfigMap = {
       lastName: customer.lastName,
       phone: customer.phone,
       email: customer.email,
+    }),
+  },
+};
+
+export interface AddCustomerFormConfig<T extends FieldValues, D, TY> {
+  getResolver: (t: TFunction) => Resolver<T>;
+  getFields: () => any[];
+  mapper: (data: D, type: TY) => T;
+  getDefaultValues: () => T;
+}
+
+export type AddCustomerFormConfigMap = {
+  [CustomerType.BUSINESS]: AddCustomerFormConfig<
+    AddBusinessCustomer,
+    BusinessData,
+    CustomerType.BUSINESS
+  >;
+  [CustomerType.CONSUMER]: AddCustomerFormConfig<
+    AddConsumerCustomer,
+    ConsumerData,
+    CustomerType.CONSUMER
+  >;
+};
+
+export const ADD_CUSTOMER_FORM_CONFIG: AddCustomerFormConfigMap = {
+  [CustomerType.BUSINESS]: {
+    getResolver: (t) => zodResolver(getBusinessAddSchema(t)),
+    getFields: () => [
+      {
+        groupName: 'form:groups.general_information',
+        layout: { desktop: { columns: 2 }, mobile: { columns: 1 } },
+        fields: [
+          { ...CUSTOMER_FORM_FIELDS[CustomerType.BUSINESS].companyName },
+          { ...CUSTOMER_FORM_FIELDS[CustomerType.BUSINESS].vat },
+        ],
+      },
+      {
+        groupName: 'form:groups.contact',
+        layout: { desktop: { columns: 3 }, mobile: { columns: 1 } },
+        fields: [
+          { ...CUSTOMER_FORM_FIELDS.common.email },
+          { ...CUSTOMER_FORM_FIELDS.common.phone },
+          { ...CUSTOMER_FORM_FIELDS[CustomerType.BUSINESS].website },
+        ],
+      },
+    ],
+    mapper: (data) => data,
+    getDefaultValues: (customer) => customer,
+  },
+  [CustomerType.CONSUMER]: {
+    getResolver: (t) => zodResolver(getConsumerAddSchema(t)),
+    getFields: () => [
+      {
+        groupName: 'form:groups.general_information',
+        layout: { desktop: { columns: 2 }, mobile: { columns: 1 } },
+        fields: [
+          { ...CUSTOMER_FORM_FIELDS[CustomerType.CONSUMER].firstName },
+          { ...CUSTOMER_FORM_FIELDS[CustomerType.CONSUMER].lastName },
+        ],
+      },
+      {
+        groupName: 'form:groups.contact',
+        layout: { desktop: { columns: 2 }, mobile: { columns: 1 } },
+        fields: [
+          { ...CUSTOMER_FORM_FIELDS.common.email },
+          { ...CUSTOMER_FORM_FIELDS.common.phone },
+        ],
+      },
+    ],
+    mapper: (data, type) => mapConsumerCustomerToAddDTO(data, type),
+    getDefaultValues: () => ({
+      type: CustomerType.CONSUMER,
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
     }),
   },
 };
