@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { MoveLeft } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
-import { Group, Title } from '@mantine/core';
+import {Box, Container, Group, Title} from '@mantine/core';
 import { Button } from '../ui/Button';
 
 interface PageLayoutProps {
@@ -32,7 +32,7 @@ export const PageLayout = ({
   };
 
   return (
-    <div>
+    <Box maw={1280}>
       <title>{title}</title>
       <Group
         justify="space-between"
@@ -64,6 +64,6 @@ export const PageLayout = ({
       </Group>
 
       {children}
-    </div>
+    </Box>
   );
 };

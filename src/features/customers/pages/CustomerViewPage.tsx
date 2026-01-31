@@ -29,9 +29,10 @@ export const CustomerViewPage = () => {
 
   const navigateToEditCustomer = () => navigate(ROUTES.app.customers.edit.getHref(cId));
 
-  const { data, isLoading, error } = useGetCustomer({
+  const {data, isLoading, error} = useGetCustomer({
     id: cId,
   });
+
   const actions = [
     {
       label: t('common:actions.edit'),

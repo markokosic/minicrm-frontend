@@ -4,7 +4,7 @@ interface Props {
   type: CustomerType;
 }
 
-export const AddCustomerForm = ({ type }: Props) => {
+export const CreateCustomerForm = ({ type }: Props) => {
   if (type === CustomerType.BUSINESS) {
     // return <AddBusinessCustomerForm />;
   }

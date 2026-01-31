@@ -5,29 +5,31 @@ import { useNavigate } from 'react-router';
 import { Box } from '@mantine/core';
 import { Button } from '@/components/ui/Button';
 import { Form } from '@/components/ui/Form';
+import { ROUTES } from '@/config/routes';
 import { ADD_CUSTOMER_FORM_CONFIG } from '../../config/customers-form-config';
 import { useAddCustomer } from '../../hooks/useAddCustomer';
-import { AddConsumerCustomer, CustomerType } from '../../types/customers-types';
+import { AddBusinessCustomer, CustomerType } from '../../types/customers-types';
 
-export const AddConsumerCustomerForm = () => {
+export const CreateBusinessCustomerForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { mutate, isPending } = useAddCustomer({});
 
-  const config = ADD_CUSTOMER_FORM_CONFIG[CustomerType.CONSUMER];
+  const config = ADD_CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS];
 
-  const methods = useForm<AddConsumerCustomer>({
+  const methods = useForm<AddBusinessCustomer>({
     resolver: config.getResolver(t),
     defaultValues: config.getDefaultValues(),
   });
 
-  const onSubmit = (data: AddConsumerCustomer) => {
+  const onSubmit = (data: AddBusinessCustomer) => {
     mutate(
-      { data: config.mapper(data, CustomerType.CONSUMER) },
+      { data: config.mapper(data, CustomerType.BUSINESS) },
       {
-        onSuccess: () => {
-          //   navigate(ROUTES.app.customers.view.getHref(customer.id));
-          toast.success(t('customers:notifications.edit.success'));
+        onSuccess: (data) => {
+          const newCustomerId = data?.id;
+          navigate(ROUTES.app.customers.view.getHref(newCustomerId));
+          toast.success(t('customers:notifications.create.success'));
         },
       }
     );

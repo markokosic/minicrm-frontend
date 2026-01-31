@@ -15,14 +15,16 @@ import {
   CustomerType,
   UpdateBusinessCustomer,
   UpdateConsumerCustomer,
-  UpdateCustomer,
 } from '../types/customers-types';
 import {
+  mapBusinessCustomerToAddDTO,
   mapBusinessCustomerToUpdateDTO,
   mapConsumerCustomerToAddDTO,
   mapConsumerCustomerToUpdateDTO,
 } from '../utils/customers-mappers';
 import { CUSTOMER_FORM_FIELDS } from './customers-form-fields';
+
+//TODO REFACTOR getFields, Fields should be defined only once, maybe create a function which returns the fieldgroups etc
 
 export interface CustomerFormConfig<T extends FieldValues> {
   getResolver: (t: TFunction) => Resolver<T>;
@@ -62,14 +64,7 @@ export const VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG: EditCustomerFormConfigMap = {
     ],
     mapper: mapBusinessCustomerToUpdateDTO,
     getDefaultValues: (customer: UpdateBusinessCustomer) => ({
-      id: customer.id,
-      type: customer.type,
-      tenantId: customer.tenantId,
-      companyName: customer.companyName,
-      vat: customer.vat,
-      email: customer.email,
-      website: customer.website,
-      phone: customer.phone,
+      ...customer,
     }),
   },
   [CustomerType.CONSUMER]: {
@@ -94,13 +89,7 @@ export const VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG: EditCustomerFormConfigMap = {
     ],
     mapper: mapConsumerCustomerToUpdateDTO,
     getDefaultValues: (customer: UpdateConsumerCustomer) => ({
-      id: customer.id,
-      type: customer.type,
-      tenantId: customer.tenantId,
-      firstName: customer.firstName,
-      lastName: customer.lastName,
-      phone: customer.phone,
-      email: customer.email,
+      ...customer,
     }),
   },
 };
@@ -147,8 +136,15 @@ export const ADD_CUSTOMER_FORM_CONFIG: AddCustomerFormConfigMap = {
         ],
       },
     ],
-    mapper: (data) => data,
-    getDefaultValues: (customer) => customer,
+    mapper: (data, type) => mapBusinessCustomerToAddDTO(data, type),
+    getDefaultValues: () => ({
+      type: CustomerType.BUSINESS,
+      companyName: '',
+      vat: '',
+      email: '',
+      website: '',
+      phone: '',
+    }),
   },
   [CustomerType.CONSUMER]: {
     getResolver: (t) => zodResolver(getConsumerAddSchema(t)),
