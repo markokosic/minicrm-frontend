@@ -57,4 +57,4 @@ export const CUSTOMER_FORM_FIELDS = {
       autoComplete: 'url',
     },
   },
-} as const;
+};

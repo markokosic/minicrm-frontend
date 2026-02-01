@@ -42,7 +42,6 @@ const AppLayout = ({ overlayVisible }: AppLayoutProps) => {
       <AppShell.Main>
         {/* <LoadingOverlay
           visible={overlayVisible}
-          zIndex={1000}
           overlayProps={{ radius: 'sm', blur: 2 }}
           loaderProps={{ type: 'dots' }}
         /> */}

@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { Center, Stack, Text, Title } from '@mantine/core';
-import { Button } from '@/components/ui/Button';
+import { Button, Center, Stack, Text, Title } from '@mantine/core';
 import { ROUTES } from '@/config/routes';
 import { RegisterForm } from '@/features/auth/components/RegisterForm';
 

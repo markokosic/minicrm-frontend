@@ -17,7 +17,6 @@ const createTestQueryClient = () =>
     },
   });
 
-// Wrapper-Komponente mit allen nötigen Providern
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   const queryClient = createTestQueryClient();
 
@@ -30,10 +29,8 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// Custom render-Funktion mit Providern
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
   render(ui, { wrapper: AllTheProviders, ...options });
 
-// Re-export alles von @testing-library/react
 export * from '@testing-library/react';
 export { customRender as render };

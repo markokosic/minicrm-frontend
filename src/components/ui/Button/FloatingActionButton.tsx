@@ -1,24 +1,24 @@
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, ActionIconProps, Affix } from '@mantine/core';
 
-type FloatingActionButtonProps = {
+interface FloatingActionButtonProps extends ActionIconProps {
   onClick: () => void;
-  children: React.ReactNode;
-};
+}
 
-export const FloatingActionButton = ({ onClick, children }: FloatingActionButtonProps) => {
+export const FloatingActionButton = ({
+  onClick,
+  children,
+  ...props
+}: FloatingActionButtonProps) => {
   return (
-    <ActionIcon
-      size="xl"
-      radius="xl"
-      style={{
-        position: 'fixed',
-        bottom: 24,
-        right: 24,
-        zIndex: 1000,
-      }}
-      onClick={onClick}
-    >
-      {children}
-    </ActionIcon>
+    <Affix position={{ bottom: 24, right: 24 }}>
+      <ActionIcon
+        size="xl"
+        radius="xl"
+        onClick={onClick}
+        {...props}
+      >
+        {children}
+      </ActionIcon>
+    </Affix>
   );
 };

@@ -10,7 +10,7 @@ import {
 import { ROUTES } from './routes';
 
 export interface NavItem {
-  id: string | number;
+  id: number;
   path: string;
   href: string;
   labelKey: string;

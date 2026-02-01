@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@mantine/core';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
 import { ROUTES } from '@/config/routes';
@@ -42,7 +42,7 @@ export const RegisterForm = () => {
   const registerMutation = useRegister({
     onSuccess: () => {
       navigate(ROUTES.auth.login.path);
-      toast.success(t('registerSuccess'));
+      toast.success(t('auth:register.success'));
     },
     onError: (error) => {
       if (error instanceof AxiosError && error.response?.data?.errorKey) {
@@ -70,6 +70,8 @@ export const RegisterForm = () => {
     AUTH_FORM_FIELDS.password,
     AUTH_FORM_FIELDS.confirmPassword,
   ];
+
+  //TODO FIX FORM BUG
 
   return (
     <Form

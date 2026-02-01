@@ -6,5 +6,20 @@
     "billing": "Billing",
     "orders": "Orders",
     "settings": "Settings"
-  }
+  },
+
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "confirm": "Confirm"
+  },
+
+  "modals": {
+    "confirm_title": "Please confirm your action"
+  },
+
+  "consumer": "Consumer",
+  "business": "Business"
 }

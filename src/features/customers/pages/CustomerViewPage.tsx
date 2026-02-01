@@ -1,39 +1,65 @@
-import { Edit } from 'lucide-react';
+import { Edit, EllipsisVertical, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useMediaQuery } from '@mantine/hooks';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { Button, FloatingActionButton } from '@/components/ui/Button';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper/DataLoadingWrapper';
-import { CustomerForm } from '@/features/customers/components/CustomerForm/CustomerForm';
+import { ActionMenu } from '@/components/ui/Menu';
+import { SpeedDial } from '@/components/ui/Menu/SpeedDial';
+import { ROUTES } from '@/config/routes';
 import { CustomerFormSkeleton } from '@/features/customers/components/CustomerForm/CustomerFormSkelleton';
 import { useGetCustomer } from '@/features/customers/hooks/useGetCustomer';
+import { CustomerForm } from '../components/CustomerForm/CustomerForm';
+import { VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG } from '../config/customers-form-config';
+import { CustomerType } from '../types/customers-types';
 
 export const CustomerViewPage = () => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation();
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const navigate = useNavigate();
   const { customerId } = useParams();
 
   if (!customerId) {
     throw new Error('customerId param is required');
   }
 
+  const cId = Number(customerId);
+
+  if (isNaN(cId)) {
+    throw new Error('customerId param must be a number');
+  }
+
+  const navigateToEditCustomer = () => navigate(ROUTES.app.customers.edit.getHref(cId));
+
   const { data, isLoading, error } = useGetCustomer({
-    id: customerId ?? undefined,
+    id: cId,
   });
 
+  const actions = [
+    {
+      label: t('common:actions.edit'),
+      onClick: navigateToEditCustomer,
+      icon: Edit,
+      color: 'default',
+    },
+    // {
+    //   label: t('common:actions.delete'),
+    //   onClick: () => console.log('Delete clicked'),
+    //   icon: Trash2,
+    //   color: 'red',
+    // },
+  ];
+
   const desktopActions = !isMobile ? (
-    <Button
-      leftSection={<Edit />}
-      onClick={() => undefined}
-    >
-      Edit
-    </Button>
+    <ActionMenu
+      actions={actions}
+      isRound
+    />
   ) : null;
 
   return (
     <PageLayout
-      title={t('navigation.customers')}
+      title={t('common:navigation.customers')}
       actions={desktopActions}
     >
       <DataLoadingWrapper
@@ -42,11 +68,31 @@ export const CustomerViewPage = () => {
         isEmpty={!data}
         skeleton={<CustomerFormSkeleton />}
       >
-        {data && <CustomerForm customer={data} />}
+        {data && (
+          <>
+            {data.type === CustomerType.BUSINESS ? (
+              <CustomerForm
+                customer={data}
+                isEditMode
+                config={VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS]}
+              />
+            ) : (
+              <CustomerForm
+                customer={data}
+                isEditMode
+                config={VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.CONSUMER]}
+              />
+            )}
+          </>
+        )}
       </DataLoadingWrapper>
-      <FloatingActionButton onClick={() => null}>
-        <Edit size={24} />
-      </FloatingActionButton>
+
+      {isMobile && (
+        <SpeedDial
+          Icon={EllipsisVertical}
+          actions={actions}
+        />
+      )}
     </PageLayout>
   );
 };

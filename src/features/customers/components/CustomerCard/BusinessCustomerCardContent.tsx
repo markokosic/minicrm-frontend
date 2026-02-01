@@ -1,6 +1,8 @@
-import { Building2 } from 'lucide-react';
-import { Avatar, Badge, Group, Text } from '@mantine/core';
+import { Building2, Mail, Phone } from 'lucide-react';
 import { BusinessCustomer } from '../../types/customers-types';
+import { CustomerCardHeader } from './shared/CustomerCardHeader';
+import { CustomerCardLayout } from './shared/CustomerCardLayout';
+import { CustomerCardRow } from './shared/CustomerCardRow';
 
 interface BusinessCustomerCardProps {
   customer: BusinessCustomer;
@@ -8,19 +10,25 @@ interface BusinessCustomerCardProps {
 
 export const BusinessCustomerCardContent = ({ customer }: BusinessCustomerCardProps) => {
   const { companyName, email, phone } = customer;
-  return (
-    <Group align="center">
-      <Group>
-        <Avatar radius="xl">
-          <Building2 />
-        </Avatar>
 
-        <div>
-          <Text fw={700}>{companyName}</Text>
-          <Text size="sm">{email}</Text>
-          <Text size="sm">{phone}</Text>
-        </div>
-      </Group>
-    </Group>
+  //TODO add fallback if no email or phone
+
+  return (
+    <CustomerCardLayout avatar={<Building2 size={24} />}>
+      <CustomerCardHeader title={`${companyName}`} />
+
+      <CustomerCardRow
+        icon={<Mail size={14} />}
+        href={`mailto:${email}`}
+      >
+        {email}
+      </CustomerCardRow>
+      <CustomerCardRow
+        icon={<Phone size={14} />}
+        href={`tel:${phone}`}
+      >
+        {phone}
+      </CustomerCardRow>
+    </CustomerCardLayout>
   );
 };
