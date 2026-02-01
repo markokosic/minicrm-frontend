@@ -51,19 +51,25 @@ export const getUpdateCustomerSchema = (t: TFunction) =>
       .extend({
         type: z.literal(CustomerType.CONSUMER),
         id: z.number(),
-      }),
+      })
+      .strict(),
     getBusinessDataSchema(t)
       .partial()
       .extend({
         type: z.literal(CustomerType.BUSINESS),
         id: z.number(),
-      }),
+      })
+      .strict(),
   ]);
 
 export const getAddCustomerSchema = (t: TFunction) =>
   z.discriminatedUnion('type', [
-    getConsumerDataSchema(t).extend({ type: z.literal(CustomerType.CONSUMER) }),
-    getBusinessDataSchema(t).extend({ type: z.literal(CustomerType.BUSINESS) }),
+    getConsumerDataSchema(t)
+      .extend({ type: z.literal(CustomerType.CONSUMER) })
+      .strict(),
+    getBusinessDataSchema(t)
+      .extend({ type: z.literal(CustomerType.BUSINESS) })
+      .strict(),
   ]);
 
 // Edit Business
