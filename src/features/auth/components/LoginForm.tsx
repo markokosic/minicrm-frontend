@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@mantine/core';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
 import { ROUTES } from '@/config/routes';
@@ -46,6 +46,7 @@ export const LoginForm = () => {
   };
 
   const fields = [AUTH_FORM_FIELDS.email, AUTH_FORM_FIELDS.password];
+  //TODO FIX FORM BUG
 
   return (
     <Form

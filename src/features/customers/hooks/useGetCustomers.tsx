@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { getCustomers } from '../api/customersApi';
+import { getCustomers } from '../api/customers-api';
 import { Customer } from '../types/customers-types';
 
 type useGetCustomersOptions = Omit<UseQueryOptions<Customer[], Error>, 'queryKey' | 'queryFn'>;

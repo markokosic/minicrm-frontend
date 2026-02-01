@@ -9,6 +9,7 @@ import deForm from '@/locales/de/form.json';
 import deNotifications from '@/locales/de/notifications.json';
 import enAuth from '@/locales/en/auth.json';
 import enCommon from '@/locales/en/common.json';
+import enCustomers from '@/locales/en/customers.json';
 import enDashboard from '@/locales/en/dashboard.json';
 import enErrors from '@/locales/en/errors.json';
 import enForm from '@/locales/en/form.json';
@@ -25,7 +26,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    debug: true,
+    debug: false,
     fallbackLng: DEFAULT_LANGUAGE.code,
     supportedLngs: ['de', 'sr', 'en'],
     interpolation: {
@@ -52,12 +53,13 @@ i18n
         common: enCommon,
         auth: enAuth,
         dashboard: enDashboard,
+        customers: enCustomers,
         errors: enErrors,
         form: enForm,
         notifications: enNotifications,
       },
     },
-    ns: ['common', 'auth', 'dashboard', 'errors', 'form', 'notifications'],
+    ns: ['common', 'auth', 'customers', 'dashboard', 'errors', 'form', 'notifications'],
     defaultNS: 'common',
   });
 

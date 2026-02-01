@@ -1,11 +1,10 @@
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { NavLink as $NavLink, useLocation, useNavigate } from 'react-router';
-import { Box, Divider, Menu, NavLink, Text } from '@mantine/core';
+import { Box, Button, Divider, Menu, NavLink, Text } from '@mantine/core';
 import { NAV_ITEMS, NavItem } from '@/config/navigation';
 import { ROUTES } from '@/config/routes';
 import { useLogout } from '@/lib/auth';
-import { Button } from '../Button';
 
 export const NavBar = () => {
   const location = useLocation();

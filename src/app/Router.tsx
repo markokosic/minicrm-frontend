@@ -4,7 +4,7 @@ import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { ROUTES } from '@/config/routes';
 import LoginPage from '../features/auth/pages/LoginPage';
 import RegisterPage from '../features/auth/pages/RegisterPage';
-import { CustomerAddPage } from '../features/customers/pages/CustomerAddPage';
+import { CustomerCreatePage } from '../features/customers/pages/CustomerCreatePage';
 import { CustomerEditPage } from '../features/customers/pages/CustomerEditPage';
 import { CustomersPage } from '../features/customers/pages/CustomersPage';
 import { CustomerViewPage } from '../features/customers/pages/CustomerViewPage';
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       // CUSTOMER PAGES
       { path: ROUTES.app.customers.path, element: <CustomersPage /> },
       { path: ROUTES.app.customers.view.path, element: <CustomerViewPage /> },
-      { path: ROUTES.app.customers.add.path, element: <CustomerAddPage /> },
+      { path: ROUTES.app.customers.add.path, element: <CustomerCreatePage /> },
       { path: ROUTES.app.customers.edit.path, element: <CustomerEditPage /> },
 
       // 404 NOT FOUND PAGE

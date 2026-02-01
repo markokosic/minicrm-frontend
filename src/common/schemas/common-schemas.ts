@@ -25,7 +25,15 @@ export const getPasswordSchema = (t: TFunction) => {
 export const getPhoneSchema = (t: TFunction) => {
   return z
     .string()
-    .min(1, t('errors:validation.phone.required'))
-    .max(20, t('errors:validation.phone.too_long'))
-    .regex(/^\+?[0-9\s\-()]+$/, t('errors:validation.phone.invalid_format'));
+    .min(1, t('errors:phone.required'))
+    .max(20, t('errors:phone.too_long'))
+    .regex(/^\+?[0-9\s\-()]+$/, t('errors:phone.invalid_format'));
+};
+
+export const getVatSchema = (t: TFunction) => {
+  return z
+    .string()
+    .min(1, t('errors:vat.required'))
+    .max(20, t('errors:vat.too_long'))
+    .regex(/^[A-Z0-9]+$/, t('errors:vat.invalid_format'));
 };

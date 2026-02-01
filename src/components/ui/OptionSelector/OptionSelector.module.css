@@ -1,0 +1,23 @@
+.root {
+  /* display: inline-block; */
+}
+
+.option {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option:hover {
+  border-color: var(--mantine-primary-color-2);
+  color: var(--mantine-primary-color-filled);
+}
+
+.option[data-selected='true'] {
+  border-color: var(--mantine-primary-color-filled);
+  background-color: var(--mantine-color-blue-light); /* Optional */
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--mantine-primary-color-filled);
+  outline-offset: 2px;
+}

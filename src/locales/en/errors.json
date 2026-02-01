@@ -26,6 +26,11 @@
     }
   },
 
+  "url": {
+    "required": "URL is required",
+    "invalid": "Format is wrong"
+  },
+
   "vat": {
     "required": "VAT is required",
     "too_long": "VAT is too long",

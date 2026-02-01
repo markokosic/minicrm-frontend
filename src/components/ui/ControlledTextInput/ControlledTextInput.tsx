@@ -12,6 +12,7 @@ export const ControlledTextInput = <T extends FieldValues>({
   rules,
   shouldUnregister,
   onChange,
+  readOnly,
   ...props
 }: TextInputProps<T>) => {
   const {
@@ -38,7 +39,7 @@ export const ControlledTextInput = <T extends FieldValues>({
           onChange?.(e);
         }}
         error={fieldState.error?.message}
-        classNames={{ label: classes.label }}
+        classNames={{ label: classes.label, input: readOnly ? classes.inputReadOnly : undefined }}
       />
     </>
   );
