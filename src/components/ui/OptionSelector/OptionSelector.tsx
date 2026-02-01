@@ -1,17 +1,17 @@
-import { Stack, Tabs, Text } from '@mantine/core';
+import { Stack, Tabs, TabsProps, Text } from '@mantine/core';
 
 type Option = {
   label: string;
   value: string | number;
 };
 
-type OptionSelectorProps = {
+interface OptionSelectorProps {
   options: Option[];
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
   selectedOption: string | number | null;
-  onChange: (value: string | number) => void;
-};
+  onChange: (value: unknown) => void;
+}
 
 export const OptionSelector = ({
   options,
@@ -24,31 +24,52 @@ export const OptionSelector = ({
     <Stack
       align="center"
       gap="md"
+      w="fit-content"
     >
-      <Stack
-        align="center"
-        gap={2}
-      >
-        <Text
-          fw={500}
-          size="lg"
+      {title && (
+        <Stack
+          align="center"
+          gap={2}
         >
-          {title}
-        </Text>
-        <Text
-          c="dimmed"
-          size="sm"
-        >
-          {subtitle}
-        </Text>
-      </Stack>
+          {title && (
+            <Text
+              fw={500}
+              size="lg"
+              ta="center"
+            >
+              {title}
+            </Text>
+          )}
+          {subtitle && (
+            <Text
+              ta="center"
+              c="dimmed"
+              size="sm"
+            >
+              {subtitle}
+            </Text>
+          )}
+        </Stack>
+      )}
 
       <Tabs
-        value={selectedOption?.toString() || options[0]?.value.toString()}
+        value={selectedOption?.toString()}
         onChange={(value) => onChange(value)}
         variant="pills"
-        radius="lg"
-        keepMounted={false} // optional, falls du die Panels nicht immer rendern willst
+        styles={(theme) => ({
+          root: {
+            backgroundColor: theme.colors.gray[0],
+            padding: '4px',
+            borderRadius: theme.radius.xl,
+          },
+          // tab: {
+          //   '&[dataActive]': {
+          //     backgroundColor: 'white',
+          //     color: 'black',
+          //     boxShadow: theme.shadows.xs,
+          //   },
+          // },
+        })}
       >
         <Tabs.List>
           {options.map((option) => (

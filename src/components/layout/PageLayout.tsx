@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 import { MoveLeft } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
-import {Box, Container, Group, Title} from '@mantine/core';
-import { Button } from '../ui/Button';
+import { Box, Button, Container, Group, Title } from '@mantine/core';
 
 interface PageLayoutProps {
   children: ReactNode;

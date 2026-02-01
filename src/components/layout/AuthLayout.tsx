@@ -5,8 +5,8 @@ import { LanguagePicker } from '@/components/ui/LanguagePicker';
 const AuthLayout = () => {
   return (
     <Center
-      h="100vh"
-      bg="blue.0"
+      mih="100vh"
+      bg="var(--mantine-primary-color-1)"
       p="md"
     >
       <Stack
@@ -18,9 +18,6 @@ const AuthLayout = () => {
         <Paper
           w="100%"
           p="xl"
-          bdrs="lg"
-          bg="white"
-          shadow="sm"
         >
           <Outlet />
         </Paper>

@@ -39,10 +39,7 @@ export const SpeedDial = ({ Icon, actions }: SpeedDialProps) => {
         </RemoveScroll>
       )}
 
-      <Affix
-        position={{ bottom: 94, right: 24 }}
-        zIndex={9999}
-      >
+      <Affix position={{ bottom: 94, right: 24 }}>
         <Transition
           mounted={openDial}
           transition="slide-left"
@@ -112,10 +109,7 @@ export const SpeedDial = ({ Icon, actions }: SpeedDialProps) => {
         </Transition>
       </Affix>
 
-      <Affix
-        position={{ bottom: 24, right: 24 }}
-        zIndex={9999}
-      >
+      <Affix position={{ bottom: 24, right: 24 }}>
         <ActionIcon
           size="xl"
           radius="xl"

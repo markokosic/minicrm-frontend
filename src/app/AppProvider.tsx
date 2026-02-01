@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Toaster } from 'react-hot-toast';
 import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { MainErrorFallback } from '@/components/errors/MainErrorFallback';
 import { theme } from '@/config/theme';
 import queryClient from '@/lib/queryClient';
@@ -14,7 +15,7 @@ type AppProviderProps = {
   children: React.ReactNode;
 };
 
-const AppProvider = ({ children }: AppProviderProps) => {
+const AppProvider = ({ children: app }: AppProviderProps) => {
   const [showDevtools, setShowDevtools] = useState(false);
 
   return (
@@ -26,9 +27,11 @@ const AppProvider = ({ children }: AppProviderProps) => {
       <ErrorBoundary FallbackComponent={MainErrorFallback}>
         <QueryClientProvider client={queryClient}>
           <MantineProvider theme={theme}>
-            {children}
-            <Toaster position="top-center" />
-            {showDevtools && <ReactQueryDevtools initialIsOpen={false} />}
+            <ModalsProvider>
+              {app}
+              <Toaster position="top-center" />
+              {showDevtools && <ReactQueryDevtools initialIsOpen={false} />}
+            </ModalsProvider>
           </MantineProvider>
         </QueryClientProvider>
       </ErrorBoundary>

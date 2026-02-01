@@ -1,4 +1,4 @@
-import { Flex, Group, Text } from '@mantine/core';
+import { Flex, Group, SimpleGrid, Text } from '@mantine/core';
 import { AppLink } from '@/components/ui/AppLink';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
 import { ROUTES } from '@/config/routes';

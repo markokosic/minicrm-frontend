@@ -2,8 +2,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { Box } from '@mantine/core';
-import { Button } from '@/components/ui/Button';
+import { Box, Button } from '@mantine/core';
 import { Form } from '@/components/ui/Form';
 import { ROUTES } from '@/config/routes';
 import { VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG } from '../../config/customers-form-config';
@@ -42,6 +41,8 @@ export const ConsumerCustomerDetailsForm = ({ customer, isReadOnly }: Props) => 
   return (
     <Box>
       <Form
+        withBorder
+        shadow="sm"
         methods={methods}
         onSubmit={onSubmit}
         formFields={config.getFields({ isReadOnly })}

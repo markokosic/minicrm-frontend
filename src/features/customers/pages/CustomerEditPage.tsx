@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router';
 import { Menu } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { Button } from '@/components/ui/Button';
 import { CustomerDetailsForm } from '@/features/customers/components/CustomerForm/CustomerDetailsForm';
 import { useGetCustomer } from '@/features/customers/hooks/useGetCustomer';
 

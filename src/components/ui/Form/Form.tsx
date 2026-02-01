@@ -31,8 +31,6 @@ const Form = <T extends FieldValues>({
         {...others}
         onSubmit={methods.handleSubmit(onSubmit)}
         component="form"
-        shadow="sm"
-        withBorder
         radius="md"
         p="sm"
       >

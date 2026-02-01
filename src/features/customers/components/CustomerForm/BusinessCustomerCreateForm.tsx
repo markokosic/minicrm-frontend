@@ -2,29 +2,28 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { Box } from '@mantine/core';
-import { Button } from '@/components/ui/Button';
+import { Box, Button } from '@mantine/core';
 import { Form } from '@/components/ui/Form';
 import { ROUTES } from '@/config/routes';
 import { ADD_CUSTOMER_FORM_CONFIG } from '../../config/customers-form-config';
 import { useAddCustomer } from '../../hooks/useAddCustomer';
-import { AddConsumerCustomer, CustomerType } from '../../types/customers-types';
+import { AddBusinessCustomer, CustomerType } from '../../types/customers-types';
 
-export const CreateConsumerCustomerForm = () => {
+export const BusinessCustomerCreateForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { mutate, isPending } = useAddCustomer({});
 
-  const config = ADD_CUSTOMER_FORM_CONFIG[CustomerType.CONSUMER];
+  const config = ADD_CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS];
 
-  const methods = useForm<AddConsumerCustomer>({
+  const methods = useForm<AddBusinessCustomer>({
     resolver: config.getResolver(t),
     defaultValues: config.getDefaultValues(),
   });
 
-  const onSubmit = (data: AddConsumerCustomer) => {
+  const onSubmit = (data: AddBusinessCustomer) => {
     mutate(
-      { data: config.mapper(data, CustomerType.CONSUMER) },
+      { data: config.mapper(data, CustomerType.BUSINESS) },
       {
         onSuccess: (data) => {
           const newCustomerId = data?.id;
@@ -38,6 +37,8 @@ export const CreateConsumerCustomerForm = () => {
   return (
     <Box>
       <Form
+        withBorder
+        shadow="sm"
         methods={methods}
         onSubmit={onSubmit}
         formFields={config.getFields()}

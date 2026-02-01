@@ -34,10 +34,7 @@ const AppLayout = ({ overlayVisible }: AppLayoutProps) => {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar
-        zIndex={99999}
-        p="md"
-      >
+      <AppShell.Navbar p="md">
         {/* <Navbar toggle={toggle} /> */}
         <NavBar />
       </AppShell.Navbar>
@@ -45,7 +42,6 @@ const AppLayout = ({ overlayVisible }: AppLayoutProps) => {
       <AppShell.Main>
         {/* <LoadingOverlay
           visible={overlayVisible}
-          zIndex={1000}
           overlayProps={{ radius: 'sm', blur: 2 }}
           loaderProps={{ type: 'dots' }}
         /> */}
