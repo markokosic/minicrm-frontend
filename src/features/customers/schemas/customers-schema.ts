@@ -22,7 +22,12 @@ export const getBusinessDataSchema = (t: TFunction) =>
     vat: getVatSchema(t),
     email: getEmailSchema(t),
     phone: getPhoneSchema(t),
-    website: z.url(t('errors:url.invalid')).or(z.literal('')),
+    website: z
+      .string()
+      .regex(
+        /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/,
+        t('errors:url.invalid')
+      ),
   });
 
 export const getCustomerSchema = (t: TFunction) =>

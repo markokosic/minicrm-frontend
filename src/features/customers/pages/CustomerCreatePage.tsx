@@ -12,21 +12,19 @@ export const CustomerCreatePage = () => {
   const [selectedCustomer, setSelectedCustomer] = useState<CustomerType | null>(null);
   const openModal = (val: CustomerType) =>
     modals.openConfirmModal({
-      title: 'Please confirm your action',
-      children: (
-        <Text size="sm">
-          This action is so important that you are required to confirm it with a modal. Please click
-          one of these buttons to proceed.
-        </Text>
-      ),
-      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      title: t('common:modals.confirm_title'),
+      children: <Text size="sm">{t('customers:modals.switch_type.text')}</Text>,
+      labels: {
+        confirm: t('customers:modals.switch_type.confirm_button'),
+        cancel: t('common:actions.cancel'),
+      },
       onCancel: () => null,
       onConfirm: () => setSelectedCustomer(val),
     });
 
   const options = [
-    { label: 'Consumer', value: CustomerType.CONSUMER },
-    { label: 'Business', value: CustomerType.BUSINESS },
+    { label: t('common:consumer'), value: CustomerType.CONSUMER },
+    { label: t('common:business'), value: CustomerType.BUSINESS },
   ];
 
   const handleCustomerChange = (val: CustomerType) => {
@@ -47,10 +45,8 @@ export const CustomerCreatePage = () => {
     >
       <OptionSelector
         options={options}
-        title={!selectedCustomer ? 'Select the type of customer you would like to create.' : ''}
-        subtitle={
-          !selectedCustomer ? 'Either choose between a private individual or a company.' : ''
-        }
+        title={!selectedCustomer ? t('customers:type_selection.title') : ''}
+        subtitle={!selectedCustomer ? t('customers:type_selection.subtitle') : ''}
         onChange={(val) => handleCustomerChange(val as CustomerType)}
         selectedOption={selectedCustomer}
       />
