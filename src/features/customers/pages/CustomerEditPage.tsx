@@ -4,8 +4,10 @@ import { useNavigate, useParams } from 'react-router';
 import { Menu } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { CustomerDetailsForm } from '@/features/customers/components/CustomerForm/CustomerDetailsForm';
 import { useGetCustomer } from '@/features/customers/hooks/useGetCustomer';
+import { CustomerForm } from '../components/CustomerForm';
+import { VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG } from '../config/customers-form-config';
+import { CustomerType } from '../types/customers-types';
 
 export const CustomerEditPage = () => {
   const { t } = useTranslation('common');
@@ -33,10 +35,21 @@ export const CustomerEditPage = () => {
       // actions={desktopActions}
     >
       {data && (
-        <CustomerDetailsForm
-          customer={data}
-          isReadOnly={false}
-        />
+        <>
+          {data.type === CustomerType.BUSINESS ? (
+            <CustomerForm
+              customer={data}
+              isEditMode={false}
+              config={VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS]}
+            />
+          ) : (
+            <CustomerForm
+              customer={data}
+              isEditMode={false}
+              config={VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.CONSUMER]}
+            />
+          )}
+        </>
       )}
     </PageLayout>
   );

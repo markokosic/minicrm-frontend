@@ -7,9 +7,11 @@ import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper/DataLoadi
 import { ActionMenu } from '@/components/ui/Menu';
 import { SpeedDial } from '@/components/ui/Menu/SpeedDial';
 import { ROUTES } from '@/config/routes';
-import { CustomerDetailsForm } from '@/features/customers/components/CustomerForm/CustomerDetailsForm';
 import { CustomerFormSkeleton } from '@/features/customers/components/CustomerForm/CustomerFormSkelleton';
 import { useGetCustomer } from '@/features/customers/hooks/useGetCustomer';
+import { CustomerForm } from '../components/CustomerForm/CustomerForm';
+import { VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG } from '../config/customers-form-config';
+import { CustomerType } from '../types/customers-types';
 
 export const CustomerViewPage = () => {
   const { t } = useTranslation();
@@ -29,7 +31,7 @@ export const CustomerViewPage = () => {
 
   const navigateToEditCustomer = () => navigate(ROUTES.app.customers.edit.getHref(cId));
 
-  const {data, isLoading, error} = useGetCustomer({
+  const { data, isLoading, error } = useGetCustomer({
     id: cId,
   });
 
@@ -67,10 +69,21 @@ export const CustomerViewPage = () => {
         skeleton={<CustomerFormSkeleton />}
       >
         {data && (
-          <CustomerDetailsForm
-            customer={data}
-            isReadOnly
-          />
+          <>
+            {data.type === CustomerType.BUSINESS ? (
+              <CustomerForm
+                customer={data}
+                isEditMode
+                config={VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS]}
+              />
+            ) : (
+              <CustomerForm
+                customer={data}
+                isEditMode
+                config={VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.CONSUMER]}
+              />
+            )}
+          </>
         )}
       </DataLoadingWrapper>
 

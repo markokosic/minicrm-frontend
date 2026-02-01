@@ -1,34 +1,41 @@
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm, UseFormProps } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { Box, Button } from '@mantine/core';
 import { Form } from '@/components/ui/Form';
 import { ROUTES } from '@/config/routes';
-import { VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG } from '../../config/customers-form-config';
+import { CustomerFormConfig } from '../../config/customers-form-config';
 import { useUpdateCustomer } from '../../hooks/useUpdateCustomer';
-import { CustomerType, UpdateConsumerCustomer } from '../../types/customers-types';
+import { CustomerId } from '../../types/customers-types';
 
-interface Props {
-  customer: UpdateConsumerCustomer;
-  isReadOnly: boolean;
+interface BaseProps<T extends FieldValues> {
+  customer: T & { id: CustomerId };
+  isEditMode: boolean;
+  config: CustomerFormConfig<T>;
 }
 
-export const ConsumerCustomerDetailsForm = ({ customer, isReadOnly }: Props) => {
+export const CustomerForm = <T extends FieldValues>({
+  customer,
+  isEditMode,
+  config,
+}: BaseProps<T>) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { mutate, isPending } = useUpdateCustomer({});
 
-  const config = VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.CONSUMER];
-
-  const methods = useForm<UpdateConsumerCustomer>({
+  const formOptions: UseFormProps<T> = {
     resolver: config.getResolver(t),
-    defaultValues: config.getDefaultValues(customer),
-  });
+    defaultValues: config.getDefaultValues(customer) as any,
+  };
 
-  const onSubmit = (data: UpdateConsumerCustomer) => {
+  const methods = useForm<T>(formOptions);
+
+  const onSubmit = (data: T) => {
+    const mappedData = config.mapper(data);
+
     mutate(
-      { id: customer.id, data: config.mapper(data) },
+      { id: customer.id, data: mappedData },
       {
         onSuccess: () => {
           navigate(ROUTES.app.customers.view.getHref(customer.id));
@@ -41,13 +48,11 @@ export const ConsumerCustomerDetailsForm = ({ customer, isReadOnly }: Props) => 
   return (
     <Box>
       <Form
-        withBorder
-        shadow="sm"
         methods={methods}
         onSubmit={onSubmit}
-        formFields={config.getFields({ isReadOnly })}
+        formFields={config.getFields({ isEditMode })}
         formActions={
-          !isReadOnly && (
+          !isEditMode && (
             <>
               <Button
                 variant="outline"

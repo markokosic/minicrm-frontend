@@ -97,7 +97,7 @@ export const VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG: EditCustomerFormConfigMap = {
 export interface AddCustomerFormConfig<T extends FieldValues, D, TY> {
   getResolver: (t: TFunction) => Resolver<T>;
   getFields: () => any[];
-  mapper: (data: D, type: TY) => T;
+  mapper: (data: D, type: TY) => any;
   getDefaultValues: () => T;
 }
 

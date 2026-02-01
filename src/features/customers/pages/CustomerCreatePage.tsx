@@ -4,7 +4,8 @@ import { Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { OptionSelector } from '@/components/ui/OptionSelector';
-import { BusinessCustomerCreateForm, ConsumerCustomerCreateForm } from '../components/CustomerForm';
+import { CustomerCreateForm } from '../components/CustomerForm';
+import { ADD_CUSTOMER_FORM_CONFIG } from '../config/customers-form-config';
 import { CustomerType } from '../types/customers-types';
 
 export const CustomerCreatePage = () => {
@@ -51,8 +52,19 @@ export const CustomerCreatePage = () => {
         selectedOption={selectedCustomer}
       />
 
-      {selectedCustomer === CustomerType.CONSUMER && <ConsumerCustomerCreateForm />}
-      {selectedCustomer === CustomerType.BUSINESS && <BusinessCustomerCreateForm />}
+      {selectedCustomer === CustomerType.CONSUMER && (
+        <CustomerCreateForm
+          type={CustomerType.CONSUMER}
+          config={ADD_CUSTOMER_FORM_CONFIG[CustomerType.CONSUMER]}
+        />
+      )}
+
+      {selectedCustomer === CustomerType.BUSINESS && (
+        <CustomerCreateForm
+          type={CustomerType.BUSINESS}
+          config={ADD_CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS]}
+        />
+      )}
     </PageLayout>
   );
 };

@@ -10,15 +10,17 @@ import {
 
 export const mapBusinessCustomerToUpdateDTO = (
   customer: UpdateBusinessCustomer
-): Partial<BusinessData> => ({
-  ...customer,
-});
+): Partial<BusinessData> => {
+  const { id, tenantId, type, ...businessData } = customer;
+  return businessData;
+};
 
 export const mapConsumerCustomerToUpdateDTO = (
   customer: UpdateConsumerCustomer
-): Partial<ConsumerData> => ({
-  ...customer,
-});
+): Partial<ConsumerData> => {
+  const { id, tenantId, type, ...customerData } = customer;
+  return customerData;
+};
 
 export const mapConsumerCustomerToAddDTO = (
   customer: ConsumerData,
