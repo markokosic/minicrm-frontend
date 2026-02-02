@@ -151,7 +151,6 @@ describe('configureAuth', () => {
 
   describe('useLogout', () => {
     it('sollte logoutFn aufrufen und User aus Cache entfernen', async () => {
-      // Arrange
       const mockLogoutFn = vi.fn().mockResolvedValue({ success: true });
       const mockGetUser = vi.fn().mockResolvedValue(mockUser);
 
@@ -165,25 +164,20 @@ describe('configureAuth', () => {
 
       const { Wrapper, queryClient } = createWrapper();
 
-      // Zuerst User im Cache setzen (simuliert eingeloggten Zustand)
       queryClient.setQueryData(['test-user'], mockUser);
 
       const { result } = renderHook(() => useLogout(), {
         wrapper: Wrapper,
       });
 
-      // Act: Logout-Mutation ausführen
       result.current.mutate(undefined);
 
-      // Assert: Warten, bis Mutation erfolgreich ist
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
       });
 
-      // Assert: Prüfen, ob logoutFn aufgerufen wurde
       expect(mockLogoutFn).toHaveBeenCalledTimes(1);
 
-      // Assert: Prüfen, ob User aus Cache entfernt wurde (sollte null sein)
       const cachedUser = queryClient.getQueryData(['test-user']);
       expect(cachedUser).toBeNull();
     });
