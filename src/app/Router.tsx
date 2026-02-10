@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
+import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router';
 import { AuthLayout } from '@/components/layout/AuthLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { ROUTES } from '@/config/routes';
@@ -35,6 +35,16 @@ const router = createBrowserRouter([
       { index: true, element: <DashboardPage /> },
       // CUSTOMER PAGES
       { path: ROUTES.app.customers.path, element: <CustomersPage /> },
+      {
+        index: true,
+        path: '/customers/:customerId',
+        element: (
+          <Navigate
+            to="general"
+            replace
+          />
+        ),
+      },
       { path: ROUTES.app.customers.view.path, element: <CustomerViewPage /> },
       { path: ROUTES.app.customers.add.path, element: <CustomerCreatePage /> },
       { path: ROUTES.app.customers.edit.path, element: <CustomerEditPage /> },

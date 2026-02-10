@@ -25,7 +25,7 @@ export const CustomersList = () => {
             {data.map((customer) => (
               <AppLink
                 key={customer.id}
-                to={`${ROUTES.app.customers.path}/${customer.id}`}
+                to={`${ROUTES.app.customers.view.getHref(customer.id, 'general')}`}
               >
                 <CustomerCard customer={customer} />
               </AppLink>
