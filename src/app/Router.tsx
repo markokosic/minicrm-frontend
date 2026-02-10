@@ -38,6 +38,7 @@ const router = createBrowserRouter([
       { path: ROUTES.app.customers.view.path, element: <CustomerViewPage /> },
       { path: ROUTES.app.customers.add.path, element: <CustomerCreatePage /> },
       { path: ROUTES.app.customers.edit.path, element: <CustomerEditPage /> },
+      { path: ROUTES.app.customers.edit.path, element: <CustomerEditPage /> },
 
       // 404 NOT FOUND PAGE
       { path: '*', element: <div>Not found</div> },
