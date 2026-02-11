@@ -1,38 +1,56 @@
-import { p } from 'node_modules/react-router/dist/development/index-react-server-client-rcoGPJhU.mjs';
-import { useNavigate, useParams } from 'react-router';
+import { Edit, EllipsisVertical } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+import { useMediaQuery } from '@mantine/hooks';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
+import { ActionMenu } from '@/components/ui/Menu';
+import { SpeedDial } from '@/components/ui/Menu/SpeedDial';
+import { TabContentLayout } from '@/components/ui/Tab';
 import { ROUTES } from '@/config/routes';
+import { CustomerTabs } from '@/types/routing-types';
 import { VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG } from '../../config/customers-form-config';
+import { useCustomerParams } from '../../hooks/useCustomerParams';
 import { useGetCustomer } from '../../hooks/useGetCustomer';
-import { Customer, CustomerType } from '../../types/customers-types';
+import { CustomerType } from '../../types/customers-types';
 import { CustomerForm, CustomerFormSkeleton } from '../CustomerForm';
 
 export const CustomerGeneralTabContent = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
-  const { customerId } = useParams();
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
-  if (!customerId) {
-    throw new Error('customerId param is required');
-  }
+  const { customerId } = useCustomerParams();
 
-  const cId = Number(customerId);
-
-  const navigateToEditCustomer = () => navigate(ROUTES.app.customers.edit.getHref(cId));
-
-  if (isNaN(cId)) {
-    throw new Error('customerId param must be a number');
-  }
+  const navigateToEditCustomer = () =>
+    navigate(ROUTES.app.customers.edit.getHref(customerId, CustomerTabs.GENERAL));
 
   const { data, isLoading, error } = useGetCustomer({
-    id: cId,
+    id: customerId,
   });
 
+  const actions = [
+    {
+      label: t('common:actions.edit'),
+      onClick: navigateToEditCustomer,
+      icon: Edit,
+      color: 'default',
+    },
+    // {
+    //   label: t('common:actions.delete'),
+    //   onClick: () => console.log('Delete clicked'),
+    //   icon: Trash2,
+    //   color: 'red',
+    // },
+  ];
+
   return (
-    <DataLoadingWrapper
+    <TabContentLayout
       isLoading={isLoading}
       error={error}
       isEmpty={!data}
       skeleton={<CustomerFormSkeleton />}
+      actions={actions}
     >
       {data && data.type === CustomerType.CONSUMER && (
         <CustomerForm
@@ -49,6 +67,6 @@ export const CustomerGeneralTabContent = () => {
           config={VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS]}
         />
       )}
-    </DataLoadingWrapper>
+    </TabContentLayout>
   );
 };
