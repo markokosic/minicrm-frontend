@@ -38,6 +38,7 @@ export const ControlledTextInput = <T extends FieldValues>({
           fieldOnChange(e);
           onChange?.(e);
         }}
+        readOnly={readOnly}
         error={fieldState.error?.message}
         classNames={{ label: classes.label, input: readOnly ? classes.inputReadOnly : undefined }}
       />

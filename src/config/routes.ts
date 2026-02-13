@@ -1,3 +1,5 @@
+import { CustomerId } from '@/features/customers/types/customers-types';
+
 export const ROUTES = {
   auth: {
     root: {
@@ -30,12 +32,13 @@ export const ROUTES = {
       path: '/customers',
       getHref: () => '/customers',
       view: {
-        path: '/customers/:customerId',
-        getHref: (customerId: number | string) => `/customers/${customerId}`,
+        path: '/customers/:customerId/:tabValue',
+        getHref: (customerId: CustomerId, tabValue: string) =>
+          `/customers/${customerId}/${tabValue}`,
       },
       edit: {
         path: '/customers/:customerId/edit',
-        getHref: (customerId: number | string) => `/customers/${customerId}/edit`,
+        getHref: (customerId: CustomerId) => `/customers/${customerId}/edit`,
       },
       add: {
         path: '/customers/new',

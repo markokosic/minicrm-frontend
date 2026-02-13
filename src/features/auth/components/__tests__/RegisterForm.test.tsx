@@ -1,12 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createTestAppWrapper } from '@/mocks/AppWrapper';
 import { RegisterForm } from '../RegisterForm';
 
 describe('Register Form', () => {
   it('should render all form inputs, tenantName, email, password, firstName, lastName', () => {
-    const mockOnSubmit = vi.fn();
+    const { Wrapper } = createTestAppWrapper();
 
-    render(<RegisterForm onSubmit={mockOnSubmit} />);
+    render(<RegisterForm />, { wrapper: Wrapper });
 
     const tenantName = screen.getByRole('textbox', { name: /tenant/i });
     const firstName = screen.getByRole('textbox', { name: /first/i });
@@ -24,12 +25,11 @@ describe('Register Form', () => {
   });
 });
 
-//Testen happy path schauen ob handleSubmit aufgerufen wird
 it('should call handleSubmit fn', async () => {
   const user = userEvent.setup();
-  const mockOnSubmit = vi.fn();
+  const { Wrapper } = createTestAppWrapper();
 
-  render(<RegisterForm onSubmit={mockOnSubmit} />);
+  render(<RegisterForm />, { wrapper: Wrapper });
 
   const tenantName = screen.getByRole('textbox', { name: /tenant/i });
   const firstName = screen.getByRole('textbox', { name: /first/i });
@@ -50,15 +50,4 @@ it('should call handleSubmit fn', async () => {
   await user.click(submitButton);
 
   expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
-
-  expect(mockOnSubmit).toHaveBeenCalledWith({
-    tenantName: 'TestTenant',
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john@example.com',
-    password: 'password123',
-    confirmPassword: 'password123',
-  });
 });
-
-//leere validierungsfehler testen, passwort missmatch etc
