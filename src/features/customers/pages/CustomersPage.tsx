@@ -14,7 +14,7 @@ export const CustomersPage = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const goToAddCustomer = () => {
-    navigate(ROUTES.app.customers.add.path);
+    navigate(ROUTES.app.customers.create.path);
   };
 
   const desktopActions = !isMobile ? (

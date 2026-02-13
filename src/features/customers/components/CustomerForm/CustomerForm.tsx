@@ -50,7 +50,7 @@ export const CustomerForm = <T extends FieldValues>({
       <Form
         methods={methods}
         onSubmit={onSubmit}
-        formFields={config.getFields({ isEditMode })}
+        formFields={config.getFields({ isReadOnly: isEditMode })}
         formActions={
           !isEditMode && (
             <>

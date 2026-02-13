@@ -23,10 +23,11 @@ export const FormRenderer = ({ formFields }: FormRendererProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  const groups = formFields.map((group: any) => {
+  const groups = formFields.map((group: any, index: number) => {
     const columns = isMobile ? group.layout.mobile.columns : group.layout.desktop.columns;
     return (
       <Stack
+        key={group.groupName ?? index}
         gap="xs"
         p="xs"
       >

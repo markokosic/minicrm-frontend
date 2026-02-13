@@ -2,6 +2,7 @@ import { Flex, Group, SimpleGrid, Text } from '@mantine/core';
 import { AppLink } from '@/components/ui/AppLink';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
 import { ROUTES } from '@/config/routes';
+import { CustomerTabs } from '@/types/routing-types';
 import { useGetCustomers } from '../hooks/useGetCustomers';
 import { CustomerCard } from './CustomerCard/CustomerCard';
 import { CustomerCardSkeleton } from './CustomerCard/CustomerCardSkelleton';
@@ -25,7 +26,7 @@ export const CustomersList = () => {
             {data.map((customer) => (
               <AppLink
                 key={customer.id}
-                to={`${ROUTES.app.customers.path}/${customer.id}`}
+                to={`${ROUTES.app.customers.view.getHref(customer.id, CustomerTabs.GENERAL)}`}
               >
                 <CustomerCard customer={customer} />
               </AppLink>
