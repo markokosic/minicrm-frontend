@@ -1,4 +1,4 @@
-import { CustomerId } from '@/features/customers/types/customers-types';
+import { CustomerId } from '../../_ARCHIVE/customers/types/customers-types';
 
 export const ROUTES = {
   auth: {
@@ -28,13 +28,13 @@ export const ROUTES = {
       path: '/',
       getHref: () => '/',
     },
-    customers: {
-      path: '/customers',
-      getHref: () => '/customers',
+    drivers: {
+      path: '/drivers',
+      getHref: () => '/drivers',
       view: {
-        path: '/customers/:customerId/:tabValue',
-        getHref: (customerId: CustomerId, tabValue: string) =>
-          `/customers/${customerId}/${tabValue}`,
+        path: '/drivers/:driverId',
+        getHref: (driverId: CustomerId) =>
+          `/customers/${driverId}`,
       },
       edit: {
         path: '/customers/:customerId/edit',
@@ -46,17 +46,10 @@ export const ROUTES = {
       },
     },
     offers: {
-      path: '/offers',
-      getHref: () => '/offers',
+      path: '/revenues',
+      getHref: () => '/revenues',
     },
-    orders: {
-      path: '/orders',
-      getHref: () => '/orders',
-    },
-    billing: {
-      path: '/billing',
-      getHref: () => '/billing',
-    },
+
     settings: {
       path: '/settings',
       getHref: () => '/settings',

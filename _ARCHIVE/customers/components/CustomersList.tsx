@@ -1,8 +1,8 @@
 import { Flex, Group, SimpleGrid, Text } from '@mantine/core';
-import { AppLink } from '@/components/ui/AppLink';
-import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
-import { ROUTES } from '@/config/routes';
-import { CustomerTabs } from '@/types/routing-types';
+import { AppLink } from 'src/components/ui/AppLink';
+import { DataLoadingWrapper } from 'src/components/ui/DataLoadingWrapper';
+import { ROUTES } from 'src/config/routes';
+// import { CustomerTabs } from '@/types/routing-types';
 import { useGetCustomers } from '../hooks/useGetCustomers';
 import { CustomerCard } from './CustomerCard/CustomerCard';
 import { CustomerCardSkeleton } from './CustomerCard/CustomerCardSkelleton';

@@ -1,3 +1,5 @@
+export type TenantId = number;
+
 export interface FieldConfig {
   name: string;
   labelKey: string;

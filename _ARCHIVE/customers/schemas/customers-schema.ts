@@ -5,7 +5,7 @@ import {
   getNameSchema,
   getPhoneSchema,
   getVatSchema,
-} from '@/common/schemas/common-schemas';
+} from 'src/common/schemas/common-schemas';
 import { CustomerType } from '../types/customers-types';
 
 export const getConsumerDataSchema = (t: TFunction) =>

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { ADD_CUSTOMER_FORM_CONFIG } from '@/features/customers/config/customers-form-config';
-import { CustomerType } from '@/features/customers/types/customers-types';
+import { ADD_CUSTOMER_FORM_CONFIG } from '../../../../../_ARCHIVE/customers/config/customers-form-config';
+import { CustomerType } from '../../../../../_ARCHIVE/customers/types/customers-types';
 import { createTestAppWrapper } from '@/mocks/AppWrapper';
 import { FormRenderer } from '../FormRenderer';
 

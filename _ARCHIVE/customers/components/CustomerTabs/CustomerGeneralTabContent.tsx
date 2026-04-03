@@ -2,12 +2,12 @@ import { Edit, EllipsisVertical } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useMediaQuery } from '@mantine/hooks';
-import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
-import { ActionMenu } from '@/components/ui/Menu';
-import { SpeedDial } from '@/components/ui/Menu/SpeedDial';
-import { TabContentLayout } from '@/components/ui/Tab';
-import { ROUTES } from '@/config/routes';
-import { CustomerTabs } from '@/types/routing-types';
+import { DataLoadingWrapper } from 'src/components/ui/DataLoadingWrapper';
+import { ActionMenu } from 'src/components/ui/Menu';
+import { SpeedDial } from 'src/components/ui/Menu/SpeedDial';
+// import { TabContentLayout } from '@/components/ui/Tab';
+import { ROUTES } from 'src/config/routes';
+// import { CustomerTabs } from '@/types/routing-types';
 import { VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG } from '../../config/customers-form-config';
 import { useCustomerParams } from '../../hooks/useCustomerParams';
 import { useGetCustomer } from '../../hooks/useGetCustomer';
@@ -23,7 +23,8 @@ export const CustomerGeneralTabContent = () => {
   const { customerId } = useCustomerParams();
 
   const navigateToEditCustomer = () =>
-    navigate(ROUTES.app.customers.edit.getHref(customerId, CustomerTabs.GENERAL));
+    // navigate(ROUTES.app.customers.edit.getHref(customerId, CustomerTabs.GENERAL));
+null;
 
   const { data, isLoading, error } = useGetCustomer({
     id: customerId,
@@ -45,12 +46,12 @@ export const CustomerGeneralTabContent = () => {
   ];
 
   return (
-    <TabContentLayout
+    <DataLoadingWrapper
       isLoading={isLoading}
       error={error}
       isEmpty={!data}
       skeleton={<CustomerFormSkeleton />}
-      actions={actions}
+      // actions={actions}
     >
       {data && data.type === CustomerType.CONSUMER && (
         <CustomerForm
@@ -67,6 +68,6 @@ export const CustomerGeneralTabContent = () => {
           config={VIEW_AND_EDIT_CUSTOMER_FORM_CONFIG[CustomerType.BUSINESS]}
         />
       )}
-    </TabContentLayout>
+    </DataLoadingWrapper>
   );
 };
