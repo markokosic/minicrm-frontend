@@ -2,12 +2,9 @@ import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-rou
 import { AuthLayout } from '@/components/layout/AuthLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { ROUTES } from '@/config/routes';
+import { DriversPage } from '@/features/drivers/pages/DriversPage';
 import LoginPage from '../features/auth/pages/LoginPage';
 import RegisterPage from '../features/auth/pages/RegisterPage';
-import { CustomerCreatePage } from '../../_ARCHIVE/customers/pages/CustomerCreatePage';
-import { CustomerEditPage } from '../../_ARCHIVE/customers/pages/CustomerEditPage';
-import { CustomersPage } from '../../_ARCHIVE/customers/pages/CustomersPage';
-import { CustomerViewPage } from '../../_ARCHIVE/customers/pages/CustomerViewPage';
 import DashboardPage from './routes/app/DashboardPage';
 
 const router = createBrowserRouter([
@@ -34,17 +31,17 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardPage /> },
       // CUSTOMER PAGES
-      // { path: ROUTES.app.customers.path, element: <CustomersPage /> },
-      {
-        index: true,
-        path: '/customers/:customerId',
-        element: (
-          <Navigate
-            to="general"
-            replace
-          />
-        ),
-      },
+      { path: ROUTES.app.drivers.path, element: <DriversPage /> },
+      // {
+      //   index: true,
+      //   path: '/drivers/:driverId',
+      //   element: (
+      //     <Navigate
+      //       to="general"
+      //       replace
+      //     />
+      //   ),
+      // },
       // { path: ROUTES.app.customers.view.path, element: <CustomerViewPage /> },
       // { path: ROUTES.app.customers.add.path, element: <CustomerCreatePage /> },
       // { path: ROUTES.app.customers.edit.path, element: <CustomerEditPage /> },

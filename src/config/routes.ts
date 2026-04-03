@@ -40,12 +40,12 @@ export const ROUTES = {
         path: '/customers/:customerId/edit',
         getHref: (customerId: CustomerId) => `/customers/${customerId}/edit`,
       },
-      add: {
+      create: {
         path: '/customers/new',
         getHref: () => '/customers/new',
       },
     },
-    offers: {
+    revenues: {
       path: '/revenues',
       getHref: () => '/revenues',
     },
