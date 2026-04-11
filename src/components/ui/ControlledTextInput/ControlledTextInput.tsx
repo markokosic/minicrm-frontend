@@ -1,47 +1,56 @@
-import { useController, type FieldValues, type UseControllerProps } from 'react-hook-form';
+import {
+  useController,
+  useFormContext,
+  type FieldPath,
+  type FieldValues,
+  type UseControllerProps,
+} from 'react-hook-form';
 import { TextInput as $TextInput, type TextInputProps as $TextInputProps } from '@mantine/core';
 import classes from './ControlledTextInput.module.css';
 
-type TextInputProps<T extends FieldValues> = UseControllerProps<T> &
-  Omit<$TextInputProps, 'value' | 'defaultValue'> & {};
+type ControlledTextInputProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = UseControllerProps<TFieldValues, TName> &
+  Omit<$TextInputProps, 'value' | 'defaultValue' | 'name' | 'onBlur' | 'onChange'>;
 
-export const ControlledTextInput = <T extends FieldValues>({
+export const ControlledTextInput = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
   name,
-  control,
-  defaultValue,
   rules,
-  shouldUnregister,
-  onChange,
+  control,
   readOnly,
   ...props
-}: TextInputProps<T>) => {
+}: ControlledTextInputProps<TFieldValues, TName>) => {
+  const { control: contextControl } = useFormContext<TFieldValues>();
+
   const {
-    field: { value, onChange: fieldOnChange, ...field },
+    field: { value, onChange: fieldOnChange, ref, ...field },
     fieldState,
-  } = useController<T>({
+  } = useController({
     name,
-    control,
-    defaultValue,
-    rules,
-    shouldUnregister,
+    control: control ?? contextControl,
   });
 
   return (
-    <>
-      <$TextInput
-        {...field}
-        {...props}
-        value={value}
-        size="md"
-        radius="md"
-        onChange={(e) => {
-          fieldOnChange(e);
-          onChange?.(e);
-        }}
-        readOnly={readOnly}
-        error={fieldState.error?.message}
-        classNames={{ label: classes.label, input: readOnly ? classes.inputReadOnly : undefined }}
-      />
-    </>
+    <$TextInput
+      {...field}
+      {...props}
+      ref={ref}
+      value={value}
+      size="md"
+      radius="md"
+      onChange={(e) => {
+        fieldOnChange(e);
+      }}
+      readOnly={readOnly}
+      error={fieldState.error?.message}
+      classNames={{
+        label: classes.label,
+        input: readOnly ? classes.inputReadOnly : undefined,
+      }}
+    />
   );
 };

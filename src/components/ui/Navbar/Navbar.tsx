@@ -10,6 +10,25 @@ export const NavBar = () => {
   const location = useLocation();
   const { t } = useTranslation();
 
+  const createLinks = (data: NavItem[]) =>
+    data.map((item) => {
+      return (
+        <NavLink
+          styles={{
+            root: {
+              borderRadius: 'var(--mantine-radius-xl)',
+            },
+          }}
+          component={$NavLink}
+          key={item.id}
+          to={item.path}
+          label={t(item.labelKey, { ns: 'common' })}
+          active={item.href === location.pathname}
+          leftSection={<item.icon size={16} />}
+        />
+      );
+    });
+
   const navigate = useNavigate();
   const logoutMutation = useLogout({
     onSuccess: () => {
@@ -25,27 +44,6 @@ export const NavBar = () => {
   const handleLogout = () => {
     logoutMutation.mutate(undefined);
   };
-
-  const createLinks = (data: NavItem[]) =>
-    data.map((item) => {
-      return (
-        <>
-          <NavLink
-            styles={{
-              root: {
-                borderRadius: 'var(--mantine-radius-xl)',
-              },
-            }}
-            component={$NavLink}
-            key={item.id}
-            to={item.path}
-            label={t(item.labelKey, { ns: 'common' })}
-            active={item.href === location.pathname}
-            leftSection={<item.icon size={16} />}
-          />
-        </>
-      );
-    });
 
   return (
     <>

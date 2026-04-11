@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { createTestAppWrapper } from '@/mocks/AppWrapper';
 import { ADD_CUSTOMER_FORM_CONFIG } from '../../../../../_ARCHIVE/customers/config/customers-form-config';
 import { CustomerType } from '../../../../../_ARCHIVE/customers/types/customers-types';
-import { createTestAppWrapper } from '@/mocks/AppWrapper';
-import { FormRenderer } from '../FormRenderer';
+import { FormFieldRenderer } from '../FormRenderer';
 
 describe('FormRenderer', () => {
   it('renders groups and fields according to config', () => {
@@ -17,7 +17,7 @@ describe('FormRenderer', () => {
       return (
         <Wrapper>
           <FormProvider {...methods}>
-            <FormRenderer formFields={addCustomerFields} />
+            <FormFieldRenderer formFields={addCustomerFields} />
           </FormProvider>
         </Wrapper>
       );

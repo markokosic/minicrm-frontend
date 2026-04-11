@@ -1,6 +1,6 @@
 export type TenantId = number;
 
-export interface FieldConfig {
+export interface FormFieldConfig {
   name: string;
   labelKey: string;
   placeholderKey: string;

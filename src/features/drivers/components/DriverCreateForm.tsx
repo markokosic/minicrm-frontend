@@ -43,7 +43,7 @@ export const DriverCreateForm = () => {
     {
       groupName: 'form:groups.general_information',
       layout: { desktop: { columns: 2 }, mobile: { columns: 1 } },
-      fields: [{ ...DRIVERS_FORM_FIELDS.common }],
+      fields: Object.values(DRIVERS_FORM_FIELDS.common),
     },
   ];
 

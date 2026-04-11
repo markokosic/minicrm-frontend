@@ -1,29 +1,29 @@
 import { useTranslation } from 'react-i18next';
-import { Paper, SimpleGrid, Stack, Text } from '@mantine/core';
+import { SimpleGrid, Stack, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { FieldConfig } from '@/common/types/common-types';
+import { FormFieldConfig } from '@/common/types/common-types';
 import { ControlledTextInput } from '../ControlledTextInput/ControlledTextInput';
 
 type FormRendererProps = {
   formFields: FormFieldGroup[];
 };
 
-type FormFieldGroup = {
+export type FormFieldGroup = {
   groupName?: string;
   layout: { desktop: { columns: number }; mobile: { columns: number } };
-  fields: FormFieldConfigWithOptions[];
+  fields: FieldsGroup[];
 };
 
-interface FormFieldConfigWithOptions extends FieldConfig {
+export interface FieldsGroup extends FormFieldConfig {
   isDisabled?: boolean;
   allowedRoles?: string[]; //add enum later
 }
 
-export const FormRenderer = ({ formFields }: FormRendererProps) => {
+export const FormFieldRenderer = ({ formFields }: FormRendererProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  const groups = formFields.map((group: any, index: number) => {
+  const groups = formFields.map((group: FormFieldGroup, index: number) => {
     const columns = isMobile ? group.layout.mobile.columns : group.layout.desktop.columns;
     return (
       <Stack
@@ -41,7 +41,7 @@ export const FormRenderer = ({ formFields }: FormRendererProps) => {
         )}
 
         <SimpleGrid cols={columns}>
-          {group.fields.map((field: any) => {
+          {group.fields.map((field: FieldsGroup) => {
             return (
               <ControlledTextInput
                 key={field.name}
@@ -49,7 +49,7 @@ export const FormRenderer = ({ formFields }: FormRendererProps) => {
                 type={field.type}
                 label={t(field.labelKey)}
                 placeholder={t(field.placeholderKey)}
-                readOnly={field.isDisabled}
+                readOnly={field?.isDisabled ?? false}
               />
             );
           })}
