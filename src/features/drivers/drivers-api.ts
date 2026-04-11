@@ -1,14 +1,14 @@
-import { ApiResponse } from 'src/common/types/api-types';
+import { ApiResponse, PaginatedList } from 'src/common/types/api-types';
 import { api } from 'src/lib/apiClient';
 import {
-  CreateDriverPayload,
+  CreateDriverRequest,
   Driver,
   DriverId,
-  UpdateDriverPayload,
+  UpdateDriverRequest,
 } from '@/features/drivers/drivers-types';
 
 
-export const getDrivers = async (): Promise<ApiResponse<Driver[]>> => {
+export const getDrivers = async (): Promise<ApiResponse<PaginatedList<Driver[]>>> => {
   return await api.get(`/drivers`);
 };
 
@@ -25,15 +25,15 @@ export const updateDriver = async ({
   payload,
 }: {
   driverId: DriverId;
-  payload: UpdateDriverPayload;
+  payload: UpdateDriverRequest;
 }): Promise<ApiResponse<Driver>> => {
   return await api.patch(`/drivers/${driverId}`, payload);
 };
 
-export const addDriver = async ({
+export const createDriver = async ({
   payload,
 }: {
-  payload: CreateDriverPayload;
+  payload: CreateDriverRequest;
 }): Promise<ApiResponse<Driver>> => {
   return await api.post(`/drivers`, payload);
 };

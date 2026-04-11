@@ -34,15 +34,15 @@ export const ROUTES = {
       view: {
         path: '/drivers/:driverId',
         getHref: (driverId: CustomerId) =>
-          `/customers/${driverId}`,
+          `/drivers/${driverId}`,
       },
       edit: {
         path: '/customers/:customerId/edit',
         getHref: (customerId: CustomerId) => `/customers/${customerId}/edit`,
       },
       create: {
-        path: '/customers/new',
-        getHref: () => '/customers/new',
+        path: '/drivers/new',
+        getHref: () => '/drivers/new',
       },
     },
     revenues: {

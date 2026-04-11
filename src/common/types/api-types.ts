@@ -13,3 +13,13 @@ export type ApiErrorResponse = {
   message: string;
   errors?: any; // Typ je nach Fehlerstruktur, z.B. string[] oder ValidationError[]
 };
+
+export type PaginatedList<T = any[]> = {
+  content: T;
+  first: boolean;
+  last: boolean;
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+};
