@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -6,6 +7,7 @@ import { useNavigate } from 'react-router';
 import { Form } from 'src/components/ui/Form';
 import { ROUTES } from 'src/config/routes';
 import { Box, Button } from '@mantine/core';
+import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
 import { DRIVERS_FORM_FIELDS } from '../config/drivers-form-fields';
 import { getCreateDriverSchema } from '../drivers-schemas';
 import { CreateDriverRequest } from '../drivers-types';
@@ -18,6 +20,7 @@ export const DriverCreateForm = () => {
 
   const methods = useForm({
     resolver: zodResolver(getCreateDriverSchema(t)),
+    mode: 'onChange',
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -39,11 +42,33 @@ export const DriverCreateForm = () => {
     );
   };
 
+  const remunerationModelType = methods.watch('remunerationConfig.remunerationModelType' as const);
+
+  const isPercentage = remunerationModelType === RemunerationModelType.PERCENTAGE_SHARE;
+
+  const percentageFields = [
+    DRIVERS_FORM_FIELDS.remunerationConfig.minDriverPayout,
+    DRIVERS_FORM_FIELDS.remunerationConfig.driverRevenueSharePercentage,
+  ];
+
+  const fixedFields = [
+    DRIVERS_FORM_FIELDS.remunerationConfig.weeklyFixedCompanySettlement,
+    DRIVERS_FORM_FIELDS.remunerationConfig.settlementDay,
+  ];
+
   const formFields = [
     {
       groupName: 'form:groups.general_information',
       layout: { desktop: { columns: 2 }, mobile: { columns: 1 } },
       fields: Object.values(DRIVERS_FORM_FIELDS.common),
+    },
+    {
+      groupName: 'Fahrer Vergütung',
+      layout: { desktop: { columns: 2 }, mobile: { columns: 1 } },
+      fields: [
+        DRIVERS_FORM_FIELDS.remunerationConfig.remunerationModelType,
+        ...(isPercentage ? percentageFields : fixedFields),
+      ],
     },
   ];
 

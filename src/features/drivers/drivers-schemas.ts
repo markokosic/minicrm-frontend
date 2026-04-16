@@ -3,8 +3,6 @@ import { z } from 'zod';
 import { getEmailSchema, getNameSchema, getPhoneSchema } from '@/common/schemas/common-schemas';
 import { getRemunerationSchema } from '@/features/remuneration/remuneration-schemas';
 
-
-
 export const getCreateDriverSchema = (t: TFunction) =>
   z.object({
     firstName: getNameSchema(t).max(50, t('errors:driver.firstName.size')),

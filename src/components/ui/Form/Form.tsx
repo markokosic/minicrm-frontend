@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { p } from 'node_modules/react-router/dist/development/index-react-server-client-rcoGPJhU.mjs';
 import { FieldValues, FormProvider, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { ElementProps, Group, Paper, PaperProps, Stack } from '@mantine/core';
 import { FormFieldGroup, FormFieldRenderer } from './FormRenderer';
@@ -29,7 +30,9 @@ const Form = <T extends FieldValues>({
         id={id}
         maw={1020}
         {...others}
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit(onSubmit, (errors) => {
+          console.error(errors);
+        })}
         component="form"
         radius="md"
         p="sm"

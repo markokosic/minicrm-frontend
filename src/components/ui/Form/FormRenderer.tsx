@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { SimpleGrid, Stack, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { FormFieldConfig } from '@/common/types/common-types';
+import { ControlledSelect } from '../ControlledSelect/ControlledSelect';
 import { ControlledTextInput } from '../ControlledTextInput/ControlledTextInput';
 
 type FormRendererProps = {
@@ -42,16 +43,30 @@ export const FormFieldRenderer = ({ formFields }: FormRendererProps) => {
 
         <SimpleGrid cols={columns}>
           {group.fields.map((field: FieldsGroup) => {
-            return (
-              <ControlledTextInput
-                key={field.name}
-                name={field.name}
-                type={field.type}
-                label={t(field.labelKey)}
-                placeholder={t(field.placeholderKey)}
-                readOnly={field?.isDisabled ?? false}
-              />
-            );
+            switch (field.type) {
+              case 'text':
+                return (
+                  <ControlledTextInput
+                    key={field.name}
+                    name={field.name}
+                    type={field.type}
+                    label={t(field.labelKey)}
+                    placeholder={t(field.placeholderKey)}
+                    readOnly={field?.isDisabled ?? false}
+                  />
+                );
+              case 'select':
+                return (
+                  <ControlledSelect
+                    key={field.name}
+                    name={field.name}
+                    type={field.type}
+                    label={t(field.labelKey)}
+                    placeholder={t(field.placeholderKey)}
+                    readOnly={field?.isDisabled ?? false}
+                  />
+                );
+            }
           })}
         </SimpleGrid>
       </Stack>
