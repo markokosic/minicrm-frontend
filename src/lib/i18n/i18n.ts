@@ -17,15 +17,14 @@ i18n
         });
     })
   )
-  .on('failedLoading', (lng, ns, msg) => console.error(msg));
+  .on('failedLoading', (_a, _b, msg) => console.error(msg));
 
 i18n.init({
   debug: false,
   fallbackLng: 'en',
   supportedLngs: ['en'],
   defaultNS: 'common',
-  ns: ['common', 'auth', 'dashboard', 'errors', 'form', 'notifications', "remuneration", "drivers"
-  ],
+  ns: ['common', 'auth', 'dashboard', 'errors', 'form', 'notifications', 'remuneration', 'drivers'],
   interpolation: {
     escapeValue: false,
   },

@@ -1,7 +1,7 @@
 import { FormFieldsGroupConfig } from '@/common/types/common-types';
 import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
 
-export const DRIVERS_FORM_FIELDS: FormFieldsGroupConfig = {
+export const DRIVERS_FORM_FIELDS = {
   common: {
     email: {
       name: 'email',
@@ -78,4 +78,4 @@ export const DRIVERS_FORM_FIELDS: FormFieldsGroupConfig = {
       type: 'number',
     },
   },
-};
+} as const satisfies FormFieldsGroupConfig;

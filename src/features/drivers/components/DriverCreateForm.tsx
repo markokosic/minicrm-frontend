@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -21,12 +22,16 @@ export const DriverCreateForm = () => {
 
   const methods = useForm({
     resolver: zodResolver(getCreateDriverSchema(t)),
+    shouldUnregister: true,
     mode: 'onChange',
     defaultValues: {
       firstName: '',
       lastName: '',
       phone: '',
       email: '',
+      remunerationConfig: {
+        remunerationModelType: undefined,
+      },
     },
   });
 
@@ -43,19 +48,12 @@ export const DriverCreateForm = () => {
     );
   };
 
-  const remunerationModelType = methods.watch('remunerationConfig.remunerationModelType' as const);
+  const selectedType = useWatch({
+    control: methods.control,
+    name: DRIVERS_FORM_FIELDS.remunerationConfig.remunerationModelType.name as any,
+  });
 
-  const isPercentage = remunerationModelType === RemunerationModelType.PERCENTAGE_SHARE;
-
-  const percentageFields = [
-    DRIVERS_FORM_FIELDS.remunerationConfig.minDriverPayout,
-    DRIVERS_FORM_FIELDS.remunerationConfig.driverRevenueSharePercentage,
-  ];
-
-  const fixedFields = [
-    DRIVERS_FORM_FIELDS.remunerationConfig.weeklyFixedCompanySettlement,
-    DRIVERS_FORM_FIELDS.remunerationConfig.settlementDay,
-  ];
+  console.log('WATCH VALUE:', selectedType);
 
   return (
     <Box>
@@ -85,28 +83,24 @@ export const DriverCreateForm = () => {
           groupNameKey="form:groups.general_information"
         >
           <ControlledTextInput
-            key={DRIVERS_FORM_FIELDS.common.firstName.name}
             name={DRIVERS_FORM_FIELDS.common.firstName.name}
             type={DRIVERS_FORM_FIELDS.common.firstName.type}
             label={t(DRIVERS_FORM_FIELDS.common.firstName.labelKey)}
             placeholder={t(DRIVERS_FORM_FIELDS.common.firstName.placeholderKey)}
           />
           <ControlledTextInput
-            key={DRIVERS_FORM_FIELDS.common.lastName.name}
             name={DRIVERS_FORM_FIELDS.common.lastName.name}
             type={DRIVERS_FORM_FIELDS.common.lastName.type}
             label={t(DRIVERS_FORM_FIELDS.common.lastName.labelKey)}
             placeholder={t(DRIVERS_FORM_FIELDS.common.lastName.placeholderKey)}
           />
           <ControlledTextInput
-            key={DRIVERS_FORM_FIELDS.common.phone.name}
             name={DRIVERS_FORM_FIELDS.common.phone.name}
             type={DRIVERS_FORM_FIELDS.common.phone.type}
             label={t(DRIVERS_FORM_FIELDS.common.phone.labelKey)}
             placeholder={t(DRIVERS_FORM_FIELDS.common.phone.placeholderKey)}
           />
           <ControlledTextInput
-            key={DRIVERS_FORM_FIELDS.common.email.name}
             name={DRIVERS_FORM_FIELDS.common.email.name}
             type={DRIVERS_FORM_FIELDS.common.email.type}
             label={t(DRIVERS_FORM_FIELDS.common.email.labelKey)}
@@ -119,7 +113,6 @@ export const DriverCreateForm = () => {
           groupNameKey="remuneration:driver_remuneration"
         >
           <ControlledSelect
-            key={DRIVERS_FORM_FIELDS.remunerationConfig.remunerationModelType.name}
             name={DRIVERS_FORM_FIELDS.remunerationConfig.remunerationModelType.name}
             type={DRIVERS_FORM_FIELDS.remunerationConfig.remunerationModelType.type}
             label={t(DRIVERS_FORM_FIELDS.remunerationConfig.remunerationModelType.labelKey)}
@@ -137,6 +130,15 @@ export const DriverCreateForm = () => {
               },
             ]}
           />
+
+          {selectedType === RemunerationModelType.PERCENTAGE_SHARE && (
+            <ControlledTextInput
+              name={DRIVERS_FORM_FIELDS.remunerationConfig.minDriverPayout.name}
+              type={DRIVERS_FORM_FIELDS.remunerationConfig.minDriverPayout.type}
+              label={t(DRIVERS_FORM_FIELDS.remunerationConfig.minDriverPayout.labelKey)}
+              placeholder={t(DRIVERS_FORM_FIELDS.remunerationConfig.minDriverPayout.placeholderKey)}
+            />
+          )}
         </FieldGroup>
       </Form>
     </Box>
