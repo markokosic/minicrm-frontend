@@ -40,8 +40,6 @@ export const ControlledTextInput = <
       {...props}
       ref={ref}
       value={value}
-      size="md"
-      radius="md"
       onChange={(e) => {
         fieldOnChange(e);
       }}

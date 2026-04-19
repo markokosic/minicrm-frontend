@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
-import { p } from 'node_modules/react-router/dist/development/index-react-server-client-rcoGPJhU.mjs';
 import { FieldValues, FormProvider, SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { ElementProps, Group, Paper, PaperProps, Stack } from '@mantine/core';
-import { FormFieldGroup, FormFieldRenderer } from './FormRenderer';
+// import { FormFieldGroup, FormFieldRenderer } from './FormRenderer';
 
 interface FormProps<T extends FieldValues> extends PaperProps, ElementProps<'form', 'onSubmit'> {
   onSubmit: SubmitHandler<T>;
@@ -10,7 +9,7 @@ interface FormProps<T extends FieldValues> extends PaperProps, ElementProps<'for
   methods: UseFormReturn<T>;
   id?: string;
   gap?: number | string;
-  formFields: FormFieldGroup[];
+  // formFields?: FormFieldGroup[];
   formActions?: ReactNode;
 }
 
@@ -20,7 +19,7 @@ const Form = <T extends FieldValues>({
   onSubmit,
   methods,
   gap = 'md',
-  formFields,
+  // formFields,
   formActions,
   ...others
 }: FormProps<T>) => {
@@ -37,11 +36,11 @@ const Form = <T extends FieldValues>({
         radius="md"
         p="sm"
       >
-        {children ? (
-          <Stack gap={gap}>{children}</Stack>
+        <Stack gap={gap}>{children}</Stack>
+        {/* {children && !formFields ? (
         ) : (
           <FormFieldRenderer formFields={formFields} />
-        )}
+        )} */}
 
         {formActions && (
           <Group

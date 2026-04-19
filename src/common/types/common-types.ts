@@ -18,7 +18,7 @@ export interface FormFieldConfig {
     | 'radio'
     | 'date'
     | 'file';
-  options?: { value: string; labelKey: string }[];
+  options?: { value: string; label: string }[];
 }
 
 export type FormFieldsGroupConfig = Record<string, Record<string, FormFieldConfig>>;

@@ -1,4 +1,4 @@
-import { Button, createTheme, MantineColorsTuple } from '@mantine/core';
+import { Button, createTheme, MantineColorsTuple, Select, TextInput } from '@mantine/core';
 
 const myColor: MantineColorsTuple = [
   '#e4fdfc',
@@ -20,7 +20,7 @@ export const theme = createTheme({
   },
   primaryColor: 'myColor',
   // primaryShade: 6,
-  defaultRadius: 'lg',
+  defaultRadius: 'md',
   components: {
     // AppShell: {
     //   styles: {
@@ -43,7 +43,18 @@ export const theme = createTheme({
         },
       },
     }),
+    TextInput: TextInput.extend({
+      defaultProps: {
+        size: 'md',
+      },
+    }),
+    Select: Select.extend({
+      defaultProps: {
+        size: 'md',
+      },
+    }),
   },
+
   shadows: {
     xs: '0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1)',
     sm: '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)',

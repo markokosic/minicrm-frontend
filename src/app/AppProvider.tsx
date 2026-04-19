@@ -21,7 +21,7 @@ const AppProvider = ({ children: app }: AppProviderProps) => {
   return (
     <Suspense
       fallback={
-        <div className="flex h-screen w-screen items-center justify-center">loading...</div>
+        <div className="flex h-screen w-screen items-center justify-center">APP PROVIDER LOADER BLA BLA </div>
       }
     >
       <ErrorBoundary FallbackComponent={MainErrorFallback}>

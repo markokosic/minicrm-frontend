@@ -4,22 +4,22 @@ import { z } from 'zod';
 export const getNameSchema = (t: TFunction) => {
   return z
     .string()
-    .min(1, t('errors:validation.name.required'))
-    .max(100, t('errors:validation.name.too_long'));
+    .min(1, t('errors:name.required'))
+    .max(100, t('errors:name.too_long'));
 };
 
 export const getEmailSchema = (t: TFunction) => {
   return z
-    .email(t('errors:validation.email.invalid'))
-    .min(1, t('errors:validation.email.required'))
-    .max(254, t('errors:validation.email.too_long'));
+    .email(t('errors:email.invalid'))
+    .min(1, t('errors:email.required'))
+    .max(254, t('errors:email.too_long'));
 };
 
 export const getPasswordSchema = (t: TFunction) => {
   return z
     .string()
-    .min(8, t('errors:validation.password.min_length'))
-    .max(72, t('errors:validation.password.max_length'));
+    .min(8, t('errors:password.min_length'))
+    .max(72, t('errors:password.max_length'));
 };
 
 export const getPhoneSchema = (t: TFunction) => {

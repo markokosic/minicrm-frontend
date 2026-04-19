@@ -35,16 +35,16 @@ export const DRIVERS_FORM_FIELDS: FormFieldsGroupConfig = {
   remunerationConfig: {
     remunerationModelType: {
       name: 'remunerationModelType',
-      labelKey: 'remuneration:type.label',
-      placeholderKey: 'remuneration:type.placeholder',
+      labelKey: 'form:remunerationType.label',
+      placeholderKey: 'form:remunerationType.placeholder',
       type: 'select',
       options: [
         {
-          labelKey: 'remuneration:type.percentageShare',
+          label: 'remuneration:type.percentageShare',
           value: RemunerationModelType.PERCENTAGE_SHARE,
         },
         {
-          labelKey: 'remuneration:type.weeklyFixedRate',
+          label: 'remuneration:type.weeklyFixedRate',
           value: RemunerationModelType.WEEKLY_FIXED_RATE,
         },
       ],

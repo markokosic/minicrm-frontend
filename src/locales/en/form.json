@@ -39,6 +39,12 @@
     "label": "Phone",
     "placeholder": "Enter your phone number"
   },
+  "remunerationType": {
+    "label": "Remuneration type",
+    "placeholder": "Select remuneration type"
+
+  },
+  
 
   "groups": {
     "general_information": "General Information",
