@@ -1,5 +1,4 @@
 import { FormFieldsGroupConfig } from '@/common/types/common-types';
-import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
 
 export const DRIVERS_FORM_FIELDS = {
   common: {
@@ -30,52 +29,6 @@ export const DRIVERS_FORM_FIELDS = {
       placeholderKey: 'form:lastName.placeholder',
       type: 'text',
       autoComplete: 'family-name',
-    },
-  },
-  remunerationConfig: {
-    remunerationModelType: {
-      name: 'remunerationModelType',
-      labelKey: 'form:remunerationType.label',
-      placeholderKey: 'form:remunerationType.placeholder',
-      type: 'select',
-      options: [
-        {
-          label: 'remuneration:type.percentageShare',
-          value: RemunerationModelType.PERCENTAGE_SHARE,
-        },
-        {
-          label: 'remuneration:type.weeklyFixedRate',
-          value: RemunerationModelType.WEEKLY_FIXED_RATE,
-        },
-      ],
-    },
-
-    minDriverPayout: {
-      name: 'minDriverPayout',
-      labelKey: 'remuneration:minDriverPayout.label',
-      placeholderKey: 'remuneration:minDriverPayout.placeholder',
-      type: 'number',
-    },
-
-    driverRevenueSharePercentage: {
-      name: 'driverRevenueSharePercentage',
-      labelKey: 'remuneration:driverRevenueSharePercentage.label',
-      placeholderKey: 'remuneration:driverRevenueSharePercentage.placeholder',
-      type: 'number',
-    },
-
-    weeklyFixedCompanySettlement: {
-      name: 'weeklyFixedCompanySettlement',
-      labelKey: 'remuneration:weeklyFixedCompanySettlement.label',
-      placeholderKey: 'remuneration:weeklyFixedCompanySettlement.placeholder',
-      type: 'number',
-    },
-
-    settlementDay: {
-      name: 'settlementDay',
-      labelKey: 'remuneration:settlementDay.label',
-      placeholderKey: 'remuneration:settlementDay.placeholder',
-      type: 'number',
     },
   },
 } as const satisfies FormFieldsGroupConfig;

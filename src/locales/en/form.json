@@ -42,9 +42,23 @@
   "remunerationType": {
     "label": "Remuneration type",
     "placeholder": "Select remuneration type"
-
   },
-  
+  "minDriverPayout": {
+    "label": "Minimal driver payout (€)",
+    "placeholder": "Please enter minimal payout in €"
+  },
+  "driverRevenueSharePercentage": {
+    "label": "Driver share percentage (%)",
+    "placeholder": "Please enter a percentage value"
+  },
+  "weeklyFixedCompanySettlement": {
+    "label": "Weekly Fixed Settlement Amount",
+    "placeholder": "Enter the minimum weekly payout (€)"
+  },
+  "settlementDay": {
+    "label": "Settlement Day",
+    "placeholder": "Select or enter a day of the week"
+  },
 
   "groups": {
     "general_information": "General Information",

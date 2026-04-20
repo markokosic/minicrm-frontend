@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SimpleGrid, Text } from '@mantine/core';
+import { Box, SimpleGrid, Text } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
 type ColumnConfig = {
@@ -24,7 +24,7 @@ export const FieldGroup = ({
   const columns = isMobile ? columnConfig.mobile.columns : columnConfig.desktop.columns;
 
   return (
-    <>
+    <Box>
       {groupNameKey && (
         <Text
           size="lg"
@@ -34,6 +34,6 @@ export const FieldGroup = ({
         </Text>
       )}
       <SimpleGrid cols={columns}>{children}</SimpleGrid>
-    </>
+    </Box>
   );
 };

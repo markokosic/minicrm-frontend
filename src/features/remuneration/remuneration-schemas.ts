@@ -14,12 +14,5 @@ export const getRemunerationSchema = (t: TFunction) =>
         .min(0, t('errors:driver.driverRevenueSharePercentage.invalid'))
         .max(100, t('errors:driver.driverRevenueSharePercentage.invalid')),
     }),
-    z.object({
-      remunerationModelType: z.literal(RemunerationModelType.WEEKLY_FIXED_RATE),
-      weeklyFixedCompanySettlement: z.number().positive(t('errors:validation.positive')),
-      settlementDay: z
-        .number()
-        .min(1, t('errors:validation.min', { count: 1 }))
-        .max(7, t('errors:validation.max', { count: 7 })),
-    }),
+    
   ]);

@@ -1,4 +1,11 @@
-import { Button, createTheme, MantineColorsTuple, Select, TextInput } from '@mantine/core';
+import {
+  Button,
+  createTheme,
+  MantineColorsTuple,
+  NumberInput,
+  Select,
+  TextInput,
+} from '@mantine/core';
 
 const myColor: MantineColorsTuple = [
   '#e4fdfc',
@@ -44,6 +51,11 @@ export const theme = createTheme({
       },
     }),
     TextInput: TextInput.extend({
+      defaultProps: {
+        size: 'md',
+      },
+    }),
+    NumberInput: NumberInput.extend({
       defaultProps: {
         size: 'md',
       },

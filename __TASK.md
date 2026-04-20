@@ -1,3 +1,4 @@
-Verschachtelte Remuneration Config Sauber implementieren und Felder entsprechend vom Type anzeigen
+ControlledCombobox lesen und verstehen
+fortfahren mit Implementation
 
 Create Driver 

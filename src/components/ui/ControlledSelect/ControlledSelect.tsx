@@ -25,9 +25,6 @@ export const ControlledSelect = <T extends FieldValues>({
     control: control ?? contextControl,
   });
 
-  console.log(fieldState);
-  
-
   return (
     <$Select
       value={value}
@@ -36,7 +33,6 @@ export const ControlledSelect = <T extends FieldValues>({
         // onChange?.(e);
       }}
       error={fieldState.error?.message}
-    
       {...field}
       {...props}
     />
