@@ -23,7 +23,7 @@ export function useCreateDriver(options?: UseCreateDriverOptions) {
       return resp.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['customers'] });
+      queryClient.invalidateQueries({ queryKey: ['drivers'] });
     },
     ...options,
   });

@@ -2,43 +2,42 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 import { Form } from 'src/components/ui/Form';
-import { ROUTES } from 'src/config/routes';
 import { Box, Button } from '@mantine/core';
 import { getCreateDriverSchema } from '../drivers-schemas';
-import { CreateDriverRequest } from '../drivers-types';
-import { useCreateDriver } from '../hooks/useCreateDriver';
+import { Driver, UpdateDriverRequest } from '../drivers-types';
+import { useUpdateDriver } from '../hooks/useUpdateDriver';
 import { DriverForm } from './DriverForm';
 
-export const DriverCreateForm = () => {
+interface DriverUpdateFormProps {
+  driver: Driver;
+  onCancel: () => void;
+  onSuccess?: () => void;
+}
+
+export const DriverUpdateForm = ({ driver, onCancel, onSuccess }: DriverUpdateFormProps) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { mutate, isPending } = useCreateDriver({});
+  const { mutate, isPending } = useUpdateDriver();
 
   const methods = useForm({
     resolver: zodResolver(getCreateDriverSchema(t)),
-    shouldUnregister: true,
     mode: 'onChange',
     defaultValues: {
-      firstName: '',
-      lastName: '',
-      phone: '',
-      email: '',
-      remunerationConfig: {
-        remunerationModelType: undefined,
-      },
+      firstName: driver.firstName,
+      lastName: driver.lastName,
+      phone: driver.phone,
+      email: driver.email,
+      remunerationConfig: driver.remunerationConfig,
     },
   });
 
-  const onSubmit = (data: CreateDriverRequest) => {
+  const onSubmit = (data: UpdateDriverRequest) => {
     mutate(
-      { data },
+      { driverId: driver.id, data },
       {
-        onSuccess: (response) => {
-          const newId = response?.id;
-          navigate(ROUTES.app.drivers.view.getHref(newId));
-          toast.success(t('drivers:notifications.create.success'));
+        onSuccess: () => {
+          toast.success(t('drivers:notifications.edit.success'));
+          onSuccess?.();
         },
       }
     );
@@ -53,7 +52,7 @@ export const DriverCreateForm = () => {
           <>
             <Button
               variant="outline"
-              onClick={() => navigate(-1)}
+              onClick={onCancel}
             >
               {t('common:actions.cancel')}
             </Button>
@@ -62,7 +61,7 @@ export const DriverCreateForm = () => {
               loading={isPending}
               disabled={!methods.formState.isDirty || isPending}
             >
-              {t('drivers:actions.add_driver')}
+              {t('common:actions.save')}
             </Button>
           </>
         }

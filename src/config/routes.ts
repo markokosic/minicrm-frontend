@@ -1,4 +1,4 @@
-import { CustomerId } from '../../_ARCHIVE/customers/types/customers-types';
+import { DriverId } from '@/features/drivers/drivers-types';
 
 export const ROUTES = {
   auth: {
@@ -33,12 +33,8 @@ export const ROUTES = {
       getHref: () => '/drivers',
       view: {
         path: '/drivers/:driverId',
-        getHref: (driverId: CustomerId) =>
+        getHref: (driverId: DriverId) =>
           `/drivers/${driverId}`,
-      },
-      edit: {
-        path: '/customers/:customerId/edit',
-        getHref: (customerId: CustomerId) => `/customers/${customerId}/edit`,
       },
       create: {
         path: '/drivers/new',

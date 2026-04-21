@@ -1,6 +1,8 @@
 {
+  "driver": "Driver",
   "actions": {
-    "add_driver": "Add driver"
+    "add_driver": "Add driver",
+    "view_driver": "View driver"
   },
   "notifications": {
     "edit": { "success": "Successfully updated driver" },

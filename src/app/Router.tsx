@@ -3,6 +3,7 @@ import { AuthLayout } from '@/components/layout/AuthLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { ROUTES } from '@/config/routes';
 import { DriverCreatePage } from '@/features/drivers/pages/DriverCreatePage';
+import { DriverPage } from '@/features/drivers/pages/DriverPage';
 import { DriversPage } from '@/features/drivers/pages/DriversPage';
 import LoginPage from '../features/auth/pages/LoginPage';
 import RegisterPage from '../features/auth/pages/RegisterPage';
@@ -31,16 +32,10 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <DashboardPage /> },
-      // CUSTOMER PAGES
+      // DRIVER PAGES
       { path: ROUTES.app.drivers.path, element: <DriversPage /> },
-      {
-        index: true,
-        path: '/drivers/:driverId',
-      },
       { path: ROUTES.app.drivers.create.path, element: <DriverCreatePage /> },
-      // { path: ROUTES.app.customers.view.path, element: <CustomerViewPage /> },
-      // { path: ROUTES.app.customers.edit.path, element: <CustomerEditPage /> },
-      // { path: ROUTES.app.customers.edit.path, element: <CustomerEditPage /> },
+      { path: ROUTES.app.drivers.view.path, element: <DriverPage /> },
 
       // 404 NOT FOUND PAGE
       { path: '*', element: <div>Not found</div> },
