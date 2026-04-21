@@ -14,5 +14,14 @@ export const getRemunerationSchema = (t: TFunction) =>
         .min(0, t('errors:driver.driverRevenueSharePercentage.invalid'))
         .max(100, t('errors:driver.driverRevenueSharePercentage.invalid')),
     }),
-    
+    z.object({
+      remunerationModelType: z.literal(RemunerationModelType.WEEKLY_FIXED_RATE),
+      weeklyFixedCompanySettlement: z
+        .number({ error: t('errors:driver.weeklyFixedCompanySettlement.invalid') })
+        .min(0, t('errors:driver.weeklyFixedCompanySettlement.invalid')),
+      settlementDay: z
+        .number({ error: t('errors:driver.settlementDay.invalid') })
+        .min(1, t('errors:driver.settlementDay.invalid'))
+        .max(7, t('errors:driver.settlementDay.invalid')),
+    }),
   ]);

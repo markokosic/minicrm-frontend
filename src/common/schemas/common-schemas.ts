@@ -2,10 +2,7 @@ import { TFunction } from 'i18next';
 import { z } from 'zod';
 
 export const getNameSchema = (t: TFunction) => {
-  return z
-    .string()
-    .min(1, t('errors:name.required'))
-    .max(100, t('errors:name.too_long'));
+  return z.string().min(1, t('errors:name.required')).max(100, t('errors:name.too_long'));
 };
 
 export const getEmailSchema = (t: TFunction) => {
@@ -25,7 +22,7 @@ export const getPasswordSchema = (t: TFunction) => {
 export const getPhoneSchema = (t: TFunction) => {
   return z
     .string()
-    .min(1, t('errors:phone.required'))
+    .min(7, t('errors:phone.invalid_format'))
     .max(20, t('errors:phone.too_long'))
     .regex(/^\+?[0-9\s\-()]+$/, t('errors:phone.invalid_format'));
 };

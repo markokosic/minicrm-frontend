@@ -1,10 +1,12 @@
 import {
   Button,
+  Combobox,
   createTheme,
   MantineColorsTuple,
   NumberInput,
   Select,
   TextInput,
+  InputBase,
 } from '@mantine/core';
 
 const myColor: MantineColorsTuple = [
@@ -61,6 +63,16 @@ export const theme = createTheme({
       },
     }),
     Select: Select.extend({
+      defaultProps: {
+        size: 'md',
+      },
+    }),
+    Combobox: Combobox.extend({
+      defaultProps: {
+        size: 'md',
+      },
+    }),
+    InputBase: InputBase.extend({
       defaultProps: {
         size: 'md',
       },

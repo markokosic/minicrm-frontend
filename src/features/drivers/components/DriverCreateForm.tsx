@@ -55,7 +55,6 @@ export const DriverCreateForm = () => {
 
   const onSubmit = (data: CreateDriverRequest) => {
     console.log('FORM SUBMIT DATA:', data);
-
     mutate(
       { data },
       {
