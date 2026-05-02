@@ -1,6 +1,10 @@
+import { Edit, Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useSearchParams } from 'react-router';
 import { PageLayout } from 'src/components/layout/PageLayout';
+import { useMediaQuery } from '@mantine/hooks';
+import { FloatingActionButton } from '@/components/ui/Button';
+import { Action, ActionMenu } from '@/components/ui/Menu';
 import { DriverUpdateForm } from '../components/DriverUpdateForm';
 import { useGetDriver } from '../hooks/useGetDriver';
 
@@ -11,11 +15,32 @@ export const DriverPage = () => {
 
   const { data: driver, isLoading, error } = useGetDriver({ driverId: Number(driverId) });
 
-  if (isLoading) return <p>bla</p>;
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
+  if (isLoading) {
+    return <p>bla</p>;
+  }
+
+  const menuActions = [
+    {
+      label: 'Edit Driver',
+      icon: Edit,
+      onClick: () => console.log(driver),
+    },
+  ];
 
   return (
-    <PageLayout title={t('drivers:driver')}>
-      <DriverUpdateForm driver={driver} />
+    <PageLayout
+      title={t('drivers:driver')}
+      actions={<ActionMenu actions={menuActions} />}
+    >
+      <p>keko</p>
+      {driver && <DriverUpdateForm driver={driver} />}
+      {isMobile && (
+        <FloatingActionButton onClick={() => null}>
+          <Plus size={24} />
+        </FloatingActionButton>
+      )}
     </PageLayout>
   );
 };

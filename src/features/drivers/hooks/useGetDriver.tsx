@@ -7,6 +7,7 @@ export const useGetDriver = ({ driverId }: { driverId: DriverId }) => {
     queryKey: ['drivers', driverId],
     queryFn: async () => {
       const resp = await getDriver({ driverId });
+
       if (!resp?.success) {
         throw new Error(resp?.message);
       }

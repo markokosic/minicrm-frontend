@@ -11,7 +11,7 @@ import { DriverForm } from './DriverForm';
 
 interface DriverUpdateFormProps {
   driver: Driver;
-  onCancel: () => void;
+  onCancel?: () => void;
   onSuccess?: () => void;
 }
 

@@ -1,9 +1,11 @@
+import { MouseEventHandler } from 'react';
 import { EllipsisVertical, LucideIcon } from 'lucide-react';
 import { Button, Menu, MenuItemProps, MenuProps } from '@mantine/core';
 
-interface Action extends MenuItemProps {
+export interface Action extends MenuItemProps {
   label: string;
   icon: LucideIcon;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 interface ActionMenuProps extends MenuProps {
@@ -40,8 +42,8 @@ export const ActionMenu = ({ actions, isRound, ...props }: ActionMenuProps) => {
           return (
             <Menu.Item
               key={action.label}
-              leftSection={<action.icon size={14} />}
               {...action}
+              leftSection={<action.icon size={14} />}
             >
               {action.label}
             </Menu.Item>
