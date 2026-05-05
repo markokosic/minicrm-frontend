@@ -12,4 +12,7 @@ export const getCreateDriverSchema = (t: TFunction) =>
     remunerationConfig: getRemunerationSchema(t),
   });
 
+export const getUpdateDriverSchema = (t: TFunction) => getCreateDriverSchema(t).partial();
+
 export type CreateDriverRequest = z.infer<ReturnType<typeof getCreateDriverSchema>>;
+export type UpdateDriverRequest = z.infer<ReturnType<typeof getUpdateDriverSchema>>;

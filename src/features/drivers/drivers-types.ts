@@ -1,4 +1,5 @@
 import { RemunerationConfig } from '@/features/remuneration/remuneration-types';
+import { CreateDriverRequest, UpdateDriverRequest } from './drivers-schemas';
 
 export type DriverId = number;
 
@@ -8,15 +9,7 @@ export type Driver = {
   lastName: string;
   email: string;
   phone: string;
-  remunerationConfig: RemunerationConfig;
+  currentRemunerationConfig: RemunerationConfig;
 };
 
-export type CreateDriverRequest = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  remunerationConfig: RemunerationConfig;
-};
-
-export type UpdateDriverRequest = Partial<CreateDriverRequest>;
+export { type CreateDriverRequest, type UpdateDriverRequest };

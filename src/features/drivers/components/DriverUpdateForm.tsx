@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { Form } from 'src/components/ui/Form';
 import { Box, Button } from '@mantine/core';
-import { getCreateDriverSchema } from '../drivers-schemas';
+import { getUpdateDriverSchema } from '../drivers-schemas';
 import { Driver, UpdateDriverRequest } from '../drivers-types';
 import { useUpdateDriver } from '../hooks/useUpdateDriver';
 import { DriverForm } from './DriverForm';
@@ -19,21 +19,44 @@ export const DriverUpdateForm = ({ driver, onCancel, onSuccess }: DriverUpdateFo
   const { t } = useTranslation();
   const { mutate, isPending } = useUpdateDriver();
 
-  const methods = useForm({
-    resolver: zodResolver(getCreateDriverSchema(t)),
+  const methods = useForm<UpdateDriverRequest>({
+    resolver: zodResolver(getUpdateDriverSchema(t)),
     mode: 'onChange',
     defaultValues: {
       firstName: driver.firstName,
       lastName: driver.lastName,
       phone: driver.phone,
       email: driver.email,
-      remunerationConfig: driver.remunerationConfig,
+      remunerationConfig: driver.currentRemunerationConfig,
     },
   });
 
   const onSubmit = (data: UpdateDriverRequest) => {
+    const changedFields: UpdateDriverRequest = {};
+
+    Object.keys(methods.formState.dirtyFields).forEach((key) => {
+      const fieldKey = key as keyof UpdateDriverRequest;
+      if (fieldKey === 'remunerationConfig') {
+        //TODO use loadash or other deep comparison
+        if (
+          JSON.stringify(data.remunerationConfig) !==
+          JSON.stringify(driver.currentRemunerationConfig)
+        ) {
+          changedFields.remunerationConfig = data.remunerationConfig;
+        }
+      } else {
+        changedFields[fieldKey] = data[fieldKey] as any;
+      }
+    });
+
+    if (Object.keys(changedFields).length === 0) {
+      onSuccess?.();
+      return;
+    }
+
+
     mutate(
-      { driverId: driver.id, data },
+      { driverId: driver.id, data: changedFields },
       {
         onSuccess: () => {
           toast.success(t('drivers:notifications.edit.success'));

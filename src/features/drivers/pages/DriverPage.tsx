@@ -34,7 +34,6 @@ export const DriverPage = () => {
       title={t('drivers:driver')}
       actions={<ActionMenu actions={menuActions} />}
     >
-      <p>keko</p>
       {driver && <DriverUpdateForm driver={driver} />}
       {isMobile && (
         <FloatingActionButton onClick={() => null}>
