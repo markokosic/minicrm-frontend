@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { getGetAllDriversQueryKey, getGetDriverQueryKey, UpdateDriverMutationBody, useUpdateDriver } from '@/api/generated/endpoints/drivers/drivers';
 import { DriverResponse } from '@/api/generated/model';
-import { UpdateDriverBody } from '@/api/generated/zod/drivers/drivers';
+import { getUpdateDriverSchema } from '../driver-schemas';
 
 
 interface UseDriverUpdateFormProps {
@@ -34,7 +34,7 @@ export const useDriverUpdateForm = ({ driver, onCancel: _onCancel, onSuccess }: 
   });
 
   const methods = useForm<UpdateDriverMutationBody>({
-    resolver: zodResolver(UpdateDriverBody),
+    resolver: zodResolver(getUpdateDriverSchema(t)) as any,
     mode: 'onChange',
     defaultValues: {
       firstName: driver.firstName,
