@@ -8,11 +8,15 @@ export const getRemunerationSchema = (t: TFunction) =>
       remunerationModelType: z.literal(RemunerationModelType.PERCENTAGE_SHARE),
       minDriverPayout: z
         .number({ error: t('errors:driver.dailyMinPayout.invalid') })
-        .min(0, t('errors:driver.dailyMinPayout.invalid')),
+        .min(0, t('errors:driver.dailyMinPayout.invalid'))
+        .optional()
+        .nullable(),
       driverRevenueSharePercentage: z
         .number({ error: t('errors:driver.driverRevenueSharePercentage.invalid') })
         .min(0, t('errors:driver.driverRevenueSharePercentage.invalid'))
-        .max(100, t('errors:driver.driverRevenueSharePercentage.invalid')),
+        .max(100, t('errors:driver.driverRevenueSharePercentage.invalid'))
+        .optional()
+        .nullable(),
     }),
     z.object({
       remunerationModelType: z.literal(RemunerationModelType.WEEKLY_FIXED_RATE),
@@ -27,7 +31,7 @@ export const getRemunerationSchema = (t: TFunction) =>
     z.object({
       remunerationModelType: z.literal(RemunerationModelType.FLAT_RATE),
       flatRateFee: z
-        .number({ error: t('errors:driver.dailyMinPayout.invalid') })
-        .min(0, t('errors:driver.dailyMinPayout.invalid')),
+        .number({ error: t('errors:driver.flatRateFee.invalid') })
+        .min(0, t('errors:driver.flatRateFee.invalid')),
     }),
   ]);

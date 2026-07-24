@@ -56,6 +56,9 @@
     },
     "settlementDay": {
       "invalid": "Bitte wählen Sie einen Abrechnungstag aus."
+    },
+    "flatRateFee": {
+      "invalid": "Bitte geben Sie einen gültigen Betrag ein (Minimum 0)."
     }
   },
   "car": {
