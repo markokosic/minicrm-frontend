@@ -17,7 +17,7 @@ export const getCreateDriverSchema = (t: TFunction) =>
       .email(t('errors:email.invalid')),
     phone: z
       .string({ error: t('errors:phone.required') })
-      .regex(/^\+?[0-9\s\-]{7,20}$/, t('errors:phone.invalid_format')),
+      .regex(/^\+?[0-9\s-]{7,20}$/, t('errors:phone.invalid_format')),
     remunerationConfigs: z
       .array(getRemunerationSchema(t))
       .min(1, t('errors:required_field')),
@@ -40,7 +40,7 @@ export const getUpdateDriverSchema = (t: TFunction) =>
       .or(z.literal('')),
     phone: z
       .string()
-      .regex(/^\+?[0-9\s\-]{7,20}$/, t('errors:phone.invalid_format'))
+      .regex(/^\+?[0-9\s-]{7,20}$/, t('errors:phone.invalid_format'))
       .optional()
       .or(z.literal('')),
     remunerationConfigs: z
