@@ -65,6 +65,9 @@
     },
     "settlementDay": {
       "invalid": "Please select a settlement day."
+    },
+    "flatRateFee": {
+      "invalid": "Please enter a valid amount (minimum 0)."
     }
   },
 

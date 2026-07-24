@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { CreateDriverMutationBody, getGetAllDriversQueryKey, useCreateDriver } from '@/api/generated/endpoints/drivers/drivers';
 import { ROUTES } from '@/config/routes';
-import { CreateDriverBody } from '@/api/generated/zod/drivers/drivers';
+import { getCreateDriverSchema } from '../driver-schemas';
 
 
 export const useDriverCreateForm = () => {
@@ -34,8 +34,7 @@ export const useDriverCreateForm = () => {
   });
 
   const methods = useForm<CreateDriverMutationBody>({
-    resolver: zodResolver(CreateDriverBody),
-    shouldUnregister: true,
+    resolver: zodResolver(getCreateDriverSchema(t)) as any,
     mode: 'onChange',
     defaultValues: {
       firstName: '',
