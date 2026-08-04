@@ -9,10 +9,17 @@ export default defineConfig({
     globals: true,
     include: ['src/**/*.{test,spec}.{ts,tsx}'],
     setupFiles: './src/testing/setupTests.ts',
-    // coverage: {
-    //   provider: 'c8',
-    //   reporter: ['text', 'lcov', 'html'],
-    //   all: true,
-    // },
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'src/api/generated/**',
+        'src/main.tsx',
+        'src/vite-env.d.ts',
+        'src/**/*.d.ts',
+        'src/testing/**',
+        'src/mocks/**',
+      ],
+    },
   },
 });
