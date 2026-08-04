@@ -1,6 +1,4 @@
 import dayjs from 'dayjs';
-import isoWeek from 'dayjs/plugin/isoWeek';
-import { useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm, useWatch } from 'react-hook-form';
@@ -9,14 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { getGetAllDailyRevenuesQueryKey, useUpdateDailyRevenue } from '@/api/generated/endpoints/revenues/revenues';
 import {
   CarResponse as Car,
-  CreateDailyRevenueRequestDriverRemunerationType,
   DriverResponse as Driver,
 } from '@/api/generated/model';
-import { FlatRateRemunerationConfig, RemunerationModelType, WeeklyFixedRemunerationConfig } from '@/features/remuneration/remuneration-types';
 import { getCreateRevenueRecordSchema } from '../revenues-schemas';
-
-
-dayjs.extend(isoWeek);
+import { useRevenueFormCalculations } from './useRevenueFormCalculations';
 
 interface UseRevenueEditFormProps {
   revenue: any;
@@ -85,95 +79,23 @@ export const useRevenueEditForm = ({ revenue, drivers, cars, onSuccess }: UseRev
   const kilometersFrom = useWatch({ name: 'kilometersFrom', control });
   const kilometersTo = useWatch({ name: 'kilometersTo', control });
 
-  const i18nDriverRemunerationConfigMap: Record<RemunerationModelType, string> = {
-    [CreateDailyRevenueRequestDriverRemunerationType.PERCENTAGE_SHARE]: 'percentageShare',
-    [CreateDailyRevenueRequestDriverRemunerationType.WEEKLY_FIXED_RATE]: 'weeklyFixedRate',
-    [CreateDailyRevenueRequestDriverRemunerationType.FLAT_RATE]: 'flatRate',
-  };
-
-  const driver: Driver = drivers?.find((d) => d.id === driverId) as any;
-
-  const driverRemunerationConfigOptions =
-    driver?.currentRemunerationConfigs?.map((config: any) => ({
-      label: `${t(`app:remuneration.type.${i18nDriverRemunerationConfigMap[config.remunerationModelType as RemunerationModelType]}`)}`,
-      value: config.remunerationModelType,
-    })) ?? [];
-
-  const selectedConfig = driver?.currentRemunerationConfigs?.find(
-    (c) => c.remunerationModelType === selectedDriverRemunerationConfig
-  );
-
-  const isWeeklyFixedRate =
-    selectedDriverRemunerationConfig === RemunerationModelType.WEEKLY_FIXED_RATE;
-  const weeklyConfig = isWeeklyFixedRate ? (selectedConfig as WeeklyFixedRemunerationConfig) : null;
-  const isWeeklyPaymentToday = weeklyConfig && weeklyConfig.settlementDay === dayjs().isoWeekday();
-  const weekdayName = weeklyConfig
-    ? dayjs().isoWeekday(weeklyConfig.settlementDay).format('dddd')
-    : null;
-
-  // Sync revenue for flat rate
-  useEffect(() => {
-    if (
-      selectedDriverRemunerationConfig === RemunerationModelType.FLAT_RATE &&
-      tripCount &&
-      pricePerTrip
-    ) {
-      setValue('revenue', tripCount * pricePerTrip, { shouldValidate: true });
-    }
-  }, [selectedDriverRemunerationConfig, tripCount, pricePerTrip, setValue]);
-
-  // Pre-fill pricePerTrip for Flat Rate from config if not already set
-  useEffect(() => {
-    if (
-      selectedDriverRemunerationConfig === RemunerationModelType.FLAT_RATE &&
-      selectedConfig &&
-      'flatRateFee' in selectedConfig
-    ) {
-      const flatRateConfig = selectedConfig as FlatRateRemunerationConfig;
-      if (pricePerTrip === undefined || pricePerTrip === null) {
-        setValue('pricePerTrip', flatRateConfig.flatRateFee, { shouldValidate: true });
-      }
-    }
-  }, [selectedDriverRemunerationConfig, selectedConfig, pricePerTrip, setValue]);
-
-  // Set default remuneration type if driver has only one config
-  useEffect(() => {
-    if (driver?.currentRemunerationConfigs?.length === 1) {
-      setValue(
-        'driverRemunerationType',
-        driver.currentRemunerationConfigs[0].remunerationModelType as any,
-        {
-          shouldValidate: true,
-        }
-      );
-    }
-  }, [driver, setValue]);
-
-  // Calculate kilometers driven
-  useEffect(() => {
-    if (
-      kilometersFrom !== undefined &&
-      kilometersTo !== undefined &&
-      kilometersFrom !== null &&
-      kilometersTo !== null
-    ) {
-      const diff = kilometersTo - kilometersFrom;
-      if (diff >= 0) {
-        setValue('kilometersDriven', diff, { shouldValidate: true });
-      }
-    }
-  }, [kilometersFrom, kilometersTo, setValue]);
-
-  // Set weekly fixed rate settlement
-  useEffect(() => {
-    if (isWeeklyFixedRate && isWeeklyPaymentToday && weeklyConfig) {
-      setValue('companyRemuneration', weeklyConfig.weeklyFixedCompanySettlement, {
-        shouldValidate: true,
-      });
-    } else {
-      resetField('companyRemuneration');
-    }
-  }, [isWeeklyFixedRate, isWeeklyPaymentToday, weeklyConfig, resetField, setValue]);
+  const {
+    driverRemunerationConfigOptions,
+    weekdayName,
+    isWeeklyPaymentToday,
+    isWeeklyFixedRate,
+    weeklyConfig,
+  } = useRevenueFormCalculations({
+    drivers,
+    driverId,
+    selectedDriverRemunerationConfig,
+    tripCount,
+    pricePerTrip,
+    kilometersFrom,
+    kilometersTo,
+    setValue,
+    resetField,
+  });
 
   const onSubmit = (data: any) => {
     mutate({ id: revenue.id, data });

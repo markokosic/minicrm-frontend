@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Group, Select, Stack } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { useGetAllDriversForSelect } from '@/api/generated/endpoints/drivers/drivers';
+import { useDriverOptions } from '@/features/drivers/hooks/useDriverOptions';
 import { RevenueReportParams } from '../report-schema';
 
 
@@ -12,17 +12,11 @@ type ReportFiltersProps = {
 
 export const ReportFilters = ({ filters, setFilters }: ReportFiltersProps) => {
   const { t } = useTranslation(['app', 'common']);
-  const { data: drivers, isLoading: isLoadingDrivers } = useGetAllDriversForSelect();
+  const { driverOptions, isLoading: isLoadingDrivers, drivers } = useDriverOptions();
 
-  if (!drivers?.data) {
+  if (!drivers.length && !isLoadingDrivers) {
     return null;
   }
-
-  const driverOptions =
-    drivers?.data?.map((driver) => ({
-      value: driver.id?.toString() || '',
-      label: driver.fullName || '',
-    })) || [];
 
   const groupByOptions = [
     { value: 'NONE', label: t('app:reports.group_by_none') },

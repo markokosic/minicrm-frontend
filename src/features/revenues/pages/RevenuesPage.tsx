@@ -1,6 +1,6 @@
 import { PlusCircle, ReceiptEuro } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useSearchParams } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Group, Pagination, Paper, Skeleton, Stack } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useGetAllDailyRevenues } from '@/api/generated/endpoints/revenues/revenues';
@@ -8,10 +8,10 @@ import { PageLayout } from '@/components/layout/PageLayout';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
 import { ActionMenu } from '@/components/ui/Menu';
 import { SpeedDial } from '@/components/ui/Menu/SpeedDial';
+import { useUrlFilters } from '@/common/hooks/useUrlFilters';
 import { ROUTES } from '@/config/routes';
 import { RevenuesList } from '../components/RevenuesList';
 import { RevenueFilters } from '../components/RevenueFilters';
-
 
 export const RevenuesPage = () => {
   const { t } = useTranslation(['revenues', 'common', 'app' ]);
@@ -19,13 +19,13 @@ export const RevenuesPage = () => {
   const navigate = useNavigate();
   const navigateToBulkRevenues = () => navigate(ROUTES.app.revenues.createBulk.getHref());
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get('page')) || 1;
+  const { getFilter, setPage } = useUrlFilters();
+  const page = Number(getFilter('page', '1')) || 1;
   const size = 10;
 
-  const driverId = searchParams.get('driverId') ? Number(searchParams.get('driverId')) : undefined;
-  const dateFrom = searchParams.get('dateFrom') || undefined;
-  const dateTo = searchParams.get('dateTo') || undefined;
+  const driverId = getFilter('driverId') ? Number(getFilter('driverId')) : undefined;
+  const dateFrom = getFilter('dateFrom') || undefined;
+  const dateTo = getFilter('dateTo') || undefined;
 
   const {
     data: response,
@@ -103,12 +103,7 @@ export const RevenuesPage = () => {
           >
             <Pagination
               value={page}
-              onChange={(val) => {
-                setSearchParams((prev) => {
-                  prev.set('page', val.toString());
-                  return prev;
-                });
-              }}
+              onChange={(val) => setPage(val)}
               total={data.totalPages ?? 1}
               withEdges
             />

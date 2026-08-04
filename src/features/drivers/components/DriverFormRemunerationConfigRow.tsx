@@ -8,6 +8,7 @@ import { ControlledCombobox } from '@/components/ui/ControlledSelect/ControlledC
 import { FieldGroup } from '@/components/ui/Form';
 import { REMUNERATION_FORM_FIELDS } from '@/features/remuneration/config/remuneration-form-fields';
 import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
+import { useRemunerationLabels } from '@/features/remuneration/hooks/useRemunerationLabels';
 
 type DriverFormRemunerationConfigRowType = {
   index: number;
@@ -19,21 +20,7 @@ export const DriverFormRemunerationConfigRow = ({
   remove,
 }: DriverFormRemunerationConfigRowType) => {
   const { t } = useTranslation(['common', 'app' ]);
-
-  const remunerationTypes = [
-    {
-      label: t('app:remuneration.type.percentageShare'),
-      value: RemunerationModelType.PERCENTAGE_SHARE,
-    },
-    {
-      label: t('app:remuneration.type.weeklyFixedRate'),
-      value: RemunerationModelType.WEEKLY_FIXED_RATE,
-    },
-    {
-      label: t('app:remuneration.type.flatRate'),
-      value: RemunerationModelType.FLAT_RATE,
-    },
-  ];
+  const { remunerationTypeOptions: remunerationTypes } = useRemunerationLabels();
 
   const selectedType = useWatch({
     name: `remunerationConfigs.${index}.remunerationModelType`,
