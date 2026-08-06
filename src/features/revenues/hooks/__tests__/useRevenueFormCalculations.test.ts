@@ -14,12 +14,12 @@ describe('useRevenueFormCalculations', () => {
     lastName: 'Mustermann',
     email: 'max@example.com',
     phone: '12345678',
-    status: 'ACTIVE' as any,
+    status: 'ACTIVE',
     createdAt: '2026-01-01',
     updatedAt: '2026-01-01',
     currentRemunerationConfigs: [
       {
-        remunerationModelType: RemunerationModelType.FLAT_RATE as any,
+        remunerationModelType: RemunerationModelType.FLAT_RATE,
         flatRateFee: 25,
       },
     ],

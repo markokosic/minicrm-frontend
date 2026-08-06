@@ -6,12 +6,12 @@ export const useGetRevenueReport = (params: RevenueReportParams) => {
     dateFrom: params.dateFrom || '',
     dateTo: params.dateTo || '',
     driverId: params.driverId ? parseInt(params.driverId, 10) : undefined,
-    groupBy: (params.groupBy || undefined) as any,
+    groupBy: (params.groupBy || undefined) as import('@/api/generated/model').GetRevenueReportGroupBy,
   };
 
   return useGetRevenueReportGenerated<RevenueReportData>(apiParams, {
     query: {
-      select: (response) => response.data as any,
+      select: (response) => response.data as RevenueReportData,
       enabled: !!params,
     },
   });

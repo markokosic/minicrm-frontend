@@ -79,7 +79,7 @@ export const ReportFilters = ({ filters, setFilters }: ReportFiltersProps) => {
           placeholder={t('common:select_grouping')}
           data={groupByOptions}
           value={filters.groupBy}
-          onChange={(value) => setFilters({ ...filters, groupBy: value as any })}
+          onChange={(value) => setFilters({ ...filters, groupBy: value as RevenueReportParams['groupBy'] })}
         />
       </Group>
     </Stack>

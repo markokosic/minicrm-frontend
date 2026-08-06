@@ -19,9 +19,9 @@ export const RevenueFilters = () => {
   const dateTo = dateToStr ? dayjs(dateToStr).toDate() : null;
 
   const handleDriverChange = (val: string | null) => setFilter('driverId', val);
-  const handleDateFromChange = (date: any) =>
+  const handleDateFromChange = (date: Date | string | null) =>
     setFilter('dateFrom', date ? dayjs(date).format('YYYY-MM-DD') : null);
-  const handleDateToChange = (date: any) =>
+  const handleDateToChange = (date: Date | string | null) =>
     setFilter('dateTo', date ? dayjs(date).format('YYYY-MM-DD') : null);
   const handleClearAll = () => clearFilters(['driverId', 'dateFrom', 'dateTo']);
 

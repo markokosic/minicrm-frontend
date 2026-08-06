@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import {
   getGetCarResponseMock,
   getGetAllCarsResponseMock,
-  getGetDriverResponseMock,
-} from '@/mocks';
+} from '@/api/generated/endpoints/cars/cars.msw';
+import { getGetUserResponseMock } from '@/api/generated/endpoints/users/users.msw';
 
 describe('Orval Fake Data Mocks', () => {
   it('generates realistic fake car data using @faker-js/faker with optional overrides', () => {
@@ -28,8 +28,8 @@ describe('Orval Fake Data Mocks', () => {
     expect(fakeCarsResponse).toBeDefined();
   });
 
-  it('generates realistic fake driver response mock', () => {
-    const fakeDriverResponse = getGetDriverResponseMock();
-    expect(fakeDriverResponse).toBeDefined();
+  it('generates realistic fake user response mock', () => {
+    const fakeUserResponse = getGetUserResponseMock();
+    expect(fakeUserResponse).toBeDefined();
   });
 });

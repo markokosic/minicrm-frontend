@@ -3,7 +3,7 @@ import { RemunerationModelType } from '@/features/remuneration/remuneration-type
 import { getCreateRevenueRecordSchema } from '../revenues-schemas';
 
 describe('getCreateRevenueRecordSchema', () => {
-  const dummyT = ((key: string) => key) as any;
+  const dummyT = ((key: string) => key) as unknown as import('i18next').TFunction;
   const schema = getCreateRevenueRecordSchema(dummyT);
 
   it('should validate correct revenue record payload', () => {

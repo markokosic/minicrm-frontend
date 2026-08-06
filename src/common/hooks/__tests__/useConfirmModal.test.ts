@@ -3,11 +3,16 @@ import { describe, expect, it, vi } from 'vitest';
 import { renderHook } from '@/testing/testUtils';
 import { useConfirmModal } from '../useConfirmModal';
 
-vi.mock('@mantine/modals', () => ({
-  modals: {
-    openConfirmModal: vi.fn(),
-  },
-}));
+vi.mock('@mantine/modals', async () => {
+  const actual = await vi.importActual<typeof import('@mantine/modals')>('@mantine/modals');
+  return {
+    ...actual,
+    modals: {
+      ...actual.modals,
+      openConfirmModal: vi.fn(),
+    },
+  };
+});
 
 describe('useConfirmModal', () => {
   it('should call modals.openConfirmModal with correct default options', () => {

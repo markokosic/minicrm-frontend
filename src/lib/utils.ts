@@ -8,7 +8,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function mapFieldConfig(field: any, t: TFunction) {
+export interface FieldConfigInput {
+  name: string;
+  type: string;
+  labelKey: string;
+  placeholderKey: string;
+}
+
+export function mapFieldConfig(field: FieldConfigInput, t: TFunction) {
   return {
     name: field.name,
     type: field.type,

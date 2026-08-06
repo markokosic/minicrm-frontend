@@ -3,8 +3,20 @@ import * as z from 'zod';
 import i18next from 'i18next';
 
 
+interface ZodIssuePayload {
+  code: string;
+  path?: PropertyKey[];
+  expected?: unknown;
+  received?: unknown;
+  minimum?: number | bigint;
+  maximum?: number | bigint;
+  type?: string;
+  validation?: string;
+  message?: string;
+}
+
 z.config({
-  customError: (iss: any) => {
+  customError: (iss: ZodIssuePayload) => {
     const path = iss.path?.join('.');
 
     const specificKey = `errors:${path}.${iss.code}`;

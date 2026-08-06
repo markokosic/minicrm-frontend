@@ -24,7 +24,7 @@ export const CarsList = () => {
   return (
     <DataLoadingWrapper
       isLoading={isLoading}
-      error={error as any}
+      error={error as Error | null}
       isEmpty={isEmpty}
       skeleton={<CarCardSkeleton />}
     >

@@ -19,7 +19,7 @@ describe('utils', () => {
         placeholderKey: 'placeholders.test',
       };
 
-      const result = mapFieldConfig(field, mockT as any);
+      const result = mapFieldConfig(field, mockT as unknown as import('i18next').TFunction);
 
       expect(result).toEqual({
         name: 'testName',

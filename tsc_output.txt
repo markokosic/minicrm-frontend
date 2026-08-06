@@ -1,0 +1,190 @@
+src/api/generated/endpoints/drivers/drivers.faker.ts(23,170): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(25,191): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(27,191): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(31,169): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(33,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(35,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(39,166): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(41,187): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(43,187): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(47,169): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(49,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(51,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(55,169): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(57,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.faker.ts(59,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(31,170): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(33,191): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(35,191): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(39,169): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(41,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(43,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(47,166): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(49,187): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(51,187): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(55,169): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(57,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(59,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(63,169): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'FlatRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; flatRateFee: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(65,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'PercentageShareRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; driverRevenueSharePercentage: number; minDriverPayout: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/api/generated/endpoints/drivers/drivers.msw.ts(67,190): error TS2322: Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'WeeklyFixedRateRemunerationResponse'.
+  Type '{ remunerationModelType: "PERCENTAGE_SHARE" | "WEEKLY_FIXED_RATE" | "FLAT_RATE" | undefined; id: number; validFrom: string; validUntil: string; current: boolean; weeklyFixedCompanySettlement: number; settlementDay: number; }' is not assignable to type 'RemunerationConfigResponse'.
+    Types of property 'remunerationModelType' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/mocks/index.ts(14,1): error TS2308: Module '@/api/generated/endpoints/authentication/authentication.faker' has already exported a member named 'getGetMeResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(14,1): error TS2308: Module '@/api/generated/endpoints/authentication/authentication.faker' has already exported a member named 'getLoginResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(14,1): error TS2308: Module '@/api/generated/endpoints/authentication/authentication.faker' has already exported a member named 'getLogoutResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(14,1): error TS2308: Module '@/api/generated/endpoints/authentication/authentication.faker' has already exported a member named 'getRefreshAccessTokenResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(14,1): error TS2308: Module '@/api/generated/endpoints/authentication/authentication.faker' has already exported a member named 'getRegisterResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(15,1): error TS2308: Module '@/api/generated/endpoints/cars/cars.faker' has already exported a member named 'getCreateCarResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(15,1): error TS2308: Module '@/api/generated/endpoints/cars/cars.faker' has already exported a member named 'getDeleteCarResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(15,1): error TS2308: Module '@/api/generated/endpoints/cars/cars.faker' has already exported a member named 'getGetAllCarsResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(15,1): error TS2308: Module '@/api/generated/endpoints/cars/cars.faker' has already exported a member named 'getGetCarResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(15,1): error TS2308: Module '@/api/generated/endpoints/cars/cars.faker' has already exported a member named 'getUpdateCarResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getCreateDriverResponseFlatRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getCreateDriverResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getCreateDriverResponsePercentageShareRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getCreateDriverResponseWeeklyFixedRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getDeleteDriverResponseFlatRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getDeleteDriverResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getDeleteDriverResponsePercentageShareRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getDeleteDriverResponseWeeklyFixedRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getGetAllDriversForSelectResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getGetAllDriversResponseFlatRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getGetAllDriversResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getGetAllDriversResponsePercentageShareRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getGetAllDriversResponseWeeklyFixedRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getGetDriverResponseFlatRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getGetDriverResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getGetDriverResponsePercentageShareRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getGetDriverResponseWeeklyFixedRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getStopRemunerationConfigResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getUpdateDriverResponseFlatRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getUpdateDriverResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getUpdateDriverResponsePercentageShareRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(16,1): error TS2308: Module '@/api/generated/endpoints/drivers/drivers.faker' has already exported a member named 'getUpdateDriverResponseWeeklyFixedRateRemunerationResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(17,1): error TS2308: Module '@/api/generated/endpoints/reports/reports.faker' has already exported a member named 'getGetDashboardReportResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(17,1): error TS2308: Module '@/api/generated/endpoints/reports/reports.faker' has already exported a member named 'getGetRevenueReportResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(18,1): error TS2308: Module '@/api/generated/endpoints/revenues/revenues.faker' has already exported a member named 'getCreateDailyRevenuesBulkResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(18,1): error TS2308: Module '@/api/generated/endpoints/revenues/revenues.faker' has already exported a member named 'getDeleteDailyRevenueResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(18,1): error TS2308: Module '@/api/generated/endpoints/revenues/revenues.faker' has already exported a member named 'getGetAllDailyRevenuesResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(18,1): error TS2308: Module '@/api/generated/endpoints/revenues/revenues.faker' has already exported a member named 'getUpdateDailyRevenueResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(19,1): error TS2308: Module '@/api/generated/endpoints/users/users.faker' has already exported a member named 'getGetAllUsersResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.
+src/mocks/index.ts(19,1): error TS2308: Module '@/api/generated/endpoints/users/users.faker' has already exported a member named 'getGetUserResponseMock'. Consider explicitly re-exporting to resolve the ambiguity.

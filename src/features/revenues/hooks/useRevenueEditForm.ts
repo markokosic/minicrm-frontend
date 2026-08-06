@@ -7,13 +7,15 @@ import { useTranslation } from 'react-i18next';
 import { getGetAllDailyRevenuesQueryKey, useUpdateDailyRevenue } from '@/api/generated/endpoints/revenues/revenues';
 import {
   CarResponse as Car,
+  CreateDailyRevenueRequest,
+  DailyRevenueResponse,
   DriverResponse as Driver,
 } from '@/api/generated/model';
-import { getCreateRevenueRecordSchema } from '../revenues-schemas';
+import { CreateRevenueRecordRequest, getCreateRevenueRecordSchema } from '../revenues-schemas';
 import { useRevenueFormCalculations } from './useRevenueFormCalculations';
 
 interface UseRevenueEditFormProps {
-  revenue: any;
+  revenue: DailyRevenueResponse;
   drivers: Driver[];
   cars: Car[];
   onSuccess: () => void;
@@ -42,27 +44,30 @@ export const useRevenueEditForm = ({ revenue, drivers, cars, onSuccess }: UseRev
         queryClient.invalidateQueries({ queryKey: getGetAllDailyRevenuesQueryKey() });
         onSuccess();
       },
-      onError: (err: any) => {
-        const apiErrorMessage = err?.response?.data?.message || err.message || t('errors:common.unknown');
+      onError: (err: unknown) => {
+        const apiErrorMessage =
+          (err as { response?: { data?: { message?: string } }; message?: string })?.response?.data?.message ||
+          (err as { message?: string })?.message ||
+          t('errors:common.unknown');
         toast.error(apiErrorMessage);
       },
     },
   });
 
-  const methods = useForm({
+  const methods = useForm<CreateRevenueRecordRequest>({
     resolver: zodResolver(getCreateRevenueRecordSchema(t)),
     shouldUnregister: true,
     mode: 'onChange',
     defaultValues: {
-      driverId: revenue.driver?.id ?? revenue.driverId ?? undefined,
-      carId: revenue.car?.id ?? revenue.carId ?? undefined,
+      driverId: revenue.driver?.id ?? undefined,
+      carId: revenue.car?.id ?? undefined,
       date: revenue.date ? dayjs(revenue.date).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
       kilometersDriven: revenue.kilometersDriven ?? undefined,
       kilometersFrom: revenue.kilometersFrom ?? undefined,
       kilometersTo: revenue.kilometersTo ?? undefined,
       drivingStartTime: revenue.drivingStartTime ? revenue.drivingStartTime.substring(0, 5) : undefined,
       drivingEndTime: revenue.drivingEndTime ? revenue.drivingEndTime.substring(0, 5) : undefined,
-      driverRemunerationType: revenue.remunerationModelType ?? undefined,
+      driverRemunerationType: (revenue.remunerationModelType as import('@/features/remuneration/remuneration-types').RemunerationModelType) ?? undefined,
       revenue: revenue.revenue ?? undefined,
       tripCount: revenue.tripCount ?? undefined,
       pricePerTrip: revenue.pricePerTrip ?? undefined,
@@ -93,12 +98,14 @@ export const useRevenueEditForm = ({ revenue, drivers, cars, onSuccess }: UseRev
     pricePerTrip,
     kilometersFrom,
     kilometersTo,
-    setValue,
-    resetField,
+    setValue: setValue as unknown as import('react-hook-form').UseFormSetValue<import('react-hook-form').FieldValues>,
+    resetField: resetField as unknown as import('react-hook-form').UseFormResetField<import('react-hook-form').FieldValues>,
   });
 
-  const onSubmit = (data: any) => {
-    mutate({ id: revenue.id, data });
+  const onSubmit = (data: CreateRevenueRecordRequest) => {
+    if (revenue.id) {
+      mutate({ id: revenue.id, data: data as CreateDailyRevenueRequest });
+    }
   };
 
   return {

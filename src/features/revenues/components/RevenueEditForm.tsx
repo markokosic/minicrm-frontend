@@ -8,6 +8,7 @@ import { ControlledCombobox } from '@/components/ui/ControlledSelect/ControlledC
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
 import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
+import { CreateRevenueRecordRequest } from '../revenues-schemas';
 import { useRevenueEditForm } from '../hooks/useRevenueEditForm';
 
 
@@ -46,7 +47,7 @@ export const RevenueEditForm = ({
 
   return (
     <Box p="xs">
-      <Form
+      <Form<CreateRevenueRecordRequest>
         methods={methods}
         onSubmit={onSubmit}
         formActions={

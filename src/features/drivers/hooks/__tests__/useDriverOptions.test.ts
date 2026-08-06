@@ -17,7 +17,7 @@ describe('useDriverOptions', () => {
       data: undefined,
       isLoading: false,
       error: null,
-    } as any);
+    } as unknown as ReturnType<typeof driversApi.useGetAllDriversForSelect>);
 
     const { result } = renderHook(() => useDriverOptions());
 
@@ -35,7 +35,7 @@ describe('useDriverOptions', () => {
       data: { data: mockDrivers },
       isLoading: false,
       error: null,
-    } as any);
+    } as unknown as ReturnType<typeof driversApi.useGetAllDriversForSelect>);
 
     const { result } = renderHook(() => useDriverOptions());
 

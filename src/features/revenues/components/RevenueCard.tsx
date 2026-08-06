@@ -16,10 +16,12 @@ import {
 import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
 import { getTimeDuration } from '@/lib/utils';
 
+import { DailyRevenueResponse } from '@/api/generated/model';
+
 interface RevenueCardProps {
-  item: any;
-  onEdit: (item: any) => void;
-  onDelete: (item: any) => void;
+  item: DailyRevenueResponse & { licensePlate?: string; driverFirstName?: string; driverLastName?: string };
+  onEdit: (item: DailyRevenueResponse) => void;
+  onDelete: (item: DailyRevenueResponse) => void;
   getRemunerationLabel: (type: RemunerationModelType) => string;
 }
 
@@ -28,7 +30,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
 
   const carLabel = item.car?.licensePlate ?? item.licensePlate ?? t('common:car');
 
-  const exactDuration = getTimeDuration(item.drivingStartTime, item.drivingEndTime);
+  const exactDuration = getTimeDuration(item.drivingStartTime ?? '', item.drivingEndTime ?? '');
 
   const driverName = item.driver
     ? `${item.driver.firstName} ${item.driver.lastName}`
@@ -57,7 +59,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                 size="sm"
                 radius="xl"
               >
-                {getRemunerationLabel(item.remunerationModelType)}
+                {getRemunerationLabel((item.remunerationModelType as RemunerationModelType) ?? RemunerationModelType.FLAT_RATE)}
               </Badge>
             </Group>
 
@@ -183,7 +185,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                 size="xl"
                 c="teal.7"
               >
-                {item.revenue.toFixed(2)} €
+                {(item.revenue ?? 0).toFixed(2)} €
               </Text>
             </Box>
 
@@ -207,7 +209,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                   fw={600}
                   c="grape.6"
                 >
-                  {item.companyRemuneration.toFixed(2)} €
+                  {(item.companyRemuneration ?? 0).toFixed(2)} €
                 </Text>
               </Group>
 
@@ -227,7 +229,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                   fw={600}
                   c="blue.6"
                 >
-                  {item.driverRemuneration.toFixed(2)} €
+                  {(item.driverRemuneration ?? 0).toFixed(2)} €
                 </Text>
               </Group>
             </Stack>

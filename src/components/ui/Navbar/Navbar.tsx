@@ -37,7 +37,7 @@ export const NavBar = () => {
       onSuccess: () => {
         navigate(ROUTES.auth.login.path);
       },
-      onError: (error: any) => {
+      onError: (error: unknown) => {
         const errorMessage =
           error instanceof Error ? error.message : t('app:auth.logout.error');
         toast.error(errorMessage);

@@ -13,11 +13,11 @@ export type ApiErrorResponse = {
   statusCode: number;
   success: false;
   message: string;
-  errors?: any; // Typ je nach Fehlerstruktur, z.B. string[] oder ValidationError[]
+  errors?: Record<string, string[]> | string[] | unknown;
 };
 
 //TODO REFACTOR EXISTING, maybe refactor all into ZOD schema from this file
-export type PaginatedList<T = any[]> = {
+export type PaginatedList<T = unknown[]> = {
   content: T;
   first: boolean;
   last: boolean;

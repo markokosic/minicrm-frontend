@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import { UseFormResetField, UseFormSetValue } from 'react-hook-form';
+import { FieldValues, UseFormResetField, UseFormSetValue } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DriverResponse } from '@/api/generated/model';
 import {
@@ -21,8 +21,8 @@ export interface UseRevenueFormCalculationsProps {
   pricePerTrip?: number | null;
   kilometersFrom?: number | null;
   kilometersTo?: number | null;
-  setValue: UseFormSetValue<any>;
-  resetField: UseFormResetField<any>;
+  setValue: UseFormSetValue<FieldValues>;
+  resetField: UseFormResetField<FieldValues>;
   fieldPrefix?: string;
 }
 

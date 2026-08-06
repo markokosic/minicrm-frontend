@@ -17,7 +17,7 @@ describe('useCarOptions', () => {
       data: [],
       isLoading: false,
       error: null,
-    } as any);
+    } as unknown as ReturnType<typeof carsApi.useGetAllCars>);
 
     const { result } = renderHook(() => useCarOptions());
 
@@ -34,7 +34,7 @@ describe('useCarOptions', () => {
       data: mockCars,
       isLoading: false,
       error: null,
-    } as any);
+    } as unknown as ReturnType<typeof carsApi.useGetAllCars>);
 
     const { result } = renderHook(() => useCarOptions());
 

@@ -6,14 +6,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useGetAllCars } from '@/api/generated/endpoints/cars/cars';
 import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
 import { getGetAllDailyRevenuesQueryKey, useDeleteDailyRevenue } from '@/api/generated/endpoints/revenues/revenues';
-import { CarResponse as Car } from '@/api/generated/model';
+import { CarResponse as Car, DailyRevenueResponse } from '@/api/generated/model';
 import { useConfirmModal } from '@/common/hooks/useConfirmModal';
 import { useRemunerationLabels } from '@/features/remuneration/hooks/useRemunerationLabels';
 import { RevenueCard } from './RevenueCard';
 import { RevenueEditForm } from './RevenueEditForm';
 
 interface RevenuesListProps {
-  revenues: any[];
+  revenues: DailyRevenueResponse[];
 }
 
 export const RevenuesList = ({ revenues }: RevenuesListProps) => {
@@ -37,8 +37,11 @@ export const RevenuesList = ({ revenues }: RevenuesListProps) => {
         toast.success(t('common:actions.confirm'));
         queryClient.invalidateQueries({ queryKey: getGetAllDailyRevenuesQueryKey() });
       },
-      onError: (err: any) => {
-        const apiErrorMessage = err?.response?.data?.message || err.message || t('common:errors.unknown');
+      onError: (err: unknown) => {
+        const apiErrorMessage =
+          (err as { response?: { data?: { message?: string } }; message?: string })?.response?.data?.message ||
+          (err as { message?: string })?.message ||
+          t('common:errors.unknown');
         toast.error(apiErrorMessage);
       },
     },
@@ -46,7 +49,7 @@ export const RevenuesList = ({ revenues }: RevenuesListProps) => {
 
   const drivers = driversResponse?.data?.content ?? [];
 
-  const handleEdit = (revenue: any) => {
+  const handleEdit = (revenue: DailyRevenueResponse) => {
     const modalId = modals.open({
       title: t('common:actions.edit'),
       size: 'xl',
@@ -62,7 +65,7 @@ export const RevenuesList = ({ revenues }: RevenuesListProps) => {
     });
   };
 
-  const handleDelete = (revenue: any) => {
+  const handleDelete = (revenue: DailyRevenueResponse) => {
     confirm({
       title: t('common:actions.delete', 'Delete Revenue'),
       children: (
@@ -71,13 +74,15 @@ export const RevenuesList = ({ revenues }: RevenuesListProps) => {
           <strong>
             {revenue.driver
               ? `${revenue.driver.firstName} ${revenue.driver.lastName}`
-              : `${revenue.driverFirstName} ${revenue.driverLastName}`}
+              : ''}
           </strong>{' '}
           on <strong>{revenue.date}</strong>? This action cannot be undone.
         </Text>
       ),
       onConfirm: () => {
-        deleteRevenue({ id: revenue.id });
+        if (revenue.id) {
+          deleteRevenue({ id: revenue.id });
+        }
       },
     });
   };
