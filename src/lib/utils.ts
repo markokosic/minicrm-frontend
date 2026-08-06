@@ -1,11 +1,8 @@
-//TODO uninstall packages and remove file
-
 import { clsx, type ClassValue } from 'clsx';
 import { TFunction } from 'i18next';
-import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return clsx(inputs);
 }
 
 export interface FieldConfigInput {

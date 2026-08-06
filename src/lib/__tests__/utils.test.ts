@@ -1,14 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
-import { cn, createFormatters, getNumberSeparators, getTimeDuration, mapFieldConfig } from '../utils';
+import {  createFormatters, getNumberSeparators, getTimeDuration, mapFieldConfig } from '../utils';
 
 describe('utils', () => {
-  describe('cn', () => {
-    it('should merge class names correctly', () => {
-      expect(cn('px-2 py-1', 'bg-blue-500')).toBe('px-2 py-1 bg-blue-500');
-      expect(cn('px-2', 'px-4')).toBe('px-4');
-    });
-  });
-
+  
   describe('mapFieldConfig', () => {
     it('should map field config using translation function', () => {
       const mockT = vi.fn((key: string) => `translated_${key}`);

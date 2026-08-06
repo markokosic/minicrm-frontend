@@ -43,7 +43,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
       p="md"
       withBorder
       radius="md"
-      className="hover:shadow-md hover:translate-y-[-2px] transition-all duration-200"
+      shadow="xs"
     >
       <Grid
         gutter="lg"
@@ -119,7 +119,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
               {item.kilometersFrom} km{' '}
               <ArrowRight
                 size={10}
-                className="inline align-middle"
+                style={{ display: 'inline', verticalAlign: 'middle' }}
               />{' '}
               {item.kilometersTo} km
             </Text>
@@ -128,48 +128,39 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
 
         {/* 3. COLUMN: Uhrzeit gesamt & von/bis */}
         <Grid.Col span={{ base: 12, md: 3 }}>
-          <Stack gap="4px">
-            <Group
-              gap="4px"
-              c="dimmed"
-            >
-              <Clock size={14} />
+          <Stack gap="xs">
+            <Group gap="xs">
+              <Clock
+                size={14}
+                color="gray"
+              />
               <Text
-                size="xs"
+                size="sm"
                 fw={500}
               >
-                {t('app:revenues.sections.route_and_times')}
+                {exactDuration}
               </Text>
             </Group>
-
-            <Text
-              size="md"
-              fw={700}
-              c="dark.4"
-            >
-              {exactDuration}
-            </Text>
 
             <Text
               size="xs"
               c="dimmed"
             >
-              {item.drivingStartTime?.substring(0, 5) || '-'} bis{' '}
-              {item.drivingEndTime?.substring(0, 5) || '-'}
+              {item.drivingStartTime
+                ? item.drivingEndTime
+                  ? `${item.drivingStartTime.substring(0, 5)} - ${item.drivingEndTime.substring(0, 5)}`
+                  : item.drivingStartTime.substring(0, 5)
+                : '-'}
             </Text>
           </Stack>
         </Grid.Col>
 
-        {/* 4. COLUMN: Prominent Umsatz, Firmenanteil, Fahreranteil */}
-        <Grid.Col span={{ base: 12, md: 2 }}>
-          <Box
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--mantine-spacing-xs)',
-              alignItems: 'var(--align-responsive, flex-end)',
-            }}
-            className="[--align-responsive:flex-start] md:[--align-responsive:flex-end]"
+        {/* 4. COLUMN: Umsatz & Beträge */}
+        <Grid.Col span={{ base: 12, md: 3 }}>
+          <Flex
+            direction="column"
+            align={{ base: 'flex-start', md: 'flex-end' }}
+            gap="xs"
           >
             <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'inherit' }}>
               <Text
@@ -233,7 +224,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                 </Text>
               </Group>
             </Stack>
-          </Box>
+          </Flex>
         </Grid.Col>
 
         {/* 5. COLUMN: Dedizierter Platz für Actions */}
