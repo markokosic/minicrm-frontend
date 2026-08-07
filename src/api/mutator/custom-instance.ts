@@ -19,7 +19,7 @@ AXIOS_INSTANCE.interceptors.response.use(
 
       queryClient.clear();
       
-      const publicPaths = ['/login', '/register', '/reset-password'];
+      const publicPaths = ['/login', '/register'];
       const currentPath = window.location.pathname.replace(/\/$/, '');
       if (!publicPaths.includes(currentPath)) {
         window.location.replace('/login');

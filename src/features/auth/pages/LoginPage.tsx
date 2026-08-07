@@ -43,7 +43,7 @@ const LoginPage = () => {
             {t('auth.register.linkCta')}
           </Text>
         </Text>
-
+{/* 
         <Text
           component={Link}
           td="underline"
@@ -52,7 +52,7 @@ const LoginPage = () => {
           to={ROUTES.auth.resetPassword.path}
         >
           {t('auth.login.forgotPassword')}
-        </Text>
+        </Text> */}
       </Flex>
     </>
   );
