@@ -14,6 +14,7 @@ AXIOS_INSTANCE.interceptors.response.use(
     return response;
   },
   (error) => {
+    // eslint-disable-next-line no-console
     console.error('API call failed:', error);
     if (error.response?.status === 401) {
 

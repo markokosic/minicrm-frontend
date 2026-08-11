@@ -22,6 +22,7 @@ i18n
         });
     })
   )
+  // eslint-disable-next-line no-console
   .on('failedLoading', (_a, _b, msg) => console.error(msg));
 i18n.on('languageChanged', (lng) => {
   dayjs.locale(lng);

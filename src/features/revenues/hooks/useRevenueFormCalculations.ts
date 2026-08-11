@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { FieldValues, UseFormResetField, UseFormSetValue } from 'react-hook-form';
@@ -40,7 +40,7 @@ export const useRevenueFormCalculations = ({
 }: UseRevenueFormCalculationsProps) => {
   const { t } = useTranslation(['app', 'common']);
 
-  const getFieldName = (name: string) => `${fieldPrefix}${name}`;
+  const getFieldName = useCallback((name: string) => `${fieldPrefix}${name}`, [fieldPrefix]);
 
   const driver = drivers?.find((d) => d.id === driverId);
 
@@ -78,7 +78,7 @@ export const useRevenueFormCalculations = ({
         shouldValidate: true,
       });
     }
-  }, [selectedDriverRemunerationConfig, tripCount, pricePerTrip, fieldPrefix, setValue]);
+  }, [selectedDriverRemunerationConfig, tripCount, pricePerTrip, getFieldName, setValue]);
 
   // 2. Pre-fill pricePerTrip for Flat Rate from config if not already set
   useEffect(() => {
@@ -94,7 +94,7 @@ export const useRevenueFormCalculations = ({
         });
       }
     }
-  }, [selectedDriverRemunerationConfig, selectedConfig, pricePerTrip, fieldPrefix, setValue]);
+  }, [selectedDriverRemunerationConfig, selectedConfig, pricePerTrip, getFieldName, setValue]);
 
   // 3. Set default remuneration type if driver has only one config
   useEffect(() => {
@@ -105,7 +105,7 @@ export const useRevenueFormCalculations = ({
         { shouldValidate: true }
       );
     }
-  }, [driver, fieldPrefix, setValue]);
+  }, [driver, getFieldName, setValue]);
 
   // 4. Calculate kilometers driven
   useEffect(() => {
@@ -120,7 +120,7 @@ export const useRevenueFormCalculations = ({
         setValue(getFieldName('kilometersDriven'), diff, { shouldValidate: true });
       }
     }
-  }, [kilometersFrom, kilometersTo, fieldPrefix, setValue]);
+  }, [kilometersFrom, kilometersTo, getFieldName, setValue]);
 
   // 5. Set weekly fixed rate settlement
   useEffect(() => {
@@ -133,7 +133,8 @@ export const useRevenueFormCalculations = ({
     } else {
       resetField(getFieldName('companyRemuneration'));
     }
-  }, [isWeeklyFixedRate, isWeeklyPaymentToday, weeklyConfig, fieldPrefix, resetField, setValue]);
+  }, [isWeeklyFixedRate, isWeeklyPaymentToday, weeklyConfig, getFieldName, resetField, setValue]);
+
 
   return {
     driver,

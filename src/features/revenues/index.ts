@@ -8,11 +8,13 @@ export { RevenueFilters } from './components/RevenueFilters';
 export { CreateRevenueRecordsBulkForm } from './components/CreateRevenueRecordsBulkForm';
 export { RevenueEditForm } from './components/RevenueEditForm';
 export { RevenueCard } from './components/RevenueCard';
+export { RevenueRecordFormFields } from './components/RevenueRecordFormFields';
 
 // Hooks
 export { useRevenueFormOptions } from './hooks/useRevenueFormOptions';
 export { useCreateRevenueRecordsBulkForm } from './hooks/useCreateRevenueRecordsBulkForm';
 export { useRevenueEditForm } from './hooks/useRevenueEditForm';
+export { useRevenuesList } from './hooks/useRevenuesList';
 
 // Schemas & Types
 export * from './revenues-schemas';
