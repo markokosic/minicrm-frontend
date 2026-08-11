@@ -1,32 +1,55 @@
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { Paper, Skeleton, Stack, Text } from '@mantine/core';
+import { Box, Stack, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useQueryClient } from '@tanstack/react-query';
 import { useGetAllCars } from '@/api/generated/endpoints/cars/cars';
 import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
-import { getGetAllDailyRevenuesQueryKey, useDeleteDailyRevenue } from '@/api/generated/endpoints/revenues/revenues';
+import {
+  getGetAllDailyRevenuesQueryKey,
+  useDeleteDailyRevenue,
+  useGetAllDailyRevenues,
+} from '@/api/generated/endpoints/revenues/revenues';
 import { CarResponse as Car, DailyRevenueResponse } from '@/api/generated/model';
 import { useConfirmModal } from '@/common/hooks/useConfirmModal';
+import { usePagination } from '@/common/hooks/usePagination';
+import { AppPagination } from '@/components/ui/AppPagination';
+import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
 import { useRemunerationLabels } from '@/features/remuneration/hooks/useRemunerationLabels';
+import { useRevenueFilters } from '../hooks/useRevenueFilters';
 import { RevenueCard } from './RevenueCard';
 import { RevenueEditForm } from './RevenueEditForm';
+import { RevenuesListSkeleton } from './RevenuesListSkeleton';
 
-interface RevenuesListProps {
-  revenues: DailyRevenueResponse[];
-}
-
-export const RevenuesList = ({ revenues }: RevenuesListProps) => {
+export const RevenuesList = () => {
   const { t } = useTranslation(['app', 'common']);
   const { getRemunerationLabel } = useRemunerationLabels();
   const { confirm } = useConfirmModal();
+
+  const { page, pageable, setPage } = usePagination();
+  const { driverId, dateFrom, dateTo } = useRevenueFilters();
+
+  const {
+    data: response,
+    isPending: isLoadingRevenues,
+    error,
+  } = useGetAllDailyRevenues({
+    pageable,
+    driverId,
+    dateFrom,
+    dateTo,
+  });
+
+  const pageData = response?.data;
+  const revenues = pageData?.content ?? [];
+  const totalElements = pageData?.totalElements ?? 0;
 
   const { data: driversResponse, isPending: isLoadingDrivers } = useGetAllDrivers({ pageable: {} });
   const { data: cars = [], isLoading: isLoadingCars } = useGetAllCars<Car[]>(
     { pageable: {} },
     {
       query: {
-        select: (response) => response.data?.content ?? [],
+        select: (res) => res.data?.content ?? [],
       },
     }
   );
@@ -87,46 +110,51 @@ export const RevenuesList = ({ revenues }: RevenuesListProps) => {
     });
   };
 
-  if (isLoadingDrivers || isLoadingCars) {
-    return (
-      <Stack gap="md">
-        {Array.from({ length: 3 }).map((_, idx) => (
-          <Paper
-            key={idx}
-            p="md"
-            withBorder
-            radius="md"
-          >
-            <Skeleton
-              height={20}
-              width="40%"
-              mb="sm"
-            />
-            <Skeleton
-              height={50}
-              mb="sm"
-            />
-            <Skeleton
-              height={20}
-              width="20%"
-            />
-          </Paper>
-        ))}
-      </Stack>
-    );
-  }
+  const isLoading = isLoadingRevenues || isLoadingDrivers || isLoadingCars;
 
   return (
-    <Stack gap="md">
-      {revenues.map((item) => (
-        <RevenueCard
-          key={item.id}
-          item={item}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          getRemunerationLabel={getRemunerationLabel}
+    <Stack
+      style={{ height: '100%', overflow: 'hidden' }}
+      gap="xs"
+    >
+      <Box
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          minHeight: 0,
+          paddingRight: 6,
+          paddingBottom: 8,
+        }}
+      >
+        <DataLoadingWrapper
+          isLoading={isLoading}
+          error={error}
+          isEmpty={!isLoading && totalElements === 0}
+          skeleton={<RevenuesListSkeleton />}
+        >
+          <Stack gap="md">
+            {revenues.map((item) => (
+              <RevenueCard
+                key={item.id}
+                item={item}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                getRemunerationLabel={getRemunerationLabel}
+              />
+            ))}
+          </Stack>
+        </DataLoadingWrapper>
+      </Box>
+
+      <Box style={{ flexShrink: 0 }}>
+        <AppPagination
+          page={page}
+          totalPages={pageData?.totalPages}
+          onChange={setPage}
         />
-      ))}
+      </Box>
     </Stack>
   );
 };
+
+

@@ -4,7 +4,6 @@ import { DatePickerInput } from '@mantine/dates';
 import { useDriverOptions } from '@/features/drivers/hooks/useDriverOptions';
 import { RevenueReportParams } from '../report-schema';
 
-
 type ReportFiltersProps = {
   filters: RevenueReportParams;
   setFilters: (filters: RevenueReportParams) => void;

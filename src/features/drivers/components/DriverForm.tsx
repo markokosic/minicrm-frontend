@@ -1,7 +1,7 @@
 import { PlusCircle } from 'lucide-react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@mantine/core';
+import { Button, Paper, Stack, Text } from '@mantine/core';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { FieldGroup } from '@/components/ui/Form';
 import { DRIVERS_FORM_FIELDS } from '../config/drivers-form-fields';
@@ -9,7 +9,6 @@ import { DriverFormRemunerationConfigRow } from './DriverFormRemunerationConfigR
 
 export const DriverForm = () => {
   const { t } = useTranslation(['common', 'app']);
-
   const { control } = useFormContext();
 
   const { fields, append, remove } = useFieldArray({
@@ -22,7 +21,7 @@ export const DriverForm = () => {
   };
 
   return (
-    <>
+    <Stack gap="lg">
       <FieldGroup
         columnConfig={{ desktop: { columns: 2 }, mobile: { columns: 1 } }}
         groupNameKey="form.groups.general_information"
@@ -53,25 +52,32 @@ export const DriverForm = () => {
         />
       </FieldGroup>
 
-      <FieldGroup
-        columnConfig={{ desktop: { columns: 1 }, mobile: { columns: 1 } }}
-        groupNameKey="app:remuneration.driver_remuneration"
-      >
-        {fields.map((field, index) => (
-          <DriverFormRemunerationConfigRow
-            key={field.id}
-            index={index}
-            remove={remove}
-          />
-        ))}
-        <Button
-          variant="light"
-          leftSection={<PlusCircle size={18} />}
-          onClick={() => append(emptyRemunerationConfig)}
-        >
-          {t('app:remuneration.add_driver_remuneration_config')}
-        </Button>
-      </FieldGroup>
-    </>
+      <Paper withBorder shadow="xs" p="lg" radius="md">
+        <Stack gap="md">
+          <Text fw={700} size="md">
+            {t('app:remuneration.driver_remuneration')}
+          </Text>
+
+          <Stack gap="sm">
+            {fields.map((field, index) => (
+              <DriverFormRemunerationConfigRow
+                key={field.id}
+                index={index}
+                remove={remove}
+              />
+            ))}
+          </Stack>
+
+          <Button
+            variant="light"
+            leftSection={<PlusCircle size={18} />}
+            onClick={() => append(emptyRemunerationConfig)}
+            style={{ alignSelf: 'flex-start' }}
+          >
+            {t('app:remuneration.add_driver_remuneration_config')}
+          </Button>
+        </Stack>
+      </Paper>
+    </Stack>
   );
 };

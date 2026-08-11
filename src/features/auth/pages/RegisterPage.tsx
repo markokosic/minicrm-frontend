@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { Button, Center, Stack, Text, Title } from '@mantine/core';
+import { Anchor, Button, Divider, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { ROUTES } from '@/config/routes';
 import { RegisterForm } from '@/features/auth/components/RegisterForm';
 
@@ -8,36 +8,43 @@ const RegisterPage = () => {
   const { t } = useTranslation('app');
 
   return (
-    <>
-      <Center
-        pb="xl"
-        pt="xl"
-      >
-        <Stack
-          align="center"
-          gap="xs"
-        >
-          <Title order={1}>{t('auth.register.title')}</Title>
-          <Text c="dimmed">{t('auth.register.submit')}</Text>
+    <Paper withBorder shadow="sm" p="xl" radius="md">
+      <Stack gap="md">
+        {/* Top: Title & Subtitle */}
+        <Stack gap={4}>
+          <Title order={2} fw={700}>
+            {t('auth.register.title')}
+          </Title>
+          <Text c="dimmed" size="sm">
+            {t('auth.register.submit')}
+          </Text>
         </Stack>
-      </Center>
-      <RegisterForm />
 
-      <Center pt="xl">
-        <Stack
-          align="center"
-          w="100%"
-        >
-          <Text c="dimmed">{t('auth.account.existingAccount')}</Text>
-          <Button
-            fullWidth
-            variant="outline"
-          >
-            <Link to={ROUTES.auth.login.path}>{t('auth.login.title')}</Link>
-          </Button>
+        {/* Middle: Form */}
+        <RegisterForm />
+
+        {/* Social Logins Slot */}
+        <Stack gap="xs" mt="xs">
+          <Divider label="oder weiter mit" labelPosition="center" color="gray.3" />
+          <Group grow gap="xs">
+            <Button variant="default" radius="md" disabled size="xs" style={{ opacity: 0.6 }}>
+              Google
+            </Button>
+            <Button variant="default" radius="md" disabled size="xs" style={{ opacity: 0.6 }}>
+              iCloud
+            </Button>
+          </Group>
         </Stack>
-      </Center>
-    </>
+
+        {/* Bottom: Login Link */}
+        <Text size="sm" ta="center" c="dimmed" pt="xs">
+          {t('auth.account.existingAccount')}{' '}
+          <Anchor component={Link} to={ROUTES.auth.login.path} fw={600} size="sm">
+            {t('auth.login.title')}
+          </Anchor>
+        </Text>
+      </Stack>
+    </Paper>
   );
 };
 

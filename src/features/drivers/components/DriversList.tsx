@@ -1,45 +1,69 @@
-import { Flex } from '@mantine/core';
+import { Box, Flex, Stack } from '@mantine/core';
+import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
+import { DriverResponse } from '@/api/generated/model';
+import { usePagination } from '@/common/hooks/usePagination';
 import { AppLink } from '@/components/ui/AppLink';
+import { AppPagination } from '@/components/ui/AppPagination';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
 import { ROUTES } from '@/config/routes';
-import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
 import { DriverCard } from './DriverCard';
 import { DriverCardSkeleton } from './DriverCardSkeleton';
-import { DriverResponse } from '@/api/generated/model';
 
 export const DriversList = () => {
-  const { data: response, isPending: isLoading, error } = useGetAllDrivers({pageable:{}});
+  const { page, pageable, setPage } = usePagination({ defaultSize: 25 });
+  const { data: response, isPending: isLoading, error } = useGetAllDrivers({ pageable });
 
   const pageData = response?.data;
-
-  if (isLoading || !pageData) {
-    return null;
-  }
-
-  const { totalElements, content } = pageData;
+  const content = pageData?.content ?? [];
+  const totalElements = pageData?.totalElements ?? 0;
 
   return (
-    <DataLoadingWrapper
-      isLoading={isLoading}
-      error={error}
-      isEmpty={totalElements === 0}
-      skeleton={<DriverCardSkeleton />}
+    <Stack
+      style={{ height: '100%', overflow: 'hidden' }}
+      gap="xs"
     >
-      {content  && (
-        <Flex
-          gap={24}
-          wrap="wrap"
+      <Box
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          minHeight: 0,
+          paddingRight: 6,
+          paddingBottom: 8,
+        }}
+      >
+        <DataLoadingWrapper
+          isLoading={isLoading}
+          error={error}
+          isEmpty={!isLoading && totalElements === 0}
+          skeleton={<DriverCardSkeleton />}
         >
-          {content.map((driver: DriverResponse) => (
-            <AppLink
-              key={driver.id}
-              to={`${ROUTES.app.drivers.view.getHref(driver.id)}`}
+          {content && (
+            <Flex
+              gap={24}
+              wrap="wrap"
+              align="stretch"
             >
-              <DriverCard driver={driver} />
-            </AppLink>
-          ))}
-        </Flex>
-      )}
-    </DataLoadingWrapper>
+              {content.map((driver: DriverResponse) => (
+                <AppLink
+                  key={driver.id}
+                  to={`${ROUTES.app.drivers.view.getHref(driver.id)}`}
+                  style={{ display: 'flex', flexDirection: 'column' }}
+                >
+                  <DriverCard driver={driver} />
+                </AppLink>
+              ))}
+            </Flex>
+          )}
+        </DataLoadingWrapper>
+      </Box>
+
+      <Box style={{ flexShrink: 0 }}>
+        <AppPagination
+          page={page}
+          totalPages={pageData?.totalPages}
+          onChange={setPage}
+        />
+      </Box>
+    </Stack>
   );
 };

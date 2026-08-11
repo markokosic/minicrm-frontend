@@ -1,4 +1,6 @@
-import { Card, Text } from '@mantine/core';
+import { Badge, Card, Group, Stack, Text } from '@mantine/core';
+import { Car as CarIcon, Gauge, Shield } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { CarResponse as Car } from '@/api/generated/model';
 
 interface CarCardProps {
@@ -6,16 +8,68 @@ interface CarCardProps {
 }
 
 export const CarCard = ({ car }: CarCardProps) => {
+  const { t } = useTranslation(['app', 'common']);
+
+  const isStatusActive = car.status === 'ACTIVE';
+
   return (
     <Card
       shadow="sm"
       padding="lg"
+      radius="md"
       withBorder
-      miw={300}
-      mih={100}
+      h="100%"
+      w={{ base: '100%', sm: 320 }}
     >
-      <Text fw={500}>{car.brand} {car.model}</Text>
-      <Text size="sm" c="dimmed">{car.licensePlate}</Text>
+      <Stack
+        gap="xs"
+        justify="space-between"
+        style={{ height: '100%' }}
+      >
+        <Stack gap="xs">
+          {/* Top Row: Status Badge */}
+          {car.status && (
+            <Group justify="flex-start">
+              <Badge
+                variant="light"
+                color={isStatusActive ? 'green' : 'gray'}
+                size="xs"
+              >
+                {isStatusActive ? t('common:status.active', 'Aktiv') : car.status}
+              </Badge>
+            </Group>
+          )}
+
+          {/* Car Brand & Model */}
+          <Group gap="xs" wrap="nowrap">
+            <CarIcon size={18} color="var(--mantine-color-blue-6)" style={{ flexShrink: 0 }} />
+            <Text fw={600} size="md" truncate style={{ flex: 1 }}>
+              {car.brand} {car.model}
+            </Text>
+          </Group>
+
+          {/* License Plate & Horsepower Info */}
+          <Stack gap="4px">
+            {car.licensePlate && (
+              <Group gap="xs" c="dimmed" wrap="nowrap">
+                <Shield size={14} style={{ flexShrink: 0 }} />
+                <Text size="xs" fw={500} truncate style={{ wordBreak: 'break-all' }}>
+                  {car.licensePlate}
+                </Text>
+              </Group>
+            )}
+
+            {car.horsepower && (
+              <Group gap="xs" c="dimmed" wrap="nowrap">
+                <Gauge size={14} style={{ flexShrink: 0 }} />
+                <Text size="xs" truncate>
+                  {car.horsepower} {car.horsepower.toLowerCase().includes('ps') || car.horsepower.toLowerCase().includes('hp') ? '' : 'PS'}
+                </Text>
+              </Group>
+            )}
+          </Stack>
+        </Stack>
+      </Stack>
     </Card>
   );
 };

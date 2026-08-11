@@ -1,8 +1,18 @@
+import { ChevronRight, LogOut, User } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { NavLink as $NavLink, useLocation, useNavigate } from 'react-router';
-import { Avatar, Box, Divider, Group, Menu, NavLink, Stack, Text, UnstyledButton } from '@mantine/core';
-import { ChevronRight, LogOut, User } from 'lucide-react';
+import {
+  Avatar,
+  Box,
+  Divider,
+  Group,
+  Menu,
+  NavLink,
+  Stack,
+  Text,
+  UnstyledButton,
+} from '@mantine/core';
 import { NAV_ITEMS, NavItem } from '@/config/navigation';
 import { ROUTES } from '@/config/routes';
 import { useAuth } from '@/features/auth/hooks/useAuth';
@@ -11,7 +21,7 @@ export const NavBar = () => {
   const location = useLocation();
   const { t } = useTranslation(['common', 'app']);
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
     logout(undefined, {
@@ -19,16 +29,22 @@ export const NavBar = () => {
         navigate(ROUTES.auth.login.path);
       },
       onError: (error: unknown) => {
-        const errorMessage =
-          error instanceof Error ? error.message : t('app:auth.logout.error');
+        const errorMessage = error instanceof Error ? error.message : t('app:auth.logout.error');
         toast.error(errorMessage);
       },
     });
   };
 
+  const isNavActive = (itemHref: string, currentPath: string) => {
+    if (itemHref === '/' || itemHref === '') {
+      return currentPath === itemHref;
+    }
+    return currentPath === itemHref || currentPath.startsWith(`${itemHref}/`);
+  };
+
   const createLinks = (data: NavItem[]) =>
     data.map((item) => {
-      const isActive = item.href === location.pathname;
+      const isActive = isNavActive(item.href, location.pathname);
       return (
         <NavLink
           component={$NavLink}
@@ -36,7 +52,12 @@ export const NavBar = () => {
           to={item.path}
           label={t(item.labelKey, { ns: 'common' })}
           active={isActive}
-          leftSection={<item.icon size={18} strokeWidth={isActive ? 2.2 : 1.7} />}
+          leftSection={
+            <item.icon
+              size={18}
+              strokeWidth={isActive ? 2.2 : 1.7}
+            />
+          }
           styles={{
             root: {
               borderRadius: 'var(--mantine-radius-md)',
@@ -58,8 +79,22 @@ export const NavBar = () => {
       );
     });
 
+  const displayName = user?.firstName
+    ? `${user.firstName} ${user.lastName ?? ''}`.trim()
+    : user?.email ?? t('common:user');
+
+  const initials =
+    user?.firstName && user?.lastName
+      ? `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
+      : user?.firstName
+        ? user.firstName[0].toUpperCase()
+        : null;
+
   return (
-    <Stack justify="space-between" h="100%">
+    <Stack
+      justify="space-between"
+      h="100%"
+    >
       <Box>
         <Box mb="md">
           <Text
@@ -76,7 +111,10 @@ export const NavBar = () => {
           {createLinks(NAV_ITEMS.general)}
         </Box>
 
-        <Divider my="md" color="gray.2" />
+        <Divider
+          my="md"
+          color="gray.2"
+        />
 
         <Box>
           <Text
@@ -95,8 +133,16 @@ export const NavBar = () => {
       </Box>
 
       <Box pt="sm">
-        <Divider mb="md" color="gray.2" />
-        <Menu position="top-end" shadow="md" width={220} radius="md">
+        <Divider
+          mb="md"
+          color="gray.2"
+        />
+        <Menu
+          position="top-end"
+          shadow="md"
+          width={240}
+          radius="md"
+        >
           <Menu.Target>
             <UnstyledButton
               style={{
@@ -107,24 +153,44 @@ export const NavBar = () => {
               }}
               className="user-menu-btn"
             >
-              <Group justify="space-between">
-                <Group gap="sm">
-                  <Avatar color="blue" radius="xl" size="sm">
-                    <User size={16} />
+              <Group justify="space-between" wrap="nowrap">
+                <Group gap="sm" wrap="nowrap" style={{ overflow: 'hidden' }}>
+                  <Avatar
+                    color="blue"
+                    radius="xl"
+                    size="sm"
+                  >
+                    {initials ?? <User size={16} />}
                   </Avatar>
-                  <Box style={{ flex: 1 }}>
-                    <Text size="sm" fw={600} lineClamp={1}>
-                      {t('common:user')}
+                  <Box style={{ flex: 1, minWidth: 0 }}>
+                    <Text
+                      size="sm"
+                      fw={600}
+                      truncate="end"
+                    >
+                      {displayName}
                     </Text>
+                    {user?.email && (
+                      <Text
+                        size="xs"
+                        c="dimmed"
+                        truncate="end"
+                      >
+                        {user.email}
+                      </Text>
+                    )}
                   </Box>
                 </Group>
-                <ChevronRight size={16} style={{ opacity: 0.5 }} />
+                <ChevronRight
+                  size={16}
+                  style={{ opacity: 0.5, flexShrink: 0 }}
+                />
               </Group>
             </UnstyledButton>
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Label>{t('common:user')}</Menu.Label>
+            <Menu.Label>{displayName}</Menu.Label>
             <Menu.Item
               color="red"
               leftSection={<LogOut size={16} />}

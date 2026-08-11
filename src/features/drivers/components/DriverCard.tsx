@@ -1,20 +1,99 @@
-import { Card } from '@mantine/core';
+import { Badge, Card, Group, Stack, Text } from '@mantine/core';
+import { Mail, Phone, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { DriverResponse } from '@/api/generated/model';
+import { useRemunerationLabels } from '@/features/remuneration/hooks/useRemunerationLabels';
+import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
 
 interface DriverCardProps {
   driver: DriverResponse;
 }
 
 export const DriverCard = ({ driver }: DriverCardProps) => {
+  const { t } = useTranslation(['app', 'common']);
+  const { getRemunerationLabel } = useRemunerationLabels();
+
+  const isStatusActive = driver.status === 'ACTIVE';
+
   return (
     <Card
       shadow="sm"
       padding="lg"
+      radius="md"
       withBorder
-      miw={300}
-      mih={100}
+      h="100%"
+      w={{ base: '100%', sm: 320 }}
     >
-      {driver.firstName} {driver.lastName}
+      <Stack
+        gap="xs"
+        justify="space-between"
+        style={{ height: '100%' }}
+      >
+        <Stack gap="xs">
+          {/* Top Row: Status Badge */}
+          {driver.status && (
+            <Group justify="flex-start">
+              <Badge
+                variant="light"
+                color={isStatusActive ? 'green' : 'gray'}
+                size="xs"
+              >
+                {isStatusActive ? t('common:status.active', 'Aktiv') : driver.status}
+              </Badge>
+            </Group>
+          )}
+
+          {/* Driver Name */}
+          <Group gap="xs" wrap="nowrap">
+            <User size={18} color="var(--mantine-color-blue-6)" style={{ flexShrink: 0 }} />
+            <Text fw={600} size="md" truncate style={{ flex: 1 }}>
+              {driver.firstName} {driver.lastName}
+            </Text>
+          </Group>
+
+          {/* Contact Info: Email & Phone */}
+          <Stack gap="4px">
+            {driver.email && (
+              <Group gap="xs" c="dimmed" wrap="nowrap">
+                <Mail size={14} style={{ flexShrink: 0 }} />
+                <Text size="xs" truncate>
+                  {driver.email}
+                </Text>
+              </Group>
+            )}
+
+            {driver.phone && (
+              <Group gap="xs" c="dimmed" wrap="nowrap">
+                <Phone size={14} style={{ flexShrink: 0 }} />
+                <Text size="xs" truncate>
+                  {driver.phone}
+                </Text>
+              </Group>
+            )}
+          </Stack>
+        </Stack>
+
+        {/* Remuneration Badges */}
+        {driver.currentRemunerationConfigs && driver.currentRemunerationConfigs.length > 0 && (
+          <Group gap="xs" mt="xs">
+            {driver.currentRemunerationConfigs.map((config, idx) => {
+              const type = config.remunerationModelType as RemunerationModelType;
+              const label = getRemunerationLabel(type);
+              return (
+                <Badge
+                  key={idx}
+                  variant="filled"
+                  color="indigo"
+                  size="xs"
+                  radius="xl"
+                >
+                  {label}
+                </Badge>
+              );
+            })}
+          </Group>
+        )}
+      </Stack>
     </Card>
   );
 };

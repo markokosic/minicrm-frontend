@@ -1,16 +1,22 @@
-import { Flex } from '@mantine/core';
+import { Box, Flex, Stack } from '@mantine/core';
 import { useGetAllCars } from '@/api/generated/endpoints/cars/cars';
 import { CarResponse, PageResponseCarResponse } from '@/api/generated/model';
+import { usePagination } from '@/common/hooks/usePagination';
 import { AppLink } from '@/components/ui/AppLink';
+import { AppPagination } from '@/components/ui/AppPagination';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
 import { ROUTES } from '@/config/routes';
 import { CarCard } from './CarCard';
 import { CarCardSkeleton } from './CarCardSkeleton';
 
-
 export const CarsList = () => {
-  const { data: paginationData, isLoading, error } = useGetAllCars<PageResponseCarResponse>(
-    { pageable: {} },
+  const { page, pageable, setPage } = usePagination({ defaultSize: 25 });
+  const {
+    data: paginationData,
+    isLoading,
+    error,
+  } = useGetAllCars<PageResponseCarResponse>(
+    { pageable },
     {
       query: {
         select: (response) => response.data!,
@@ -19,30 +25,57 @@ export const CarsList = () => {
   );
 
   const cars = paginationData?.content || [];
-  const isEmpty = !paginationData?.totalElements || paginationData.totalElements === 0;
+  const isEmpty =
+    !isLoading && (!paginationData?.totalElements || paginationData.totalElements === 0);
 
   return (
-    <DataLoadingWrapper
-      isLoading={isLoading}
-      error={error as Error | null}
-      isEmpty={isEmpty}
-      skeleton={<CarCardSkeleton />}
+    <Stack
+      style={{ height: '100%', overflow: 'hidden' }}
+      gap="xs"
     >
-      {cars.length > 0 && (
-        <Flex
-          gap={24}
-          wrap="wrap"
+      <Box
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          minHeight: 0,
+          paddingRight: 6,
+          paddingBottom: 8,
+        }}
+      >
+        <DataLoadingWrapper
+          isLoading={isLoading}
+          error={error as Error | null}
+          isEmpty={isEmpty}
+          skeleton={<CarCardSkeleton />}
         >
-          {cars.map((car: CarResponse) => (
-            <AppLink
-              key={car.id}
-              to={`${ROUTES.app.cars.view.getHref(car.id!)}`}
+          {cars.length > 0 && (
+            <Flex
+              gap={24}
+              wrap="wrap"
+              align="stretch"
             >
-              <CarCard car={car} />
-            </AppLink>
-          ))}
-        </Flex>
-      )}
-    </DataLoadingWrapper>
+              {cars.map((car: CarResponse) => (
+                <AppLink
+                  key={car.id}
+                  to={`${ROUTES.app.cars.view.getHref(car.id!)}`}
+                  style={{ display: 'flex', flexDirection: 'column' }}
+                >
+                  <CarCard car={car} />
+                </AppLink>
+              ))}
+            </Flex>
+          )}
+        </DataLoadingWrapper>
+      </Box>
+
+      <Box style={{ flexShrink: 0 }}>
+        <AppPagination
+          page={page}
+          totalPages={paginationData?.totalPages}
+          onChange={setPage}
+        />
+      </Box>
+    </Stack>
   );
 };
+

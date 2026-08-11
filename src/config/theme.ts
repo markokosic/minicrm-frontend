@@ -78,7 +78,7 @@ export const theme = createTheme({
     Card: Card.extend({
       defaultProps: {
         shadow: 'sm',
-        radius: 'lg',
+        radius: 'md',
         withBorder: true,
       },
       styles: {
@@ -95,7 +95,7 @@ export const theme = createTheme({
     Paper: Paper.extend({
       defaultProps: {
         shadow: 'xs',
-        radius: 'lg',
+        radius: 'md',
         withBorder: true,
       },
     }),

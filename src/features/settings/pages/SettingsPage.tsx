@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { Paper, Stack, Title, Divider } from '@mantine/core';
-import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher/LanguageSwitcher';
+import { Divider, Paper, SimpleGrid, Stack, Title } from '@mantine/core';
 import { PageLayout } from '@/components/layout/PageLayout';
+import { ColorSchemeSwitcher } from '@/components/ui/ColorSchemeSwitcher';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher/LanguageSwitcher';
 
 const SettingsPage = () => {
   const { t } = useTranslation();
@@ -9,13 +10,26 @@ const SettingsPage = () => {
   return (
     <PageLayout title={t('common:settings', 'Settings')}>
       <Stack gap="lg">
-        <Paper withBorder p="md" >
+        <Paper
+          withBorder
+          p="lg"
+          radius="md"
+        >
           <Stack gap="md">
-            <Title order={3} size="h4">
-              {t('common:appearance', 'Appearance')}
+            <Title
+              order={3}
+              size="h4"
+            >
+              {t('common:appearance', 'Erscheinungsbild')}
             </Title>
-            <Divider />
-            <LanguageSwitcher />
+            <Divider color="gray.2" />
+            <SimpleGrid
+              cols={{ base: 1, sm: 1 }}
+              spacing="lg"
+            >
+              <LanguageSwitcher />
+              <ColorSchemeSwitcher />
+            </SimpleGrid>
           </Stack>
         </Paper>
       </Stack>

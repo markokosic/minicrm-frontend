@@ -20,20 +20,8 @@ const AppLayout = ({ overlayVisible: _overlayVisible }: AppLayoutProps) => {
         collapsed: { mobile: !opened },
       }}
       padding="lg"
-      styles={{
-        main: {
-          backgroundColor: 'var(--mantine-color-gray-0)',
-          minHeight: '100vh',
-        },
-      }}
     >
-      <AppShell.Header
-        style={{
-          backdropFilter: 'blur(12px)',
-          backgroundColor: 'rgba(255, 255, 255, 0.85)',
-          borderColor: 'var(--mantine-color-gray-2)',
-        }}
-      >
+      <AppShell.Header>
         <Group h="100%" px="lg" justify="space-between">
           <Group gap="md">
             <Burger
@@ -54,18 +42,29 @@ const AppLayout = ({ overlayVisible: _overlayVisible }: AppLayoutProps) => {
         </Group>
       </AppShell.Header>
 
-      <AppShell.Navbar
-        p="md"
-        style={{
-          borderColor: 'var(--mantine-color-gray-2)',
-          backgroundColor: '#ffffff',
-        }}
-      >
+      <AppShell.Navbar p="md">
         <NavBar />
       </AppShell.Navbar>
 
-      <AppShell.Main>
-        <Box style={{ maxWidth: 1280, margin: '0 auto' }}>
+      <AppShell.Main
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: 'calc(100vh - 64px)',
+          overflow: 'hidden',
+        }}
+      >
+        <Box
+          style={{
+            maxWidth: 1280,
+            width: '100%',
+            margin: '0 auto',
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+          }}
+        >
           <Outlet />
         </Box>
       </AppShell.Main>
