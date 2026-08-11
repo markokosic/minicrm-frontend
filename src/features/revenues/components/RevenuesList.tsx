@@ -15,7 +15,7 @@ import { useConfirmModal } from '@/common/hooks/useConfirmModal';
 import { usePagination } from '@/common/hooks/usePagination';
 import { AppPagination } from '@/components/ui/AppPagination';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
-import { useRemunerationLabels } from '@/features/remuneration/hooks/useRemunerationLabels';
+import { useRemunerationLabels } from '@/features/remuneration';
 import { useRevenueFilters } from '../hooks/useRevenueFilters';
 import { RevenueCard } from './RevenueCard';
 import { RevenueEditForm } from './RevenueEditForm';

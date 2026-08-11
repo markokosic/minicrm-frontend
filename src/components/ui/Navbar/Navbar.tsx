@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { NAV_ITEMS, NavItem } from '@/config/navigation';
 import { ROUTES } from '@/config/routes';
-import { useAuth } from '@/features/auth/hooks/useAuth';
+import { useAuth } from '@/features/auth';
 
 export const NavBar = () => {
   const location = useLocation();

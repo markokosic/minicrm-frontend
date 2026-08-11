@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Group, Select, Stack } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { useDriverOptions } from '@/features/drivers/hooks/useDriverOptions';
+import { useDriverOptions } from '@/features/drivers';
 import { RevenueReportParams } from '../report-schema';
 
 type ReportFiltersProps = {

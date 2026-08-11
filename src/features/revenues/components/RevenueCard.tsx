@@ -141,7 +141,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                 size="xs"
                 fw={500}
               >
-                Dauer
+                {t('common:duration', 'Dauer')}
               </Text>
             </Group>
 
@@ -179,7 +179,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                 fw={500}
                 lts="0.5px"
               >
-                UMSATZ
+                {t('common:revenue', 'Umsatz').toUpperCase()}
               </Text>
               <Text
                 fw={800}
@@ -204,7 +204,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                   size="xs"
                   c="dimmed"
                 >
-                  Firma:
+                  {t('common:company', 'Firma')}:
                 </Text>
                 <Text
                   size="xs"
@@ -224,7 +224,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                   size="xs"
                   c="dimmed"
                 >
-                  Fahrer:
+                  {t('common:driver', 'Fahrer')}:
                 </Text>
                 <Text
                   size="xs"
@@ -235,6 +235,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                 </Text>
               </Group>
             </Stack>
+
           </Flex>
         </Grid.Col>
 

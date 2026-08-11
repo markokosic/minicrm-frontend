@@ -5,9 +5,11 @@ import { ActionIcon, Box, Group, SimpleGrid, Stack, Text } from '@mantine/core';
 import { DAYS_OF_THE_WEEK } from '@/common/constants';
 import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
 import { ControlledCombobox } from '@/components/ui/ControlledSelect/ControlledCombobox';
-import { REMUNERATION_FORM_FIELDS } from '@/features/remuneration/config/remuneration-form-fields';
-import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
-import { useRemunerationLabels } from '@/features/remuneration/hooks/useRemunerationLabels';
+import {
+  REMUNERATION_FORM_FIELDS,
+  RemunerationModelType,
+  useRemunerationLabels,
+} from '@/features/remuneration';
 
 type DriverFormRemunerationConfigRowType = {
   index: number;

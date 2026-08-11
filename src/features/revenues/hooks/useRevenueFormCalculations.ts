@@ -8,8 +8,8 @@ import {
   FlatRateRemunerationConfig,
   RemunerationModelType,
   WeeklyFixedRemunerationConfig,
-} from '@/features/remuneration/remuneration-types';
-import { i18nDriverRemunerationConfigMap } from '@/features/remuneration/hooks/useRemunerationLabels';
+  i18nDriverRemunerationConfigMap,
+} from '@/features/remuneration';
 
 dayjs.extend(isoWeek);
 
