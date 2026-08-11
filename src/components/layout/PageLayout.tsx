@@ -37,7 +37,7 @@ export const PageLayout = ({
 
   return (
     <Box
-      maw={1280}
+      maw={1600}
       w="100%"
       h="100%"
       style={{

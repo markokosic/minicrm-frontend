@@ -18,20 +18,12 @@ export const DashboardSummary = ({ data, title }: DashboardSummaryProps) => {
   }
 
   return (
-    <Stack gap="md" mb="xl">
+    <Stack gap="md" mb="md">
       <Title order={3}>{title}</Title>
-      <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }} spacing="md">
+      <SimpleGrid cols={{ base: 1, xs: 2, sm: 2, md: 4 }} spacing="md">
         <StatsCard
           title={t('app:reports.total_revenue')}
           value={`${fmt.number(data.totalRevenue)} €`}
-        />
-        <StatsCard
-          title={t('app:reports.company_share')}
-          value={`${fmt.number(data.companyShare)} €`}
-        />
-        <StatsCard
-          title={t('app:reports.driver_share')}
-          value={`${fmt.number(data.driverShare)} €`}
         />
         <StatsCard
           title={t('app:reports.total_kilometers')}

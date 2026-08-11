@@ -56,7 +56,7 @@ const AppLayout = ({ overlayVisible: _overlayVisible }: AppLayoutProps) => {
       >
         <Box
           style={{
-            maxWidth: 1280,
+            maxWidth: 1600,
             width: '100%',
             margin: '0 auto',
             flex: 1,
