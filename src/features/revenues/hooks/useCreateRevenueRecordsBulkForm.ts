@@ -6,9 +6,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
-import { CarResponse as Car, CreateDailyRevenueRequest } from '@/api/generated/model';
-import { useGetAllCars } from '@/api/generated/endpoints/cars/cars';
-import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
+import { CreateDailyRevenueRequest } from '@/api/generated/model';
 import {
   useCreateDailyRevenuesBulk,
   getGetAllDailyRevenuesQueryKey,
@@ -18,6 +16,7 @@ import {
   CreateRevenueRecordRequest,
   getCreateDailyRevenueBulkRequestSchema,
 } from '../revenues-schemas';
+import { useRevenueFormOptions } from './useRevenueFormOptions';
 
 dayjs.extend(isoWeek);
 
@@ -25,6 +24,8 @@ export const useCreateRevenueRecordsBulkForm = () => {
   const { t } = useTranslation(['app', 'common']);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  const { drivers, carOptions, driverOptions, isPendingOptions } = useRevenueFormOptions();
 
   const emptyRevenueRecord = {
     driverId: undefined,
@@ -73,32 +74,6 @@ export const useCreateRevenueRecordsBulkForm = () => {
     },
   });
 
-  const { data: driversResponse, isPending: isPendingDrivers } = useGetAllDrivers({ pageable: {} });
-  const drivers = driversResponse?.data;
-
-  const { data: cars, isLoading: isPendingCars } = useGetAllCars<Car[]>(
-    { pageable: {} },
-    {
-      query: {
-        select: (response) => response.data?.content || [],
-      },
-    }
-  );
-
-  const isPendingData = (isPendingCars || isPendingDrivers) && !cars && !drivers;
-
-  const carOptions =
-    cars?.map((car) => ({
-      label: `${car.licensePlate} ${car.model} ${car.brand}`,
-      value: car.id!,
-    })) ?? [];
-
-  const driverOptions =
-    drivers?.content?.map((driver) => ({
-      label: `${driver.firstName} ${driver.lastName} `,
-      value: driver.id!,
-    })) ?? [];
-
   const onSubmit = (data: CreateRevenueRecordBulkRequest) => {
     mutate({ data: data.dailyRevenueRecords as unknown as CreateDailyRevenueRequest[] });
   };
@@ -111,9 +86,10 @@ export const useCreateRevenueRecordsBulkForm = () => {
     remove,
     carOptions,
     driverOptions,
-    drivers: drivers?.content || [],
-    isPendingData,
+    drivers,
+    isPendingData: isPendingOptions,
     isPendingCreation,
     emptyRevenueRecord,
   };
 };
+
