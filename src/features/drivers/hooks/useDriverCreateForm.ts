@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
+import { Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -26,23 +26,25 @@ export const useDriverCreateForm = () => {
         toast.success(t('app:drivers.notifications.create.success'));
         queryClient.invalidateQueries({ queryKey: getGetAllDriversQueryKey() });
       },
-      onError: (error: any) => {
-        const apiErrorMessage = error?.response?.data?.message || t('errors:common.unknown');
+      onError: (error: unknown) => {
+        const apiErrorMessage =
+          (error as { response?: { data?: { message?: string } } })?.response?.data?.message ||
+          t('errors:common.unknown');
         toast.error(apiErrorMessage);
       },
     },
   });
 
   const methods = useForm<CreateDriverMutationBody>({
-    resolver: zodResolver(getCreateDriverSchema(t)) as any,
+    resolver: zodResolver(getCreateDriverSchema(t)) as unknown as Resolver<CreateDriverMutationBody>,
     mode: 'onChange',
     defaultValues: {
       firstName: '',
       lastName: '',
       phone: '',
       email: '',
-      remunerationConfigs: [{}],
-    } as any,
+      remunerationConfigs: [],
+    },
   });
 
   const onSubmit = (data: CreateDriverMutationBody) => {

@@ -25,7 +25,7 @@ export type ComboboxOption<T> = {
 type ControlledComboboxProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-  TValue = any,
+  TValue = unknown,
 > = UseControllerProps<TFieldValues, TName> &
   Omit<InputBaseProps, 'value' | 'defaultValue' | 'onChange'> & {
     data: ComboboxOption<TValue>[];

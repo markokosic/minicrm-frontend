@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Clock, Edit2, Route, Trash } from 'lucide-react';
+import { ArrowRight, Calendar, Car, Clock, Edit2, Route, Trash, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import {
   ActionIcon,
@@ -16,10 +16,12 @@ import {
 import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
 import { getTimeDuration } from '@/lib/utils';
 
+import { DailyRevenueResponse } from '@/api/generated/model';
+
 interface RevenueCardProps {
-  item: any;
-  onEdit: (item: any) => void;
-  onDelete: (item: any) => void;
+  item: DailyRevenueResponse & { licensePlate?: string; driverFirstName?: string; driverLastName?: string };
+  onEdit: (item: DailyRevenueResponse) => void;
+  onDelete: (item: DailyRevenueResponse) => void;
   getRemunerationLabel: (type: RemunerationModelType) => string;
 }
 
@@ -28,7 +30,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
 
   const carLabel = item.car?.licensePlate ?? item.licensePlate ?? t('common:car');
 
-  const exactDuration = getTimeDuration(item.drivingStartTime, item.drivingEndTime);
+  const exactDuration = getTimeDuration(item.drivingStartTime ?? '', item.drivingEndTime ?? '');
 
   const driverName = item.driver
     ? `${item.driver.firstName} ${item.driver.lastName}`
@@ -41,54 +43,58 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
       p="md"
       withBorder
       radius="md"
-      className="hover:shadow-md hover:translate-y-[-2px] transition-all duration-200"
+      shadow="xs"
+      style={{ transition: 'box-shadow 150ms ease, border-color 150ms ease' }}
     >
       <Grid
-        gutter="lg"
+        gutter="md"
         align="center"
       >
-        {/* 1. COLUMN: Typ, Name, Datum, Kennzeichen */}
-        <Grid.Col span={{ base: 12, md: 3 }}>
+        {/* 1. COLUMN: Status, Name, Datum, Fahrzeug */}
+        <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
           <Stack gap="xs">
-            <Group>
+            <Group gap="xs">
               <Badge
                 variant="filled"
                 color="indigo"
-                size="sm"
+                size="xs"
                 radius="xl"
               >
-                {getRemunerationLabel(item.remunerationModelType)}
+                {getRemunerationLabel((item.remunerationModelType as RemunerationModelType) ?? RemunerationModelType.FLAT_RATE)}
               </Badge>
             </Group>
 
-            <Text
-              fw={600}
-              size="md"
-              c="dark.4"
-            >
-              {driverName}
-            </Text>
+            {driverName && (
+              <Group gap="6px" wrap="nowrap">
+                <User size={15} color="var(--mantine-color-blue-6)" style={{ flexShrink: 0 }} />
+                <Text
+                  fw={600}
+                  size="sm"
+                  truncate
+                >
+                  {driverName}
+                </Text>
+              </Group>
+            )}
 
-            <Text
-              size="sm"
-              c="dimmed"
-            >
-              {item.date}
-            </Text>
+            <Group gap="xs" c="dimmed">
+              <Group gap="4px" wrap="nowrap">
+                <Calendar size={13} style={{ flexShrink: 0 }} />
+                <Text size="xs">{item.date}</Text>
+              </Group>
 
-            <Text
-              size="xs"
-              fw={500}
-              c="dimmed"
-              style={{ wordBreak: 'break-all' }}
-            >
-              {carLabel}
-            </Text>
+              <Text size="xs">•</Text>
+
+              <Group gap="4px" wrap="nowrap">
+                <Car size={13} style={{ flexShrink: 0 }} />
+                <Text size="xs" fw={500}>{carLabel}</Text>
+              </Group>
+            </Group>
           </Stack>
         </Grid.Col>
 
-        {/* 2. COLUMN: km gesamt & km von/bis */}
-        <Grid.Col span={{ base: 12, md: 3 }}>
+        {/* 2. COLUMN: KM-Stand */}
+        <Grid.Col span={{ base: 6, sm: 3, md: 2 }}>
           <Stack gap="4px">
             <Group
               gap="4px"
@@ -104,7 +110,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
             </Group>
 
             <Text
-              size="md"
+              size="sm"
               fw={700}
             >
               {item.kilometersDriven} km
@@ -117,33 +123,31 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
               {item.kilometersFrom} km{' '}
               <ArrowRight
                 size={10}
-                className="inline align-middle"
+                style={{ display: 'inline', verticalAlign: 'middle' }}
               />{' '}
               {item.kilometersTo} km
             </Text>
           </Stack>
         </Grid.Col>
 
-        {/* 3. COLUMN: Uhrzeit gesamt & von/bis */}
-        <Grid.Col span={{ base: 12, md: 3 }}>
+        {/* 3. COLUMN: Arbeitszeit / Dauer */}
+        <Grid.Col span={{ base: 6, sm: 3, md: 2 }}>
           <Stack gap="4px">
-            <Group
-              gap="4px"
-              c="dimmed"
-            >
-              <Clock size={14} />
+            <Group gap="4px" c="dimmed">
+              <Clock
+                size={14}
+              />
               <Text
                 size="xs"
                 fw={500}
               >
-                {t('app:revenues.sections.route_and_times')}
+                Dauer
               </Text>
             </Group>
 
             <Text
-              size="md"
+              size="sm"
               fw={700}
-              c="dark.4"
             >
               {exactDuration}
             </Text>
@@ -152,22 +156,21 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
               size="xs"
               c="dimmed"
             >
-              {item.drivingStartTime?.substring(0, 5) || '-'} bis{' '}
-              {item.drivingEndTime?.substring(0, 5) || '-'}
+              {item.drivingStartTime
+                ? item.drivingEndTime
+                  ? `${item.drivingStartTime.substring(0, 5)} - ${item.drivingEndTime.substring(0, 5)}`
+                  : item.drivingStartTime.substring(0, 5)
+                : '-'}
             </Text>
           </Stack>
         </Grid.Col>
 
-        {/* 4. COLUMN: Prominent Umsatz, Firmenanteil, Fahreranteil */}
-        <Grid.Col span={{ base: 12, md: 2 }}>
-          <Box
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--mantine-spacing-xs)',
-              alignItems: 'var(--align-responsive, flex-end)',
-            }}
-            className="[--align-responsive:flex-start] md:[--align-responsive:flex-end]"
+        {/* 4. COLUMN: Umsatz & Aufteilung (Firma / Fahrer) */}
+        <Grid.Col span={{ base: 12, sm: 8, md: 4 }}>
+          <Flex
+            direction="column"
+            align={{ base: 'flex-start', md: 'flex-end' }}
+            gap="xs"
           >
             <Box style={{ display: 'flex', flexDirection: 'column', alignItems: 'inherit' }}>
               <Text
@@ -180,16 +183,17 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
               </Text>
               <Text
                 fw={800}
-                size="xl"
+                size="lg"
                 c="teal.7"
               >
-                {item.revenue.toFixed(2)} €
+                {(item.revenue ?? 0).toFixed(2)} €
               </Text>
             </Box>
 
             <Stack
               gap="2px"
               w="100%"
+              style={{ maxWidth: 220 }}
             >
               <Group
                 gap="xs"
@@ -207,7 +211,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                   fw={600}
                   c="grape.6"
                 >
-                  {item.companyRemuneration.toFixed(2)} €
+                  {(item.companyRemuneration ?? 0).toFixed(2)} €
                 </Text>
               </Group>
 
@@ -227,22 +231,22 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                   fw={600}
                   c="blue.6"
                 >
-                  {item.driverRemuneration.toFixed(2)} €
+                  {(item.driverRemuneration ?? 0).toFixed(2)} €
                 </Text>
               </Group>
             </Stack>
-          </Box>
+          </Flex>
         </Grid.Col>
 
-        {/* 5. COLUMN: Dedizierter Platz für Actions */}
-        <Grid.Col span={{ base: 12, md: 1 }}>
+        {/* 5. COLUMN: Action Buttons (Edit & Delete) */}
+        <Grid.Col span={{ base: 12, sm: 4, md: 1 }}>
           <Flex
-            direction="column"
-            gap="md"
-            justify="center"
+            direction={{ base: 'row', md: 'column' }}
+            gap="xs"
+            justify={{ base: 'flex-end', md: 'center' }}
             align="center"
           >
-            <Tooltip label={t('common:actions.edit')}>
+            <Tooltip label={t('common:actions.edit', 'Bearbeiten')}>
               <ActionIcon
                 variant="light"
                 color="blue"
@@ -253,7 +257,7 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
                 <Edit2 size={16} />
               </ActionIcon>
             </Tooltip>
-            <Tooltip label={t('common:actions.edit')}>
+            <Tooltip label={t('common:actions.delete', 'Löschen')}>
               <ActionIcon
                 variant="light"
                 color="red"
@@ -270,3 +274,4 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
     </Paper>
   );
 };
+

@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, RenderOptions } from '@testing-library/react';
+import { render, RenderOptions, renderHook, RenderHookOptions } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter } from 'react-router';
 import i18n from '@/lib/i18n/i18n';
@@ -17,7 +17,7 @@ const createTestQueryClient = () =>
     },
   });
 
-const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
+export const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   const queryClient = createTestQueryClient();
 
   return (
@@ -32,5 +32,10 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
 const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
   render(ui, { wrapper: AllTheProviders, ...options });
 
+const customRenderHook = <Result, Props>(
+  renderFn: (initialProps: Props) => Result,
+  options?: Omit<RenderHookOptions<Props>, 'wrapper'>
+) => renderHook(renderFn, { wrapper: AllTheProviders, ...options });
+
 export * from '@testing-library/react';
-export { customRender as render };
+export { customRender as render, customRenderHook as renderHook };

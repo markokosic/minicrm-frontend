@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { FieldValues, FormProvider, SubmitHandler, UseFormReturn } from 'react-hook-form';
-import { ElementProps, Group, Paper, PaperProps, Stack } from '@mantine/core';
+import { Box, ElementProps, Group, PaperProps, Stack } from '@mantine/core';
 
 interface FormProps<T extends FieldValues> extends PaperProps, ElementProps<'form', 'onSubmit'> {
   onSubmit: SubmitHandler<T>;
@@ -22,7 +22,7 @@ const Form = <T extends FieldValues>({
 }: FormProps<T>) => {
   return (
     <FormProvider {...methods}>
-      <Paper
+      <Box
         id={id}
         maw={1020}
         {...others}
@@ -30,7 +30,6 @@ const Form = <T extends FieldValues>({
           console.error(errors);
         })}
         component="form"
-        p="sm"
       >
         <Stack gap={gap}>{children}</Stack>
 
@@ -42,7 +41,7 @@ const Form = <T extends FieldValues>({
             {formActions}
           </Group>
         )}
-      </Paper>
+      </Box>
     </FormProvider>
   );
 };

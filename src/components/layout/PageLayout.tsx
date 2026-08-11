@@ -10,6 +10,7 @@ interface PageLayoutProps {
   showBack?: boolean;
   backFallback?: number;
   actions?: ReactNode;
+  fullHeight?: boolean;
 }
 
 export const PageLayout = ({
@@ -18,6 +19,7 @@ export const PageLayout = ({
   showBack = true,
   backFallback = -1,
   actions,
+  fullHeight = false,
 }: PageLayoutProps) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,12 +36,22 @@ export const PageLayout = ({
   };
 
   return (
-    <Box maw={1280}>
+    <Box
+      maw={1600}
+      w="100%"
+      h="100%"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    >
       <title>{title}</title>
       <Group
         justify="space-between"
         align="center"
         mb="md"
+        style={{ flexShrink: 0 }}
       >
         <Group
           gap="sm"
@@ -65,7 +77,17 @@ export const PageLayout = ({
           </Group>
         )}
       </Group>
-      {children}
+      <Box
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          overflowY: fullHeight ? 'hidden' : 'auto',
+          minHeight: 0,
+        }}
+      >
+        {children}
+      </Box>
     </Box>
   );
 };

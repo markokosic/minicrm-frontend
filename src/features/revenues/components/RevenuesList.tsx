@@ -1,28 +1,55 @@
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { Paper, Skeleton, Stack, Text } from '@mantine/core';
+import { Box, Stack, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { useGetAllCars } from '@/api/generated/endpoints/cars/cars';
-import { CarResponse as Car } from '@/api/generated/model';
-import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
-import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
 import { useQueryClient } from '@tanstack/react-query';
-import { useDeleteDailyRevenue, getGetAllDailyRevenuesQueryKey } from '@/api/generated/endpoints/revenues/revenues';
+import { useGetAllCars } from '@/api/generated/endpoints/cars/cars';
+import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
+import {
+  getGetAllDailyRevenuesQueryKey,
+  useDeleteDailyRevenue,
+  useGetAllDailyRevenues,
+} from '@/api/generated/endpoints/revenues/revenues';
+import { CarResponse as Car, DailyRevenueResponse } from '@/api/generated/model';
+import { useConfirmModal } from '@/common/hooks/useConfirmModal';
+import { usePagination } from '@/common/hooks/usePagination';
+import { AppPagination } from '@/components/ui/AppPagination';
+import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
+import { useRemunerationLabels } from '@/features/remuneration/hooks/useRemunerationLabels';
+import { useRevenueFilters } from '../hooks/useRevenueFilters';
 import { RevenueCard } from './RevenueCard';
 import { RevenueEditForm } from './RevenueEditForm';
-import toast from 'react-hot-toast';
+import { RevenuesListSkeleton } from './RevenuesListSkeleton';
 
-interface RevenuesListProps {
-  revenues: any[];
-}
-
-export const RevenuesList = ({ revenues }: RevenuesListProps) => {
+export const RevenuesList = () => {
   const { t } = useTranslation(['app', 'common']);
+  const { getRemunerationLabel } = useRemunerationLabels();
+  const { confirm } = useConfirmModal();
+
+  const { page, pageable, setPage } = usePagination();
+  const { driverId, dateFrom, dateTo } = useRevenueFilters();
+
+  const {
+    data: response,
+    isPending: isLoadingRevenues,
+    error,
+  } = useGetAllDailyRevenues({
+    pageable,
+    driverId,
+    dateFrom,
+    dateTo,
+  });
+
+  const pageData = response?.data;
+  const revenues = pageData?.content ?? [];
+  const totalElements = pageData?.totalElements ?? 0;
+
   const { data: driversResponse, isPending: isLoadingDrivers } = useGetAllDrivers({ pageable: {} });
   const { data: cars = [], isLoading: isLoadingCars } = useGetAllCars<Car[]>(
     { pageable: {} },
     {
       query: {
-        select: (response) => response.data?.content ?? [],
+        select: (res) => res.data?.content ?? [],
       },
     }
   );
@@ -33,8 +60,11 @@ export const RevenuesList = ({ revenues }: RevenuesListProps) => {
         toast.success(t('common:actions.confirm'));
         queryClient.invalidateQueries({ queryKey: getGetAllDailyRevenuesQueryKey() });
       },
-      onError: (err: any) => {
-        const apiErrorMessage = err?.response?.data?.message || err.message || t('common:errors.unknown');
+      onError: (err: unknown) => {
+        const apiErrorMessage =
+          (err as { response?: { data?: { message?: string } }; message?: string })?.response?.data?.message ||
+          (err as { message?: string })?.message ||
+          t('common:errors.unknown');
         toast.error(apiErrorMessage);
       },
     },
@@ -42,18 +72,7 @@ export const RevenuesList = ({ revenues }: RevenuesListProps) => {
 
   const drivers = driversResponse?.data?.content ?? [];
 
-  const i18nDriverRemunerationConfigMap: Record<RemunerationModelType, string> = {
-    [RemunerationModelType.PERCENTAGE_SHARE]: 'percentageShare',
-    [RemunerationModelType.WEEKLY_FIXED_RATE]: 'weeklyFixedRate',
-    [RemunerationModelType.FLAT_RATE]: 'flatRate',
-  };
-
-  const getRemunerationLabel = (type: RemunerationModelType) => {
-    const key = i18nDriverRemunerationConfigMap[type];
-    return key ? t(`app:remuneration.type.${key}`) : type;
-  };
-
-  const handleEdit = (revenue: any) => {
+  const handleEdit = (revenue: DailyRevenueResponse) => {
     const modalId = modals.open({
       title: t('common:actions.edit'),
       size: 'xl',
@@ -69,72 +88,73 @@ export const RevenuesList = ({ revenues }: RevenuesListProps) => {
     });
   };
 
-  const handleDelete = (revenue: any) => {
-  modals.openConfirmModal({
-    title: t('common:actions.delete', 'Delete Revenue'),
-    centered: true,
-    labels: {
-      confirm: t('common:actions.yes', 'Yes, delete'),
-      cancel: t('common:actions.cancel', 'Cancel'),
-    },
-    confirmProps: { color: 'red' },
-    children: (
-      <Text size="sm">
-        Are you sure you want to delete this daily revenue entry for{' '}
-        <strong>
-          {revenue.driver
-            ? `${revenue.driver.firstName} ${revenue.driver.lastName}`
-            : `${revenue.driverFirstName} ${revenue.driverLastName}`}
-        </strong>{' '}
-        on <strong>{revenue.date}</strong>? This action cannot be undone.
-      </Text>
-    ),
-    onConfirm: () => {
-      deleteRevenue({ id: revenue.id });
-    },
-  });
-};
+  const handleDelete = (revenue: DailyRevenueResponse) => {
+    confirm({
+      title: t('common:actions.delete', 'Delete Revenue'),
+      children: (
+        <Text size="sm">
+          Are you sure you want to delete this daily revenue entry for{' '}
+          <strong>
+            {revenue.driver
+              ? `${revenue.driver.firstName} ${revenue.driver.lastName}`
+              : ''}
+          </strong>{' '}
+          on <strong>{revenue.date}</strong>? This action cannot be undone.
+        </Text>
+      ),
+      onConfirm: () => {
+        if (revenue.id) {
+          deleteRevenue({ id: revenue.id });
+        }
+      },
+    });
+  };
 
-  if (isLoadingDrivers || isLoadingCars) {
-    return (
-      <Stack gap="md">
-        {Array.from({ length: 3 }).map((_, idx) => (
-          <Paper
-            key={idx}
-            p="md"
-            withBorder
-            radius="md"
-          >
-            <Skeleton
-              height={20}
-              width="40%"
-              mb="sm"
-            />
-            <Skeleton
-              height={50}
-              mb="sm"
-            />
-            <Skeleton
-              height={20}
-              width="20%"
-            />
-          </Paper>
-        ))}
-      </Stack>
-    );
-  }
+  const isLoading = isLoadingRevenues || isLoadingDrivers || isLoadingCars;
 
   return (
-    <Stack gap="md">
-      {revenues.map((item) => (
-        <RevenueCard
-          key={item.id}
-          item={item}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          getRemunerationLabel={getRemunerationLabel}
+    <Stack
+      style={{ height: '100%', overflow: 'hidden' }}
+      gap="xs"
+    >
+      <Box
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          minHeight: 0,
+          paddingRight: 6,
+          paddingBottom: 8,
+        }}
+      >
+        <DataLoadingWrapper
+          isLoading={isLoading}
+          error={error}
+          isEmpty={!isLoading && totalElements === 0}
+          skeleton={<RevenuesListSkeleton />}
+        >
+          <Stack gap="md">
+            {revenues.map((item) => (
+              <RevenueCard
+                key={item.id}
+                item={item}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                getRemunerationLabel={getRemunerationLabel}
+              />
+            ))}
+          </Stack>
+        </DataLoadingWrapper>
+      </Box>
+
+      <Box style={{ flexShrink: 0 }}>
+        <AppPagination
+          page={page}
+          totalPages={pageData?.totalPages}
+          onChange={setPage}
         />
-      ))}
+      </Box>
     </Stack>
   );
 };
+
+

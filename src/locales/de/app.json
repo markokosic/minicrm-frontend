@@ -96,7 +96,41 @@
     "revenue_per_km": "Umsatz pro KM",
     "trip_count": "Anzahl Fahrten",
     "current_month": "Aktueller Monat",
-    "current_year": "Aktuelles Jahr"
+    "current_year": "Aktuelles Jahr",
+    "tabs": {
+      "month": "Monatsübersicht",
+      "year": "Jahresübersicht"
+    },
+    "charts": {
+      "revenue_timeline_title": "Monatlicher Umsatzverlauf",
+      "revenue_timeline_subtitle": "Tägliche Umsätze, Firmen- und Fahreranteile",
+      "yearly_revenue_title": "Umsatzverlauf {{year}}",
+      "yearly_revenue_subtitle": "Monatliche Umsätze, Firmen- und Fahreranteile im Jahresverlauf",
+      "monthly_share_title": "Monatsverteilung",
+      "yearly_share_title": "Jahresverteilung {{year}}",
+      "share_subtitle": "Aufteilung zwischen Betrieb und Fahrern",
+      "monthly_trips_title": "Fahrten & Kilometer im Monat",
+      "monthly_trips_subtitle": "Tägliche Anzahl von Fahrten und gefahrenen Kilometern",
+      "yearly_trips_title": "Fahrten & Kilometer {{year}}",
+      "yearly_trips_subtitle": "Monatliche Übersicht aller Fahrten und gefahrenen Kilometer",
+      "series": {
+        "revenue": "Gesamtumsatz (€)",
+        "company_share": "Firmenanteil (€)",
+        "driver_share": "Fahreranteil (€)",
+        "other_share": "Nicht zugeordnet (€)",
+        "company_label": "Firma",
+        "driver_label": "Fahrer",
+        "other_label": "Nicht zugeordnet",
+        "trips": "Anzahl Fahrten",
+        "km": "Gefahrene km"
+      },
+      "empty": {
+        "revenue": "Keine Umsatzdaten für diesen Zeitraum vorhanden",
+        "share": "Keine Umsätze im gewählten Monat",
+        "trips": "Keine Fahrtdaten vorhanden",
+        "general": "Keine Daten vorhanden"
+      }
+    }
   },
   "drivers": {
     "actions": {

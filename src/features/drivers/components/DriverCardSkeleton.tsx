@@ -1,42 +1,45 @@
-import { Card, Skeleton, Stack } from '@mantine/core';
+import { Card, Flex, Skeleton, Stack } from '@mantine/core';
 
 export const DriverCardSkeleton = () => {
-  const skeletons = Array.from({ length: 15 });
-
-  //TODO ADAPT TO REAL CARD
+  const skeletons = Array.from({ length: 6 });
 
   return (
-    <Stack gap="md">
+    <Flex
+      gap={24}
+      wrap="wrap"
+    >
       {skeletons.map((_, index) => (
         <Card
           key={index}
           shadow="sm"
           padding="lg"
+          radius="md"
           withBorder
-          miw={300}
-          mih={100}
+          w={{ base: '100%', sm: 320 }}
         >
-          <Skeleton
-            height={20}
-            width="50%"
-            mb="sm"
-          />
-          <Skeleton
-            height={15}
-            width="80%"
-            mb="xs"
-          />
-          <Skeleton
-            height={15}
-            width="70%"
-            mb="xs"
-          />
-          <Skeleton
-            height={15}
-            width="60%"
-          />
+          <Stack gap="xs">
+            <Skeleton
+              height={22}
+              width="60%"
+              mb="xs"
+            />
+            <Skeleton
+              height={14}
+              width="80%"
+            />
+            <Skeleton
+              height={14}
+              width="50%"
+            />
+            <Skeleton
+              height={20}
+              width="40%"
+              mt="xs"
+            />
+          </Stack>
         </Card>
       ))}
-    </Stack>
+    </Flex>
   );
 };
+
