@@ -1,60 +1,57 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
-import { Center, Flex, Stack, Text, Title } from '@mantine/core';
+import { Anchor, Button, Divider, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { ROUTES } from '@/config/routes';
 import { LoginForm } from '@/features/auth/components';
 
 const LoginPage = () => {
   const { t } = useTranslation('app');
+
   return (
-    <>
-      <Center
-        pb="xl"
-        pt="xl"
-      >
-        <Stack
-          align="center"
-          gap="xs"
-        >
-          <Title order={1}>{t('auth.login.title')}</Title>
-          <Text c="dimmed">{t('auth.login.subtitle')}</Text>
-        </Stack>
-      </Center>
-      <LoginForm />
-
-      <Flex
-        pt="xl"
-        justify="center"
-        align="center"
-        direction="column"
-        gap="xs"
-      >
-        <Text
-          c="dimmed"
-          size="sm"
-        >
-          {t('auth.login.noAccountHint')}{' '}
-          <Text
-            td="underline"
-            fw={700}
-            component={Link}
-            to={ROUTES.auth.register.path}
-          >
-            {t('auth.register.linkCta')}
+    <Paper withBorder shadow="sm" p="xl" radius="md">
+      <Stack gap="md">
+        {/* Top: Title & Subtitle */}
+        <Stack gap={4}>
+          <Title order={2} fw={700}>
+            {t('auth.login.title')}
+          </Title>
+          <Text c="dimmed" size="sm">
+            {t('auth.login.subtitle')}
           </Text>
-        </Text>
+        </Stack>
 
-        <Text
-          component={Link}
-          td="underline"
-          c="dimmed"
-          size="sm"
-          to={ROUTES.auth.resetPassword.path}
-        >
-          {t('auth.login.forgotPassword')}
+        {/* Middle: Form */}
+        <LoginForm />
+
+        {/* Passwort vergessen Link */}
+        <Group justify="flex-end" mt="-xs">
+          <Anchor component={Link} to="#" size="xs" c="dimmed">
+            {t('auth.login.forgotPassword')}
+          </Anchor>
+        </Group>
+
+        {/* Social Logins Slot */}
+        <Stack gap="xs" mt="xs">
+          <Divider label="oder weiter mit" labelPosition="center" color="gray.3" />
+          <Group grow gap="xs">
+            <Button variant="default" radius="md" disabled size="xs" style={{ opacity: 0.6 }}>
+              Google
+            </Button>
+            <Button variant="default" radius="md" disabled size="xs" style={{ opacity: 0.6 }}>
+              iCloud
+            </Button>
+          </Group>
+        </Stack>
+
+        {/* Bottom: Register Link */}
+        <Text size="sm" ta="center" c="dimmed" pt="xs">
+          {t('auth.login.noAccountHint')}{' '}
+          <Anchor component={Link} to={ROUTES.auth.register.path} fw={600} size="sm">
+            {t('auth.register.linkCta')}
+          </Anchor>
         </Text>
-      </Flex>
-    </>
+      </Stack>
+    </Paper>
   );
 };
 

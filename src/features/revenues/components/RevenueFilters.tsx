@@ -1,75 +1,29 @@
 import dayjs from 'dayjs';
 import { X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router';
 import { ActionIcon, Group, Paper, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { useGetAllDriversForSelect } from '@/api/generated/endpoints/drivers/drivers';
-
+import { useUrlFilters } from '@/common/hooks/useUrlFilters';
+import { useDriverOptions } from '@/features/drivers/hooks/useDriverOptions';
 
 export const RevenueFilters = () => {
   const { t } = useTranslation(['app', 'common']);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { data: drivers, isLoading: isLoadingDrivers } = useGetAllDriversForSelect();
+  const { getFilter, setFilter, clearFilters } = useUrlFilters();
+  const { driverOptions, isLoading: isLoadingDrivers } = useDriverOptions();
 
-  const driverId = searchParams.get('driverId') || '';
-  const dateFromStr = searchParams.get('dateFrom') || '';
-  const dateToStr = searchParams.get('dateTo') || '';
+  const driverId = getFilter('driverId');
+  const dateFromStr = getFilter('dateFrom');
+  const dateToStr = getFilter('dateTo');
 
   const dateFrom = dateFromStr ? dayjs(dateFromStr).toDate() : null;
   const dateTo = dateToStr ? dayjs(dateToStr).toDate() : null;
 
-  const driverOptions =
-    drivers?.data?.map((driver) => ({
-      value: driver.id?.toString() || '',
-      label: driver.fullName || '',
-    })) || [];
-
-  const handleDriverChange = (val: string | null) => {
-    setSearchParams((prev) => {
-      if (val) {
-        prev.set('driverId', val);
-      } else {
-        prev.delete('driverId');
-      }
-      prev.set('page', '1');
-      return prev;
-    });
-  };
-
-  const handleDateFromChange = (date: any) => {
-    setSearchParams((prev) => {
-      if (date) {
-        prev.set('dateFrom', dayjs(date).format('YYYY-MM-DD'));
-      } else {
-        prev.delete('dateFrom');
-      }
-      prev.set('page', '1');
-      return prev;
-    });
-  };
-
-  const handleDateToChange = (date: any) => {
-    setSearchParams((prev) => {
-      if (date) {
-        prev.set('dateTo', dayjs(date).format('YYYY-MM-DD'));
-      } else {
-        prev.delete('dateTo');
-      }
-      prev.set('page', '1');
-      return prev;
-    });
-  };
-
-  const handleClearAll = () => {
-    setSearchParams((prev) => {
-      prev.delete('driverId');
-      prev.delete('dateFrom');
-      prev.delete('dateTo');
-      prev.set('page', '1');
-      return prev;
-    });
-  };
+  const handleDriverChange = (val: string | null) => setFilter('driverId', val);
+  const handleDateFromChange = (date: Date | string | null) =>
+    setFilter('dateFrom', date ? dayjs(date).format('YYYY-MM-DD') : null);
+  const handleDateToChange = (date: Date | string | null) =>
+    setFilter('dateTo', date ? dayjs(date).format('YYYY-MM-DD') : null);
+  const handleClearAll = () => clearFilters(['driverId', 'dateFrom', 'dateTo']);
 
   const hasActiveFilters = !!driverId || !!dateFromStr || !!dateToStr;
 

@@ -24,7 +24,7 @@ const AppProvider = ({ children: app }: AppProviderProps) => {
   return (
     <ErrorBoundary FallbackComponent={MainErrorFallback}>
       <QueryClientProvider client={queryClient}>
-        <MantineProvider theme={theme}>
+        <MantineProvider theme={theme} defaultColorScheme="auto">
           <Suspense fallback={null}>
             <DatesProvider settings={{ locale: i18n.resolvedLanguage }}>
               <ModalsProvider>

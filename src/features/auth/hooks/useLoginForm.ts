@@ -37,8 +37,10 @@ export const useLoginForm = () => {
           toast.success(t('auth.login.success'));
           navigate(ROUTES.app.dashboard.getHref());
         },
-        onError: (error: any) => {
-          const apiErrorMessage = error?.response?.data?.message || t('auth.login.error');
+        onError: (error: unknown) => {
+          const apiErrorMessage =
+            (error as { response?: { data?: { message?: string } } })?.response?.data?.message ||
+            t('auth.login.error');
           toast.error(apiErrorMessage);
         },
       }

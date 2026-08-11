@@ -31,6 +31,7 @@ export const CarsPage = () => {
       title={t('common:navigation.cars')}
       showBack={false}
       actions={desktopActions}
+      fullHeight
     >
       <CarsList />
       {isMobile && (

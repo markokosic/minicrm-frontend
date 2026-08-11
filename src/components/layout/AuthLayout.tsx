@@ -1,30 +1,33 @@
 import { Outlet } from 'react-router';
-import { Center, Paper, Stack } from '@mantine/core';
+import { Box, Container, Group, Text, ThemeIcon } from '@mantine/core';
+import { Car } from 'lucide-react';
 import { LanguagePicker } from '@/components/ui/LanguagePicker';
 
 const AuthLayout = () => {
   return (
-    <Center
-      mih="100vh"
-      bg="var(--mantine-primary-color-1)"
-      p="md"
-    >
-      <Stack
-        align="center"
-        gap="md"
-        w="100%"
-        maw={600}
-      >
-        <Paper
-          w="100%"
-          p="xl"
-        >
-          <Outlet />
-        </Paper>
+    <Box bg="gray.0" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Top navigation header without borders */}
+      <Box px="xl" py="lg">
+        <Group justify="space-between" align="center">
+          <Group gap="xs">
+            <ThemeIcon size="md" radius="md" color="blue" variant="filled">
+              <Car size={18} />
+            </ThemeIcon>
+            <Text fw={800} size="md" style={{ letterSpacing: '-0.02em' }}>
+              Taxi<Text span color="blue.6" inherit>OS</Text>
+            </Text>
+          </Group>
+          <LanguagePicker />
+        </Group>
+      </Box>
 
-        <LanguagePicker />
-      </Stack>
-    </Center>
+      {/* Main centered Auth Form Card Container */}
+      <Box style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }} p="md">
+        <Container size={440} w="100%" px={0}>
+          <Outlet />
+        </Container>
+      </Box>
+    </Box>
   );
 };
 

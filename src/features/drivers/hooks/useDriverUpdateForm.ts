@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
+import { Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { getGetAllDriversQueryKey, getGetDriverQueryKey, UpdateDriverMutationBody, useUpdateDriver } from '@/api/generated/endpoints/drivers/drivers';
@@ -26,23 +26,27 @@ export const useDriverUpdateForm = ({ driver, onCancel: _onCancel, onSuccess }: 
         queryClient.invalidateQueries({ queryKey: getGetAllDriversQueryKey() });
         onSuccess?.();
       },
-      onError: (error: any) => {
-        const apiErrorMessage = error?.response?.data?.message || t('errors:common.unknown');
+      onError: (error: unknown) => {
+        const apiErrorMessage =
+          (error as { response?: { data?: { message?: string } } })?.response?.data?.message ||
+          t('errors:common.unknown');
         toast.error(apiErrorMessage);
       },
     },
   });
 
   const methods = useForm<UpdateDriverMutationBody>({
-    resolver: zodResolver(getUpdateDriverSchema(t)) as any,
+    resolver: zodResolver(getUpdateDriverSchema(t)) as unknown as Resolver<UpdateDriverMutationBody>,
     mode: 'onChange',
     defaultValues: {
-      firstName: driver.firstName,
-      lastName: driver.lastName,
-      phone: driver.phone,
-      email: driver.email,
-      remunerationConfigs: driver.currentRemunerationConfigs ? [...driver.currentRemunerationConfigs] : [],
-    } as any,
+      firstName: driver.firstName ?? '',
+      lastName: driver.lastName ?? '',
+      phone: driver.phone ?? '',
+      email: driver.email ?? '',
+      remunerationConfigs: driver.currentRemunerationConfigs
+        ? (driver.currentRemunerationConfigs as UpdateDriverMutationBody['remunerationConfigs'])
+        : [],
+    },
   });
 
   const onSubmit = (data: UpdateDriverMutationBody) => {

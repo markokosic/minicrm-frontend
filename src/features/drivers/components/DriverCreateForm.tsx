@@ -5,6 +5,8 @@ import { Box, Button } from '@mantine/core';
 import { useDriverCreateForm } from '../hooks/useDriverCreateForm';
 import { DriverForm } from './DriverForm';
 
+import { CreateDriverMutationBody } from '@/api/generated/endpoints/drivers/drivers';
+
 export const DriverCreateForm = () => {
   const { t } = useTranslation(['app', 'common', 'errors']);
   const navigate = useNavigate();
@@ -12,7 +14,7 @@ export const DriverCreateForm = () => {
 
   return (
     <Box>
-      <Form
+      <Form<CreateDriverMutationBody>
         methods={methods}
         onSubmit={onSubmit}
         formActions={

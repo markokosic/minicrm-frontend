@@ -96,7 +96,41 @@
     "revenue_per_km": "Revenue per KM",
     "trip_count": "Trip Count",
     "current_month": "Current Month",
-    "current_year": "Current Year"
+    "current_year": "Current Year",
+    "tabs": {
+      "month": "Monthly Overview",
+      "year": "Yearly Overview"
+    },
+    "charts": {
+      "revenue_timeline_title": "Monthly Revenue Timeline",
+      "revenue_timeline_subtitle": "Daily revenue, company and driver shares",
+      "yearly_revenue_title": "Revenue Timeline {{year}}",
+      "yearly_revenue_subtitle": "Monthly revenues, company and driver shares over the year",
+      "monthly_share_title": "Monthly Distribution",
+      "yearly_share_title": "Yearly Distribution {{year}}",
+      "share_subtitle": "Breakdown between company and drivers",
+      "monthly_trips_title": "Rides & Kilometers in Month",
+      "monthly_trips_subtitle": "Daily number of rides and kilometers driven",
+      "yearly_trips_title": "Rides & Kilometers {{year}}",
+      "yearly_trips_subtitle": "Monthly summary of all rides and kilometers driven",
+      "series": {
+        "revenue": "Total Revenue (€)",
+        "company_share": "Company Share (€)",
+        "driver_share": "Driver Share (€)",
+        "other_share": "Unassigned Revenue (€)",
+        "company_label": "Company",
+        "driver_label": "Driver",
+        "other_label": "Unassigned",
+        "trips": "Trip Count",
+        "km": "Kilometers Driven"
+      },
+      "empty": {
+        "revenue": "No revenue data available for this period",
+        "share": "No revenue in selected month",
+        "trips": "No trip data available",
+        "general": "No data available"
+      }
+    }
   },
   "drivers": {
     "actions": {

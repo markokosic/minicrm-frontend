@@ -31,6 +31,7 @@ export const DriversPage = () => {
       title={t('common:navigation.drivers')}
       showBack={false}
       actions={desktopActions}
+      fullHeight
     >
       <DriversList />
       {isMobile && (

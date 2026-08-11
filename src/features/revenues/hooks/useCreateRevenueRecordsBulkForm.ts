@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
-import { CarResponse as Car } from '@/api/generated/model';
+import { CarResponse as Car, CreateDailyRevenueRequest } from '@/api/generated/model';
 import { useGetAllCars } from '@/api/generated/endpoints/cars/cars';
 import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
 import {
@@ -15,6 +15,7 @@ import {
 } from '@/api/generated/endpoints/revenues/revenues';
 import {
   CreateRevenueRecordBulkRequest,
+  CreateRevenueRecordRequest,
   getCreateDailyRevenueBulkRequestSchema,
 } from '../revenues-schemas';
 
@@ -45,7 +46,7 @@ export const useCreateRevenueRecordsBulkForm = () => {
     resolver: zodResolver(getCreateDailyRevenueBulkRequestSchema(t)),
     mode: 'onChange',
     defaultValues: {
-      dailyRevenueRecords: [emptyRevenueRecord as any],
+      dailyRevenueRecords: [emptyRevenueRecord as unknown as CreateRevenueRecordRequest],
     },
   });
 
@@ -63,8 +64,10 @@ export const useCreateRevenueRecordsBulkForm = () => {
         queryClient.invalidateQueries({ queryKey: getGetAllDailyRevenuesQueryKey() });
         navigate('/revenues');
       },
-      onError: (error: any) => {
-        const apiErrorMessage = error?.response?.data?.message || t('common:errors.unknown');
+      onError: (error: unknown) => {
+        const apiErrorMessage =
+          (error as { response?: { data?: { message?: string } } })?.response?.data?.message ||
+          t('common:errors.unknown');
         toast.error(apiErrorMessage);
       },
     },
@@ -97,14 +100,14 @@ export const useCreateRevenueRecordsBulkForm = () => {
     })) ?? [];
 
   const onSubmit = (data: CreateRevenueRecordBulkRequest) => {
-    mutate({ data: data.dailyRevenueRecords as any });
+    mutate({ data: data.dailyRevenueRecords as unknown as CreateDailyRevenueRequest[] });
   };
 
   return {
     methods,
     onSubmit,
     fields,
-    append: () => append(emptyRevenueRecord as any),
+    append: () => append(emptyRevenueRecord as unknown as CreateRevenueRecordRequest),
     remove,
     carOptions,
     driverOptions,
