@@ -52,4 +52,7 @@ export const RevenuesPage = () => {
   );
 };
 
+export default RevenuesPage;
+
+
 

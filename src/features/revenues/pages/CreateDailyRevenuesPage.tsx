@@ -14,3 +14,6 @@ export const CreateDailyRevenuesPage = () => {
     </PageLayout>
   );
 };
+
+export default CreateDailyRevenuesPage;
+

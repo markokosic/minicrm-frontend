@@ -4,62 +4,21 @@ import { AuthLayout } from '@/components/layout/AuthLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { ROUTES } from '@/config/routes';
 
-//TODO unify pages
 // LAZY LOADED PAGES
-const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'));
-const RegisterPage = lazy(() => import('../features/auth/pages/RegisterPage'));
-const DashboardPage = lazy(() => import('../features/dashboard/pages/DashboardPage'));
-const SettingsPage = lazy(() => import('../features/settings/pages/SettingsPage'));
+const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
+const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
+const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
+const SettingsPage = lazy(() => import('@/features/settings/pages/SettingsPage'));
+const DriversPage = lazy(() => import('@/features/drivers/pages/DriversPage'));
+const DriverCreatePage = lazy(() => import('@/features/drivers/pages/DriverCreatePage'));
+const DriverPage = lazy(() => import('@/features/drivers/pages/DriverPage'));
+const CarsPage = lazy(() => import('@/features/cars/pages/CarsPage'));
+const CarCreatePage = lazy(() => import('@/features/cars/pages/CarCreatePage'));
+const CarPage = lazy(() => import('@/features/cars/pages/CarPage'));
+const RevenuesPage = lazy(() => import('@/features/revenues/pages/RevenuesPage'));
+const CreateDailyRevenuesPage = lazy(() => import('@/features/revenues/pages/CreateDailyRevenuesPage'));
+const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
 
-// Named exports need to be mapped for React.lazy
-const DriversPage = lazy(() =>
-  import('@/features/drivers/pages/DriversPage').then((module) => ({
-    default: module.DriversPage,
-  }))
-);
-const DriverCreatePage = lazy(() =>
-  import('@/features/drivers/pages/DriverCreatePage').then((module) => ({
-    default: module.DriverCreatePage,
-  }))
-);
-const DriverPage = lazy(() =>
-  import('@/features/drivers/pages/DriverPage').then((module) => ({
-    default: module.DriverPage,
-  }))
-);
-
-const CarsPage = lazy(() =>
-  import('@/features/cars/pages/CarsPage').then((module) => ({
-    default: module.CarsPage,
-  }))
-);
-const CarCreatePage = lazy(() =>
-  import('@/features/cars/pages/CarCreatePage').then((module) => ({
-    default: module.CarCreatePage,
-  }))
-);
-const CarPage = lazy(() =>
-  import('@/features/cars/pages/CarPage').then((module) => ({
-    default: module.CarPage,
-  }))
-);
-
-const RevenuesPage = lazy(() =>
-  import('@/features/revenues/pages/RevenuesPage').then((module) => ({
-    default: module.RevenuesPage,
-  }))
-);
-const CreateDailyRevenuesPage = lazy(() =>
-  import('@/features/revenues/pages/CreateDailyRevenuesPage').then((module) => ({
-    default: module.CreateDailyRevenuesPage,
-  }))
-);
-
-const ReportPage = lazy(() =>
-  import('@/features/reports/pages/ReportPage').then((module) => ({
-    default: module.ReportPage,
-  }))
-);
 
 const router = createBrowserRouter([
   {

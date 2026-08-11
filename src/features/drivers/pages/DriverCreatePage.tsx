@@ -12,3 +12,6 @@ export const DriverCreatePage = () => {
     </PageLayout>
   );
 };
+
+export default DriverCreatePage;
+

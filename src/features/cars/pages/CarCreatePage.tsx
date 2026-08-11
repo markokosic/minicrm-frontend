@@ -14,3 +14,6 @@ export const CarCreatePage = () => {
     </PageLayout>
   );
 };
+
+export default CarCreatePage;
+

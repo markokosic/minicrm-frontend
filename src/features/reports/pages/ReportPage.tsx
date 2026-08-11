@@ -72,3 +72,6 @@ export const ReportPage = () => {
     </PageLayout>
   );
 };
+
+export default ReportPage;
+

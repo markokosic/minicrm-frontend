@@ -42,3 +42,6 @@ export const CarsPage = () => {
     </PageLayout>
   );
 };
+
+export default CarsPage;
+
