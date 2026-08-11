@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Group, Select, Stack } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
@@ -6,10 +7,10 @@ import { RevenueReportParams } from '../report-schema';
 
 type ReportFiltersProps = {
   filters: RevenueReportParams;
-  setFilters: (filters: RevenueReportParams) => void;
+  setFilter: (key: string, value: string | null | undefined) => void;
 };
 
-export const ReportFilters = ({ filters, setFilters }: ReportFiltersProps) => {
+export const ReportFilters = ({ filters, setFilter }: ReportFiltersProps) => {
   const { t } = useTranslation(['app', 'common']);
   const { driverOptions, isLoading: isLoadingDrivers, drivers } = useDriverOptions();
 
@@ -22,7 +23,6 @@ export const ReportFilters = ({ filters, setFilters }: ReportFiltersProps) => {
     { value: 'DAY', label: t('app:reports.group_by_day') },
     { value: 'MONTH', label: t('app:reports.group_by_month') },
     { value: 'YEAR', label: t('app:reports.group_by_year') },
-    // { value: 'DRIVER', label: 'DRIVER' },
   ];
 
   return (
@@ -39,10 +39,10 @@ export const ReportFilters = ({ filters, setFilters }: ReportFiltersProps) => {
           placeholder={t('common:pick_date')}
           value={filters.dateFrom ? new Date(filters.dateFrom) : null}
           onChange={(date) =>
-            setFilters({
-              ...filters,
-              dateFrom: date,
-            })
+            setFilter(
+              'dateFrom',
+              date ? dayjs(date).format('YYYY-MM-DD') : null
+            )
           }
           clearable
         />
@@ -51,10 +51,10 @@ export const ReportFilters = ({ filters, setFilters }: ReportFiltersProps) => {
           placeholder={t('common:pick_date')}
           value={filters.dateTo ? new Date(filters.dateTo) : null}
           onChange={(date) =>
-            setFilters({
-              ...filters,
-              dateTo: date,
-            })
+            setFilter(
+              'dateTo',
+              date ? dayjs(date).format('YYYY-MM-DD') : null
+            )
           }
           clearable
         />
@@ -68,7 +68,7 @@ export const ReportFilters = ({ filters, setFilters }: ReportFiltersProps) => {
           placeholder={t('common:select_driver')}
           data={driverOptions}
           value={filters.driverId}
-          onChange={(value) => setFilters({ ...filters, driverId: value })}
+          onChange={(value) => setFilter('driverId', value)}
           searchable
           clearable
           disabled={isLoadingDrivers}
@@ -78,7 +78,7 @@ export const ReportFilters = ({ filters, setFilters }: ReportFiltersProps) => {
           placeholder={t('common:select_grouping')}
           data={groupByOptions}
           value={filters.groupBy}
-          onChange={(value) => setFilters({ ...filters, groupBy: value as RevenueReportParams['groupBy'] })}
+          onChange={(value) => setFilter('groupBy', value)}
         />
       </Group>
     </Stack>

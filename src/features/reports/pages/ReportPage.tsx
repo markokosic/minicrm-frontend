@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-import { useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Alert, Box, LoadingOverlay } from '@mantine/core';
@@ -8,17 +6,11 @@ import { ReportFilters } from '../components/ReportFilters';
 import { ReportSummary } from '../components/ReportSummary';
 import { ReportTable } from '../components/ReportTable';
 import { useGetRevenueReport } from '../hooks/useGetRevenueReport';
-import { RevenueReportParams } from '../report-schema';
+import { useReportFilters } from '../hooks/useReportFilters';
 
 export const ReportPage = () => {
   const { t } = useTranslation(['app', 'common']);
-
-  const [filters, setFilters] = useState<RevenueReportParams>({
-    dateFrom: dayjs().startOf('month').format('YYYY-MM-DD'),
-    dateTo: dayjs().endOf('month').format('YYYY-MM-DD'),
-    driverId: null,
-    groupBy: 'DAY',
-  });
+  const { filters, setFilter } = useReportFilters();
 
   const { data, isLoading, error } = useGetRevenueReport(filters);
 
@@ -36,7 +28,7 @@ export const ReportPage = () => {
 
         <ReportFilters
           filters={filters}
-          setFilters={setFilters}
+          setFilter={setFilter}
         />
 
         {error && (
@@ -74,4 +66,3 @@ export const ReportPage = () => {
 };
 
 export default ReportPage;
-

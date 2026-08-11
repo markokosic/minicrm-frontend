@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
+import { MainErrorFallback } from '@/components/errors/MainErrorFallback';
 import { AuthLayout } from '@/components/layout/AuthLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { ROUTES } from '@/config/routes';
@@ -19,9 +20,10 @@ const RevenuesPage = lazy(() => import('@/features/revenues/pages/RevenuesPage')
 const CreateDailyRevenuesPage = lazy(() => import('@/features/revenues/pages/CreateDailyRevenuesPage'));
 const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
 
-
 const router = createBrowserRouter([
+
   {
+    errorElement: <MainErrorFallback />,
     element: <AuthLayout />,
     children: [
       {
@@ -36,6 +38,7 @@ const router = createBrowserRouter([
   },
 
   {
+    errorElement: <MainErrorFallback />,
     element: <ProtectedRoute />,
     children: [
       { index: true, element: <Navigate to={ROUTES.app.dashboard.path} replace /> },

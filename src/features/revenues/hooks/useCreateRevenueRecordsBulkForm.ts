@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { DefaultValues, useFieldArray, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -27,7 +27,7 @@ export const useCreateRevenueRecordsBulkForm = () => {
 
   const { drivers, carOptions, driverOptions, isPendingOptions } = useRevenueFormOptions();
 
-  const emptyRevenueRecord = {
+  const emptyRevenueRecord: DefaultValues<CreateRevenueRecordRequest> = {
     driverId: undefined,
     carId: undefined,
     date: dayjs().format('YYYY-MM-DD'),
@@ -47,7 +47,7 @@ export const useCreateRevenueRecordsBulkForm = () => {
     resolver: zodResolver(getCreateDailyRevenueBulkRequestSchema(t)),
     mode: 'onChange',
     defaultValues: {
-      dailyRevenueRecords: [emptyRevenueRecord as unknown as CreateRevenueRecordRequest],
+      dailyRevenueRecords: [emptyRevenueRecord as CreateRevenueRecordRequest],
     },
   });
 
@@ -75,14 +75,14 @@ export const useCreateRevenueRecordsBulkForm = () => {
   });
 
   const onSubmit = (data: CreateRevenueRecordBulkRequest) => {
-    mutate({ data: data.dailyRevenueRecords as unknown as CreateDailyRevenueRequest[] });
+    mutate({ data: data.dailyRevenueRecords as CreateDailyRevenueRequest[] });
   };
 
   return {
     methods,
     onSubmit,
     fields,
-    append: () => append(emptyRevenueRecord as unknown as CreateRevenueRecordRequest),
+    append: () => append(emptyRevenueRecord as CreateRevenueRecordRequest),
     remove,
     carOptions,
     driverOptions,
@@ -92,4 +92,3 @@ export const useCreateRevenueRecordsBulkForm = () => {
     emptyRevenueRecord,
   };
 };
-

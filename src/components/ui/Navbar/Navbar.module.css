@@ -1,0 +1,22 @@
+.navLink {
+  border-radius: var(--mantine-radius-md);
+  margin: 3px 0;
+  padding: 10px 14px;
+  transition: all 150ms ease;
+  font-weight: 500;
+}
+
+.navLink[data-active] {
+  background-color: var(--mantine-color-blue-light);
+  color: var(--mantine-color-blue-filled);
+  font-weight: 600;
+}
+
+.navLink:hover {
+  transform: translateX(2px);
+  background-color: var(--mantine-color-gray-0);
+}
+
+.navLink[data-active]:hover {
+  background-color: var(--mantine-color-blue-light-hover);
+}
