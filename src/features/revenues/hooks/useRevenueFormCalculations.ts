@@ -1,6 +1,4 @@
 import { useEffect, useCallback } from 'react';
-import dayjs from 'dayjs';
-import isoWeek from 'dayjs/plugin/isoWeek';
 import { FieldValues, UseFormResetField, UseFormSetValue } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DriverResponse } from '@/api/generated/model';
@@ -8,10 +6,15 @@ import {
   FlatRateRemunerationConfig,
   RemunerationModelType,
   WeeklyFixedRemunerationConfig,
-  i18nDriverRemunerationConfigMap,
 } from '@/features/remuneration';
-
-dayjs.extend(isoWeek);
+import {
+  calculateFlatRateRevenue,
+  calculateKilometersDriven,
+  checkWeeklySettlement,
+  findDriverById,
+  findSelectedRemunerationConfig,
+  getDriverRemunerationConfigOptions,
+} from '../utils/revenue-form-calculations.utils';
 
 export interface UseRevenueFormCalculationsProps {
   drivers?: DriverResponse[];
@@ -42,16 +45,13 @@ export const useRevenueFormCalculations = ({
 
   const getFieldName = useCallback((name: string) => `${fieldPrefix}${name}`, [fieldPrefix]);
 
-  const driver = drivers?.find((d) => d.id === driverId);
+  const driver = findDriverById(drivers, driverId);
 
-  const driverRemunerationConfigOptions =
-    driver?.currentRemunerationConfigs?.map((config) => ({
-      label: `${t(`app:remuneration.type.${i18nDriverRemunerationConfigMap[config.remunerationModelType as RemunerationModelType]}`)}`,
-      value: config.remunerationModelType,
-    })) ?? [];
+  const driverRemunerationConfigOptions = getDriverRemunerationConfigOptions(driver, t);
 
-  const selectedConfig = driver?.currentRemunerationConfigs?.find(
-    (c) => c.remunerationModelType === selectedDriverRemunerationConfig
+  const selectedConfig = findSelectedRemunerationConfig(
+    driver,
+    selectedDriverRemunerationConfig
   );
 
   const isWeeklyFixedRate =
@@ -60,23 +60,17 @@ export const useRevenueFormCalculations = ({
     ? (selectedConfig as WeeklyFixedRemunerationConfig)
     : null;
 
-  const isWeeklyPaymentToday =
-    Boolean(weeklyConfig) && weeklyConfig?.settlementDay === dayjs().isoWeekday();
-
-  const weekdayName = weeklyConfig
-    ? dayjs().isoWeekday(weeklyConfig.settlementDay).format('dddd')
-    : null;
+  const { isWeeklyPaymentToday, weekdayName } = checkWeeklySettlement(weeklyConfig);
 
   // 1. Sync revenue for flat rate
   useEffect(() => {
-    if (
-      selectedDriverRemunerationConfig === RemunerationModelType.FLAT_RATE &&
-      tripCount &&
-      pricePerTrip
-    ) {
-      setValue(getFieldName('revenue'), tripCount * pricePerTrip, {
-        shouldValidate: true,
-      });
+    if (selectedDriverRemunerationConfig === RemunerationModelType.FLAT_RATE) {
+      const calculatedRevenue = calculateFlatRateRevenue(tripCount, pricePerTrip);
+      if (calculatedRevenue !== null) {
+        setValue(getFieldName('revenue'), calculatedRevenue, {
+          shouldValidate: true,
+        });
+      }
     }
   }, [selectedDriverRemunerationConfig, tripCount, pricePerTrip, getFieldName, setValue]);
 
@@ -109,16 +103,9 @@ export const useRevenueFormCalculations = ({
 
   // 4. Calculate kilometers driven
   useEffect(() => {
-    if (
-      kilometersFrom !== undefined &&
-      kilometersTo !== undefined &&
-      kilometersFrom !== null &&
-      kilometersTo !== null
-    ) {
-      const diff = kilometersTo - kilometersFrom;
-      if (diff >= 0) {
-        setValue(getFieldName('kilometersDriven'), diff, { shouldValidate: true });
-      }
+    const kilometersDriven = calculateKilometersDriven(kilometersFrom, kilometersTo);
+    if (kilometersDriven !== null) {
+      setValue(getFieldName('kilometersDriven'), kilometersDriven, { shouldValidate: true });
     }
   }, [kilometersFrom, kilometersTo, getFieldName, setValue]);
 
@@ -135,7 +122,6 @@ export const useRevenueFormCalculations = ({
     }
   }, [isWeeklyFixedRate, isWeeklyPaymentToday, weeklyConfig, getFieldName, resetField, setValue]);
 
-
   return {
     driver,
     driverRemunerationConfigOptions,
@@ -146,3 +132,4 @@ export const useRevenueFormCalculations = ({
     weekdayName,
   };
 };
+

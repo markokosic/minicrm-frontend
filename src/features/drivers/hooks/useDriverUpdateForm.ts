@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { getGetAllDriversQueryKey, getGetDriverQueryKey, UpdateDriverMutationBody, useUpdateDriver } from '@/api/generated/endpoints/drivers/drivers';
 import { DriverResponse } from '@/api/generated/model';
 import { getUpdateDriverSchema } from '../driver-schemas';
+import { getDriverUpdateFormDefaultValues } from '../utils/driver-form.utils';
 
 
 interface UseDriverUpdateFormProps {
@@ -38,15 +39,7 @@ export const useDriverUpdateForm = ({ driver, onCancel: _onCancel, onSuccess }: 
   const methods = useForm<UpdateDriverMutationBody>({
     resolver: zodResolver(getUpdateDriverSchema(t)) as unknown as Resolver<UpdateDriverMutationBody>,
     mode: 'onChange',
-    defaultValues: {
-      firstName: driver.firstName ?? '',
-      lastName: driver.lastName ?? '',
-      phone: driver.phone ?? '',
-      email: driver.email ?? '',
-      remunerationConfigs: driver.currentRemunerationConfigs
-        ? (driver.currentRemunerationConfigs as UpdateDriverMutationBody['remunerationConfigs'])
-        : [],
-    },
+    defaultValues: getDriverUpdateFormDefaultValues(driver),
   });
 
   const onSubmit = (data: UpdateDriverMutationBody) => {

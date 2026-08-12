@@ -1,20 +1,13 @@
 import { useGetAllDriversForSelect } from '@/api/generated/endpoints/drivers/drivers';
+import { mapDriversToComboboxOptions, mapDriversToOptions } from '../utils/driver-options.utils';
 
 export const useDriverOptions = () => {
   const { data, isLoading, error } = useGetAllDriversForSelect();
 
   const drivers = data?.data ?? [];
 
-  const driverOptions = drivers.map((driver) => ({
-    value: driver.id?.toString() || '',
-    label: driver.fullName || '',
-    id: driver.id!,
-  }));
-
-  const driverComboboxOptions = drivers.map((driver) => ({
-    value: driver.id!,
-    label: driver.fullName || '',
-  }));
+  const driverOptions = mapDriversToOptions(drivers);
+  const driverComboboxOptions = mapDriversToComboboxOptions(drivers);
 
   return {
     driverOptions,
@@ -24,3 +17,4 @@ export const useDriverOptions = () => {
     error,
   };
 };
+

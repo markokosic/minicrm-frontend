@@ -1,7 +1,6 @@
-import dayjs from 'dayjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import { useForm, useWatch } from 'react-hook-form';
+import { FieldValues, useForm, UseFormResetField, UseFormSetValue, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { getGetAllDailyRevenuesQueryKey, useUpdateDailyRevenue } from '@/api/generated/endpoints/revenues/revenues';
@@ -12,6 +11,8 @@ import {
   DriverResponse as Driver,
 } from '@/api/generated/model';
 import { CreateRevenueRecordRequest, getCreateRevenueRecordSchema } from '../revenues-schemas';
+import { getRevenueEditFormDefaultValues } from '../utils/revenue-edit-form.utils';
+import { mapCarsToRevenueOptions, mapDriversToRevenueOptions } from '../utils/revenue-options.utils';
 import { useRevenueFormCalculations } from './useRevenueFormCalculations';
 
 interface UseRevenueEditFormProps {
@@ -25,17 +26,8 @@ export const useRevenueEditForm = ({ revenue, drivers, cars, onSuccess }: UseRev
   const { t } = useTranslation(['app', 'common', 'errors']);
   const queryClient = useQueryClient();
 
-  const carOptions =
-    cars?.map((car) => ({
-      label: `${car.licensePlate} ${car.model} ${car.brand}`,
-      value: car.id!,
-    })) ?? [];
-
-  const driverOptions =
-    drivers?.map((driver) => ({
-      label: `${driver.firstName} ${driver.lastName}`,
-      value: driver.id!,
-    })) ?? [];
+  const carOptions = mapCarsToRevenueOptions(cars ?? []);
+  const driverOptions = mapDriversToRevenueOptions(drivers ?? []);
 
   const { mutate, isPending } = useUpdateDailyRevenue({
     mutation: {
@@ -58,21 +50,7 @@ export const useRevenueEditForm = ({ revenue, drivers, cars, onSuccess }: UseRev
     resolver: zodResolver(getCreateRevenueRecordSchema(t)),
     shouldUnregister: true,
     mode: 'onChange',
-    defaultValues: {
-      driverId: revenue.driver?.id ?? undefined,
-      carId: revenue.car?.id ?? undefined,
-      date: revenue.date ? dayjs(revenue.date).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
-      kilometersDriven: revenue.kilometersDriven ?? undefined,
-      kilometersFrom: revenue.kilometersFrom ?? undefined,
-      kilometersTo: revenue.kilometersTo ?? undefined,
-      drivingStartTime: revenue.drivingStartTime ? revenue.drivingStartTime.substring(0, 5) : undefined,
-      drivingEndTime: revenue.drivingEndTime ? revenue.drivingEndTime.substring(0, 5) : undefined,
-      driverRemunerationType: (revenue.remunerationModelType as import('@/features/remuneration/remuneration-types').RemunerationModelType) ?? undefined,
-      revenue: revenue.revenue ?? undefined,
-      tripCount: revenue.tripCount ?? undefined,
-      pricePerTrip: revenue.pricePerTrip ?? undefined,
-      companyRemuneration: revenue.companyRemuneration ?? undefined,
-    },
+    defaultValues: getRevenueEditFormDefaultValues(revenue),
   });
 
   const { control, setValue, resetField } = methods;
@@ -98,8 +76,8 @@ export const useRevenueEditForm = ({ revenue, drivers, cars, onSuccess }: UseRev
     pricePerTrip,
     kilometersFrom,
     kilometersTo,
-    setValue: setValue as unknown as import('react-hook-form').UseFormSetValue<import('react-hook-form').FieldValues>,
-    resetField: resetField as unknown as import('react-hook-form').UseFormResetField<import('react-hook-form').FieldValues>,
+    setValue: setValue as unknown as UseFormSetValue<FieldValues>,
+    resetField: resetField as unknown as UseFormResetField<FieldValues>,
   });
 
   const onSubmit = (data: CreateRevenueRecordRequest) => {

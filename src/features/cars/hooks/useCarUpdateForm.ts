@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { UpdateCarMutationBody, useUpdateCar } from '@/api/generated/endpoints/cars/cars';
 import { CarResponse } from '@/api/generated/model';
 import { UpdateCarBody } from '@/api/generated/zod/cars/cars';
+import { getCarUpdateFormDefaultValues } from '../utils/car-form.utils';
 
 
 export const useCarUpdateForm = (car: CarResponse) => {
@@ -15,12 +16,7 @@ export const useCarUpdateForm = (car: CarResponse) => {
     resolver: zodResolver(UpdateCarBody),
     shouldUnregister: true,
     mode: 'onChange',
-    defaultValues: {
-      brand: car.brand || '',
-      model: car.model || '',
-      licensePlate: car.licensePlate || '',
-      horsepower: car.horsepower || '',
-    },
+    defaultValues: getCarUpdateFormDefaultValues(car),
   });
 
   const onSubmit = (data: UpdateCarMutationBody) => {

@@ -1,11 +1,14 @@
 import { CarResponse as Car } from '@/api/generated/model';
 import { useGetAllCars } from '@/api/generated/endpoints/cars/cars';
 import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
+import {
+  computeIsPendingOptions,
+  mapCarsToRevenueOptions,
+  mapDriversToRevenueOptions,
+  RevenueSelectOption,
+} from '../utils/revenue-options.utils';
 
-export interface RevenueSelectOption {
-  label: string;
-  value: number;
-}
+export type { RevenueSelectOption };
 
 export const useRevenueFormOptions = () => {
   const { data: driversResponse, isPending: isPendingDrivers } = useGetAllDrivers({
@@ -22,21 +25,15 @@ export const useRevenueFormOptions = () => {
     }
   );
 
-  const carOptions: RevenueSelectOption[] = cars
-    .filter((car) => car.id !== undefined)
-    .map((car) => ({
-      label: `${car.licensePlate} ${car.model} ${car.brand}`,
-      value: car.id!,
-    }));
+  const carOptions = mapCarsToRevenueOptions(cars);
+  const driverOptions = mapDriversToRevenueOptions(drivers);
 
-  const driverOptions: RevenueSelectOption[] = drivers
-    .filter((driver) => driver.id !== undefined)
-    .map((driver) => ({
-      label: `${driver.firstName} ${driver.lastName}`,
-      value: driver.id!,
-    }));
-
-  const isPendingOptions = (isPendingCars || isPendingDrivers) && cars.length === 0 && drivers.length === 0;
+  const isPendingOptions = computeIsPendingOptions(
+    isPendingCars,
+    isPendingDrivers,
+    cars.length,
+    drivers.length
+  );
 
   return {
     drivers,
@@ -46,3 +43,4 @@ export const useRevenueFormOptions = () => {
     isPendingOptions,
   };
 };
+
