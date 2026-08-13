@@ -72,6 +72,15 @@ export const ROUTES = {
       },
     },
 
+    shifts: {
+      path: '/shifts',
+      getHref: () => '/shifts',
+      create: {
+        path: '/shifts/new',
+        getHref: () => '/shifts/new',
+      },
+    },
+
     settings: {
       path: '/settings',
       getHref: () => '/settings',

@@ -10,7 +10,8 @@
     "cars": "Autos",
     "revenues": "Umsätze",
     "reports": "Berichte",
-    "flatrates": "Pauschalen"
+    "flatrates": "Pauschalen",
+    "shifts": "Schichten"
   },
   "actions": {
     "edit": "Bearbeiten",

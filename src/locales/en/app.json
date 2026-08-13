@@ -261,5 +261,93 @@
       "success": "Flat rate created successfully",
       "deactivate_success": "Flat rate deactivated successfully"
     }
+  },
+  "shifts": {
+    "create_page_title": "Record Shift",
+    "detail_title": "Shift Details",
+    "empty": "No shifts available.",
+    "select_driver_hint": "Please select a driver first to load available revenue options.",
+    "no_revenues_hint": "No revenue entries added yet. Click '+ Add Revenue'.",
+    "calculation_preview": "Live Preview",
+    "revenue_entry": "Revenue Entry",
+    "groups": {
+      "master_data": "Master Data (Shift Header)",
+      "revenues": "Revenues (Positive List)"
+    },
+    "fields": {
+      "driver": {
+        "label": "Driver",
+        "placeholder": "Select driver"
+      },
+      "car": {
+        "label": "Car",
+        "placeholder": "Select car"
+      },
+      "shift_start": {
+        "label": "Shift Start",
+        "placeholder": "Select date & time"
+      },
+      "shift_end": {
+        "label": "Shift End",
+        "placeholder": "Select date & time"
+      },
+      "odometer_start": {
+        "label": "Odometer Start (km)",
+        "placeholder": "e.g. 45000"
+      },
+      "odometer_end": {
+        "label": "Odometer End (km)",
+        "placeholder": "e.g. 45312"
+      },
+      "revenue_type": {
+        "label": "Revenue Type",
+        "placeholder": "Select revenue type"
+      },
+      "revenue": {
+        "label": "Total Revenue (€)",
+        "placeholder": "0.00"
+      },
+      "trip_count": {
+        "label": "Trip Count (N)",
+        "placeholder": "1"
+      },
+      "price_per_trip": {
+        "label": "Price Per Trip (€)",
+        "placeholder": "0.00"
+      }
+    },
+    "actions": {
+      "add": "Record New Shift",
+      "add_revenue": "+ Add Revenue",
+      "view_details": "View Details"
+    },
+    "table": {
+      "date": "Date",
+      "driver": "Driver",
+      "car": "Car",
+      "km": "Km Driven",
+      "total_revenue": "Total Revenue",
+      "driver_payout": "Driver Payout",
+      "company_share": "Company Share",
+      "status": "Status",
+      "actions": "Actions",
+      "category": "Category",
+      "details": "Details",
+      "revenue": "Revenue"
+    },
+    "modals": {
+      "delete_confirm": {
+        "title": "Delete Shift",
+        "message": "Are you sure you want to delete this shift?"
+      }
+    },
+    "notifications": {
+      "create": {
+        "success": "Shift recorded successfully"
+      },
+      "delete": {
+        "success": "Shift deleted successfully"
+      }
+    }
   }
 }

@@ -261,5 +261,93 @@
       "success": "Pauschale erfolgreich erstellt",
       "deactivate_success": "Pauschale erfolgreich deaktiviert"
     }
+  },
+  "shifts": {
+    "create_page_title": "Schicht erfassen",
+    "detail_title": "Schicht-Details",
+    "empty": "Keine Schichten vorhanden.",
+    "select_driver_hint": "Bitte wählen Sie zuerst einen Fahrer aus, um die verfügbaren Umsatzoptionen zu laden.",
+    "no_revenues_hint": "Noch keine Umsatzeinträge vorhanden. Klicken Sie auf '+ Umsatz hinzufügen'.",
+    "calculation_preview": "Live-Vorschau",
+    "revenue_entry": "Umsatzeintrag",
+    "groups": {
+      "master_data": "Stammdaten (Schicht-Kopf)",
+      "revenues": "Umsätze (Positiv-Liste)"
+    },
+    "fields": {
+      "driver": {
+        "label": "Fahrer",
+        "placeholder": "Fahrer auswählen"
+      },
+      "car": {
+        "label": "Fahrzeug",
+        "placeholder": "Fahrzeug auswählen"
+      },
+      "shift_start": {
+        "label": "Schichtbeginn",
+        "placeholder": "Datum & Uhrzeit auswählen"
+      },
+      "shift_end": {
+        "label": "Schichtende",
+        "placeholder": "Datum & Uhrzeit auswählen"
+      },
+      "odometer_start": {
+        "label": "Tachostand Beginn (km)",
+        "placeholder": "z.B. 45000"
+      },
+      "odometer_end": {
+        "label": "Tachostand Ende (km)",
+        "placeholder": "z.B. 45312"
+      },
+      "revenue_type": {
+        "label": "Umsatzart",
+        "placeholder": "Umsatzart auswählen"
+      },
+      "revenue": {
+        "label": "Gesamtbetrag (€)",
+        "placeholder": "0,00"
+      },
+      "trip_count": {
+        "label": "Anzahl Fahrten (N)",
+        "placeholder": "1"
+      },
+      "price_per_trip": {
+        "label": "Preis pro Fahrt (€)",
+        "placeholder": "0,00"
+      }
+    },
+    "actions": {
+      "add": "Neue Schicht erfassen",
+      "add_revenue": "+ Umsatz hinzufügen",
+      "view_details": "Details anzeigen"
+    },
+    "table": {
+      "date": "Datum",
+      "driver": "Fahrer",
+      "car": "Fahrzeug",
+      "km": "Gefahrene km",
+      "total_revenue": "Gesamtumsatz",
+      "driver_payout": "Fahrerlohn",
+      "company_share": "Firmenanteil",
+      "status": "Status",
+      "actions": "Aktionen",
+      "category": "Kategorie",
+      "details": "Details",
+      "revenue": "Umsatz"
+    },
+    "modals": {
+      "delete_confirm": {
+        "title": "Schicht löschen",
+        "message": "Möchten Sie diese Schicht wirklich löschen?"
+      }
+    },
+    "notifications": {
+      "create": {
+        "success": "Schicht erfolgreich erfasst"
+      },
+      "delete": {
+        "success": "Schicht erfolgreich gelöscht"
+      }
+    }
   }
 }

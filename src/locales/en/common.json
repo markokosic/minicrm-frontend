@@ -10,7 +10,8 @@
     "cars": "Cars",
     "revenues": "Revenues",
     "reports": "Reports",
-    "flatrates": "Flat Rates"
+    "flatrates": "Flat Rates",
+    "shifts": "Shifts"
   },
   "actions": {
     "edit": "Edit",

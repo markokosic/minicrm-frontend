@@ -21,6 +21,8 @@ const CreateDailyRevenuesPage = lazy(() => import('@/features/revenues/pages/Cre
 const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
 const CreateNewFlatRatePage = lazy(() => import('@/features/flatrates/pages/CreateNewFlatRatePage'));
 const FlatRatesPage = lazy(() => import('@/features/flatrates/pages/FlatRatesPage'));
+const ShiftsPage = lazy(() => import('@/features/shifts/pages/ShiftsPage'));
+const CreateShiftPage = lazy(() => import('@/features/shifts/pages/CreateShiftPage'));
 
 const router = createBrowserRouter([
 
@@ -65,6 +67,10 @@ const router = createBrowserRouter([
       // FLATRATE PAGES
       { path: ROUTES.app.flatrates.path, element: <FlatRatesPage /> },
       { path: ROUTES.app.flatrates.create.path, element: <CreateNewFlatRatePage /> },
+
+      // SHIFTS PAGES
+      { path: ROUTES.app.shifts.path, element: <ShiftsPage /> },
+      { path: ROUTES.app.shifts.create.path, element: <CreateShiftPage /> },
 
       // SETTINGS PAGE
       { path: ROUTES.app.settings.path, element: <SettingsPage /> },

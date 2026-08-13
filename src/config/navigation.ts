@@ -7,6 +7,7 @@ import {
   HandCoins,
   Car,
   Tag,
+  CalendarDays,
 } from 'lucide-react';
 import { ROUTES } from './routes';
 
@@ -48,6 +49,13 @@ export const NAV_ITEMS: Record<string, NavItem[]> = {
       path: ROUTES.app.flatrates.path,
       labelKey: 'navigation.flatrates',
       icon: Tag,
+    },
+    {
+      id: 1.9,
+      href: ROUTES.app.shifts.getHref(),
+      path: ROUTES.app.shifts.path,
+      labelKey: 'navigation.shifts',
+      icon: CalendarDays,
     },
     {
       id: 2,
