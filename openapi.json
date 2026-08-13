@@ -1628,6 +1628,39 @@
         }
       }
     },
+    "/api/drivers/{id}/revenue-options": {
+      "get": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Get selectable revenue options for driver",
+        "description": "Fetches the list of selectable revenue categories and flat rate options for a driver.",
+        "operationId": "getDriverRevenueOptions",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Revenue options fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOListDriverRevenueOptionDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/drivers/select": {
       "get": {
         "tags": [
@@ -2312,6 +2345,10 @@
               },
               "flatRateFee": {
                 "type": "number"
+              },
+              "flatRateTypeId": {
+                "type": "integer",
+                "format": "int64"
               }
             }
           }
@@ -2524,6 +2561,13 @@
               },
               "flatRateFee": {
                 "type": "number"
+              },
+              "flatRateTypeId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "flatRateTypeName": {
+                "type": "string"
               }
             }
           }
@@ -3211,6 +3255,46 @@
           },
           "last": {
             "type": "boolean"
+          }
+        }
+      },
+      "ApiResponseDTOListDriverRevenueOptionDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DriverRevenueOptionDTO"
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "DriverRevenueOptionDTO": {
+        "type": "object",
+        "properties": {
+          "entryCategory": {
+            "type": "string",
+            "enum": [
+              "REGULAR",
+              "FLAT_RATE",
+              "WEEKLY"
+            ]
+          },
+          "flatRateTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "label": {
+            "type": "string"
+          },
+          "defaultPrice": {
+            "type": "number"
           }
         }
       },

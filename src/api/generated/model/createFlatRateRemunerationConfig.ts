@@ -11,4 +11,5 @@ import type { CreateRemunerationRequest } from './createRemunerationRequest';
 export type CreateFlatRateRemunerationConfig = Omit<CreateRemunerationRequest, 'remunerationModelType'> & {
   remunerationModelType: CreateFlatRateRemunerationConfigRemunerationModelType;
   flatRateFee: number;
+  flatRateTypeId?: number;
 };

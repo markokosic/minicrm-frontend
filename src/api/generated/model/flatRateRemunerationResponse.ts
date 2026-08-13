@@ -15,4 +15,6 @@ export type FlatRateRemunerationResponse = RemunerationConfigResponse & {
   current?: boolean;
   remunerationModelType?: FlatRateRemunerationResponseRemunerationModelType;
   flatRateFee?: number;
+  flatRateTypeId?: number;
+  flatRateTypeName?: string;
 };
