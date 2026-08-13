@@ -20,10 +20,10 @@ export const UpdateDailyRevenueBody = zod.object({
   "driverId": zod.number(),
   "carId": zod.number(),
   "date": zod.iso.date(),
-  "kilometersDriven": zod.number(),
+  "kilometersDriven": zod.number().optional(),
   "revenue": zod.number(),
-  "kilometersFrom": zod.number(),
-  "kilometersTo": zod.number(),
+  "kilometersFrom": zod.number().optional(),
+  "kilometersTo": zod.number().optional(),
   "driverRemunerationType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
   "drivingStartTime": zod.string().optional(),
   "drivingEndTime": zod.string().optional(),
@@ -32,7 +32,36 @@ export const UpdateDailyRevenueBody = zod.object({
   "companyRemuneration": zod.number().optional()
 })
 
-export const UpdateDailyRevenueResponse = zod.unknown()
+export const UpdateDailyRevenueResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().optional(),
+  "date": zod.iso.date().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).optional(),
+  "tripCount": zod.number().optional(),
+  "pricePerTrip": zod.number().optional(),
+  "driver": zod.object({
+  "id": zod.number().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional()
+}).optional(),
+  "car": zod.object({
+  "id": zod.number().optional(),
+  "licensePlate": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "model": zod.string().optional()
+}).optional(),
+  "kilometersDriven": zod.number().optional(),
+  "kilometersFrom": zod.number().optional(),
+  "kilometersTo": zod.number().optional(),
+  "revenue": zod.number().optional(),
+  "companyRemuneration": zod.number().optional(),
+  "driverRemuneration": zod.number().optional(),
+  "drivingStartTime": zod.string().optional(),
+  "drivingEndTime": zod.string().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Permanently deletes a logged daily revenue entry.
@@ -42,7 +71,7 @@ export const DeleteDailyRevenueParams = zod.object({
   "id": zod.number()
 })
 
-export const DeleteDailyRevenueResponse = zod.unknown()
+export const DeleteDailyRevenueResponse = zod.void()
 
 /**
  * Logs multiple daily revenue entries for drivers at once.
@@ -52,10 +81,10 @@ export const CreateDailyRevenuesBulkBodyItem = zod.object({
   "driverId": zod.number(),
   "carId": zod.number(),
   "date": zod.iso.date(),
-  "kilometersDriven": zod.number(),
+  "kilometersDriven": zod.number().optional(),
   "revenue": zod.number(),
-  "kilometersFrom": zod.number(),
-  "kilometersTo": zod.number(),
+  "kilometersFrom": zod.number().optional(),
+  "kilometersTo": zod.number().optional(),
   "driverRemunerationType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
   "drivingStartTime": zod.string().optional(),
   "drivingEndTime": zod.string().optional(),
@@ -65,27 +94,67 @@ export const CreateDailyRevenuesBulkBodyItem = zod.object({
 })
 export const CreateDailyRevenuesBulkBody = zod.array(CreateDailyRevenuesBulkBodyItem)
 
-export const CreateDailyRevenuesBulkResponse = zod.void()
+export const CreateDailyRevenuesBulkResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.unknown().optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Retrieves a paginated list of logged daily revenues.
  * @summary Get all daily revenues
  */
-export const getAllDailyRevenuesQueryPageablePageMin = 0;
+export const getAllDailyRevenuesQueryPageDefault = 1;
 
+export const getAllDailyRevenuesQuerySizeDefault = 10;
 
-
+export const getAllDailyRevenuesQuerySortDefault = [`date,DESC`, `drivingStartTime,DESC`];
 
 export const GetAllDailyRevenuesQueryParams = zod.object({
   "driverId": zod.number().optional(),
   "dateFrom": zod.iso.date().optional(),
   "dateTo": zod.iso.date().optional(),
-  "pageable": zod.object({
-  "page": zod.number().min(getAllDailyRevenuesQueryPageablePageMin).optional(),
-  "size": zod.number().min(1).optional(),
-  "sort": zod.array(zod.string()).optional()
-})
+  "page": zod.number().min(1).default(getAllDailyRevenuesQueryPageDefault).describe('Page number (1-indexed, minimum 1)'),
+  "size": zod.number().min(1).default(getAllDailyRevenuesQuerySizeDefault).describe('The size of the page to be returned'),
+  "sort": zod.array(zod.string()).default(getAllDailyRevenuesQuerySortDefault).describe('Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.')
 })
 
-export const GetAllDailyRevenuesResponse = zod.unknown()
+export const GetAllDailyRevenuesResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "content": zod.array(zod.object({
+  "id": zod.number().optional(),
+  "date": zod.iso.date().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).optional(),
+  "tripCount": zod.number().optional(),
+  "pricePerTrip": zod.number().optional(),
+  "driver": zod.object({
+  "id": zod.number().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional()
+}).optional(),
+  "car": zod.object({
+  "id": zod.number().optional(),
+  "licensePlate": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "model": zod.string().optional()
+}).optional(),
+  "kilometersDriven": zod.number().optional(),
+  "kilometersFrom": zod.number().optional(),
+  "kilometersTo": zod.number().optional(),
+  "revenue": zod.number().optional(),
+  "companyRemuneration": zod.number().optional(),
+  "driverRemuneration": zod.number().optional(),
+  "drivingStartTime": zod.string().optional(),
+  "drivingEndTime": zod.string().optional()
+})).optional(),
+  "page": zod.number().optional(),
+  "size": zod.number().optional(),
+  "totalElements": zod.number().optional(),
+  "totalPages": zod.number().optional(),
+  "first": zod.boolean().optional(),
+  "last": zod.boolean().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 

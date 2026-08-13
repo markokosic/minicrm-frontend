@@ -11,10 +11,10 @@ export interface CreateDailyRevenueRequest {
   driverId: number;
   carId: number;
   date: string;
-  kilometersDriven: number;
+  kilometersDriven?: number;
   revenue: number;
-  kilometersFrom: number;
-  kilometersTo: number;
+  kilometersFrom?: number;
+  kilometersTo?: number;
   driverRemunerationType: CreateDailyRevenueRequestDriverRemunerationType;
   drivingStartTime?: string;
   drivingEndTime?: string;

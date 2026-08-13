@@ -29,13 +29,24 @@ export const RegisterBody = zod.object({
   "email": zod.email().min(1)
 })
 
-export const RegisterResponse = zod.unknown()
+export const RegisterResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "tenantId": zod.number().optional(),
+  "tenantName": zod.string().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Clears the access and refresh token cookies from the browser.
  * @summary Log out from the application
  */
-export const LogoutResponse = zod.unknown()
+export const LogoutResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.unknown().optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Authenticates user credentials and sets HttpOnly accessToken and refreshToken cookies.
@@ -50,17 +61,41 @@ export const LoginBody = zod.object({
   "password": zod.string().min(1)
 })
 
-export const LoginResponse = zod.unknown()
+export const LoginResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional(),
+  "email": zod.string().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Uses the HttpOnly refreshToken cookie to issue a new HttpOnly accessToken cookie.
  * @summary Refresh access token
  */
-export const RefreshAccessTokenResponse = zod.unknown()
+export const RefreshAccessTokenResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.unknown().optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Retrieves information about the currently logged-in user.
  * @summary Get current session information
  */
-export const GetMeResponse = zod.unknown()
+export const GetMeResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional(),
+  "email": zod.string().optional(),
+  "tenantId": zod.number().optional(),
+  "tenantName": zod.string().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 

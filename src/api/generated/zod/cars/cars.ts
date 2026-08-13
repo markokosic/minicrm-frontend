@@ -12,20 +12,40 @@ import * as zod from 'zod';
  * Retrieves a paginated list of all cars for the current tenant.
  * @summary Get all cars
  */
-export const getAllCarsQueryPageablePageMin = 0;
+export const getAllCarsQueryPageDefault = 1;
 
+export const getAllCarsQuerySizeDefault = 10;
 
-
+export const getAllCarsQuerySortDefault = [`licensePlate,ASC`, `id,ASC`];
 
 export const GetAllCarsQueryParams = zod.object({
-  "pageable": zod.object({
-  "page": zod.number().min(getAllCarsQueryPageablePageMin).optional(),
-  "size": zod.number().min(1).optional(),
-  "sort": zod.array(zod.string()).optional()
-})
+  "page": zod.number().min(1).default(getAllCarsQueryPageDefault).describe('Page number (1-indexed, minimum 1)'),
+  "size": zod.number().min(1).default(getAllCarsQuerySizeDefault).describe('The size of the page to be returned'),
+  "sort": zod.array(zod.string()).default(getAllCarsQuerySortDefault).describe('Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.')
 })
 
-export const GetAllCarsResponse = zod.unknown()
+export const GetAllCarsResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "content": zod.array(zod.object({
+  "id": zod.number().optional(),
+  "licensePlate": zod.string().optional(),
+  "model": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "horsepower": zod.string().optional(),
+  "status": zod.enum(['ACTIVE', 'DELETED']).optional(),
+  "createdAt": zod.iso.datetime({"offset":true}).optional(),
+  "updatedAt": zod.iso.datetime({"offset":true}).optional()
+})).optional(),
+  "page": zod.number().optional(),
+  "size": zod.number().optional(),
+  "totalElements": zod.number().optional(),
+  "totalPages": zod.number().optional(),
+  "first": zod.boolean().optional(),
+  "last": zod.boolean().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Creates a new car profile associated with the current tenant.
@@ -41,7 +61,20 @@ export const CreateCarBody = zod.object({
   "horsepower": zod.string().optional()
 })
 
-export const CreateCarResponse = zod.void()
+export const CreateCarResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().optional(),
+  "licensePlate": zod.string().optional(),
+  "model": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "horsepower": zod.string().optional(),
+  "status": zod.enum(['ACTIVE', 'DELETED']).optional(),
+  "createdAt": zod.iso.datetime({"offset":true}).optional(),
+  "updatedAt": zod.iso.datetime({"offset":true}).optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Fetches details of a specific car belonging to the tenant.
@@ -51,7 +84,20 @@ export const GetCarParams = zod.object({
   "id": zod.number()
 })
 
-export const GetCarResponse = zod.unknown()
+export const GetCarResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().optional(),
+  "licensePlate": zod.string().optional(),
+  "model": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "horsepower": zod.string().optional(),
+  "status": zod.enum(['ACTIVE', 'DELETED']).optional(),
+  "createdAt": zod.iso.datetime({"offset":true}).optional(),
+  "updatedAt": zod.iso.datetime({"offset":true}).optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Deletes a car by its ID.
@@ -78,5 +124,18 @@ export const UpdateCarBody = zod.object({
   "horsepower": zod.string().optional()
 })
 
-export const UpdateCarResponse = zod.unknown()
+export const UpdateCarResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().optional(),
+  "licensePlate": zod.string().optional(),
+  "model": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "horsepower": zod.string().optional(),
+  "status": zod.enum(['ACTIVE', 'DELETED']).optional(),
+  "createdAt": zod.iso.datetime({"offset":true}).optional(),
+  "updatedAt": zod.iso.datetime({"offset":true}).optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 

@@ -6,7 +6,10 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetAllDriversParams = {
+export type GetAllShiftsParams = {
+driverId?: number;
+dateFrom?: string;
+dateTo?: string;
 /**
  * Page number (1-indexed, minimum 1)
  * @minimum 1

@@ -19,8 +19,7 @@ import type {
 
 import type {
   ApiResponseCarResponse,
-  ApiResponsePageResponseCarResponse,
-  ApiResponseVoid
+  ApiResponsePageResponseCarResponse
 } from '../../model';
 
 
@@ -29,8 +28,6 @@ export const getGetAllCarsResponseMock = (overrideResponse: Partial<Extract<ApiR
 export const getCreateCarResponseMock = (overrideResponse: Partial<Extract<ApiResponseCarResponse, object>> = {}): ApiResponseCarResponse => ({success: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), data: faker.helpers.arrayElement([{id: faker.helpers.arrayElement([faker.number.int(), undefined]), licensePlate: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), model: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), brand: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), horsepower: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), status: faker.helpers.arrayElement([faker.helpers.arrayElement(['ACTIVE','DELETED'] as const), undefined]), createdAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + 'Z', undefined]), updatedAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + 'Z', undefined])}, undefined]), message: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), ...overrideResponse})
 
 export const getGetCarResponseMock = (overrideResponse: Partial<Extract<ApiResponseCarResponse, object>> = {}): ApiResponseCarResponse => ({success: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), data: faker.helpers.arrayElement([{id: faker.helpers.arrayElement([faker.number.int(), undefined]), licensePlate: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), model: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), brand: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), horsepower: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), status: faker.helpers.arrayElement([faker.helpers.arrayElement(['ACTIVE','DELETED'] as const), undefined]), createdAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + 'Z', undefined]), updatedAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + 'Z', undefined])}, undefined]), message: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), ...overrideResponse})
-
-export const getDeleteCarResponseMock = (overrideResponse: Partial<Extract<ApiResponseVoid, object>> = {}): ApiResponseVoid => ({success: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), data: faker.helpers.arrayElement([{}, undefined]), message: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), ...overrideResponse})
 
 export const getUpdateCarResponseMock = (overrideResponse: Partial<Extract<ApiResponseCarResponse, object>> = {}): ApiResponseCarResponse => ({success: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), data: faker.helpers.arrayElement([{id: faker.helpers.arrayElement([faker.number.int(), undefined]), licensePlate: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), model: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), brand: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), horsepower: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), status: faker.helpers.arrayElement([faker.helpers.arrayElement(['ACTIVE','DELETED'] as const), undefined]), createdAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + 'Z', undefined]), updatedAt: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 19) + 'Z', undefined])}, undefined]), message: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), ...overrideResponse})
 
@@ -71,13 +68,11 @@ export const getGetCarMockHandler = (overrideResponse?: ApiResponseCarResponse |
   }, options)
 }
 
-export const getDeleteCarMockHandler = (overrideResponse?: ApiResponseVoid | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<ApiResponseVoid> | ApiResponseVoid), options?: RequestHandlerOptions) => {
+export const getDeleteCarMockHandler = (overrideResponse?: void | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<void> | void), options?: RequestHandlerOptions) => {
   return http.delete('*/api/cars/:id', async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
 
-
-    return HttpResponse.json(overrideResponse !== undefined
-    ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
-    : getDeleteCarResponseMock(),
+    return new HttpResponse(null,
       { status: 204
       })
   }, options)

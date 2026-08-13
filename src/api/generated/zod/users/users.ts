@@ -12,7 +12,16 @@ import * as zod from 'zod';
  * Retrieves a list of all system users/administrators for the current tenant.
  * @summary Get all users
  */
-export const GetAllUsersResponse = zod.unknown()
+export const GetAllUsersResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.array(zod.object({
+  "id": zod.number().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional(),
+  "email": zod.string().optional()
+})).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Retrieves profile details of a specific system user.
@@ -22,7 +31,16 @@ export const GetUserParams = zod.object({
   "id": zod.number()
 })
 
-export const GetUserResponse = zod.unknown()
+export const GetUserResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional(),
+  "email": zod.string().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Deletes a system user by their ID.

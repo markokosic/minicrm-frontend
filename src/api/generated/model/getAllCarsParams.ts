@@ -5,8 +5,20 @@
  * API Documentation for MiniCRM Application
  * OpenAPI spec version: 1.0.0
  */
-import type { Pageable } from './pageable';
 
 export type GetAllCarsParams = {
-pageable: Pageable;
+/**
+ * Page number (1-indexed, minimum 1)
+ * @minimum 1
+ */
+page?: number;
+/**
+ * The size of the page to be returned
+ * @minimum 1
+ */
+size?: number;
+/**
+ * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ */
+sort?: string[];
 };

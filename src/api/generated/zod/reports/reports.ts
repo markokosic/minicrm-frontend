@@ -19,7 +19,35 @@ export const GetRevenueReportQueryParams = zod.object({
   "groupBy": zod.enum(['NONE', 'DAY', 'MONTH', 'YEAR', 'DRIVER', 'CAR']).optional()
 })
 
-export const GetRevenueReportResponse = zod.unknown()
+export const GetRevenueReportResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "dateFrom": zod.iso.date().optional(),
+  "dateTo": zod.iso.date().optional(),
+  "groupBy": zod.enum(['NONE', 'DAY', 'MONTH', 'YEAR', 'DRIVER', 'CAR']).optional(),
+  "totals": zod.object({
+  "revenue": zod.number().optional(),
+  "companyShare": zod.number().optional(),
+  "driverShare": zod.number().optional(),
+  "totalKm": zod.number().optional(),
+  "entryCount": zod.number().optional()
+}).optional(),
+  "rows": zod.array(zod.object({
+  "date": zod.iso.date().optional(),
+  "revenue": zod.number().optional(),
+  "companyRemuneration": zod.number().optional(),
+  "driverRemuneration": zod.number().optional(),
+  "kilometersDriven": zod.number().optional(),
+  "entryCount": zod.number().optional(),
+  "drivers": zod.array(zod.object({
+  "id": zod.number().optional().describe('Unique identifier of the driver'),
+  "firstName": zod.string().optional().describe('First name of the driver'),
+  "lastName": zod.string().optional().describe('Last name of the driver')
+}).describe('Driver information in a report entry')).optional()
+})).optional()
+}).optional().describe('Response object representing a detailed revenues report in the system'),
+  "message": zod.string().optional()
+})
 
 /**
  * Fetches aggregate analytics (totals, trends) for the dashboard for a given year and optional month.
@@ -30,5 +58,18 @@ export const GetDashboardReportQueryParams = zod.object({
   "month": zod.number().optional()
 })
 
-export const GetDashboardReportResponse = zod.unknown()
+export const GetDashboardReportResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "year": zod.number().optional(),
+  "month": zod.number().optional(),
+  "totalRevenue": zod.number().optional(),
+  "companyShare": zod.number().optional(),
+  "driverShare": zod.number().optional(),
+  "totalKm": zod.number().optional(),
+  "revenuePerKm": zod.number().optional(),
+  "tripCount": zod.number().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 

@@ -12,20 +12,70 @@ import * as zod from 'zod';
  * Retrieves a paginated list of all drivers for the current tenant.
  * @summary Get all drivers
  */
-export const getAllDriversQueryPageablePageMin = 0;
+export const getAllDriversQueryPageDefault = 1;
 
+export const getAllDriversQuerySizeDefault = 10;
 
-
+export const getAllDriversQuerySortDefault = [`lastName,ASC`, `id,ASC`];
 
 export const GetAllDriversQueryParams = zod.object({
-  "pageable": zod.object({
-  "page": zod.number().min(getAllDriversQueryPageablePageMin).optional(),
-  "size": zod.number().min(1).optional(),
-  "sort": zod.array(zod.string()).optional()
-})
+  "page": zod.number().min(1).default(getAllDriversQueryPageDefault).describe('Page number (1-indexed, minimum 1)'),
+  "size": zod.number().min(1).default(getAllDriversQuerySizeDefault).describe('The size of the page to be returned'),
+  "sort": zod.array(zod.string()).default(getAllDriversQuerySortDefault).describe('Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.')
 })
 
-export const GetAllDriversResponse = zod.unknown()
+export const GetAllDriversResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "content": zod.array(zod.object({
+  "id": zod.number().describe('Unique identifier of the driver'),
+  "firstName": zod.string().describe('First name of the driver'),
+  "lastName": zod.string().describe('Last name of the driver'),
+  "email": zod.string().describe('Email address'),
+  "phone": zod.string().describe('Phone number'),
+  "status": zod.enum(['ACTIVE', 'DELETED']).describe('Current employment status'),
+  "currentRemunerationConfigs": zod.array(zod.union([zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "flatRateFee": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "driverRevenueSharePercentage": zod.number().optional(),
+  "minDriverPayout": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "weeklyFixedCompanySettlement": zod.number().optional(),
+  "settlementDay": zod.number().optional()
+}))])).describe('Current remuneration configuration'),
+  "createdAt": zod.iso.datetime({"offset":true}).describe('Timestamp when the driver was created'),
+  "updatedAt": zod.iso.datetime({"offset":true}).describe('Timestamp of the last update')
+}).describe('Response object representing a driver in the system')).optional(),
+  "page": zod.number().optional(),
+  "size": zod.number().optional(),
+  "totalElements": zod.number().optional(),
+  "totalPages": zod.number().optional(),
+  "first": zod.boolean().optional(),
+  "last": zod.boolean().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Registers a new driver and sets up their initial profile.
@@ -70,7 +120,50 @@ export const CreateDriverBody = zod.object({
 }))])).describe('The internal remuneration models assigned to the driver')
 }).describe('Request object for creating a new driver')
 
-export const CreateDriverResponse = zod.void()
+export const CreateDriverResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().describe('Unique identifier of the driver'),
+  "firstName": zod.string().describe('First name of the driver'),
+  "lastName": zod.string().describe('Last name of the driver'),
+  "email": zod.string().describe('Email address'),
+  "phone": zod.string().describe('Phone number'),
+  "status": zod.enum(['ACTIVE', 'DELETED']).describe('Current employment status'),
+  "currentRemunerationConfigs": zod.array(zod.union([zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "flatRateFee": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "driverRevenueSharePercentage": zod.number().optional(),
+  "minDriverPayout": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "weeklyFixedCompanySettlement": zod.number().optional(),
+  "settlementDay": zod.number().optional()
+}))])).describe('Current remuneration configuration'),
+  "createdAt": zod.iso.datetime({"offset":true}).describe('Timestamp when the driver was created'),
+  "updatedAt": zod.iso.datetime({"offset":true}).describe('Timestamp of the last update')
+}).optional().describe('Response object representing a driver in the system'),
+  "message": zod.string().optional()
+})
 
 /**
  * Fetches details of a specific driver.
@@ -80,7 +173,50 @@ export const GetDriverParams = zod.object({
   "id": zod.number()
 })
 
-export const GetDriverResponse = zod.unknown()
+export const GetDriverResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().describe('Unique identifier of the driver'),
+  "firstName": zod.string().describe('First name of the driver'),
+  "lastName": zod.string().describe('Last name of the driver'),
+  "email": zod.string().describe('Email address'),
+  "phone": zod.string().describe('Phone number'),
+  "status": zod.enum(['ACTIVE', 'DELETED']).describe('Current employment status'),
+  "currentRemunerationConfigs": zod.array(zod.union([zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "flatRateFee": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "driverRevenueSharePercentage": zod.number().optional(),
+  "minDriverPayout": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "weeklyFixedCompanySettlement": zod.number().optional(),
+  "settlementDay": zod.number().optional()
+}))])).describe('Current remuneration configuration'),
+  "createdAt": zod.iso.datetime({"offset":true}).describe('Timestamp when the driver was created'),
+  "updatedAt": zod.iso.datetime({"offset":true}).describe('Timestamp of the last update')
+}).optional().describe('Response object representing a driver in the system'),
+  "message": zod.string().optional()
+})
 
 /**
  * Deletes a driver's profile.
@@ -139,13 +275,63 @@ export const UpdateDriverBody = zod.object({
 }))])).optional()
 }).describe('Request object for updating a driver')
 
-export const UpdateDriverResponse = zod.unknown()
+export const UpdateDriverResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.number().describe('Unique identifier of the driver'),
+  "firstName": zod.string().describe('First name of the driver'),
+  "lastName": zod.string().describe('Last name of the driver'),
+  "email": zod.string().describe('Email address'),
+  "phone": zod.string().describe('Phone number'),
+  "status": zod.enum(['ACTIVE', 'DELETED']).describe('Current employment status'),
+  "currentRemunerationConfigs": zod.array(zod.union([zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "flatRateFee": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "driverRevenueSharePercentage": zod.number().optional(),
+  "minDriverPayout": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.number().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "weeklyFixedCompanySettlement": zod.number().optional(),
+  "settlementDay": zod.number().optional()
+}))])).describe('Current remuneration configuration'),
+  "createdAt": zod.iso.datetime({"offset":true}).describe('Timestamp when the driver was created'),
+  "updatedAt": zod.iso.datetime({"offset":true}).describe('Timestamp of the last update')
+}).optional().describe('Response object representing a driver in the system'),
+  "message": zod.string().optional()
+})
 
 /**
  * Retrieves a simplified list of drivers optimized for selection controls.
  * @summary Get drivers list for dropdowns
  */
-export const GetAllDriversForSelectResponse = zod.unknown()
+export const GetAllDriversForSelectResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.array(zod.object({
+  "id": zod.number().optional(),
+  "fullName": zod.string().optional()
+})).optional(),
+  "message": zod.string().optional()
+})
 
 /**
  * Deactivates a specific remuneration configuration for a driver.
@@ -156,5 +342,5 @@ export const StopRemunerationConfigParams = zod.object({
   "configId": zod.number()
 })
 
-export const StopRemunerationConfigResponse = zod.unknown()
+export const StopRemunerationConfigResponse = zod.void()
 

@@ -21,7 +21,6 @@ import type {
   ApiResponseDriverResponse,
   ApiResponseListDriverSelect,
   ApiResponsePageResponseDriverResponse,
-  ApiResponseVoid,
   FlatRateRemunerationResponse,
   PercentageShareRemunerationResponse,
   WeeklyFixedRateRemunerationResponse
@@ -52,14 +51,6 @@ export const getGetDriverResponseWeeklyFixedRateRemunerationResponseMock = (over
 
 export const getGetDriverResponseMock = (overrideResponse: Partial<Extract<ApiResponseDriverResponse, object>> = {}): ApiResponseDriverResponse => ({success: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), data: faker.helpers.arrayElement([{id: faker.number.int(), firstName: faker.string.alpha({length: {min: 10, max: 20}}), lastName: faker.string.alpha({length: {min: 10, max: 20}}), email: faker.string.alpha({length: {min: 10, max: 20}}), phone: faker.string.alpha({length: {min: 10, max: 20}}), status: faker.helpers.arrayElement(['ACTIVE','DELETED'] as const), currentRemunerationConfigs: Array.from({ length: faker.number.int({min: 1, max: 10}) }, (_, i) => i + 1).map(() => (faker.helpers.arrayElement([{...getGetDriverResponseFlatRateRemunerationResponseMock()},{...getGetDriverResponsePercentageShareRemunerationResponseMock()},{...getGetDriverResponseWeeklyFixedRateRemunerationResponseMock()},]))), createdAt: faker.date.past().toISOString().slice(0, 19) + 'Z', updatedAt: faker.date.past().toISOString().slice(0, 19) + 'Z'}, undefined]), message: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), ...overrideResponse})
 
-export const getDeleteDriverResponseFlatRateRemunerationResponseMock = (overrideResponse: Partial<FlatRateRemunerationResponse> = {}): FlatRateRemunerationResponse => ({...{...{remunerationModelType: faker.string.alpha({length: {min: 10, max: 20}})},...{id: faker.helpers.arrayElement([faker.number.int(), undefined]), validFrom: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), validUntil: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), current: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), remunerationModelType: faker.helpers.arrayElement([faker.helpers.arrayElement(['PERCENTAGE_SHARE','WEEKLY_FIXED_RATE','FLAT_RATE'] as const), undefined]), flatRateFee: faker.helpers.arrayElement([faker.number.float({fractionDigits: 2}), undefined])},}, ...overrideResponse});
-
-export const getDeleteDriverResponsePercentageShareRemunerationResponseMock = (overrideResponse: Partial<PercentageShareRemunerationResponse> = {}): PercentageShareRemunerationResponse => ({...{...{remunerationModelType: faker.string.alpha({length: {min: 10, max: 20}})},...{id: faker.helpers.arrayElement([faker.number.int(), undefined]), validFrom: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), validUntil: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), current: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), remunerationModelType: faker.helpers.arrayElement([faker.helpers.arrayElement(['PERCENTAGE_SHARE','WEEKLY_FIXED_RATE','FLAT_RATE'] as const), undefined]), driverRevenueSharePercentage: faker.helpers.arrayElement([faker.number.float({fractionDigits: 2}), undefined]), minDriverPayout: faker.helpers.arrayElement([faker.number.float({fractionDigits: 2}), undefined])},}, ...overrideResponse});
-
-export const getDeleteDriverResponseWeeklyFixedRateRemunerationResponseMock = (overrideResponse: Partial<WeeklyFixedRateRemunerationResponse> = {}): WeeklyFixedRateRemunerationResponse => ({...{...{remunerationModelType: faker.string.alpha({length: {min: 10, max: 20}})},...{id: faker.helpers.arrayElement([faker.number.int(), undefined]), validFrom: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), validUntil: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), current: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), remunerationModelType: faker.helpers.arrayElement([faker.helpers.arrayElement(['PERCENTAGE_SHARE','WEEKLY_FIXED_RATE','FLAT_RATE'] as const), undefined]), weeklyFixedCompanySettlement: faker.helpers.arrayElement([faker.number.float({fractionDigits: 2}), undefined]), settlementDay: faker.helpers.arrayElement([faker.number.int(), undefined])},}, ...overrideResponse});
-
-export const getDeleteDriverResponseMock = (overrideResponse: Partial<Extract<ApiResponseDriverResponse, object>> = {}): ApiResponseDriverResponse => ({success: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), data: faker.helpers.arrayElement([{id: faker.number.int(), firstName: faker.string.alpha({length: {min: 10, max: 20}}), lastName: faker.string.alpha({length: {min: 10, max: 20}}), email: faker.string.alpha({length: {min: 10, max: 20}}), phone: faker.string.alpha({length: {min: 10, max: 20}}), status: faker.helpers.arrayElement(['ACTIVE','DELETED'] as const), currentRemunerationConfigs: Array.from({ length: faker.number.int({min: 1, max: 10}) }, (_, i) => i + 1).map(() => (faker.helpers.arrayElement([{...getDeleteDriverResponseFlatRateRemunerationResponseMock()},{...getDeleteDriverResponsePercentageShareRemunerationResponseMock()},{...getDeleteDriverResponseWeeklyFixedRateRemunerationResponseMock()},]))), createdAt: faker.date.past().toISOString().slice(0, 19) + 'Z', updatedAt: faker.date.past().toISOString().slice(0, 19) + 'Z'}, undefined]), message: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), ...overrideResponse})
-
 export const getUpdateDriverResponseFlatRateRemunerationResponseMock = (overrideResponse: Partial<FlatRateRemunerationResponse> = {}): FlatRateRemunerationResponse => ({...{...{remunerationModelType: faker.string.alpha({length: {min: 10, max: 20}})},...{id: faker.helpers.arrayElement([faker.number.int(), undefined]), validFrom: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), validUntil: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), current: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), remunerationModelType: faker.helpers.arrayElement([faker.helpers.arrayElement(['PERCENTAGE_SHARE','WEEKLY_FIXED_RATE','FLAT_RATE'] as const), undefined]), flatRateFee: faker.helpers.arrayElement([faker.number.float({fractionDigits: 2}), undefined])},}, ...overrideResponse});
 
 export const getUpdateDriverResponsePercentageShareRemunerationResponseMock = (overrideResponse: Partial<PercentageShareRemunerationResponse> = {}): PercentageShareRemunerationResponse => ({...{...{remunerationModelType: faker.string.alpha({length: {min: 10, max: 20}})},...{id: faker.helpers.arrayElement([faker.number.int(), undefined]), validFrom: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), validUntil: faker.helpers.arrayElement([faker.date.past().toISOString().slice(0, 10), undefined]), current: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), remunerationModelType: faker.helpers.arrayElement([faker.helpers.arrayElement(['PERCENTAGE_SHARE','WEEKLY_FIXED_RATE','FLAT_RATE'] as const), undefined]), driverRevenueSharePercentage: faker.helpers.arrayElement([faker.number.float({fractionDigits: 2}), undefined]), minDriverPayout: faker.helpers.arrayElement([faker.number.float({fractionDigits: 2}), undefined])},}, ...overrideResponse});
@@ -69,8 +60,6 @@ export const getUpdateDriverResponseWeeklyFixedRateRemunerationResponseMock = (o
 export const getUpdateDriverResponseMock = (overrideResponse: Partial<Extract<ApiResponseDriverResponse, object>> = {}): ApiResponseDriverResponse => ({success: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), data: faker.helpers.arrayElement([{id: faker.number.int(), firstName: faker.string.alpha({length: {min: 10, max: 20}}), lastName: faker.string.alpha({length: {min: 10, max: 20}}), email: faker.string.alpha({length: {min: 10, max: 20}}), phone: faker.string.alpha({length: {min: 10, max: 20}}), status: faker.helpers.arrayElement(['ACTIVE','DELETED'] as const), currentRemunerationConfigs: Array.from({ length: faker.number.int({min: 1, max: 10}) }, (_, i) => i + 1).map(() => (faker.helpers.arrayElement([{...getUpdateDriverResponseFlatRateRemunerationResponseMock()},{...getUpdateDriverResponsePercentageShareRemunerationResponseMock()},{...getUpdateDriverResponseWeeklyFixedRateRemunerationResponseMock()},]))), createdAt: faker.date.past().toISOString().slice(0, 19) + 'Z', updatedAt: faker.date.past().toISOString().slice(0, 19) + 'Z'}, undefined]), message: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), ...overrideResponse})
 
 export const getGetAllDriversForSelectResponseMock = (overrideResponse: Partial<Extract<ApiResponseListDriverSelect, object>> = {}): ApiResponseListDriverSelect => ({success: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), data: faker.helpers.arrayElement([Array.from({ length: faker.number.int({min: 1, max: 10}) }, (_, i) => i + 1).map(() => ({id: faker.helpers.arrayElement([faker.number.int(), undefined]), fullName: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined])})), undefined]), message: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), ...overrideResponse})
-
-export const getStopRemunerationConfigResponseMock = (overrideResponse: Partial<Extract<ApiResponseVoid, object>> = {}): ApiResponseVoid => ({success: faker.helpers.arrayElement([faker.datatype.boolean(), undefined]), data: faker.helpers.arrayElement([{}, undefined]), message: faker.helpers.arrayElement([faker.string.alpha({length: {min: 10, max: 20}}), undefined]), ...overrideResponse})
 
 
 export const getGetAllDriversMockHandler = (overrideResponse?: ApiResponsePageResponseDriverResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ApiResponsePageResponseDriverResponse> | ApiResponsePageResponseDriverResponse), options?: RequestHandlerOptions) => {
@@ -109,13 +98,11 @@ export const getGetDriverMockHandler = (overrideResponse?: ApiResponseDriverResp
   }, options)
 }
 
-export const getDeleteDriverMockHandler = (overrideResponse?: ApiResponseDriverResponse | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<ApiResponseDriverResponse> | ApiResponseDriverResponse), options?: RequestHandlerOptions) => {
+export const getDeleteDriverMockHandler = (overrideResponse?: void | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<void> | void), options?: RequestHandlerOptions) => {
   return http.delete('*/api/drivers/:id', async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
 
-
-    return HttpResponse.json(overrideResponse !== undefined
-    ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
-    : getDeleteDriverResponseMock(),
+    return new HttpResponse(null,
       { status: 204
       })
   }, options)
@@ -145,14 +132,12 @@ export const getGetAllDriversForSelectMockHandler = (overrideResponse?: ApiRespo
   }, options)
 }
 
-export const getStopRemunerationConfigMockHandler = (overrideResponse?: ApiResponseVoid | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<ApiResponseVoid> | ApiResponseVoid), options?: RequestHandlerOptions) => {
+export const getStopRemunerationConfigMockHandler = (overrideResponse?: void | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<void> | void), options?: RequestHandlerOptions) => {
   return http.delete('*/api/drivers/:id/remuneration-configs/:configId', async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
+  if (typeof overrideResponse === 'function') {await overrideResponse(info); }
 
-
-    return HttpResponse.json(overrideResponse !== undefined
-    ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
-    : getStopRemunerationConfigResponseMock(),
-      { status: 200
+    return new HttpResponse(null,
+      { status: 204
       })
   }, options)
 }

@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const BACKEND_URL = process.env.VITE_API_URL || 'http://localhost:8080';
-const OPENAPI_URL = `${BACKEND_URL}/v3/api-docs`;
+const OPENAPI_URL = `${BACKEND_URL}/api/v3/api-docs`;
 
 const USERNAME = 'developer';
 const PASSWORD = 'swagger2026';
