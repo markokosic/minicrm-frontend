@@ -9,7 +9,8 @@
     "drivers": "Fahrer",
     "cars": "Autos",
     "revenues": "Umsätze",
-    "reports": "Berichte"
+    "reports": "Berichte",
+    "flatrates": "Pauschalen"
   },
   "actions": {
     "edit": "Bearbeiten",

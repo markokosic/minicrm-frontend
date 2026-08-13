@@ -5,7 +5,8 @@ import {
   Settings,
   FileChartLine,
   HandCoins,
-  Car
+  Car,
+  Tag,
 } from 'lucide-react';
 import { ROUTES } from './routes';
 
@@ -40,6 +41,13 @@ export const NAV_ITEMS: Record<string, NavItem[]> = {
       path: ROUTES.app.cars.path,
       labelKey: 'navigation.cars',
       icon: Car,
+    },
+    {
+      id: 1.8,
+      href: ROUTES.app.flatrates.getHref(),
+      path: ROUTES.app.flatrates.path,
+      labelKey: 'navigation.flatrates',
+      icon: Tag,
     },
     {
       id: 2,

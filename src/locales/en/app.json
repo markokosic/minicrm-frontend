@@ -219,5 +219,47 @@
       "manual": "Daily Revenue Manual",
       "flat_rate": "Flat Rate Trip"
     }
+  },
+  "flatrate": {
+    "page_title": "Flat Rates",
+    "create_page_title": "Create New Flat Rate",
+    "edit_title": "Edit Flat Rate",
+    "group_title": "Flat Rate Details",
+    "empty": "No active flat rates available.",
+    "update_success": "Flat rate updated successfully",
+    "name": {
+      "label": "Name",
+      "placeholder": "e.g. Vienna -> Graz"
+    },
+    "default_price": {
+      "label": "Default Price (€)",
+      "placeholder": "e.g. 150"
+    },
+    "actions": {
+      "add": "Create New Flat Rate",
+      "deactivate": "Deactivate"
+    },
+    "table": {
+      "id": "ID",
+      "name": "Name",
+      "default_price": "Default Price",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "modals": {
+      "deactivate_confirm": {
+        "title": "Deactivate Flat Rate",
+        "message": "Are you sure you want to deactivate this flat rate?",
+        "confirm": "Deactivate"
+      }
+    },
+    "create": {
+      "success": "Flat rate created successfully",
+      "deactivate_success": "Flat rate deactivated successfully"
+    }
   }
 }

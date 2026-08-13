@@ -19,6 +19,8 @@ const CarPage = lazy(() => import('@/features/cars/pages/CarPage'));
 const RevenuesPage = lazy(() => import('@/features/revenues/pages/RevenuesPage'));
 const CreateDailyRevenuesPage = lazy(() => import('@/features/revenues/pages/CreateDailyRevenuesPage'));
 const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
+const CreateNewFlatRatePage = lazy(() => import('@/features/flatrates/pages/CreateNewFlatRatePage'));
+const FlatRatesPage = lazy(() => import('@/features/flatrates/pages/FlatRatesPage'));
 
 const router = createBrowserRouter([
 
@@ -59,6 +61,10 @@ const router = createBrowserRouter([
 
       //REPORTS PAGES
       { path: ROUTES.app.reports.path, element: <ReportPage /> },
+
+      // FLATRATE PAGES
+      { path: ROUTES.app.flatrates.path, element: <FlatRatesPage /> },
+      { path: ROUTES.app.flatrates.create.path, element: <CreateNewFlatRatePage /> },
 
       // SETTINGS PAGE
       { path: ROUTES.app.settings.path, element: <SettingsPage /> },

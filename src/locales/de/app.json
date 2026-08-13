@@ -219,5 +219,47 @@
       "manual": "Tagesumsatz manuell",
       "flat_rate": "Pauschalfahrt"
     }
+  },
+  "flatrate": {
+    "page_title": "Pauschalen",
+    "create_page_title": "Neue Pauschale erstellen",
+    "edit_title": "Pauschale bearbeiten",
+    "group_title": "Pauschal-Informationen",
+    "empty": "Keine aktiven Pauschalpreise vorhanden.",
+    "update_success": "Pauschale erfolgreich aktualisiert",
+    "name": {
+      "label": "Bezeichnung",
+      "placeholder": "z.B. Wien -> Graz"
+    },
+    "default_price": {
+      "label": "Standardpreis (€)",
+      "placeholder": "z.B. 150"
+    },
+    "actions": {
+      "add": "Neue Pauschale erstellen",
+      "deactivate": "Deaktivieren"
+    },
+    "table": {
+      "id": "ID",
+      "name": "Bezeichnung",
+      "default_price": "Standardpreis",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "modals": {
+      "deactivate_confirm": {
+        "title": "Pauschale deaktivieren",
+        "message": "Möchten Sie diese Pauschale wirklich deaktivieren?",
+        "confirm": "Deaktivieren"
+      }
+    },
+    "create": {
+      "success": "Pauschale erfolgreich erstellt",
+      "deactivate_success": "Pauschale erfolgreich deaktiviert"
+    }
   }
 }

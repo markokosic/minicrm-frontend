@@ -63,6 +63,15 @@ export const ROUTES = {
       getHref: () => '/reports',
     },
 
+    flatrates: {
+      path: '/flatrates',
+      getHref: () => '/flatrates',
+      create: {
+        path: '/flatrates/new',
+        getHref: () => '/flatrates/new',
+      },
+    },
+
     settings: {
       path: '/settings',
       getHref: () => '/settings',
