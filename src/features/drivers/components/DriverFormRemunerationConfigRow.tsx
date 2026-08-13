@@ -1,10 +1,12 @@
+import { useMemo } from 'react';
 import { Trash } from 'lucide-react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ActionIcon, Box, Group, SimpleGrid, Stack, Text } from '@mantine/core';
+import { useGetActiveFlatRateTypes } from '@/api/generated/endpoints/flat-rate-types/flat-rate-types';
 import { DAYS_OF_THE_WEEK } from '@/common/constants';
 import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
-import { ControlledCombobox } from '@/components/ui/ControlledSelect/ControlledCombobox';
+import { ComboboxOption, ControlledCombobox } from '@/components/ui/ControlledSelect/ControlledCombobox';
 import {
   REMUNERATION_FORM_FIELDS,
   RemunerationModelType,
@@ -23,8 +25,17 @@ export const DriverFormRemunerationConfigRow = ({
   const { t } = useTranslation(['common', 'app']);
   const { remunerationTypeOptions: remunerationTypes } = useRemunerationLabels();
 
+  const { data: flatRateTypesResponse } = useGetActiveFlatRateTypes();
+  const activeFlatRateTypes = flatRateTypesResponse?.data || [];
+
+  const namePrefix = `remunerationConfigs.${index}`;
+
   const selectedType = useWatch({
-    name: `remunerationConfigs.${index}.remunerationModelType`,
+    name: `${namePrefix}.remunerationModelType`,
+  });
+
+  const currentFlatRateTypeId = useWatch({
+    name: `${namePrefix}.flatRateTypeId`,
   });
 
   const dayOptions = DAYS_OF_THE_WEEK.map((day) => ({
@@ -32,7 +43,36 @@ export const DriverFormRemunerationConfigRow = ({
     label: t(day.label),
   }));
 
-  const namePrefix = `remunerationConfigs.${index}`;
+  const flatRateTypeOptions = useMemo(() => {
+    const options: ComboboxOption<number | null>[] = [
+      {
+        label: t('common:form.flatRateTypeId.all_flat_rates'),
+        value: null,
+      },
+    ];
+
+    activeFlatRateTypes.forEach((fr) => {
+      if (fr.id !== undefined && fr.id !== null) {
+        options.push({
+          label: fr.name || '',
+          value: fr.id,
+        });
+      }
+    });
+
+    if (
+      currentFlatRateTypeId !== undefined &&
+      currentFlatRateTypeId !== null &&
+      !options.some((opt) => opt.value === currentFlatRateTypeId)
+    ) {
+      options.push({
+        label: `ID #${currentFlatRateTypeId}`,
+        value: currentFlatRateTypeId,
+      });
+    }
+
+    return options;
+  }, [activeFlatRateTypes, currentFlatRateTypeId, t]);
 
   return (
     <Box
@@ -115,13 +155,19 @@ export const DriverFormRemunerationConfigRow = ({
         )}
 
         {selectedType === RemunerationModelType.FLAT_RATE && (
-          <SimpleGrid cols={1} spacing="md">
+          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
             <ControlledNumberInput
               min={0}
               suffix="€"
               name={`${namePrefix}.${REMUNERATION_FORM_FIELDS.flatRate.flatRateFee.name}`}
               label={t(REMUNERATION_FORM_FIELDS.flatRate.flatRateFee.labelKey)}
               placeholder={t(REMUNERATION_FORM_FIELDS.flatRate.flatRateFee.placeholderKey)}
+            />
+            <ControlledCombobox
+              name={`${namePrefix}.${REMUNERATION_FORM_FIELDS.flatRate.flatRateTypeId.name}`}
+              label={t(REMUNERATION_FORM_FIELDS.flatRate.flatRateTypeId.labelKey)}
+              placeholder={t(REMUNERATION_FORM_FIELDS.flatRate.flatRateTypeId.placeholderKey)}
+              data={flatRateTypeOptions}
             />
           </SimpleGrid>
         )}

@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Table } from '@mantine/core';
@@ -20,8 +21,8 @@ describe('FlatRateTableRow Component', () => {
         <Table.Tbody>
           <FlatRateTableRow
             flatRate={mockFlatRate}
-            onEdit={jest.fn()}
-            onDeactivate={jest.fn()}
+            onEdit={vi.fn()}
+            onDeactivate={vi.fn()}
           />
         </Table.Tbody>
       </Table>,
@@ -36,8 +37,8 @@ describe('FlatRateTableRow Component', () => {
   it('calls onEdit and onDeactivate when action buttons are clicked', async () => {
     const user = userEvent.setup();
     const { Wrapper } = createTestAppWrapper();
-    const handleEdit = jest.fn();
-    const handleDeactivate = jest.fn();
+    const handleEdit = vi.fn();
+    const handleDeactivate = vi.fn();
 
     render(
       <Table>

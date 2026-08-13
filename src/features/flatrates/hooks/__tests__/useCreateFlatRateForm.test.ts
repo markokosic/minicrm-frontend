@@ -18,6 +18,9 @@ describe('useCreateFlatRateForm Hook', () => {
     const { Wrapper } = createTestAppWrapper();
     const { result } = renderHook(() => useCreateFlatRateForm(), { wrapper: Wrapper });
 
+    // Access formState.errors to subscribe React Hook Form error state tracking
+    void result.current.methods.formState.errors;
+
     await act(async () => {
       await result.current.methods.trigger('name');
     });

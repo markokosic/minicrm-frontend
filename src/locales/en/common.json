@@ -121,6 +121,11 @@
       "label": "Flat rate per trip (€)",
       "placeholder": "Enter flat rate per trip (€)"
     },
+    "flatRateTypeId": {
+      "label": "Applies to specific flat rate type (optional)",
+      "placeholder": "Applies generally to all flat rate trips",
+      "all_flat_rates": "Applies generally to all flat rate trips"
+    },
     "groups": {
       "general_information": "General Information",
       "contact": "Contact"

@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { getAuthenticationMock } from '@/api/generated/endpoints/authentication/authentication.msw';
 import { getCarsMock } from '@/api/generated/endpoints/cars/cars.msw';
+import { getFlatRateTypesMock } from '@/api/generated/endpoints/flat-rate-types/flat-rate-types.msw';
 import { getReportsMock } from '@/api/generated/endpoints/reports/reports.msw';
 import { getRevenuesMock } from '@/api/generated/endpoints/revenues/revenues.msw';
 import { getUsersMock } from '@/api/generated/endpoints/users/users.msw';
@@ -19,6 +20,7 @@ export const handlers = [
   // Orval auto-generated MSW handlers with Faker mock data
   ...getAuthenticationMock(),
   ...getCarsMock(),
+  ...getFlatRateTypesMock(),
   ...getReportsMock(),
   ...getRevenuesMock(),
   ...getUsersMock(),
