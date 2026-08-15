@@ -3,7 +3,11 @@ import { CarResponse } from '@/api/generated/model';
 import { mapCarsToComboboxOptions, mapCarsToOptions } from '../utils/car-options.utils';
 
 export const useCarOptions = () => {
-  const { data: cars = [], isLoading, error } = useGetAllCars<CarResponse[]>(
+  const {
+    data: cars = [],
+    isLoading,
+    error,
+  } = useGetAllCars<CarResponse[]>(
     { pageable: {} },
     {
       query: {
@@ -23,4 +27,3 @@ export const useCarOptions = () => {
     error,
   };
 };
-

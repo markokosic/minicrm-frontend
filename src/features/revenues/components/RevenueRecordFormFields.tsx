@@ -35,7 +35,7 @@ export const RevenueRecordFormFields = ({
 
   return (
     <>
-      <Grid gutter="md">
+      <Grid >
         {/* --- ABSCHNITT 1: STAMMDATEN --- */}
         <Grid.Col span={12}>
           <Text

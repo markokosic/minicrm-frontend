@@ -47,7 +47,6 @@ export const RevenueCard = ({ item, onEdit, onDelete, getRemunerationLabel }: Re
       style={{ transition: 'box-shadow 150ms ease, border-color 150ms ease' }}
     >
       <Grid
-        gutter="md"
         align="center"
       >
         {/* 1. COLUMN: Status, Name, Datum, Fahrzeug */}
