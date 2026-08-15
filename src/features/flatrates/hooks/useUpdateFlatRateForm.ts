@@ -10,7 +10,8 @@ import {
 } from '@/api/generated/endpoints/flat-rate-types/flat-rate-types';
 import { CreateFlatRateTypeRequest, FlatRateTypeResponse } from '@/api/generated/model';
 import { UpdateFlatRateTypeBody } from '@/api/generated/zod/flat-rate-types/flat-rate-types';
-import queryClient from '@/lib/queryClient';
+import { useQueryClient } from '@tanstack/react-query';
+
 
 interface UseUpdateFlatRateFormProps {
   flatRate: FlatRateTypeResponse | null;
@@ -18,6 +19,7 @@ interface UseUpdateFlatRateFormProps {
 }
 
 export const useUpdateFlatRateForm = ({ flatRate, onSuccess }: UseUpdateFlatRateFormProps) => {
+  const queryClient = useQueryClient()
   const { t } = useTranslation(['app', 'common', 'errors']);
 
   const methods = useForm<CreateFlatRateTypeRequest>({

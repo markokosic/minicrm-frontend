@@ -10,9 +10,12 @@ import {
 } from '@/api/generated/endpoints/flat-rate-types/flat-rate-types';
 import { CreateFlatRateTypeRequest } from '@/api/generated/model';
 import { CreateFlatRateTypeBody } from '@/api/generated/zod/flat-rate-types/flat-rate-types';
-import queryClient from '@/lib/queryClient';
+import { useQueryClient } from '@tanstack/react-query';
+
 
 export const useCreateFlatRateForm = () => {
+  const queryClient = useQueryClient()
+
   const { t } = useTranslation(['app', 'common', 'errors']);
   const navigate = useNavigate();
 
