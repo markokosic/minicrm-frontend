@@ -23,6 +23,7 @@ const CreateNewFlatRatePage = lazy(() => import('@/features/flatrates/pages/Crea
 const FlatRatesPage = lazy(() => import('@/features/flatrates/pages/FlatRatesPage'));
 const ShiftsPage = lazy(() => import('@/features/shifts/pages/ShiftsPage'));
 const CreateShiftPage = lazy(() => import('@/features/shifts/pages/CreateShiftPage'));
+const ShiftViewPage = lazy(() => import('@/features/shifts/pages/ShiftViewPage'));
 
 const router = createBrowserRouter([
 
@@ -71,6 +72,7 @@ const router = createBrowserRouter([
       // SHIFTS PAGES
       { path: ROUTES.app.shifts.path, element: <ShiftsPage /> },
       { path: ROUTES.app.shifts.create.path, element: <CreateShiftPage /> },
+      { path: ROUTES.app.shifts.view.path, element: <ShiftViewPage /> },
 
       // SETTINGS PAGE
       { path: ROUTES.app.settings.path, element: <SettingsPage /> },

@@ -12,8 +12,9 @@ import { useNavigate } from 'react-router';
 
 export const ShiftsList = () => {
   const { t } = useTranslation(['app', 'common']);
-  const navigate = useNavigate();
   const { page, size, setPage } = usePagination({ defaultSize: 25 });
+
+  const navigate = useNavigate();
 
   const { data: response, isLoading, error } = useGetAllShifts({ page, size });
   const pageData = response?.data;

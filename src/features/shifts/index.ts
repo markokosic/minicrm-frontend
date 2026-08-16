@@ -1,6 +1,7 @@
 // Pages
 export { default as ShiftsPage } from './pages/ShiftsPage';
 export { default as CreateShiftPage } from './pages/CreateShiftPage';
+export { default as ShiftViewPage } from './pages/ShiftViewPage';
 
 // Components
 export { ShiftsList } from './components/ShiftsList';
@@ -11,7 +12,6 @@ export { CreateShiftForm } from './components/CreateShiftForm';
 export { ShiftMasterDataSection } from './components/ShiftMasterDataSection';
 export { ShiftRevenuesSection } from './components/ShiftRevenuesSection';
 export { ShiftRevenueRow } from './components/ShiftRevenueRow';
-export { ShiftDetailModal } from './components/ShiftDetailModal';
 
 // Hooks
 export { useCreateShiftForm } from './hooks/useCreateShiftForm';
