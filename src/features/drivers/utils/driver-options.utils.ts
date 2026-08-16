@@ -1,27 +1,14 @@
-import { DriverSelectResponse } from '@/api/generated/model';
+import { Primitive } from '@mantine/core';
+import { DriverSelect } from '@/api/generated/model';
 
 export interface DriverOption {
-  value: string;
-  label: string;
-  id: number;
-}
-
-export interface DriverComboboxOption {
-  value: number;
+  value: Primitive;
   label: string;
 }
 
-export const mapDriversToOptions = (drivers: DriverSelectResponse[]): DriverOption[] => {
-  return drivers.map((driver) => ({
-    value: driver.id?.toString() || '',
-    label: driver.fullName || '',
-    id: driver.id!,
-  }));
-};
-
-export const mapDriversToComboboxOptions = (drivers: DriverSelectResponse[]): DriverComboboxOption[] => {
+export const mapDriversToOptions = (drivers: DriverSelect[]): DriverOption[] => {
   return drivers.map((driver) => ({
     value: driver.id!,
-    label: driver.fullName || '',
+    label: driver.fullName!,
   }));
 };

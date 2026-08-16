@@ -314,6 +314,10 @@
       "price_per_trip": {
         "label": "Price Per Trip (€)",
         "placeholder": "0.00"
+      },
+      "weekly_revenue": {
+        "label": "Weekly Fixed Contribution (€)",
+        "placeholder": "0.00"
       }
     },
     "actions": {

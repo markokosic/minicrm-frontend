@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { renderHook } from '@/testing/testUtils';
 import * as carsApi from '@/api/generated/endpoints/cars/cars';
-import { useCarOptions } from '../useCarOptions';
+import { useCarSelectOptions } from '../useCarOptions';
 
 vi.mock('@/api/generated/endpoints/cars/cars', async () => {
   const actual = await vi.importActual('@/api/generated/endpoints/cars/cars');
@@ -11,7 +11,7 @@ vi.mock('@/api/generated/endpoints/cars/cars', async () => {
   };
 });
 
-describe('useCarOptions', () => {
+describe('useCarSelectOptions', () => {
   it('should return empty options when API returns no cars', () => {
     vi.mocked(carsApi.useGetAllCars).mockReturnValue({
       data: [],
@@ -19,10 +19,9 @@ describe('useCarOptions', () => {
       error: null,
     } as unknown as ReturnType<typeof carsApi.useGetAllCars>);
 
-    const { result } = renderHook(() => useCarOptions());
+    const { result } = renderHook(() => useCarSelectOptions());
 
     expect(result.current.carOptions).toEqual([]);
-    expect(result.current.carComboboxOptions).toEqual([]);
   });
 
   it('should format car options correctly when cars exist', () => {
@@ -36,13 +35,9 @@ describe('useCarOptions', () => {
       error: null,
     } as unknown as ReturnType<typeof carsApi.useGetAllCars>);
 
-    const { result } = renderHook(() => useCarOptions());
+    const { result } = renderHook(() => useCarSelectOptions());
 
     expect(result.current.carOptions).toEqual([
-      { value: '1', label: 'B-MW 123 Model 3 Tesla', id: 1 },
-    ]);
-
-    expect(result.current.carComboboxOptions).toEqual([
       { value: 1, label: 'B-MW 123 Model 3 Tesla' },
     ]);
   });

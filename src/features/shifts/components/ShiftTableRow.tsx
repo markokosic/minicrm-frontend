@@ -2,36 +2,25 @@ import { Eye, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ActionIcon, Badge, Group, Table } from '@mantine/core';
 import { ShiftResponse } from '@/api/generated/model';
+import { calculateShiftTotals, formatShiftDate } from '../utils/shift-calculations.utils';
+
+import { ShiftActions } from './ShiftsTable';
 
 interface ShiftTableRowProps {
   shift: ShiftResponse;
-  onViewDetails: (shift: ShiftResponse) => void;
-  onDelete: (shift: ShiftResponse) => void;
+  actions: ShiftActions;
 }
 
-export const ShiftTableRow = ({ shift, onViewDetails, onDelete }: ShiftTableRowProps) => {
+export const ShiftTableRow = ({ shift, actions }: ShiftTableRowProps) => {
   const { t } = useTranslation(['app', 'common']);
 
-  const totalRevenue = (shift.revenues || []).reduce((acc, r) => acc + (r.revenue || 0), 0);
-  const totalDriverRemuneration = (shift.revenues || []).reduce(
-    (acc, r) => acc + (r.driverRemuneration || 0),
-    0
-  );
-  const totalCompanyRemuneration = (shift.revenues || []).reduce(
-    (acc, r) => acc + (r.companyRemuneration || 0),
-    0
-  );
+  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } =
+    calculateShiftTotals(shift.revenues);
 
   const statusColor =
     shift.status === 'APPROVED' ? 'green' : shift.status === 'PENDING' ? 'yellow' : 'red';
 
-  const dateFormatted = shift.shiftStart
-    ? new Date(shift.shiftStart).toLocaleDateString('de-DE', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      })
-    : '-';
+  const dateFormatted = formatShiftDate(shift.shiftStart);
 
   return (
     <Table.Tr>
@@ -75,7 +64,7 @@ export const ShiftTableRow = ({ shift, onViewDetails, onDelete }: ShiftTableRowP
             variant="subtle"
             color="blue"
             aria-label={t('app:shifts.actions.view_details')}
-            onClick={() => onViewDetails(shift)}
+            onClick={() => actions.onViewDetails(shift)}
           >
             <Eye size={16} />
           </ActionIcon>
@@ -83,7 +72,7 @@ export const ShiftTableRow = ({ shift, onViewDetails, onDelete }: ShiftTableRowP
             variant="subtle"
             color="red"
             aria-label={t('common:actions.delete')}
-            onClick={() => onDelete(shift)}
+            onClick={() => actions.onDelete(shift)}
           >
             <Trash2 size={16} />
           </ActionIcon>

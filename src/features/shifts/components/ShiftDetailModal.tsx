@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Badge, Card, Group, Modal, Paper, SimpleGrid, Stack, Table, Text } from '@mantine/core';
 import { ShiftResponse } from '@/api/generated/model';
+import { calculateShiftTotals, formatShiftDate, formatShiftTime } from '../utils/shift-calculations.utils';
 
 interface ShiftDetailModalProps {
   shift: ShiftResponse | null;
@@ -13,15 +14,8 @@ export const ShiftDetailModal = ({ shift, opened, onClose }: ShiftDetailModalPro
 
   if (!shift) return null;
 
-  const totalRevenue = (shift.revenues || []).reduce((acc, r) => acc + (r.revenue || 0), 0);
-  const totalDriverRemuneration = (shift.revenues || []).reduce(
-    (acc, r) => acc + (r.driverRemuneration || 0),
-    0
-  );
-  const totalCompanyRemuneration = (shift.revenues || []).reduce(
-    (acc, r) => acc + (r.companyRemuneration || 0),
-    0
-  );
+  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } =
+    calculateShiftTotals(shift.revenues);
 
   const statusColor =
     shift.status === 'APPROVED' ? 'green' : shift.status === 'PENDING' ? 'yellow' : 'red';
@@ -60,13 +54,8 @@ export const ShiftDetailModal = ({ shift, opened, onClose }: ShiftDetailModalPro
               {t('app:shifts.table.date')}
             </Text>
             <Text fw={500} size="sm">
-              {shift.shiftStart ? new Date(shift.shiftStart).toLocaleString('de-DE') : '-'} –{' '}
-              {shift.shiftEnd
-                ? new Date(shift.shiftEnd).toLocaleTimeString('de-DE', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })
-                : '-'}
+              {formatShiftDate(shift.shiftStart)} ({formatShiftTime(shift.shiftStart)} –{' '}
+              {formatShiftTime(shift.shiftEnd)})
             </Text>
           </Card>
           <Card withBorder padding="xs" radius="md">
@@ -164,7 +153,7 @@ export const ShiftDetailModal = ({ shift, opened, onClose }: ShiftDetailModalPro
             </Table.Tbody>
             <Table.Tfoot>
               <Table.Tr style={{ fontWeight: 600 }}>
-                <Table.Td colSpan={2}>{t('common:labels.sum')}</Table.Td>
+                <Table.Td colSpan={2}>{t('common:labels.sum', 'Summe')}</Table.Td>
                 <Table.Td style={{ textAlign: 'right' }}>
                   {totalRevenue.toLocaleString('de-DE', {
                     minimumFractionDigits: 2,

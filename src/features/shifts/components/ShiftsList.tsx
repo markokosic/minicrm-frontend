@@ -1,76 +1,38 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
-import { Group, Pagination, Paper, Table, Text } from '@mantine/core';
-import {
-  getGetAllShiftsQueryKey,
-  useDeleteShift,
-  useGetAllShifts,
-} from '@/api/generated/endpoints/shifts/shifts';
-import { ShiftResponse } from '@/api/generated/model';
-import { useConfirmModal } from '@/common/hooks/useConfirmModal';
+import { Paper, Text } from '@mantine/core';
+import { useGetAllShifts } from '@/api/generated/endpoints/shifts/shifts';
+import { usePagination } from '@/common/hooks/usePagination';
+import { AppPagination } from '@/components/ui/AppPagination';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
-import queryClient from '@/lib/queryClient';
-import { ShiftDetailModal } from './ShiftDetailModal';
-import { ShiftTableRow } from './ShiftTableRow';
+import { ROUTES } from '@/config/routes';
+import { useDeleteShiftAction } from '../hooks/useDeleteShiftAction';
 import { ShiftsListSkeleton } from './ShiftsListSkeleton';
+import { ShiftsTable } from './ShiftsTable';
+import { useNavigate } from 'react-router';
 
 export const ShiftsList = () => {
   const { t } = useTranslation(['app', 'common']);
-  const { confirm } = useConfirmModal();
+  const navigate = useNavigate();
+  const { page, size, setPage } = usePagination({ defaultSize: 25 });
 
-  const [page, setPage] = useState(1);
-  const [selectedShift, setSelectedShift] = useState<ShiftResponse | null>(null);
-
-  const { data: response, isLoading, error } = useGetAllShifts({
-    page,
-    size: 15,
-  });
-
+  const { data: response, isLoading, error } = useGetAllShifts({ page, size });
   const pageData = response?.data;
   const shifts = pageData?.content || [];
   const totalPages = pageData?.totalPages || 1;
   const isEmpty = !isLoading && shifts.length === 0;
 
-  const { mutate: deleteMutate } = useDeleteShift({
-    mutation: {
-      onSuccess: () => {
-        toast.success(t('app:shifts.notifications.delete.success'));
-        queryClient.invalidateQueries({ queryKey: getGetAllShiftsQueryKey() });
-      },
-      onError: (err: unknown) => {
-        const apiErrorMessage =
-          (err as { response?: { data?: { message?: string } } })?.response?.data?.message ||
-          t('errors:common.unknown');
-        toast.error(apiErrorMessage);
-      },
-    },
-  });
+  const { handleDelete } = useDeleteShiftAction();
 
-  const handleDelete = (shift: ShiftResponse) => {
-    if (!shift.id) return;
-    confirm({
-      title: t('app:shifts.modals.delete_confirm.title'),
-      children: (
-        <Text size="sm">
-          {t('app:shifts.modals.delete_confirm.message')}
-        </Text>
-      ),
-      labels: {
-        confirm: t('common:actions.delete'),
-        cancel: t('common:actions.cancel'),
-      },
-      onConfirm: () => {
-        deleteMutate({ id: shift.id! });
-      },
-    });
+  const actions = {
+    onViewDetails: (shift: any) => navigate(ROUTES.app.shifts.view.getHref(shift.id)),
+    onDelete: handleDelete,
   };
 
   return (
     <>
       <DataLoadingWrapper
         isLoading={isLoading}
-        error={error as Error | null}
+        error={error}
         isEmpty={isEmpty}
         skeleton={<ShiftsListSkeleton />}
         emptyFallback={
@@ -79,46 +41,14 @@ export const ShiftsList = () => {
           </Paper>
         }
       >
-        <Paper withBorder radius="md" p="0" style={{ overflow: 'hidden' }}>
-          <Table verticalSpacing="sm" horizontalSpacing="md" highlightOnHover>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>{t('app:shifts.table.date')}</Table.Th>
-                <Table.Th>{t('app:shifts.table.driver')}</Table.Th>
-                <Table.Th>{t('app:shifts.table.car')}</Table.Th>
-                <Table.Th>{t('app:shifts.table.km')}</Table.Th>
-                <Table.Th style={{ textAlign: 'right' }}>{t('app:shifts.table.total_revenue')}</Table.Th>
-                <Table.Th style={{ textAlign: 'right' }}>{t('app:shifts.table.driver_payout')}</Table.Th>
-                <Table.Th style={{ textAlign: 'right' }}>{t('app:shifts.table.company_share')}</Table.Th>
-                <Table.Th>{t('app:shifts.table.status')}</Table.Th>
-                <Table.Th style={{ textAlign: 'right' }}>{t('app:shifts.table.actions')}</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {shifts.map((shift: ShiftResponse) => (
-                <ShiftTableRow
-                  key={shift.id}
-                  shift={shift}
-                  onViewDetails={setSelectedShift}
-                  onDelete={handleDelete}
-                />
-              ))}
-            </Table.Tbody>
-          </Table>
-        </Paper>
+        <ShiftsTable shifts={shifts} actions={actions} />
 
-        {totalPages > 1 && (
-          <Group justify="center" mt="lg">
-            <Pagination total={totalPages} value={page} onChange={setPage} />
-          </Group>
-        )}
+        <AppPagination
+          page={page}
+          totalPages={totalPages}
+          onChange={setPage}
+        />
       </DataLoadingWrapper>
-
-      <ShiftDetailModal
-        shift={selectedShift}
-        opened={!!selectedShift}
-        onClose={() => setSelectedShift(null)}
-      />
     </>
   );
 };

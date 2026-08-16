@@ -75,6 +75,10 @@ export const ROUTES = {
     shifts: {
       path: '/shifts',
       getHref: () => '/shifts',
+      view: {
+        path: '/shifts/:shiftId',
+        getHref: (shiftId: number | string) => `/shifts/${shiftId}`,
+      },
       create: {
         path: '/shifts/new',
         getHref: () => '/shifts/new',

@@ -1,8 +1,8 @@
 import { useGetAllCars } from '@/api/generated/endpoints/cars/cars';
 import { CarResponse } from '@/api/generated/model';
-import { mapCarsToComboboxOptions, mapCarsToOptions } from '../utils/car-options.utils';
+import {mapCarsToOptions } from '../utils/car-options.utils';
 
-export const useCarOptions = () => {
+export const useCarSelectOptions = () => {
   const {
     data: cars = [],
     isLoading,
@@ -17,11 +17,9 @@ export const useCarOptions = () => {
   );
 
   const carOptions = mapCarsToOptions(cars);
-  const carComboboxOptions = mapCarsToComboboxOptions(cars);
 
   return {
     carOptions,
-    carComboboxOptions,
     cars,
     isLoading,
     error,

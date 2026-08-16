@@ -1,28 +1,33 @@
 import { TFunction } from 'i18next';
 import { z } from 'zod';
 
+export interface ShiftRevenueFormRow {
+  optionKey?: string;
+  entryCategory: 'REGULAR' | 'FLAT_RATE' | 'WEEKLY';
+  flatRateTypeId?: number | null;
+  revenue?: number;
+  tripCount?: number;
+  pricePerTrip?: number;
+}
+
 export const getCreateShiftSchema = (t: TFunction) =>
   z
     .object({
       driverId: z.number({
-        required_error: t('errors:shifts.driverId.required', 'Bitte wählen Sie einen Fahrer aus'),
         invalid_type_error: t('errors:shifts.driverId.required', 'Bitte wählen Sie einen Fahrer aus'),
       }),
       carId: z.number({
-        required_error: t('errors:shifts.carId.required', 'Bitte wählen Sie ein Fahrzeug aus'),
         invalid_type_error: t('errors:shifts.carId.required', 'Bitte wählen Sie ein Fahrzeug aus'),
       }),
       shiftStart: z.string().min(1, t('errors:shifts.shiftStart.required', 'Bitte geben Sie den Schichtbeginn an')),
       shiftEnd: z.string().min(1, t('errors:shifts.shiftEnd.required', 'Bitte geben Sie das Schichtende an')),
       odometerStart: z
         .number({
-          required_error: t('errors:shifts.odometerStart.required', 'Tachostand Beginn ist erforderlich'),
           invalid_type_error: t('errors:shifts.odometerStart.required', 'Tachostand Beginn ist erforderlich'),
         })
         .min(0, t('errors:shifts.odometerStart.invalid', 'Ungültiger Tachostand')),
       odometerEnd: z
         .number({
-          required_error: t('errors:shifts.odometerEnd.required', 'Tachostand Ende ist erforderlich'),
           invalid_type_error: t('errors:shifts.odometerEnd.required', 'Tachostand Ende ist erforderlich'),
         })
         .min(0, t('errors:shifts.odometerEnd.invalid', 'Ungültiger Tachostand')),

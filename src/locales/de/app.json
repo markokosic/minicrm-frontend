@@ -314,6 +314,10 @@
       "price_per_trip": {
         "label": "Preis pro Fahrt (€)",
         "placeholder": "0,00"
+      },
+      "weekly_revenue": {
+        "label": "Wöchentlicher Fixbeitrag (€)",
+        "placeholder": "0,00"
       }
     },
     "actions": {

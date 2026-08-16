@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { ActionIcon, Group, Paper, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useUrlFilters } from '@/common/hooks/useUrlFilters';
-import { useDriverOptions } from '@/features/drivers';
+import { useDriverSelectOptions } from '@/features/drivers';
 
 export const RevenueFilters = () => {
   const { t } = useTranslation(['app', 'common']);
   const { getFilter, setFilter, clearFilters } = useUrlFilters();
-  const { driverOptions, isLoading: isLoadingDrivers } = useDriverOptions();
+  const { driverOptions, isLoading: isLoadingDrivers } = useDriverSelectOptions();
 
   const driverId = getFilter('driverId');
   const dateFromStr = getFilter('dateFrom');

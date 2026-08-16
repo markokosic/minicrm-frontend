@@ -1,40 +1,44 @@
-import {
-  useController,
-  useFormContext,
-  type FieldValues,
-  type UseControllerProps,
-} from 'react-hook-form';
-import { Select as $Select, type SelectProps as $SelectProps } from '@mantine/core';
+import React from 'react';
+import { Select, SelectProps } from '@mantine/core';
+import { useController, useFormContext, FieldValues, Path, UseControllerProps } from 'react-hook-form';
 
-export type SelectProps<T extends FieldValues> = UseControllerProps<T> &
-  Omit<$SelectProps, 'value' | 'defaultValue'>;
+export type FormSelectProps<TFieldValues extends FieldValues> = {
+  name: Path<TFieldValues>;
+  rules?: UseControllerProps<TFieldValues>['rules'];
+  defaultValue?: UseControllerProps<TFieldValues>['defaultValue'];
+} & Omit<SelectProps<any>, 'value' | 'onChange' | 'error' | 'name'>;
 
-export const ControlledSelect = <T extends FieldValues>({
+export function FormSelect<TFieldValues extends FieldValues>({
   name,
-  control,
-  onChange,
-  ...props
-}: SelectProps<T>) => {
-  const { control: contextControl } = useFormContext<T>();
+  rules,
+  defaultValue,
+  searchable = true,
+  clearable = true,
+  ...selectProps
+}: FormSelectProps<TFieldValues>) {
+  const { control } = useFormContext<TFieldValues>();
 
   const {
-    field: { value, onChange: fieldOnChange, ...field },
-    fieldState,
-  } = useController<T>({
+    field: { value, onChange, onBlur, ref },
+    fieldState: { error },
+  } = useController({
     name,
-    control: control ?? contextControl,
+    control,
+    rules,
+    defaultValue,
   });
 
   return (
-    <$Select
-      value={value}
-      onChange={(e) => {
-        fieldOnChange(e);
-        // onChange?.(e);
-      }}
-      error={fieldState.error?.message}
-      {...field}
-      {...props}
+    <Select
+      {...selectProps}
+      ref={ref}
+      name={name}
+      value={value ?? null}
+      onChange={(val) => onChange(val)}
+      onBlur={onBlur}
+      error={error?.message}
+      searchable={searchable}
+      clearable={clearable}
     />
   );
-};
+}

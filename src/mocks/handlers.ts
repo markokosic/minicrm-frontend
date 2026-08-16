@@ -19,6 +19,34 @@ export const handlers = [
       email: 'john@wick.com',
     });
   }),
+  http.get('*/api/drivers/:id/revenue-options', () => {
+    return HttpResponse.json({
+      success: true,
+      data: [
+        {
+          entryCategory: 'REGULAR',
+          label: 'Normale Fahrten (Taxameter)',
+        },
+        {
+          entryCategory: 'FLAT_RATE',
+          flatRateTypeId: 1,
+          label: 'Flughafentransfer Wien -> Graz',
+          defaultPrice: 150.0,
+        },
+        {
+          entryCategory: 'FLAT_RATE',
+          flatRateTypeId: null,
+          label: 'Pauschalfahrt Allgemein',
+          defaultPrice: 200.0,
+        },
+        {
+          entryCategory: 'WEEKLY',
+          label: 'Wöchentliche Fixpauschale',
+          defaultPrice: 500.0,
+        },
+      ],
+    });
+  }),
   // Orval auto-generated MSW handlers with Faker mock data
   ...getAuthenticationMock(),
   ...getCarsMock(),

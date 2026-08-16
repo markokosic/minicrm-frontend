@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  formatCarLabel,
-  mapCarsToComboboxOptions,
-  mapCarsToOptions,
-} from '../car-options.utils';
+import { formatCarLabel, mapCarsToOptions } from '../car-options.utils';
 
 describe('car-options.utils', () => {
   const mockCars = [
@@ -20,14 +16,6 @@ describe('car-options.utils', () => {
     expect(result).toEqual([
       { value: '1', label: 'B-MW 123 Model 3 Tesla', id: 1 },
       { value: '2', label: 'M-XY 999 Golf VW', id: 2 },
-    ]);
-  });
-
-  it('mapCarsToComboboxOptions should map cars array to combobox options', () => {
-    const result = mapCarsToComboboxOptions(mockCars);
-    expect(result).toEqual([
-      { value: 1, label: 'B-MW 123 Model 3 Tesla' },
-      { value: 2, label: 'M-XY 999 Golf VW' },
     ]);
   });
 });
