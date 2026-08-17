@@ -271,8 +271,8 @@
     "calculation_preview": "Live Preview",
     "revenue_entry": "Revenue Entry",
     "groups": {
-      "master_data": "Master Data (Shift Header)",
-      "revenues": "Revenues (Positive List)"
+      "master_data": "Master Data",
+      "revenues": "Revenues"
     },
     "fields": {
       "driver": {
@@ -337,7 +337,9 @@
       "actions": "Actions",
       "category": "Category",
       "details": "Details",
-      "revenue": "Revenue"
+      "revenue": "Revenue",
+      "time": "Time",
+      "license_plate": "License Plate"
     },
     "modals": {
       "delete_confirm": {

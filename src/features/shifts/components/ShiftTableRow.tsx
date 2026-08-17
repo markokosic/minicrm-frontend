@@ -1,8 +1,10 @@
-import { Eye, Trash2 } from 'lucide-react';
+import { Eye, Trash2, Edit2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ActionIcon, Badge, Group, Table } from '@mantine/core';
+import { Badge, Group, Table } from '@mantine/core';
 import { ShiftResponse } from '@/api/generated/model';
-import { calculateShiftTotals, formatShiftDate } from '../utils/shift-calculations.utils';
+import { calculateShiftTotals, formatShiftDate, formatShiftTime } from '../utils/shift-calculations.utils';
+import { ActionMenu } from '@/components/ui/Menu/ActionMenu';
+import { createFormatters } from '@/lib/utils';
 
 import { ShiftActions } from './ShiftsTable';
 
@@ -12,7 +14,8 @@ interface ShiftTableRowProps {
 }
 
 export const ShiftTableRow = ({ shift, actions }: ShiftTableRowProps) => {
-  const { t } = useTranslation(['app', 'common']);
+  const { t, i18n } = useTranslation(['app', 'common']);
+  const fmt = createFormatters(i18n.language);
 
   const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } =
     calculateShiftTotals(shift.revenues);
@@ -21,61 +24,61 @@ export const ShiftTableRow = ({ shift, actions }: ShiftTableRowProps) => {
     shift.status === 'APPROVED' ? 'green' : shift.status === 'PENDING' ? 'yellow' : 'red';
 
   const dateFormatted = formatShiftDate(shift.shiftStart);
+  const timeFormatted = `${formatShiftTime(shift.shiftStart)} - ${formatShiftTime(shift.shiftEnd)}`;
 
   return (
-    <Table.Tr>
+    <Table.Tr
+      onClick={() => actions.onViewDetails(shift)}
+      style={{ cursor: 'pointer' }}
+    >
       <Table.Td fw={500}>{dateFormatted}</Table.Td>
+      <Table.Td>{timeFormatted}</Table.Td>
       <Table.Td>
         {shift.driver ? `${shift.driver.firstName} ${shift.driver.lastName}` : '-'}
       </Table.Td>
       <Table.Td>{shift.car?.licensePlate || '-'}</Table.Td>
       <Table.Td>
+        {shift.car ? `${shift.car.brand || ''} ${shift.car.model || ''}`.trim() || '-' : '-'}
+      </Table.Td>
+      <Table.Td>
         {shift.kilometersDriven !== undefined ? `${shift.kilometersDriven} km` : '-'}
       </Table.Td>
       <Table.Td style={{ textAlign: 'right' }} fw={600}>
-        {totalRevenue.toLocaleString('de-DE', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}{' '}
-        €
+        {fmt.number(totalRevenue)} €
       </Table.Td>
       <Table.Td style={{ textAlign: 'right' }} c="teal">
-        {totalDriverRemuneration.toLocaleString('de-DE', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}{' '}
-        €
+        {fmt.number(totalDriverRemuneration)} €
       </Table.Td>
       <Table.Td style={{ textAlign: 'right' }} c="indigo">
-        {totalCompanyRemuneration.toLocaleString('de-DE', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}{' '}
-        €
+        {fmt.number(totalCompanyRemuneration)} €
       </Table.Td>
       <Table.Td>
         <Badge color={statusColor} variant="light">
           {shift.status}
         </Badge>
       </Table.Td>
-      <Table.Td style={{ textAlign: 'right' }}>
+      <Table.Td style={{ textAlign: 'right' }} onClick={(e) => e.stopPropagation()}>
         <Group gap="xs" justify="flex-end">
-          <ActionIcon
-            variant="subtle"
-            color="blue"
-            aria-label={t('app:shifts.actions.view_details')}
-            onClick={() => actions.onViewDetails(shift)}
-          >
-            <Eye size={16} />
-          </ActionIcon>
-          <ActionIcon
-            variant="subtle"
-            color="red"
-            aria-label={t('common:actions.delete')}
-            onClick={() => actions.onDelete(shift)}
-          >
-            <Trash2 size={16} />
-          </ActionIcon>
+          <ActionMenu
+            actions={[
+              {
+                label: t('app:shifts.actions.view_details', 'Details'),
+                icon: Eye,
+                onClick: () => actions.onViewDetails(shift),
+              },
+              {
+                label: t('common:actions.edit', 'Bearbeiten'),
+                icon: Edit2,
+                onClick: () => actions.onEdit?.(shift),
+              },
+              {
+                label: t('common:actions.delete', 'Löschen'),
+                icon: Trash2,
+                isDanger: true,
+                onClick: () => actions.onDelete(shift),
+              },
+            ]}
+          />
         </Group>
       </Table.Td>
     </Table.Tr>

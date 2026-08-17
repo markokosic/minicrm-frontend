@@ -5,6 +5,7 @@ import { ShiftTableRow } from './ShiftTableRow';
 
 export interface ShiftActions {
   onViewDetails: (shift: ShiftResponse) => void;
+  onEdit?: (shift: ShiftResponse) => void;
   onDelete: (shift: ShiftResponse) => void;
 }
 
@@ -22,7 +23,9 @@ export const ShiftsTable = ({ shifts, actions }: ShiftsTableProps) => {
         <Table.Thead>
           <Table.Tr>
             <Table.Th>{t('app:shifts.table.date')}</Table.Th>
+            <Table.Th>{t('app:shifts.table.time')}</Table.Th>
             <Table.Th>{t('app:shifts.table.driver')}</Table.Th>
+            <Table.Th>{t('app:shifts.table.license_plate')}</Table.Th>
             <Table.Th>{t('app:shifts.table.car')}</Table.Th>
             <Table.Th>{t('app:shifts.table.km')}</Table.Th>
             <Table.Th style={{ textAlign: 'right' }}>

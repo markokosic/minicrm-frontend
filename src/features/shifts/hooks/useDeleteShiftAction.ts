@@ -8,7 +8,7 @@ import { ShiftResponse } from '@/api/generated/model';
 import { useConfirmModal } from '@/common/hooks/useConfirmModal';
 import { useQueryClient } from '@tanstack/react-query';
 
-export const useDeleteShiftAction = () => {
+export const useDeleteShiftAction = (options?: { onSuccess?: () => void }) => {
   const { t } = useTranslation(['app', 'common', 'errors']);
   const { confirm } = useConfirmModal();
   const queryClient = useQueryClient();
@@ -18,6 +18,7 @@ export const useDeleteShiftAction = () => {
       onSuccess: () => {
         toast.success(t('app:shifts.notifications.delete.success'));
         queryClient.invalidateQueries({ queryKey: getGetAllShiftsQueryKey() });
+        options?.onSuccess?.();
       },
       onError: (err: unknown) => {
         const apiErrorMessage =
