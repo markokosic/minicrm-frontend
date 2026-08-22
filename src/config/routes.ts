@@ -50,14 +50,6 @@ export const ROUTES = {
         getHref: () => '/cars/new',
       },
     },
-    revenues: {
-      path: '/revenues',
-      getHref: () => '/revenues',
-       createBulk: {
-        path: '/revenues/bulk',
-        getHref: () => '/revenues/bulk',
-      },
-    },
     reports: {
       path: '/reports',
       getHref: () => '/reports',

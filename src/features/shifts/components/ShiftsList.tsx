@@ -1,11 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import { Paper, Text } from '@mantine/core';
+import { Paper, Stack, Text } from '@mantine/core';
 import { useGetAllShifts } from '@/api/generated/endpoints/shifts/shifts';
 import { usePagination } from '@/common/hooks/usePagination';
 import { AppPagination } from '@/components/ui/AppPagination';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
 import { ROUTES } from '@/config/routes';
 import { useDeleteShiftAction } from '../hooks/useDeleteShiftAction';
+import { useShiftFilters } from '../hooks/useShiftFilters';
+import { ShiftFilters } from './ShiftFilters';
 import { ShiftsListSkeleton } from './ShiftsListSkeleton';
 import { ShiftsTable } from './ShiftsTable';
 import { useNavigate } from 'react-router';
@@ -13,10 +15,17 @@ import { useNavigate } from 'react-router';
 export const ShiftsList = () => {
   const { t } = useTranslation(['app', 'common']);
   const { page, size, setPage } = usePagination({ defaultSize: 25 });
+  const { driverId, dateFrom, dateTo } = useShiftFilters();
 
   const navigate = useNavigate();
 
-  const { data: response, isLoading, error } = useGetAllShifts({ page, size });
+  const { data: response, isLoading, error } = useGetAllShifts({
+    page,
+    size,
+    driverId,
+    dateFrom,
+    dateTo,
+  });
   const pageData = response?.data;
   const shifts = pageData?.content || [];
   const totalPages = pageData?.totalPages || 1;
@@ -30,7 +39,8 @@ export const ShiftsList = () => {
   };
 
   return (
-    <>
+    <Stack gap="md">
+      <ShiftFilters />
       <DataLoadingWrapper
         isLoading={isLoading}
         error={error}
@@ -50,6 +60,6 @@ export const ShiftsList = () => {
           onChange={setPage}
         />
       </DataLoadingWrapper>
-    </>
+    </Stack>
   );
 };

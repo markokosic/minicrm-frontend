@@ -4,7 +4,6 @@ import {
   PersonStanding,
   Settings,
   FileChartLine,
-  HandCoins,
   Car,
   Tag,
   CalendarDays,
@@ -56,13 +55,6 @@ export const NAV_ITEMS: Record<string, NavItem[]> = {
       path: ROUTES.app.shifts.path,
       labelKey: 'navigation.shifts',
       icon: CalendarDays,
-    },
-    {
-      id: 2,
-      href: ROUTES.app.revenues.getHref(),
-      path: ROUTES.app.revenues.path,
-      labelKey: 'navigation.revenues',
-      icon: HandCoins,
     },
     {
       id: 3,

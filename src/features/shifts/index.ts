@@ -12,11 +12,13 @@ export { CreateShiftForm } from './components/CreateShiftForm';
 export { ShiftMasterDataSection } from './components/ShiftMasterDataSection';
 export { ShiftRevenuesSection } from './components/ShiftRevenuesSection';
 export { ShiftRevenueRow } from './components/ShiftRevenueRow';
+export { ShiftFilters } from './components/ShiftFilters';
 
 // Hooks
 export { useCreateShiftForm } from './hooks/useCreateShiftForm';
 export { useShiftRevenueRow } from './hooks/useShiftRevenueRow';
 export { useDeleteShiftAction } from './hooks/useDeleteShiftAction';
+export { useShiftFilters } from './hooks/useShiftFilters';
 
 // Utils
 export * from './utils/shift-calculations.utils';
