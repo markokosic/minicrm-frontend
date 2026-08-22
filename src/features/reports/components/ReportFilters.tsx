@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
-import { Group, Primitive, Select, Stack } from '@mantine/core';
+import { Group, Select, Stack } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useDriverSelectOptions } from '@/features/drivers';
 import { RevenueReportParams } from '../report-schema';
 
 type ReportFiltersProps = {
   filters: RevenueReportParams;
-  setFilter: (key: string, value: Primitive | null | undefined) => void;
+  setFilter: (key: string, value: string | number | boolean | null | undefined) => void;
 };
 
 export const ReportFilters = ({ filters, setFilter }: ReportFiltersProps) => {

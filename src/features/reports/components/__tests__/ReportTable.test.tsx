@@ -103,7 +103,7 @@ describe('ReportTable Component', () => {
     const { container: loadingContainer } = render(
       <ReportTable
         data={mockData}
-        isLoading={true}
+        isLoading
         groupBy="NONE"
       />,
       { wrapper: Wrapper }

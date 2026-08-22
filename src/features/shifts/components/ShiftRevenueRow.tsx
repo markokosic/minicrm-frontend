@@ -108,7 +108,7 @@ export const ShiftRevenueRow = ({ index, revenueOptions, onRemove }: ShiftRevenu
             />
             <ControlledNumberInput
               name={`${fieldPrefix}.companyRemuneration`}
-              label={t('app:revenues.fields.weekly_company_share', 'Wöchentlicher Firmenbeitrag')}
+              label={t('app:shifts.fields.weekly_revenue.label', 'Wöchentlicher Fixbeitrag (€)')}
               placeholder="0,00"
               min={0}
               decimalScale={2}
@@ -134,8 +134,8 @@ export const ShiftRevenueRow = ({ index, revenueOptions, onRemove }: ShiftRevenu
           color={isWeeklyPaymentToday ? 'red' : 'blue'}
           title={
             isWeeklyPaymentToday
-              ? t('app:revenues.fields.share_due_today', 'Heute ist Zahltag / Abrechnungstag!')
-              : t('app:revenues.fields.share_due_on', {
+              ? t('app:shifts.weekly_settlement.share_due_today', 'Heute ist Zahltag / Abrechnungstag!')
+              : t('app:shifts.weekly_settlement.share_due_on', {
                   day: weekdayName,
                   defaultValue: `Abrechnungstag: ${weekdayName}`,
                 })
@@ -143,10 +143,10 @@ export const ShiftRevenueRow = ({ index, revenueOptions, onRemove }: ShiftRevenu
         >
           {isWeeklyPaymentToday
             ? t(
-                'app:revenues.fields.weekly_share_hint',
+                'app:shifts.weekly_settlement.share_hint_today',
                 'Für die gewählte Wochenpauschale ist heute der wöchentliche Firmenbeitrag fällig.'
               )
-            : t('app:revenues.fields.weekly_share_other_day_hint', {
+            : t('app:shifts.weekly_settlement.share_hint_other_day', {
                 day: weekdayName,
                 defaultValue: `Der wöchentliche Beitrag wird am ${weekdayName} abgerechnet.`,
               })}

@@ -1,4 +1,4 @@
-import { Paper, Table, Text } from '@mantine/core';
+import { Paper, Table } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { FlatRateTypeResponse } from '@/api/generated/model';
 import { FlatRateTableRow } from './FlatRateTableRow';

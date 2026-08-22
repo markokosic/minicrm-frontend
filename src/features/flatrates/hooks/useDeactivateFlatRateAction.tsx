@@ -32,7 +32,7 @@ export const useDeactivateFlatRateAction = () => {
   });
 
   const handleDeactivate = (flatRate: FlatRateTypeResponse) => {
-    if (!flatRate.id) return;
+    if (!flatRate.id) {return;}
     confirm({
       title: t('app:flatrate.modals.deactivate_confirm.title'),
       children: (

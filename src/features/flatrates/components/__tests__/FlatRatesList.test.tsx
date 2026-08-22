@@ -9,7 +9,7 @@ describe('FlatRatesList Component', () => {
     vi.spyOn(flatRateEndpoints, 'useGetActiveFlatRateTypes').mockReturnValue({
       data: {
         data: [
-          { id: 1, name: 'Wien -> Airport', defaultPrice: 45, active: true },
+          { id: 1, name: 'Wien -> Airport', defaultPrice: 45, status: 'ACTIVE' as const },
         ],
       },
       isLoading: false,

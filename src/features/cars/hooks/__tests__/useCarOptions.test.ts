@@ -38,7 +38,7 @@ describe('useCarSelectOptions', () => {
     const { result } = renderHook(() => useCarSelectOptions());
 
     expect(result.current.carOptions).toEqual([
-      { value: 1, label: 'B-MW 123 Model 3 Tesla' },
+      { value: '1', label: 'B-MW 123 Model 3 Tesla', id: 1 },
     ]);
   });
 });

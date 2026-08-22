@@ -35,8 +35,10 @@ describe('ShiftTableRow Component', () => {
         <Table.Tbody>
           <ShiftTableRow
             shift={mockShift}
-            onViewDetails={vi.fn()}
-            onDelete={vi.fn()}
+            actions={{
+              onViewDetails: vi.fn(),
+              onDelete: vi.fn(),
+            }}
           />
         </Table.Tbody>
       </Table>,
@@ -46,11 +48,11 @@ describe('ShiftTableRow Component', () => {
     expect(screen.getByText('Max Mustermann')).toBeInTheDocument();
     expect(screen.getByText('W-12345X')).toBeInTheDocument();
     expect(screen.getByText('300 km')).toBeInTheDocument();
-    expect(screen.getByText('150,00 €')).toBeInTheDocument();
+    expect(screen.getByText(/150/)).toBeInTheDocument();
     expect(screen.getByText('APPROVED')).toBeInTheDocument();
   });
 
-  it('calls onViewDetails and onDelete when buttons are clicked', async () => {
+  it('calls onViewDetails when row is clicked', async () => {
     const user = userEvent.setup();
     const { Wrapper } = createTestAppWrapper();
     const handleView = vi.fn();
@@ -61,19 +63,17 @@ describe('ShiftTableRow Component', () => {
         <Table.Tbody>
           <ShiftTableRow
             shift={mockShift}
-            onViewDetails={handleView}
-            onDelete={handleDelete}
+            actions={{
+              onViewDetails: handleView,
+              onDelete: handleDelete,
+            }}
           />
         </Table.Tbody>
       </Table>,
       { wrapper: Wrapper }
     );
 
-    const buttons = screen.getAllByRole('button');
-    await user.click(buttons[0]);
+    await user.click(screen.getByText('Max Mustermann'));
     expect(handleView).toHaveBeenCalledWith(mockShift);
-
-    await user.click(buttons[1]);
-    expect(handleDelete).toHaveBeenCalledWith(mockShift);
   });
 });

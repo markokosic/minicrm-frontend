@@ -39,8 +39,8 @@ describe('useDriverSelectOptions', () => {
     const { result } = renderHook(() => useDriverSelectOptions());
 
     expect(result.current.driverOptions).toEqual([
-      { value: 10, label: 'John Doe' },
-      { value: 20, label: 'Jane Smith' },
+      { value: '10', label: 'John Doe', id: 10 },
+      { value: '20', label: 'Jane Smith', id: 20 },
     ]);
   });
 });

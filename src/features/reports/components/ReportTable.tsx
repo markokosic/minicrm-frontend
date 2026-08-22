@@ -10,7 +10,7 @@ import { GroupBy, RevenueReportData, RevenueReportRow } from '../report-schema';
 type ReportTableProps = {
   data: RevenueReportData | undefined;
   isLoading: boolean;
-  groupBy: GroupBy | null;
+  groupBy?: GroupBy | null;
 };
 
 export const ReportTable = ({ data, isLoading, groupBy }: ReportTableProps) => {
@@ -24,7 +24,7 @@ export const ReportTable = ({ data, isLoading, groupBy }: ReportTableProps) => {
     return null;
   }
 
-  const getDateFormat = (groupBy: GroupBy | null) => {
+  const getDateFormat = (groupBy?: GroupBy | null) => {
     switch (groupBy) {
       case 'MONTH':
         return 'MMMM YYYY';

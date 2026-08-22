@@ -4,6 +4,7 @@ import { Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import {
+  getGetAllDriversForSelectQueryKey,
   getGetAllDriversQueryKey,
   getGetDriverQueryKey,
   getGetDriverRevenueOptionsQueryKey,
@@ -34,6 +35,7 @@ export const useDriverUpdateForm = ({
         toast.success(t('app:drivers.notifications.edit.success'));
         queryClient.invalidateQueries({ queryKey: getGetDriverQueryKey(driver.id!) });
         queryClient.invalidateQueries({ queryKey: getGetAllDriversQueryKey() });
+        queryClient.invalidateQueries({ queryKey: getGetAllDriversForSelectQueryKey() });
         queryClient.invalidateQueries({ queryKey: getGetDriverRevenueOptionsQueryKey(driver.id) });
         onSuccess?.();
       },

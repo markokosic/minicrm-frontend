@@ -1,9 +1,9 @@
-import { Primitive } from '@mantine/core';
 import { CarResponse } from '@/api/generated/model';
 
 export interface CarOption {
-  value: Primitive;
+  value: string;
   label: string;
+  id?: number;
 }
 
 export const formatCarLabel = (car: CarResponse): string => {
@@ -12,7 +12,8 @@ export const formatCarLabel = (car: CarResponse): string => {
 
 export const mapCarsToOptions = (cars: CarResponse[]): CarOption[] => {
   return cars.map((car) => ({
-    value: car.id!,
+    value: car.id !== undefined && car.id !== null ? String(car.id) : '',
     label: formatCarLabel(car),
+    id: car.id,
   }));
 };

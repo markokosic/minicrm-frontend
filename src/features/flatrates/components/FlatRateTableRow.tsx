@@ -1,7 +1,7 @@
 import { Pencil, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ActionIcon, Badge, Group, Table } from '@mantine/core';
-import { FlatRateTypeResponse } from '@/api/generated/model';
+import { FlatRateTypeResponse, FlatRateTypeResponseStatus } from '@/api/generated/model';
 
 interface FlatRateTableRowProps {
   flatRate: FlatRateTypeResponse;
@@ -15,6 +15,7 @@ export const FlatRateTableRow = ({
   onDeactivate,
 }: FlatRateTableRowProps) => {
   const { t } = useTranslation(['app', 'common']);
+  const isActive = flatRate.status === FlatRateTypeResponseStatus.ACTIVE;
 
   return (
     <Table.Tr>
@@ -26,8 +27,8 @@ export const FlatRateTableRow = ({
           : '-'}
       </Table.Td>
       <Table.Td>
-        <Badge color={flatRate.active ? 'green' : 'gray'} variant="light">
-          {flatRate.active
+        <Badge color={isActive ? 'green' : 'gray'} variant="light">
+          {isActive
             ? t('app:flatrate.status.active')
             : t('app:flatrate.status.inactive')}
         </Badge>

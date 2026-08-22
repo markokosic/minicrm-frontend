@@ -8,7 +8,7 @@ export const useCarSelectOptions = () => {
     isLoading,
     error,
   } = useGetAllCars<CarResponse[]>(
-    { pageable: {} },
+    { size: 1000 },
     {
       query: {
         select: (response) => response.data?.content ?? [],

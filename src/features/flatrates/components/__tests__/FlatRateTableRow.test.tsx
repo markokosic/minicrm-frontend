@@ -10,7 +10,7 @@ describe('FlatRateTableRow Component', () => {
     id: 42,
     name: 'Wien -> Linz',
     defaultPrice: 180,
-    active: true,
+    status: 'ACTIVE' as const,
   };
 
   it('renders flat rate row data correctly', () => {

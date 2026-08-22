@@ -1,5 +1,5 @@
 import { useGetAllDriversForSelect } from '@/api/generated/endpoints/drivers/drivers';
-import { mapDriversToComboboxOptions, mapDriversToOptions } from '../utils/driver-options.utils';
+import { mapDriversToOptions } from '../utils/driver-options.utils';
 
 export const useDriverSelectOptions = () => {
   const { data, isLoading, error } = useGetAllDriversForSelect();

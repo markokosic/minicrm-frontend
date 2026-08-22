@@ -26,7 +26,6 @@ export const DriverFormRemunerationConfigRow = ({
   const { remunerationTypeOptions: remunerationTypes } = useRemunerationLabels();
 
   const { data: flatRateTypesResponse } = useGetActiveFlatRateTypes();
-  const activeFlatRateTypes = flatRateTypesResponse?.data || [];
 
   const namePrefix = `remunerationConfigs.${index}`;
 
@@ -44,6 +43,7 @@ export const DriverFormRemunerationConfigRow = ({
   }));
 
   const flatRateTypeOptions = useMemo(() => {
+    const activeFlatRateTypes = flatRateTypesResponse?.data ?? [];
     const options: ComboboxOption<number | null>[] = [
       {
         label: t('common:form.flatRateTypeId.all_flat_rates'),
@@ -72,7 +72,7 @@ export const DriverFormRemunerationConfigRow = ({
     }
 
     return options;
-  }, [activeFlatRateTypes, currentFlatRateTypeId, t]);
+  }, [flatRateTypesResponse?.data, currentFlatRateTypeId, t]);
 
   return (
     <Box

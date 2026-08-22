@@ -15,10 +15,10 @@ export const getRevenueReportParamsSchema = (_t: TFunction) =>
   });
 
 export type RevenueReportParams = {
-  dateFrom: string | null;
-  dateTo: string | null;
-  driverId: string | null;
-  groupBy: GroupBy | null;
+  dateFrom?: string | null;
+  dateTo?: string | null;
+  driverId?: string | null;
+  groupBy?: GroupBy | null;
 };
 
 export type ReportRowDriver = {

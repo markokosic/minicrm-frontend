@@ -1,4 +1,4 @@
-import { Paper, Table, Text } from '@mantine/core';
+import { Paper, Table } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { ShiftResponse } from '@/api/generated/model';
 import { ShiftTableRow } from './ShiftTableRow';
