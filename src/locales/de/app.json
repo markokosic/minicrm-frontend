@@ -335,6 +335,7 @@
       "view_details": "Details anzeigen"
     },
     "table": {
+      "id": "ID",
       "date": "Datum",
       "driver": "Fahrer",
       "car": "Fahrzeug",

@@ -45,6 +45,7 @@ describe('ShiftTableRow Component', () => {
       { wrapper: Wrapper }
     );
 
+    expect(screen.getByText('#10')).toBeInTheDocument();
     expect(screen.getByText('Max Mustermann')).toBeInTheDocument();
     expect(screen.getByText('W-12345X')).toBeInTheDocument();
     expect(screen.getByText('300 km')).toBeInTheDocument();

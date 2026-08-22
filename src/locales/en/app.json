@@ -335,6 +335,7 @@
       "view_details": "View Details"
     },
     "table": {
+      "id": "ID",
       "date": "Date",
       "driver": "Driver",
       "car": "Car",
