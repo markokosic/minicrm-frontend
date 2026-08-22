@@ -1,5 +1,6 @@
 import { TFunction } from 'i18next';
 import z from 'zod';
+import { RevenueReportEntryEntryCategory } from '@/api/generated/model';
 
 export const GroupBySchema = z.enum(['NONE', 'DAY', 'WEEK', 'MONTH', 'YEAR']);
 
@@ -14,36 +15,37 @@ export const getRevenueReportParamsSchema = (_t: TFunction) =>
   });
 
 export type RevenueReportParams = {
-  dateFrom: string | null;
-  dateTo: string | null;
-  driverId: string | null;
-  groupBy: GroupBy | null;
+  dateFrom?: string | null;
+  dateTo?: string | null;
+  driverId?: string | null;
+  groupBy?: GroupBy | null;
 };
 
 export type ReportRowDriver = {
-  id: number;
-  firstName: string;
-  lastName: string;
+  id?: number;
+  firstName?: string;
+  lastName?: string;
 };
 
 export type RevenueReportRow = {
-  date: string;
-  revenue: number;
-  companyRemuneration: number;
-  driverRemuneration: number;
-  kilometersDriven: number;
-  entryCount: number;
-  drivers: ReportRowDriver[];
+  date?: string;
+  shiftId?: number;
+  entryId?: number;
+  entryCategory?: RevenueReportEntryEntryCategory;
+  revenue?: number;
+  companyRemuneration?: number;
+  driverRemuneration?: number;
+  entryCount?: number;
+  drivers?: ReportRowDriver[];
 };
 
 export type RevenueReportData = {
   rows: RevenueReportRow[];
-  totals: {
-    revenue: number;
-    companyShare: number;
-    driverShare: number;
-    totalKm: number;
-    entryCount: number;
+  totals?: {
+    revenue?: number;
+    companyShare?: number;
+    driverShare?: number;
+    entryCount?: number;
   };
 };
 
@@ -53,12 +55,10 @@ export type DashboardSummaryParams = {
 };
 
 export type DashboardSummaryData = {
-  year: number;
-  month: number | null;
-  totalRevenue: number;
-  companyShare: number;
-  driverShare: number;
-  totalKm: number;
-  revenuePerKm: number;
-  tripCount: number;
+  year?: number;
+  month?: number | null;
+  totalRevenue?: number;
+  companyShare?: number;
+  driverShare?: number;
+  entryCount?: number;
 };

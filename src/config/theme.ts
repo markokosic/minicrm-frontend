@@ -3,20 +3,15 @@ import {
   Badge,
   Button,
   Card,
-  Combobox,
   createTheme,
-  InputBase,
+  Input,
+  InputWrapper,
   MantineColorsTuple,
   NavLink,
-  NumberInput,
   Paper,
-  Select,
   Table,
-  TextInput,
 } from '@mantine/core';
-import { DatePickerInput } from '@mantine/dates';
 
-// Professional, high-contrast Enterprise Blue color palette for TaxiOS ERP
 const enterpriseBlue: MantineColorsTuple = [
   '#ebf5ff',
   '#d6eafe',
@@ -42,6 +37,7 @@ export const theme = createTheme({
   },
   primaryColor: 'blue',
   primaryShade: 5,
+
   defaultRadius: 'md',
 
   shadows: {
@@ -53,11 +49,21 @@ export const theme = createTheme({
   },
 
   components: {
+    Input: Input.extend({
+      defaultProps: {
+        size: 'md',
+      },
+    }),
+    InputWrapper: InputWrapper.extend({
+      defaultProps: {
+        size: 'md',
+      },
+    }),
+
     Button: Button.extend({
       defaultProps: {
         variant: 'filled',
         size: 'md',
-        radius: 'md',
       },
       styles: {
         root: {
@@ -78,7 +84,6 @@ export const theme = createTheme({
     Card: Card.extend({
       defaultProps: {
         shadow: 'sm',
-        radius: 'md',
         withBorder: true,
       },
       styles: {
@@ -95,50 +100,7 @@ export const theme = createTheme({
     Paper: Paper.extend({
       defaultProps: {
         shadow: 'xs',
-        radius: 'md',
         withBorder: true,
-      },
-    }),
-
-    TextInput: TextInput.extend({
-      defaultProps: {
-        size: 'md',
-        radius: 'md',
-      },
-    }),
-
-    NumberInput: NumberInput.extend({
-      defaultProps: {
-        size: 'md',
-        radius: 'md',
-      },
-    }),
-
-    Select: Select.extend({
-      defaultProps: {
-        size: 'md',
-        radius: 'md',
-      },
-    }),
-
-    DatePickerInput: DatePickerInput.extend({
-      defaultProps: {
-        size: 'md',
-        radius: 'md',
-      },
-    }),
-
-    Combobox: Combobox.extend({
-      defaultProps: {
-        size: 'md',
-        radius: 'md',
-      },
-    }),
-
-    InputBase: InputBase.extend({
-      defaultProps: {
-        size: 'md',
-        radius: 'md',
       },
     }),
 
@@ -170,9 +132,6 @@ export const theme = createTheme({
     }),
 
     ActionIcon: ActionIcon.extend({
-      defaultProps: {
-        radius: 'md',
-      },
       styles: {
         root: {
           transition: 'transform 150ms ease',

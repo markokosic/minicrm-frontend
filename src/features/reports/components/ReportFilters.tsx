@@ -2,17 +2,17 @@ import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Group, Select, Stack } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { useDriverOptions } from '@/features/drivers';
+import { useDriverSelectOptions } from '@/features/drivers';
 import { RevenueReportParams } from '../report-schema';
 
 type ReportFiltersProps = {
   filters: RevenueReportParams;
-  setFilter: (key: string, value: string | null | undefined) => void;
+  setFilter: (key: string, value: string | number | boolean | null | undefined) => void;
 };
 
 export const ReportFilters = ({ filters, setFilter }: ReportFiltersProps) => {
   const { t } = useTranslation(['app', 'common']);
-  const { driverOptions, isLoading: isLoadingDrivers, drivers } = useDriverOptions();
+  const { driverOptions, isLoading: isLoadingDrivers, drivers } = useDriverSelectOptions();
 
   if (!drivers.length && !isLoadingDrivers) {
     return null;
@@ -38,24 +38,14 @@ export const ReportFilters = ({ filters, setFilter }: ReportFiltersProps) => {
           label={t('app:reports.date_from')}
           placeholder={t('common:pick_date')}
           value={filters.dateFrom ? new Date(filters.dateFrom) : null}
-          onChange={(date) =>
-            setFilter(
-              'dateFrom',
-              date ? dayjs(date).format('YYYY-MM-DD') : null
-            )
-          }
+          onChange={(date) => setFilter('dateFrom', date ? dayjs(date).format('YYYY-MM-DD') : null)}
           clearable
         />
         <DatePickerInput
           label={t('app:reports.date_to')}
           placeholder={t('common:pick_date')}
           value={filters.dateTo ? new Date(filters.dateTo) : null}
-          onChange={(date) =>
-            setFilter(
-              'dateTo',
-              date ? dayjs(date).format('YYYY-MM-DD') : null
-            )
-          }
+          onChange={(date) => setFilter('dateTo', date ? dayjs(date).format('YYYY-MM-DD') : null)}
           clearable
         />
       </Group>

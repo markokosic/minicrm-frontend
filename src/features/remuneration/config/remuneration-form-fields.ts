@@ -57,5 +57,11 @@ export const REMUNERATION_FORM_FIELDS = {
       placeholderKey: 'common:form.flatRateFee.placeholder',
       type: 'number',
     },
+    flatRateTypeId: {
+      name: 'flatRateTypeId',
+      labelKey: 'common:form.flatRateTypeId.label',
+      placeholderKey: 'common:form.flatRateTypeId.placeholder',
+      type: 'select',
+    },
   },
 };

@@ -14,7 +14,7 @@ describe('DataLoadingWrapper Component', () => {
     const { Wrapper } = createTestAppWrapper();
 
     render(
-      <DataLoadingWrapper {...defaultProps} isLoading={true}>
+      <DataLoadingWrapper {...defaultProps} isLoading>
         <div>Data Content</div>
       </DataLoadingWrapper>,
       { wrapper: Wrapper }
@@ -62,7 +62,7 @@ describe('DataLoadingWrapper Component', () => {
     const { Wrapper } = createTestAppWrapper();
 
     render(
-      <DataLoadingWrapper {...defaultProps} isEmpty={true}>
+      <DataLoadingWrapper {...defaultProps} isEmpty>
         <div>Data Content</div>
       </DataLoadingWrapper>,
       { wrapper: Wrapper }

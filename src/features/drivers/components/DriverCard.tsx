@@ -77,7 +77,14 @@ export const DriverCard = ({ driver }: DriverCardProps) => {
           <Group gap="xs" mt="xs">
             {driver.currentRemunerationConfigs.map((config, idx) => {
               const type = config.remunerationModelType as RemunerationModelType;
-              const label = getRemunerationLabel(type);
+              let label = getRemunerationLabel(type);
+              if (
+                type === RemunerationModelType.FLAT_RATE &&
+                'flatRateTypeName' in config &&
+                config.flatRateTypeName
+              ) {
+                label = `${label}: ${config.flatRateTypeName}`;
+              }
               return (
                 <Badge
                   key={idx}

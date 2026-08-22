@@ -16,7 +16,7 @@ export const CarsList = () => {
     isLoading,
     error,
   } = useGetAllCars<PageResponseCarResponse>(
-    { pageable },
+    { ...pageable },
     {
       query: {
         select: (response) => response.data!,
@@ -68,14 +68,11 @@ export const CarsList = () => {
         </DataLoadingWrapper>
       </Box>
 
-      <Box style={{ flexShrink: 0 }}>
-        <AppPagination
-          page={page}
-          totalPages={paginationData?.totalPages}
-          onChange={setPage}
-        />
-      </Box>
+      <AppPagination
+        page={page}
+        totalPages={paginationData?.totalPages}
+        onChange={setPage}
+      />
     </Stack>
   );
 };
-

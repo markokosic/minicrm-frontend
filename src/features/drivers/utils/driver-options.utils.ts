@@ -1,27 +1,22 @@
-import { DriverSelectResponse } from '@/api/generated/model';
+import { DriverSelect } from '@/api/generated/model';
 
 export interface DriverOption {
   value: string;
   label: string;
-  id: number;
+  id?: number;
 }
 
-export interface DriverComboboxOption {
-  value: number;
-  label: string;
-}
-
-export const mapDriversToOptions = (drivers: DriverSelectResponse[]): DriverOption[] => {
+export const mapDriversToOptions = (drivers: DriverSelect[]): DriverOption[] => {
   return drivers.map((driver) => ({
-    value: driver.id?.toString() || '',
+    value: driver.id !== undefined && driver.id !== null ? String(driver.id) : '',
     label: driver.fullName || '',
-    id: driver.id!,
+    id: driver.id,
   }));
 };
 
-export const mapDriversToComboboxOptions = (drivers: DriverSelectResponse[]): DriverComboboxOption[] => {
+export const mapDriversToComboboxOptions = (drivers: DriverSelect[]) => {
   return drivers.map((driver) => ({
     value: driver.id!,
-    label: driver.fullName || '',
+    label: driver.fullName!,
   }));
 };

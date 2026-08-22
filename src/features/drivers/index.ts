@@ -9,7 +9,7 @@ export { DriverCreateForm } from './components/DriverCreateForm';
 export { DriverUpdateForm } from './components/DriverUpdateForm';
 
 // Hooks
-export { useDriverOptions } from './hooks/useDriverOptions';
+export { useDriverSelectOptions } from './hooks/useDriverOptions';
 
 // Schemas & Types
 export * from './driver-schemas';

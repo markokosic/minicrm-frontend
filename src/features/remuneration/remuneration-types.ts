@@ -13,5 +13,7 @@ export type WeeklyFixedRemunerationConfig = {
 export type FlatRateRemunerationConfig = {
   remunerationModelType: RemunerationModelType.FLAT_RATE;
   flatRateFee: number;
+  flatRateTypeId?: number | null;
+  flatRateTypeName?: string | null;
 };
 

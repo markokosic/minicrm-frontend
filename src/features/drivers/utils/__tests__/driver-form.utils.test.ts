@@ -33,7 +33,7 @@ describe('driver-form.utils', () => {
 
   it('getDriverUpdateFormDefaultValues should fallback to empty values when fields are null or undefined', () => {
     const driver = { id: 1 };
-    expect(getDriverUpdateFormDefaultValues(driver)).toEqual({
+    expect(getDriverUpdateFormDefaultValues(driver as never)).toEqual({
       firstName: '',
       lastName: '',
       phone: '',

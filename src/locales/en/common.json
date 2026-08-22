@@ -9,7 +9,9 @@
     "drivers": "Drivers",
     "cars": "Cars",
     "revenues": "Revenues",
-    "reports": "Reports"
+    "reports": "Reports",
+    "flatrates": "Flat Rates",
+    "shifts": "Shifts"
   },
   "actions": {
     "edit": "Edit",
@@ -119,6 +121,11 @@
     "flatRateFee": {
       "label": "Flat rate per trip (€)",
       "placeholder": "Enter flat rate per trip (€)"
+    },
+    "flatRateTypeId": {
+      "label": "Applies to specific flat rate type (optional)",
+      "placeholder": "Applies generally to all flat rate trips",
+      "all_flat_rates": "Applies generally to all flat rate trips"
     },
     "groups": {
       "general_information": "General Information",

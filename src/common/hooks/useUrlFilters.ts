@@ -7,10 +7,13 @@ export const useUrlFilters = () => {
     return searchParams.get(key) || defaultValue;
   };
 
-  const setFilter = (key: string, value: string | null | undefined) => {
+  const setFilter = (
+    key: string,
+    value: string | number | boolean | null | undefined
+  ) => {
     setSearchParams((prev) => {
-      if (value) {
-        prev.set(key, value);
+      if (value !== null && value !== undefined && value !== '') {
+        prev.set(key, String(value));
       } else {
         prev.delete(key);
       }

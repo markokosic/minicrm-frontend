@@ -3,12 +3,7 @@ import { CarResponse } from '@/api/generated/model';
 export interface CarOption {
   value: string;
   label: string;
-  id: number;
-}
-
-export interface CarComboboxOption {
-  value: number;
-  label: string;
+  id?: number;
 }
 
 export const formatCarLabel = (car: CarResponse): string => {
@@ -17,15 +12,8 @@ export const formatCarLabel = (car: CarResponse): string => {
 
 export const mapCarsToOptions = (cars: CarResponse[]): CarOption[] => {
   return cars.map((car) => ({
-    value: car.id?.toString() || '',
+    value: car.id !== undefined && car.id !== null ? String(car.id) : '',
     label: formatCarLabel(car),
-    id: car.id!,
-  }));
-};
-
-export const mapCarsToComboboxOptions = (cars: CarResponse[]): CarComboboxOption[] => {
-  return cars.map((car) => ({
-    value: car.id!,
-    label: formatCarLabel(car),
+    id: car.id,
   }));
 };
