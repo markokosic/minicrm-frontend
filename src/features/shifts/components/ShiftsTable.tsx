@@ -22,6 +22,7 @@ export const ShiftsTable = ({ shifts, actions }: ShiftsTableProps) => {
       <Table verticalSpacing="sm" horizontalSpacing="md" highlightOnHover>
         <Table.Thead>
           <Table.Tr>
+            <Table.Th>{t('app:shifts.table.id')}</Table.Th>
             <Table.Th>{t('app:shifts.table.date')}</Table.Th>
             <Table.Th>{t('app:shifts.table.time')}</Table.Th>
             <Table.Th>{t('app:shifts.table.driver')}</Table.Th>

@@ -31,6 +31,7 @@ export const ShiftTableRow = ({ shift, actions }: ShiftTableRowProps) => {
       onClick={() => actions.onViewDetails(shift)}
       style={{ cursor: 'pointer' }}
     >
+      <Table.Td fw={500}>#{shift.id}</Table.Td>
       <Table.Td fw={500}>{dateFormatted}</Table.Td>
       <Table.Td>{timeFormatted}</Table.Td>
       <Table.Td>
