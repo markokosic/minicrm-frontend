@@ -50,17 +50,35 @@ export const ROUTES = {
         getHref: () => '/cars/new',
       },
     },
-    revenues: {
-      path: '/revenues',
-      getHref: () => '/revenues',
-       createBulk: {
-        path: '/revenues/bulk',
-        getHref: () => '/revenues/bulk',
-      },
-    },
     reports: {
       path: '/reports',
       getHref: () => '/reports',
+    },
+
+    flatrates: {
+      path: '/flatrates',
+      getHref: () => '/flatrates',
+      create: {
+        path: '/flatrates/new',
+        getHref: () => '/flatrates/new',
+      },
+    },
+
+    shifts: {
+      path: '/shifts',
+      getHref: () => '/shifts',
+      view: {
+        path: '/shifts/:shiftId',
+        getHref: (shiftId: number | string) => `/shifts/${shiftId}`,
+      },
+      edit: {
+        path: '/shifts/:shiftId/edit',
+        getHref: (shiftId: number | string) => `/shifts/${shiftId}/edit`,
+      },
+      create: {
+        path: '/shifts/new',
+        getHref: () => '/shifts/new',
+      },
     },
 
     settings: {

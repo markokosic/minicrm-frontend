@@ -9,7 +9,9 @@
     "drivers": "Fahrer",
     "cars": "Autos",
     "revenues": "Umsätze",
-    "reports": "Berichte"
+    "reports": "Berichte",
+    "flatrates": "Pauschalen",
+    "shifts": "Schichten"
   },
   "actions": {
     "edit": "Bearbeiten",
@@ -117,8 +119,13 @@
       "placeholder": "Wählen Sie einen Wochentag aus oder geben Sie einen ein"
     },
     "flatRateFee": {
-      "label": "Pauschale pro Fahrt (€)",
-      "placeholder": "Geben Sie die Pauschale pro Fahrt ein (€)"
+      "label": "Pauschale pro Schicht (€)",
+      "placeholder": "Geben Sie die Pauschale pro Schicht ein (€)"
+    },
+    "flatRateTypeId": {
+      "label": "Gilt für speziellen Pauschaltyp (optional)",
+      "placeholder": "Gilt allgemein für alle Pauschalfahrten",
+      "all_flat_rates": "Gilt allgemein für alle Pauschalfahrten"
     },
     "groups": {
       "general_information": "Allgemeine Informationen",

@@ -1,68 +1,33 @@
 import { lazy } from 'react';
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
+import { MainErrorFallback } from '@/components/errors/MainErrorFallback';
 import { AuthLayout } from '@/components/layout/AuthLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { ROUTES } from '@/config/routes';
 
-//TODO unify pages
 // LAZY LOADED PAGES
-const LoginPage = lazy(() => import('../features/auth/pages/LoginPage'));
-const RegisterPage = lazy(() => import('../features/auth/pages/RegisterPage'));
-const DashboardPage = lazy(() => import('../features/dashboard/pages/DashboardPage'));
-const SettingsPage = lazy(() => import('../features/settings/pages/SettingsPage'));
-
-// Named exports need to be mapped for React.lazy
-const DriversPage = lazy(() =>
-  import('@/features/drivers/pages/DriversPage').then((module) => ({
-    default: module.DriversPage,
-  }))
-);
-const DriverCreatePage = lazy(() =>
-  import('@/features/drivers/pages/DriverCreatePage').then((module) => ({
-    default: module.DriverCreatePage,
-  }))
-);
-const DriverPage = lazy(() =>
-  import('@/features/drivers/pages/DriverPage').then((module) => ({
-    default: module.DriverPage,
-  }))
-);
-
-const CarsPage = lazy(() =>
-  import('@/features/cars/pages/CarsPage').then((module) => ({
-    default: module.CarsPage,
-  }))
-);
-const CarCreatePage = lazy(() =>
-  import('@/features/cars/pages/CarCreatePage').then((module) => ({
-    default: module.CarCreatePage,
-  }))
-);
-const CarPage = lazy(() =>
-  import('@/features/cars/pages/CarPage').then((module) => ({
-    default: module.CarPage,
-  }))
-);
-
-const RevenuesPage = lazy(() =>
-  import('@/features/revenues/pages/RevenuesPage').then((module) => ({
-    default: module.RevenuesPage,
-  }))
-);
-const CreateDailyRevenuesPage = lazy(() =>
-  import('@/features/revenues/pages/CreateDailyRevenuesPage').then((module) => ({
-    default: module.CreateDailyRevenuesPage,
-  }))
-);
-
-const ReportPage = lazy(() =>
-  import('@/features/reports/pages/ReportPage').then((module) => ({
-    default: module.ReportPage,
-  }))
-);
+const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
+const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
+const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
+const SettingsPage = lazy(() => import('@/features/settings/pages/SettingsPage'));
+const DriversPage = lazy(() => import('@/features/drivers/pages/DriversPage'));
+const DriverCreatePage = lazy(() => import('@/features/drivers/pages/DriverCreatePage'));
+const DriverPage = lazy(() => import('@/features/drivers/pages/DriverPage'));
+const CarsPage = lazy(() => import('@/features/cars/pages/CarsPage'));
+const CarCreatePage = lazy(() => import('@/features/cars/pages/CarCreatePage'));
+const CarPage = lazy(() => import('@/features/cars/pages/CarPage'));
+const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
+const CreateNewFlatRatePage = lazy(() => import('@/features/flatrates/pages/CreateNewFlatRatePage'));
+const FlatRatesPage = lazy(() => import('@/features/flatrates/pages/FlatRatesPage'));
+const ShiftsPage = lazy(() => import('@/features/shifts/pages/ShiftsPage'));
+const CreateShiftPage = lazy(() => import('@/features/shifts/pages/CreateShiftPage'));
+const EditShiftPage = lazy(() => import('@/features/shifts/pages/EditShiftPage'));
+const ShiftViewPage = lazy(() => import('@/features/shifts/pages/ShiftViewPage'));
 
 const router = createBrowserRouter([
+
   {
+    errorElement: <MainErrorFallback />,
     element: <AuthLayout />,
     children: [
       {
@@ -77,6 +42,7 @@ const router = createBrowserRouter([
   },
 
   {
+    errorElement: <MainErrorFallback />,
     element: <ProtectedRoute />,
     children: [
       { index: true, element: <Navigate to={ROUTES.app.dashboard.path} replace /> },
@@ -91,12 +57,18 @@ const router = createBrowserRouter([
       { path: ROUTES.app.cars.create.path, element: <CarCreatePage /> },
       { path: ROUTES.app.cars.view.path, element: <CarPage /> },
 
-      //REVENUES PAGES
-      { path: ROUTES.app.revenues.path, element: <RevenuesPage /> },
-      { path: ROUTES.app.revenues.createBulk.path, element: <CreateDailyRevenuesPage /> },
-
       //REPORTS PAGES
       { path: ROUTES.app.reports.path, element: <ReportPage /> },
+
+      // FLATRATE PAGES
+      { path: ROUTES.app.flatrates.path, element: <FlatRatesPage /> },
+      { path: ROUTES.app.flatrates.create.path, element: <CreateNewFlatRatePage /> },
+
+      // SHIFTS PAGES
+      { path: ROUTES.app.shifts.path, element: <ShiftsPage /> },
+      { path: ROUTES.app.shifts.create.path, element: <CreateShiftPage /> },
+      { path: ROUTES.app.shifts.edit.path, element: <EditShiftPage /> },
+      { path: ROUTES.app.shifts.view.path, element: <ShiftViewPage /> },
 
       // SETTINGS PAGE
       { path: ROUTES.app.settings.path, element: <SettingsPage /> },

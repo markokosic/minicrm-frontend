@@ -14,6 +14,7 @@ api.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    // eslint-disable-next-line no-console
     console.error('API call failed:', error);
     // Handle specific error cases
     if (error.response.status === 401) {

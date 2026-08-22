@@ -1,5 +1,6 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router';
-import { AppShell, Box, Burger, Group, Text, ThemeIcon } from '@mantine/core';
+import { AppShell, Box, Burger, Group, LoadingOverlay, Text, ThemeIcon } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Car } from 'lucide-react';
 import { NavBar } from '@/components/ui/Navbar/Navbar';
@@ -63,9 +64,12 @@ const AppLayout = ({ overlayVisible: _overlayVisible }: AppLayoutProps) => {
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
+            position: 'relative',
           }}
         >
-          <Outlet />
+          <Suspense fallback={<LoadingOverlay visible zIndex={1000} overlayProps={{ radius: 'sm', blur: 2 }} />}>
+            <Outlet />
+          </Suspense>
         </Box>
       </AppShell.Main>
     </AppShell>
@@ -73,3 +77,4 @@ const AppLayout = ({ overlayVisible: _overlayVisible }: AppLayoutProps) => {
 };
 
 export { AppLayout };
+

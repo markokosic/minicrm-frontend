@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router';
 import { AppLayout } from '@/components/layout';
 import { ROUTES } from '@/config/routes';
-import { useAuth } from '@/features/auth/hooks/useAuth';
+import { useAuth } from '@/features/auth';
 
 export const ProtectedRoute = () => {
   const { user, isPending } = useAuth();

@@ -36,3 +36,6 @@ export const DriverPage = () => {
     </PageLayout>
   );
 };
+
+export default DriverPage;
+

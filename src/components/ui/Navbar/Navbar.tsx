@@ -15,7 +15,9 @@ import {
 } from '@mantine/core';
 import { NAV_ITEMS, NavItem } from '@/config/navigation';
 import { ROUTES } from '@/config/routes';
-import { useAuth } from '@/features/auth/hooks/useAuth';
+import { useAuth } from '@/features/auth';
+
+import classes from './Navbar.module.css';
 
 export const NavBar = () => {
   const location = useLocation();
@@ -52,32 +54,17 @@ export const NavBar = () => {
           to={item.path}
           label={t(item.labelKey, { ns: 'common' })}
           active={isActive}
+          className={classes.navLink}
           leftSection={
             <item.icon
               size={18}
               strokeWidth={isActive ? 2.2 : 1.7}
             />
           }
-          styles={{
-            root: {
-              borderRadius: 'var(--mantine-radius-md)',
-              margin: '3px 0',
-              padding: '10px 14px',
-              transition: 'all 150ms ease',
-              backgroundColor: isActive ? 'var(--mantine-color-blue-light)' : 'transparent',
-              color: isActive ? 'var(--mantine-color-blue-filled)' : undefined,
-              fontWeight: isActive ? 600 : 500,
-              '&:hover': {
-                backgroundColor: isActive
-                  ? 'var(--mantine-color-blue-light-hover)'
-                  : 'var(--mantine-color-gray-0)',
-                transform: 'translateX(2px)',
-              },
-            },
-          }}
         />
       );
     });
+
 
   const displayName = user?.firstName
     ? `${user.firstName} ${user.lastName ?? ''}`.trim()

@@ -27,6 +27,7 @@ const Form = <T extends FieldValues>({
         maw={1020}
         {...others}
         onSubmit={methods.handleSubmit(onSubmit, (errors) => {
+          // eslint-disable-next-line no-console
           console.error(errors);
         })}
         component="form"

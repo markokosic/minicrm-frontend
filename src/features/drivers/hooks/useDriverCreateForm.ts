@@ -4,7 +4,12 @@ import { Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { CreateDriverMutationBody, getGetAllDriversQueryKey, useCreateDriver } from '@/api/generated/endpoints/drivers/drivers';
+import {
+  CreateDriverMutationBody,
+  getGetAllDriversForSelectQueryKey,
+  getGetAllDriversQueryKey,
+  useCreateDriver,
+} from '@/api/generated/endpoints/drivers/drivers';
 import { ROUTES } from '@/config/routes';
 import { getCreateDriverSchema } from '../driver-schemas';
 
@@ -17,14 +22,15 @@ export const useDriverCreateForm = () => {
   const { mutate, isPending } = useCreateDriver({
     mutation: {
       onSuccess: (response) => {
+        toast.success(t('app:drivers.notifications.create.success'));
+        queryClient.invalidateQueries({ queryKey: getGetAllDriversQueryKey() });
+        queryClient.invalidateQueries({ queryKey: getGetAllDriversForSelectQueryKey() });
         const newId = response.data?.id;
         if (newId) {
           navigate(ROUTES.app.drivers.view.getHref(newId));
         } else {
           navigate(ROUTES.app.drivers.path);
         }
-        toast.success(t('app:drivers.notifications.create.success'));
-        queryClient.invalidateQueries({ queryKey: getGetAllDriversQueryKey() });
       },
       onError: (error: unknown) => {
         const apiErrorMessage =
