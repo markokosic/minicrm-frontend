@@ -92,6 +92,7 @@ export * from './updateCarRequest';
 export * from './updateDriverRequest';
 export * from './updateShiftRequest';
 export * from './updateShiftRevenueEntryRequest';
+export * from './updateShiftRevenueEntryRequestEntryCategory';
 export * from './userResponse';
 export * from './weeklyFixedRateRemunerationResponse';
 export * from './weeklyFixedRateRemunerationResponseRemunerationModelType';

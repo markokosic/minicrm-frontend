@@ -71,6 +71,10 @@ export const ROUTES = {
         path: '/shifts/:shiftId',
         getHref: (shiftId: number | string) => `/shifts/${shiftId}`,
       },
+      edit: {
+        path: '/shifts/:shiftId/edit',
+        getHref: (shiftId: number | string) => `/shifts/${shiftId}/edit`,
+      },
       create: {
         path: '/shifts/new',
         getHref: () => '/shifts/new',

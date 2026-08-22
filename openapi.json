@@ -30,10 +30,6 @@
       "description": "Endpoints for managing driver shifts"
     },
     {
-      "name": "Revenues",
-      "description": "Endpoints for logging and updating driver daily revenue data"
-    },
-    {
       "name": "Flat Rate Types",
       "description": "Endpoints for managing custom flat rate trip types"
     },
@@ -167,123 +163,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponseDTOVoid"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/revenues/{id}": {
-      "put": {
-        "tags": [
-          "Revenues"
-        ],
-        "summary": "Update a daily revenue log",
-        "description": "Modifies an existing daily revenue log.",
-        "operationId": "updateDailyRevenue",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateDailyRevenueRequestDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Daily revenue log updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseDTODailyRevenueResponseDTO"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request payload",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Daily revenue log not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Revenues"
-        ],
-        "summary": "Delete a daily revenue log",
-        "description": "Permanently deletes a logged daily revenue entry.",
-        "operationId": "deleteDailyRevenue",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Daily revenue log deleted successfully"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Daily revenue log not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
                 }
               }
             }
@@ -477,61 +356,6 @@
           },
           "400": {
             "description": "Invalid shift data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/revenues/bulk": {
-      "post": {
-        "tags": [
-          "Revenues"
-        ],
-        "summary": "Bulk create daily revenues",
-        "description": "Logs multiple daily revenue entries for drivers at once.",
-        "operationId": "createDailyRevenuesBulk",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/CreateDailyRevenueRequestDTO"
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Daily revenues logged successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseDTOVoid"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid daily revenue logs payload",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
@@ -1430,105 +1254,6 @@
         }
       }
     },
-    "/api/revenues": {
-      "get": {
-        "tags": [
-          "Revenues"
-        ],
-        "summary": "Get all daily revenues",
-        "description": "Retrieves a paginated list of logged daily revenues.",
-        "operationId": "getAllDailyRevenues",
-        "parameters": [
-          {
-            "name": "driverId",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "dateFrom",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          {
-            "name": "dateTo",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "date"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page number (1-indexed, minimum 1)",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 1,
-              "minimum": 1
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "description": "The size of the page to be returned",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10,
-              "minimum": 1
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "default": [
-                "date,DESC",
-                "drivingStartTime,DESC"
-              ],
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Revenues list retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseDTOPageResponseDTODailyRevenueResponseDTO"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/reports/revenue": {
       "get": {
         "tags": [
@@ -1921,25 +1646,47 @@
       },
       "UpdateShiftRevenueEntryRequestDTO": {
         "type": "object",
+        "description": "DTO for updating existing or adding new revenue entries within a shift",
         "properties": {
           "id": {
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "description": "ID of the existing revenue entry. If present, only amounts are updated (category is immutable). If omitted/null, a new entry is created.",
+            "example": 100
+          },
+          "entryCategory": {
+            "type": "string",
+            "description": "Entry category (REGULAR, FLAT_RATE, WEEKLY). Required when adding a new entry (id is null). Ignored for existing entries.",
+            "enum": [
+              "REGULAR",
+              "FLAT_RATE",
+              "WEEKLY"
+            ],
+            "example": "REGULAR"
+          },
+          "flatRateTypeId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Flat rate type ID (optional for FLAT_RATE category when adding a new entry). Ignored for existing entries.",
+            "example": 1
           },
           "revenue": {
-            "type": "number"
+            "type": "number",
+            "description": "Direct revenue amount",
+            "example": 250
           },
           "tripCount": {
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "description": "Number of trips",
+            "example": 10
           },
           "pricePerTrip": {
-            "type": "number"
+            "type": "number",
+            "description": "Price per trip",
+            "example": 25
           }
-        },
-        "required": [
-          "id"
-        ]
+        }
       },
       "ProblemDetail": {
         "type": "object",
@@ -2112,138 +1859,6 @@
           }
         }
       },
-      "CreateDailyRevenueRequestDTO": {
-        "type": "object",
-        "properties": {
-          "driverId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "carId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "kilometersDriven": {
-            "type": "number"
-          },
-          "revenue": {
-            "type": "number"
-          },
-          "kilometersFrom": {
-            "type": "number"
-          },
-          "kilometersTo": {
-            "type": "number"
-          },
-          "driverRemunerationType": {
-            "type": "string",
-            "enum": [
-              "PERCENTAGE_SHARE",
-              "WEEKLY_FIXED_RATE",
-              "FLAT_RATE"
-            ]
-          },
-          "drivingStartTime": {
-            "type": "string"
-          },
-          "drivingEndTime": {
-            "type": "string"
-          },
-          "tripCount": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "pricePerTrip": {
-            "type": "number"
-          },
-          "companyRemuneration": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "carId",
-          "date",
-          "driverId",
-          "driverRemunerationType",
-          "revenue"
-        ]
-      },
-      "ApiResponseDTODailyRevenueResponseDTO": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/DailyRevenueResponseDTO"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      },
-      "DailyRevenueResponseDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "remunerationModelType": {
-            "type": "string",
-            "enum": [
-              "PERCENTAGE_SHARE",
-              "WEEKLY_FIXED_RATE",
-              "FLAT_RATE"
-            ]
-          },
-          "tripCount": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "pricePerTrip": {
-            "type": "number"
-          },
-          "driver": {
-            "$ref": "#/components/schemas/DriverSummaryDTO"
-          },
-          "car": {
-            "$ref": "#/components/schemas/CarSummaryDTO"
-          },
-          "kilometersDriven": {
-            "type": "number"
-          },
-          "kilometersFrom": {
-            "type": "number"
-          },
-          "kilometersTo": {
-            "type": "number"
-          },
-          "revenue": {
-            "type": "number"
-          },
-          "companyRemuneration": {
-            "type": "number"
-          },
-          "driverRemuneration": {
-            "type": "number"
-          },
-          "drivingStartTime": {
-            "type": "string"
-          },
-          "drivingEndTime": {
-            "type": "string"
-          }
-        }
-      },
       "CreateFlatRateTypeRequestDTO": {
         "type": "object",
         "properties": {
@@ -2378,18 +1993,6 @@
         "required": [
           "entryCategory"
         ]
-      },
-      "ApiResponseDTOVoid": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {},
-          "message": {
-            "type": "string"
-          }
-        }
       },
       "CreateDriverRequestDTO": {
         "type": "object",
@@ -2920,6 +2523,18 @@
           }
         }
       },
+      "ApiResponseDTOVoid": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {},
+          "message": {
+            "type": "string"
+          }
+        }
+      },
       "LoginRequestDTO": {
         "type": "object",
         "properties": {
@@ -3073,53 +2688,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ShiftResponseDTO"
-            }
-          },
-          "page": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "totalElements": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "totalPages": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "first": {
-            "type": "boolean"
-          },
-          "last": {
-            "type": "boolean"
-          }
-        }
-      },
-      "ApiResponseDTOPageResponseDTODailyRevenueResponseDTO": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/PageResponseDTODailyRevenueResponseDTO"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      },
-      "PageResponseDTODailyRevenueResponseDTO": {
-        "type": "object",
-        "properties": {
-          "content": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DailyRevenueResponseDTO"
             }
           },
           "page": {
