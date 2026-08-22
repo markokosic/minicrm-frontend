@@ -42,7 +42,7 @@ export const ShiftViewPage = () => {
               {
                 label: t('common:actions.edit', 'Bearbeiten'),
                 icon: Edit2,
-                onClick: () => console.log('Edit shift', shift.id),
+                onClick: () => navigate(ROUTES.app.shifts.edit.getHref(shift.id!)),
               },
               {
                 label: t('common:actions.delete', 'Löschen'),

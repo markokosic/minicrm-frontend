@@ -6,20 +6,25 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useGetDriverRevenueOptions } from '@/api/generated/endpoints/drivers/drivers';
 import { ShiftRevenueRow } from './ShiftRevenueRow';
 import { DriverRevenueOptionEntryCategory } from '@/api/generated/model';
+import { getRevenueOptionKey } from '../utils/shift-calculations.utils';
 
 export const ShiftRevenuesSection = () => {
   const { t } = useTranslation(['app', 'common']);
   
   const { control } = useFormContext();
-  const selectedDriverId = useWatch({
+  const selectedDriverIdRaw = useWatch({
     control,
     name: 'driverId',
   });
+  const selectedDriverId =
+    selectedDriverIdRaw !== undefined && selectedDriverIdRaw !== null && selectedDriverIdRaw !== ''
+      ? Number(selectedDriverIdRaw)
+      : undefined;
   
   const { data: revenueOptionsResponse, isLoading: isLoadingRevenueOptions } =
-    useGetDriverRevenueOptions(selectedDriverId, {
+    useGetDriverRevenueOptions(selectedDriverId as number, {
       query: {
-        enabled: typeof selectedDriverId === 'number' && selectedDriverId > 0,
+        enabled: typeof selectedDriverId === 'number' && !isNaN(selectedDriverId) && selectedDriverId > 0,
       },
     });
 
@@ -46,16 +51,16 @@ export const ShiftRevenuesSection = () => {
     // 1. Fallback: Keine Umsatz-Optionen verfügbar
     if (!revenueOptions.length) {
       return append({
+        optionKey: 'REGULAR',
         entryCategory: DriverRevenueOptionEntryCategory.REGULAR,
         revenue: 0,
       });
     }
 
     const firstOpt = revenueOptions[0];
-    const optionKey = `${firstOpt.entryCategory}_${firstOpt.flatRateTypeId ?? 'none'}_0`;
+    const optionKey = getRevenueOptionKey(firstOpt.entryCategory, firstOpt.flatRateTypeId);
     const baseRevenue = { optionKey, entryCategory: firstOpt.entryCategory };
 
-    
     if (firstOpt.entryCategory === DriverRevenueOptionEntryCategory.FLAT_RATE) {
       return append({
         ...baseRevenue,

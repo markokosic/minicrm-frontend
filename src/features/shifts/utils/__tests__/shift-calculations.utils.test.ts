@@ -5,10 +5,20 @@ import {
   calculateShiftTotals,
   formatShiftDate,
   formatShiftTime,
+  getRevenueOptionKey,
   transformShiftFormPayload,
+  transformUpdateShiftPayload,
 } from '../shift-calculations.utils';
 
 describe('shift-calculations.utils', () => {
+  describe('getRevenueOptionKey', () => {
+    it('generates consistent keys for FLAT_RATE, REGULAR, and WEEKLY', () => {
+      expect(getRevenueOptionKey('FLAT_RATE', 1)).toBe('FLAT_RATE_1');
+      expect(getRevenueOptionKey('FLAT_RATE', null)).toBe('FLAT_RATE_none');
+      expect(getRevenueOptionKey('REGULAR', null)).toBe('REGULAR');
+      expect(getRevenueOptionKey('WEEKLY', null)).toBe('WEEKLY');
+    });
+  });
   describe('calculateKilometersDriven', () => {
     it('returns difference when odometerEnd >= odometerStart', () => {
       expect(calculateKilometersDriven(45000, 45312)).toBe(312);
@@ -97,7 +107,7 @@ describe('shift-calculations.utils', () => {
         ],
       };
 
-      const payload = transformShiftFormPayload(values);
+        const payload = transformShiftFormPayload(values);
       expect(payload.driverId).toBe(10);
       expect(payload.carId).toBe(5);
       expect(payload.revenues).toHaveLength(2);
@@ -106,6 +116,43 @@ describe('shift-calculations.utils', () => {
         flatRateTypeId: 3,
         tripCount: 2,
         pricePerTrip: 150,
+      });
+    });
+  });
+
+  describe('transformUpdateShiftPayload', () => {
+    it('transforms form values keeping ID for existing rows and category for new rows', () => {
+      const values = {
+        driverId: 10,
+        carId: 5,
+        odometerStart: 45000,
+        odometerEnd: 45200,
+        shiftStart: '2026-08-13T06:00',
+        shiftEnd: '2026-08-13T14:00',
+        revenues: [
+          { id: 99, entryCategory: 'REGULAR', revenue: 150 },
+          { id: 100, entryCategory: 'FLAT_RATE', tripCount: 3, pricePerTrip: 50 },
+          { entryCategory: 'REGULAR', revenue: 80 },
+          { entryCategory: 'FLAT_RATE', flatRateTypeId: 2, tripCount: 1, pricePerTrip: 100 },
+        ],
+      };
+
+      const payload = transformUpdateShiftPayload(values);
+      expect(payload.odometerStart).toBe(45000);
+      expect(payload.odometerEnd).toBe(45200);
+      expect(payload.revenues).toHaveLength(4);
+      // Existing regular
+      expect(payload.revenues[0]).toEqual({ id: 99, revenue: 150 });
+      // Existing flat rate
+      expect(payload.revenues[1]).toEqual({ id: 100, tripCount: 3, pricePerTrip: 50 });
+      // New regular
+      expect(payload.revenues[2]).toEqual({ entryCategory: 'REGULAR', revenue: 80 });
+      // New flat rate
+      expect(payload.revenues[3]).toEqual({
+        entryCategory: 'FLAT_RATE',
+        flatRateTypeId: 2,
+        tripCount: 1,
+        pricePerTrip: 100,
       });
     });
   });

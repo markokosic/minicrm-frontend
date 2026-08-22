@@ -35,6 +35,7 @@ export const ShiftsList = () => {
 
   const actions = {
     onViewDetails: (shift: any) => navigate(ROUTES.app.shifts.view.getHref(shift.id)),
+    onEdit: (shift: any) => navigate(ROUTES.app.shifts.edit.getHref(shift.id)),
     onDelete: handleDelete,
   };
 

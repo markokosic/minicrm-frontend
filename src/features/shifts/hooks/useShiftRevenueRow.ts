@@ -1,9 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { DriverRevenueOption, DriverRevenueOptionEntryCategory } from '@/api/generated/model';
-import { calculateFlatRateTotal, checkWeeklySettlement } from '../utils/shift-calculations.utils';
+import {
+  calculateFlatRateTotal,
+  checkWeeklySettlement,
+  getRevenueOptionKey,
+} from '../utils/shift-calculations.utils';
 
 export const useShiftRevenueRow = (index: number, revenueOptions: DriverRevenueOption[]) => {
+  const { t } = useTranslation(['app', 'common']);
   const { setValue, control } = useFormContext();
   const fieldPrefix = `revenues.${index}`;
 
@@ -11,10 +17,26 @@ export const useShiftRevenueRow = (index: number, revenueOptions: DriverRevenueO
   const optionKey = rowValues.optionKey;
   const shiftStart = useWatch({ control, name: 'shiftStart' });
 
-  const comboboxData = revenueOptions.map((opt, idx) => ({
+  const comboboxData = revenueOptions.map((opt) => ({
     label: opt.label || '',
-    value: `${opt.entryCategory}_${opt.flatRateTypeId ?? 'none'}_${idx}`,
+    value: getRevenueOptionKey(opt.entryCategory, opt.flatRateTypeId),
   }));
+
+  if (rowValues.optionKey && !comboboxData.some((c) => c.value === rowValues.optionKey)) {
+    const fallbackLabel =
+      rowValues.flatRateTypeName
+        ? `${rowValues.flatRateTypeName} (${t('app:reports.categories.FLAT_RATE', 'Pauschale')})`
+        : rowValues.entryCategory === 'REGULAR'
+        ? t('app:reports.categories.REGULAR', 'Regulär')
+        : rowValues.entryCategory === 'WEEKLY'
+        ? t('app:reports.categories.WEEKLY', 'Wöchentlich')
+        : rowValues.entryCategory || t('app:shifts.table.revenue', 'Umsatz');
+
+    comboboxData.push({
+      label: fallbackLabel,
+      value: rowValues.optionKey,
+    });
+  }
 
   const previousOptionKeyRef = useRef(optionKey);
 
@@ -26,11 +48,11 @@ export const useShiftRevenueRow = (index: number, revenueOptions: DriverRevenueO
     }
     previousOptionKeyRef.current = optionKey;
 
-    if (!optionKey) return;
+    if (!optionKey) {return;}
     const matched = revenueOptions.find(
-      (opt, idx) => `${opt.entryCategory}_${opt.flatRateTypeId ?? 'none'}_${idx}` === optionKey
+      (opt) => getRevenueOptionKey(opt.entryCategory, opt.flatRateTypeId) === optionKey
     );
-    if (!matched) return;
+    if (!matched) {return;}
 
     setValue(`${fieldPrefix}.entryCategory`, matched.entryCategory);
 

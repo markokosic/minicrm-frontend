@@ -13,9 +13,9 @@ vi.mock('@/common/hooks/useUrlFilters', () => ({
 describe('useShiftFilters', () => {
   it('formats dateFrom and dateTo as ISO LocalDateTime format YYYY-MM-DDTHH:mm:ss', () => {
     mockGetFilter.mockImplementation((key: string) => {
-      if (key === 'driverId') return '5';
-      if (key === 'dateFrom') return '2026-07-01';
-      if (key === 'dateTo') return '2026-07-31';
+      if (key === 'driverId') {return '5';}
+      if (key === 'dateFrom') {return '2026-07-01';}
+      if (key === 'dateTo') {return '2026-07-31';}
       return null;
     });
 

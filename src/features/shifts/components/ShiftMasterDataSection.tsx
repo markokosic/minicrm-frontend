@@ -1,6 +1,6 @@
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ComboboxItem, Grid, Paper, Text, TextInput } from '@mantine/core';
+import { Grid, Paper, Text, TextInput } from '@mantine/core';
 import { ControlledDateTimePicker } from '@/components/ui/ControlledDatePicker/ControlledDateTimePicker';
 import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
 import { FormSelect } from '@/components/ui/ControlledSelect/ControlledSelect';
@@ -16,6 +16,7 @@ interface ShiftMasterDataSectionProps {
   carOptions: CarOption[];
   isLoadingDrivers: boolean;
   isLoadingCars: boolean;
+  isEdit?: boolean;
 }
 
 export const ShiftMasterDataSection = ({
@@ -23,6 +24,7 @@ export const ShiftMasterDataSection = ({
   carOptions,
   isLoadingDrivers,
   isLoadingCars,
+  isEdit = false,
 }: ShiftMasterDataSectionProps) => {
   const { t } = useTranslation(['app', 'common']);
 
@@ -53,22 +55,24 @@ export const ShiftMasterDataSection = ({
         <Grid.Col span={{ base: 12, md: 6 }}>
           <FormSelect
             withAsterisk
+            isNumber
             name="driverId"
             label={t('common:driver')}
             placeholder={t('common:select_driver')}
             data={driverOptions}
-            disabled={isLoadingDrivers}
+            disabled={isLoadingDrivers || isEdit}
           />
         </Grid.Col>
 
         <Grid.Col span={{ base: 12, md: 6 }}>
           <FormSelect
             withAsterisk
+            isNumber
             name="carId"
             label={t('common:car')}
             placeholder={t('common:select_car')}
             data={carOptions}
-            disabled={isLoadingCars}
+            disabled={isLoadingCars || isEdit}
           />
         </Grid.Col>
 

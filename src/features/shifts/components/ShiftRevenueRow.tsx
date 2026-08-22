@@ -67,6 +67,7 @@ export const ShiftRevenueRow = ({ index, revenueOptions, onRemove }: ShiftRevenu
           label={t('app:shifts.fields.revenue_type.label')}
           placeholder={t('app:shifts.fields.revenue_type.placeholder')}
           data={comboboxData}
+          disabled={!!rowValues.id}
         />
 
         {rowValues.entryCategory === DriverRevenueOptionEntryCategory.FLAT_RATE ? (

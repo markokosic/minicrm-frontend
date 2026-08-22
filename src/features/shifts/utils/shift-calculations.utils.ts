@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import { CreateShiftRequest, ShiftRevenueEntryResponse } from '@/api/generated/model';
+import { CreateShiftRequest, ShiftRevenueEntryResponse, UpdateShiftRequest } from '@/api/generated/model';
 import { ShiftRevenueFormRow } from '../shifts-schemas';
 
 dayjs.extend(isoWeek);
@@ -22,6 +22,19 @@ export interface WeeklySettlementResult {
   isWeeklyPaymentToday: boolean;
   weekdayName: string;
 }
+
+/**
+ * Builds a consistent option key for driver revenue options and form rows.
+ */
+export const getRevenueOptionKey = (
+  entryCategory?: string | null,
+  flatRateTypeId?: number | null
+): string => {
+  if (entryCategory === 'FLAT_RATE') {
+    return `FLAT_RATE_${flatRateTypeId ?? 'none'}`;
+  }
+  return entryCategory || 'REGULAR';
+};
 
 /**
  * Calculates driven kilometers from start and end odometer values.
@@ -47,10 +60,10 @@ export const calculateShiftDuration = (
   shiftStart?: string | null,
   shiftEnd?: string | null
 ): ShiftDurationResult | null => {
-  if (!shiftStart || !shiftEnd) return null;
+  if (!shiftStart || !shiftEnd) {return null;}
   const start = dayjs(shiftStart);
   const end = dayjs(shiftEnd);
-  if (!start.isValid() || !end.isValid() || !end.isAfter(start)) return null;
+  if (!start.isValid() || !end.isValid() || !end.isAfter(start)) {return null;}
 
   const diffMinutes = end.diff(start, 'minute');
   const hours = Math.floor(diffMinutes / 60);
@@ -118,7 +131,7 @@ export const calculateShiftTotals = (
  * Formats date string to DD.MM.YYYY.
  */
 export const formatShiftDate = (dateString?: string | null, locale = 'de-DE'): string => {
-  if (!dateString) return '-';
+  if (!dateString) {return '-';}
   const date = new Date(dateString);
   return isNaN(date.getTime())
     ? '-'
@@ -133,7 +146,7 @@ export const formatShiftDate = (dateString?: string | null, locale = 'de-DE'): s
  * Formats time portion of date string to HH:mm.
  */
 export const formatShiftTime = (dateString?: string | null, locale = 'de-DE'): string => {
-  if (!dateString) return '-';
+  if (!dateString) {return '-';}
   const date = new Date(dateString);
   return isNaN(date.getTime())
     ? '-'
@@ -170,6 +183,48 @@ export const transformShiftFormPayload = (values: any): CreateShiftRequest => {
     shiftStart: dayjs(values.shiftStart).toISOString(),
     shiftEnd: dayjs(values.shiftEnd).toISOString(),
     status: values.status || 'APPROVED',
+    revenues: formattedRevenues,
+  };
+};
+
+/**
+ * Transforms form values into UpdateShiftRequest payload for PUT /api/shifts/{id}.
+ */
+export const transformUpdateShiftPayload = (values: any): UpdateShiftRequest => {
+  const formattedRevenues = values.revenues.map((r: ShiftRevenueFormRow) => {
+    if (r.id) {
+      if (r.entryCategory === 'FLAT_RATE') {
+        return {
+          id: r.id,
+          tripCount: Number(r.tripCount || 1),
+          pricePerTrip: Number(r.pricePerTrip || 0),
+        };
+      }
+      return {
+        id: r.id,
+        revenue: Number(r.revenue || 0),
+      };
+    }
+
+    if (r.entryCategory === 'FLAT_RATE') {
+      return {
+        entryCategory: 'FLAT_RATE' as const,
+        flatRateTypeId: r.flatRateTypeId ?? undefined,
+        tripCount: Number(r.tripCount || 1),
+        pricePerTrip: Number(r.pricePerTrip || 0),
+      };
+    }
+    return {
+      entryCategory: r.entryCategory,
+      revenue: Number(r.revenue || 0),
+    };
+  });
+
+  return {
+    odometerStart: Number(values.odometerStart),
+    odometerEnd: Number(values.odometerEnd),
+    shiftStart: dayjs(values.shiftStart).toISOString(),
+    shiftEnd: dayjs(values.shiftEnd).toISOString(),
     revenues: formattedRevenues,
   };
 };

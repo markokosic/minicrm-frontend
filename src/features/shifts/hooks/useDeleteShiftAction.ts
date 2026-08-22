@@ -30,7 +30,7 @@ export const useDeleteShiftAction = (options?: { onSuccess?: () => void }) => {
   });
 
   const handleDelete = (shift: ShiftResponse) => {
-    if (!shift.id) return;
+    if (!shift.id) {return;}
     confirm({
       title: t('app:shifts.modals.delete_confirm.title'),
       labels: {
