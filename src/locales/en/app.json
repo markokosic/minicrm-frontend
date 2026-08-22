@@ -109,10 +109,10 @@
       "monthly_share_title": "Monthly Distribution",
       "yearly_share_title": "Yearly Distribution {{year}}",
       "share_subtitle": "Breakdown between company and drivers",
-      "monthly_trips_title": "Rides & Kilometers in Month",
-      "monthly_trips_subtitle": "Daily number of rides and kilometers driven",
-      "yearly_trips_title": "Rides & Kilometers {{year}}",
-      "yearly_trips_subtitle": "Monthly summary of all rides and kilometers driven",
+      "monthly_trips_title": "Rides in Month",
+      "monthly_trips_subtitle": "Daily number of rides",
+      "yearly_trips_title": "Rides {{year}}",
+      "yearly_trips_subtitle": "Monthly summary of all rides",
       "series": {
         "revenue": "Total Revenue (€)",
         "company_share": "Company Share (€)",
@@ -171,6 +171,14 @@
   },
   "reports": {
     "rides": "Rides",
+    "shift": "Shift",
+    "shift_id": "Shift ID",
+    "category": "Category",
+    "categories": {
+      "REGULAR": "Regular",
+      "FLAT_RATE": "Flat Rate",
+      "WEEKLY": "Weekly"
+    },
     "no_data_info": "Please select a date range and filters to see the report.",
     "group_by_none": "None",
     "group_by_day": "Day",

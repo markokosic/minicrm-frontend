@@ -6,7 +6,6 @@ export interface TripsBarChartProps {
   data: Array<{
     label: string;
     trips: number;
-    km: number;
   }>;
   title?: string;
   subtitle?: string;
@@ -24,7 +23,6 @@ export const TripsBarChart = ({
   const chartTitle = title || t('app:dashboard.charts.monthly_trips_title');
   const series = [
     { name: 'trips', label: t('app:dashboard.charts.series.trips'), color: 'orange.6' },
-    { name: 'km', label: t('app:dashboard.charts.series.km'), color: 'cyan.6' },
   ];
   const isEmpty = !data || data.length === 0;
 

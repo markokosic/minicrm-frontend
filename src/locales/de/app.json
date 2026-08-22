@@ -109,10 +109,10 @@
       "monthly_share_title": "Monatsverteilung",
       "yearly_share_title": "Jahresverteilung {{year}}",
       "share_subtitle": "Aufteilung zwischen Betrieb und Fahrern",
-      "monthly_trips_title": "Fahrten & Kilometer im Monat",
-      "monthly_trips_subtitle": "Tägliche Anzahl von Fahrten und gefahrenen Kilometern",
-      "yearly_trips_title": "Fahrten & Kilometer {{year}}",
-      "yearly_trips_subtitle": "Monatliche Übersicht aller Fahrten und gefahrenen Kilometer",
+      "monthly_trips_title": "Fahrten im Monat",
+      "monthly_trips_subtitle": "Tägliche Anzahl von Fahrten",
+      "yearly_trips_title": "Fahrten {{year}}",
+      "yearly_trips_subtitle": "Monatliche Übersicht aller Fahrten",
       "series": {
         "revenue": "Gesamtumsatz (€)",
         "company_share": "Firmenanteil (€)",
@@ -149,13 +149,13 @@
       }
     },
     "type_selection": {
-      "title": "Wählen Sie den Fahrertyp aus, den Sie erstellen möchten.",
-      "subtitle": "Wählen Sie entweder zwischen einem freiberuflichen oder einem angestellten Fahrer."
+      "title": "Wählen Sie den Fahrertyp, den Sie erstellen möchten.",
+      "subtitle": "Wählen Sie entweder einen freien Dienstnehmer oder einen Angestellten."
     },
     "modals": {
       "switch_type": {
         "title": "Fahrertyp ändern?",
-        "text": "Das Ändern des Fahrertyps verwirft alle eingegebenen Daten. Möchten Sie fortfahren?",
+        "text": "Wenn Sie den Fahrertyp ändern, gehen alle eingegebenen Daten verloren. Möchten Sie fortfahren?",
         "confirm_button": "Typ ändern"
       }
     }
@@ -171,6 +171,14 @@
   },
   "reports": {
     "rides": "Fahrten",
+    "shift": "Schicht",
+    "shift_id": "Schicht-ID",
+    "category": "Kategorie",
+    "categories": {
+      "REGULAR": "Regulär",
+      "FLAT_RATE": "Pauschale",
+      "WEEKLY": "Wöchentlich"
+    },
     "no_data_info": "Bitte wählen Sie einen Datumsbereich und Filter aus, um den Bericht zu sehen.",
     "group_by_none": "Keine",
     "group_by_day": "Tag",
