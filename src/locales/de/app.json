@@ -272,6 +272,7 @@
   },
   "shifts": {
     "create_page_title": "Schicht erfassen",
+    "edit_page_title": "Schicht bearbeiten",
     "detail_title": "Schicht-Details",
     "empty": "Keine Schichten vorhanden.",
     "select_driver_hint": "Bitte wählen Sie zuerst einen Fahrer aus, um die verfügbaren Umsatzoptionen zu laden.",
@@ -359,9 +360,18 @@
       "create": {
         "success": "Schicht erfolgreich erfasst"
       },
+      "edit": {
+        "success": "Schicht erfolgreich aktualisiert"
+      },
       "delete": {
         "success": "Schicht erfolgreich gelöscht"
       }
+    },
+    "weekly_settlement": {
+      "share_due_today": "Heute ist Zahltag / Abrechnungstag!",
+      "share_due_on": "Abrechnungstag: {{day}}",
+      "share_hint_today": "Für die gewählte Wochenpauschale ist heute der wöchentliche Firmenbeitrag fällig.",
+      "share_hint_other_day": "Der wöchentliche Beitrag wird am {{day}} abgerechnet."
     }
   }
 }

@@ -272,6 +272,7 @@
   },
   "shifts": {
     "create_page_title": "Record Shift",
+    "edit_page_title": "Edit Shift",
     "detail_title": "Shift Details",
     "empty": "No shifts available.",
     "select_driver_hint": "Please select a driver first to load available revenue options.",
@@ -359,9 +360,18 @@
       "create": {
         "success": "Shift recorded successfully"
       },
+      "edit": {
+        "success": "Shift updated successfully"
+      },
       "delete": {
         "success": "Shift deleted successfully"
       }
+    },
+    "weekly_settlement": {
+      "share_due_today": "Today is settlement day!",
+      "share_due_on": "Settlement day: {{day}}",
+      "share_hint_today": "For the chosen weekly flat rate, the weekly company share is due today.",
+      "share_hint_other_day": "The weekly share is settled on {{day}}."
     }
   }
 }
