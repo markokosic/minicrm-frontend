@@ -51,6 +51,129 @@
     }
   ],
   "paths": {
+    "/api/shifts/{id}": {
+      "get": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Get shift by ID",
+        "operationId": "getShiftById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOShiftResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Update a shift",
+        "description": "Updates shift metadata (odometer, dates) and revenue amounts. Does not allow changing driver, car, or remuneration configs.",
+        "operationId": "updateShift",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateShiftRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Shift updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOShiftResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid shift data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Shift not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Delete a shift",
+        "operationId": "deleteShift",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/revenues/{id}": {
       "put": {
         "tags": [
@@ -1307,68 +1430,6 @@
         }
       }
     },
-    "/api/shifts/{id}": {
-      "get": {
-        "tags": [
-          "Shifts"
-        ],
-        "summary": "Get shift by ID",
-        "operationId": "getShiftById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseDTOShiftResponseDTO"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Shifts"
-        ],
-        "summary": "Delete a shift",
-        "operationId": "deleteShift",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseDTOVoid"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/revenues": {
       "get": {
         "tags": [
@@ -1825,46 +1886,48 @@
   },
   "components": {
     "schemas": {
-      "CreateDailyRevenueRequestDTO": {
+      "UpdateShiftRequestDTO": {
         "type": "object",
         "properties": {
-          "driverId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "carId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "kilometersDriven": {
+          "odometerStart": {
             "type": "number"
+          },
+          "odometerEnd": {
+            "type": "number"
+          },
+          "shiftStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shiftEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "revenues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateShiftRevenueEntryRequestDTO"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "odometerEnd",
+          "odometerStart",
+          "revenues",
+          "shiftEnd",
+          "shiftStart"
+        ]
+      },
+      "UpdateShiftRevenueEntryRequestDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           },
           "revenue": {
             "type": "number"
-          },
-          "kilometersFrom": {
-            "type": "number"
-          },
-          "kilometersTo": {
-            "type": "number"
-          },
-          "driverRemunerationType": {
-            "type": "string",
-            "enum": [
-              "PERCENTAGE_SHARE",
-              "WEEKLY_FIXED_RATE",
-              "FLAT_RATE"
-            ]
-          },
-          "drivingStartTime": {
-            "type": "string"
-          },
-          "drivingEndTime": {
-            "type": "string"
           },
           "tripCount": {
             "type": "integer",
@@ -1872,17 +1935,10 @@
           },
           "pricePerTrip": {
             "type": "number"
-          },
-          "companyRemuneration": {
-            "type": "number"
           }
         },
         "required": [
-          "carId",
-          "date",
-          "driverId",
-          "driverRemunerationType",
-          "revenue"
+          "id"
         ]
       },
       "ProblemDetail": {
@@ -1912,14 +1968,14 @@
           }
         }
       },
-      "ApiResponseDTODailyRevenueResponseDTO": {
+      "ApiResponseDTOShiftResponseDTO": {
         "type": "object",
         "properties": {
           "success": {
             "type": "boolean"
           },
           "data": {
-            "$ref": "#/components/schemas/DailyRevenueResponseDTO"
+            "$ref": "#/components/schemas/ShiftResponseDTO"
           },
           "message": {
             "type": "string"
@@ -1944,64 +2000,6 @@
           }
         }
       },
-      "DailyRevenueResponseDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "remunerationModelType": {
-            "type": "string",
-            "enum": [
-              "PERCENTAGE_SHARE",
-              "WEEKLY_FIXED_RATE",
-              "FLAT_RATE"
-            ]
-          },
-          "tripCount": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "pricePerTrip": {
-            "type": "number"
-          },
-          "driver": {
-            "$ref": "#/components/schemas/DriverSummaryDTO"
-          },
-          "car": {
-            "$ref": "#/components/schemas/CarSummaryDTO"
-          },
-          "kilometersDriven": {
-            "type": "number"
-          },
-          "kilometersFrom": {
-            "type": "number"
-          },
-          "kilometersTo": {
-            "type": "number"
-          },
-          "revenue": {
-            "type": "number"
-          },
-          "companyRemuneration": {
-            "type": "number"
-          },
-          "driverRemuneration": {
-            "type": "number"
-          },
-          "drivingStartTime": {
-            "type": "string"
-          },
-          "drivingEndTime": {
-            "type": "string"
-          }
-        }
-      },
       "DriverSummaryDTO": {
         "type": "object",
         "properties": {
@@ -2013,151 +2011,6 @@
             "type": "string"
           },
           "lastName": {
-            "type": "string"
-          }
-        }
-      },
-      "CreateFlatRateTypeRequestDTO": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "minLength": 1
-          },
-          "defaultPrice": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "name"
-        ]
-      },
-      "ApiResponseDTOFlatRateTypeResponseDTO": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/FlatRateTypeResponseDTO"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      },
-      "FlatRateTypeResponseDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "name": {
-            "type": "string"
-          },
-          "defaultPrice": {
-            "type": "number"
-          },
-          "active": {
-            "type": "boolean"
-          }
-        }
-      },
-      "CreateShiftRequestDTO": {
-        "type": "object",
-        "properties": {
-          "driverId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "carId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "odometerStart": {
-            "type": "number"
-          },
-          "odometerEnd": {
-            "type": "number"
-          },
-          "shiftStart": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "shiftEnd": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "PENDING",
-              "APPROVED",
-              "REJECTED"
-            ]
-          },
-          "revenues": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CreateShiftRevenueEntryRequestDTO"
-            },
-            "minItems": 1
-          }
-        },
-        "required": [
-          "carId",
-          "driverId",
-          "odometerEnd",
-          "odometerStart",
-          "revenues",
-          "shiftEnd",
-          "shiftStart"
-        ]
-      },
-      "CreateShiftRevenueEntryRequestDTO": {
-        "type": "object",
-        "properties": {
-          "entryCategory": {
-            "type": "string",
-            "enum": [
-              "REGULAR",
-              "FLAT_RATE",
-              "WEEKLY"
-            ]
-          },
-          "flatRateTypeId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "revenue": {
-            "type": "number"
-          },
-          "tripCount": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "pricePerTrip": {
-            "type": "number"
-          },
-          "effectiveRevenue": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "entryCategory"
-        ]
-      },
-      "ApiResponseDTOShiftResponseDTO": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "data": {
-            "$ref": "#/components/schemas/ShiftResponseDTO"
-          },
-          "message": {
             "type": "string"
           }
         }
@@ -2258,6 +2111,273 @@
             "type": "number"
           }
         }
+      },
+      "CreateDailyRevenueRequestDTO": {
+        "type": "object",
+        "properties": {
+          "driverId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "carId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "kilometersDriven": {
+            "type": "number"
+          },
+          "revenue": {
+            "type": "number"
+          },
+          "kilometersFrom": {
+            "type": "number"
+          },
+          "kilometersTo": {
+            "type": "number"
+          },
+          "driverRemunerationType": {
+            "type": "string",
+            "enum": [
+              "PERCENTAGE_SHARE",
+              "WEEKLY_FIXED_RATE",
+              "FLAT_RATE"
+            ]
+          },
+          "drivingStartTime": {
+            "type": "string"
+          },
+          "drivingEndTime": {
+            "type": "string"
+          },
+          "tripCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pricePerTrip": {
+            "type": "number"
+          },
+          "companyRemuneration": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "carId",
+          "date",
+          "driverId",
+          "driverRemunerationType",
+          "revenue"
+        ]
+      },
+      "ApiResponseDTODailyRevenueResponseDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/DailyRevenueResponseDTO"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "DailyRevenueResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "remunerationModelType": {
+            "type": "string",
+            "enum": [
+              "PERCENTAGE_SHARE",
+              "WEEKLY_FIXED_RATE",
+              "FLAT_RATE"
+            ]
+          },
+          "tripCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pricePerTrip": {
+            "type": "number"
+          },
+          "driver": {
+            "$ref": "#/components/schemas/DriverSummaryDTO"
+          },
+          "car": {
+            "$ref": "#/components/schemas/CarSummaryDTO"
+          },
+          "kilometersDriven": {
+            "type": "number"
+          },
+          "kilometersFrom": {
+            "type": "number"
+          },
+          "kilometersTo": {
+            "type": "number"
+          },
+          "revenue": {
+            "type": "number"
+          },
+          "companyRemuneration": {
+            "type": "number"
+          },
+          "driverRemuneration": {
+            "type": "number"
+          },
+          "drivingStartTime": {
+            "type": "string"
+          },
+          "drivingEndTime": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateFlatRateTypeRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "defaultPrice": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "ApiResponseDTOFlatRateTypeResponseDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/FlatRateTypeResponseDTO"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "FlatRateTypeResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "defaultPrice": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "DISABLED"
+            ]
+          }
+        }
+      },
+      "CreateShiftRequestDTO": {
+        "type": "object",
+        "properties": {
+          "driverId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "carId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "odometerStart": {
+            "type": "number"
+          },
+          "odometerEnd": {
+            "type": "number"
+          },
+          "shiftStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shiftEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "REJECTED"
+            ]
+          },
+          "revenues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateShiftRevenueEntryRequestDTO"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "carId",
+          "driverId",
+          "odometerEnd",
+          "odometerStart",
+          "revenues",
+          "shiftEnd",
+          "shiftStart"
+        ]
+      },
+      "CreateShiftRevenueEntryRequestDTO": {
+        "type": "object",
+        "properties": {
+          "entryCategory": {
+            "type": "string",
+            "enum": [
+              "REGULAR",
+              "FLAT_RATE",
+              "WEEKLY"
+            ]
+          },
+          "flatRateTypeId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "revenue": {
+            "type": "number"
+          },
+          "tripCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pricePerTrip": {
+            "type": "number"
+          },
+          "effectiveRevenue": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "entryCategory"
+        ]
       },
       "ApiResponseDTOVoid": {
         "type": "object",
@@ -3064,29 +3184,60 @@
       },
       "RevenueReportEntryDTO": {
         "type": "object",
+        "description": "Single entry or grouped summary row in the revenue report",
         "properties": {
           "date": {
             "type": "string",
-            "format": "date"
+            "format": "date",
+            "description": "Date of the shift or grouped period",
+            "example": "2025-05-10"
+          },
+          "shiftId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID of the shift (populated for detailed entries, null for grouped rows)",
+            "example": 50
+          },
+          "entryId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID of the revenue entry (populated for detailed entries, null for grouped rows)",
+            "example": 100
+          },
+          "entryCategory": {
+            "type": "string",
+            "description": "Category of the revenue entry (REGULAR, FLAT_RATE, WEEKLY)",
+            "enum": [
+              "REGULAR",
+              "FLAT_RATE",
+              "WEEKLY"
+            ],
+            "example": "REGULAR"
           },
           "revenue": {
-            "type": "number"
+            "type": "number",
+            "description": "Gross revenue amount",
+            "example": 200
           },
           "companyRemuneration": {
-            "type": "number"
+            "type": "number",
+            "description": "Company share amount",
+            "example": 80
           },
           "driverRemuneration": {
-            "type": "number"
-          },
-          "kilometersDriven": {
-            "type": "number"
+            "type": "number",
+            "description": "Driver share amount",
+            "example": 120
           },
           "entryCount": {
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "description": "Number of revenue entries represented in this row",
+            "example": 1
           },
           "drivers": {
             "type": "array",
+            "description": "List of associated drivers",
             "items": {
               "$ref": "#/components/schemas/DriverInfoDTO"
             }
@@ -3129,22 +3280,28 @@
       },
       "RevenueReportSummaryDTO": {
         "type": "object",
+        "description": "Overall financial summary totals for the revenue report",
         "properties": {
           "revenue": {
-            "type": "number"
+            "type": "number",
+            "description": "Total revenue amount",
+            "example": 5000
           },
           "companyShare": {
-            "type": "number"
+            "type": "number",
+            "description": "Total company share amount",
+            "example": 2000
           },
           "driverShare": {
-            "type": "number"
-          },
-          "totalKm": {
-            "type": "number"
+            "type": "number",
+            "description": "Total driver share amount",
+            "example": 3000
           },
           "entryCount": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Total count of revenue entries",
+            "example": 25
           }
         }
       },
@@ -3164,33 +3321,40 @@
       },
       "DashboardReportDTO": {
         "type": "object",
+        "description": "Dashboard financial analytics summary",
         "properties": {
           "year": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Reporting year",
+            "example": 2025
           },
           "month": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Reporting month (null for full year)",
+            "example": 5
           },
           "totalRevenue": {
-            "type": "number"
+            "type": "number",
+            "description": "Total revenue amount",
+            "example": 15000
           },
           "companyShare": {
-            "type": "number"
+            "type": "number",
+            "description": "Total company share amount",
+            "example": 6000
           },
           "driverShare": {
-            "type": "number"
+            "type": "number",
+            "description": "Total driver share amount",
+            "example": 9000
           },
-          "totalKm": {
-            "type": "number"
-          },
-          "revenuePerKm": {
-            "type": "number"
-          },
-          "tripCount": {
+          "entryCount": {
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "description": "Total count of revenue entries",
+            "example": 75
           }
         }
       },

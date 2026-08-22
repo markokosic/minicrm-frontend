@@ -6,7 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type GetDashboardReportParams = {
-year: number;
-month?: number;
-};
+export interface UpdateShiftRevenueEntryRequest {
+  id: number;
+  revenue?: number;
+  tripCount?: number;
+  pricePerTrip?: number;
+}

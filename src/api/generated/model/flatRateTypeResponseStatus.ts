@@ -6,10 +6,10 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type CarResponseStatus = typeof CarResponseStatus[keyof typeof CarResponseStatus];
+export type FlatRateTypeResponseStatus = typeof FlatRateTypeResponseStatus[keyof typeof FlatRateTypeResponseStatus];
 
 
-export const CarResponseStatus = {
+export const FlatRateTypeResponseStatus = {
   ACTIVE: 'ACTIVE',
-  DELETED: 'DELETED',
+  DISABLED: 'DISABLED',
 } as const;
