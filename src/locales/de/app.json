@@ -109,10 +109,10 @@
       "monthly_share_title": "Monatsverteilung",
       "yearly_share_title": "Jahresverteilung {{year}}",
       "share_subtitle": "Aufteilung zwischen Betrieb und Fahrern",
-      "monthly_trips_title": "Fahrten & Kilometer im Monat",
-      "monthly_trips_subtitle": "Tägliche Anzahl von Fahrten und gefahrenen Kilometern",
-      "yearly_trips_title": "Fahrten & Kilometer {{year}}",
-      "yearly_trips_subtitle": "Monatliche Übersicht aller Fahrten und gefahrenen Kilometer",
+      "monthly_trips_title": "Fahrten im Monat",
+      "monthly_trips_subtitle": "Tägliche Anzahl von Fahrten",
+      "yearly_trips_title": "Fahrten {{year}}",
+      "yearly_trips_subtitle": "Monatliche Übersicht aller Fahrten",
       "series": {
         "revenue": "Gesamtumsatz (€)",
         "company_share": "Firmenanteil (€)",
@@ -149,13 +149,13 @@
       }
     },
     "type_selection": {
-      "title": "Wählen Sie den Fahrertyp aus, den Sie erstellen möchten.",
-      "subtitle": "Wählen Sie entweder zwischen einem freiberuflichen oder einem angestellten Fahrer."
+      "title": "Wählen Sie den Fahrertyp, den Sie erstellen möchten.",
+      "subtitle": "Wählen Sie entweder einen freien Dienstnehmer oder einen Angestellten."
     },
     "modals": {
       "switch_type": {
         "title": "Fahrertyp ändern?",
-        "text": "Das Ändern des Fahrertyps verwirft alle eingegebenen Daten. Möchten Sie fortfahren?",
+        "text": "Wenn Sie den Fahrertyp ändern, gehen alle eingegebenen Daten verloren. Möchten Sie fortfahren?",
         "confirm_button": "Typ ändern"
       }
     }
@@ -164,13 +164,21 @@
     "type": {
       "percentageShare": "Prozentualer Anteil",
       "weeklyFixedRate": "Wöchentlicher Festsatz",
-      "flatRate": "City Taxi"
+      "flatRate": "Pauschalfahrt"
     },
     "driver_remuneration": "Fahrervergütung",
     "add_driver_remuneration_config": "Fahrervergütung hinzufügen"
   },
   "reports": {
     "rides": "Fahrten",
+    "shift": "Schicht",
+    "shift_id": "Schicht-ID",
+    "category": "Kategorie",
+    "categories": {
+      "REGULAR": "Regulär",
+      "FLAT_RATE": "Pauschale",
+      "WEEKLY": "Wöchentlich"
+    },
     "no_data_info": "Bitte wählen Sie einen Datumsbereich und Filter aus, um den Bericht zu sehen.",
     "group_by_none": "Keine",
     "group_by_day": "Tag",
@@ -218,6 +226,153 @@
     "types": {
       "manual": "Tagesumsatz manuell",
       "flat_rate": "Pauschalfahrt"
+    }
+  },
+  "flatrate": {
+    "page_title": "Pauschalen",
+    "create_page_title": "Neue Pauschale erstellen",
+    "edit_title": "Pauschale bearbeiten",
+    "group_title": "Pauschal-Informationen",
+    "empty": "Keine aktiven Pauschalpreise vorhanden.",
+    "update_success": "Pauschale erfolgreich aktualisiert",
+    "name": {
+      "label": "Bezeichnung",
+      "placeholder": "z.B. Wien -> Graz"
+    },
+    "default_price": {
+      "label": "Standardpreis (€)",
+      "placeholder": "z.B. 150"
+    },
+    "actions": {
+      "add": "Neue Pauschale erstellen",
+      "deactivate": "Deaktivieren"
+    },
+    "table": {
+      "id": "ID",
+      "name": "Bezeichnung",
+      "default_price": "Standardpreis",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv"
+    },
+    "modals": {
+      "deactivate_confirm": {
+        "title": "Pauschale deaktivieren",
+        "message": "Möchten Sie diese Pauschale wirklich deaktivieren?",
+        "confirm": "Deaktivieren"
+      }
+    },
+    "create": {
+      "success": "Pauschale erfolgreich erstellt",
+      "deactivate_success": "Pauschale erfolgreich deaktiviert"
+    }
+  },
+  "shifts": {
+    "create_page_title": "Schicht erfassen",
+    "edit_page_title": "Schicht bearbeiten",
+    "detail_title": "Schicht-Details",
+    "empty": "Keine Schichten vorhanden.",
+    "select_driver_hint": "Bitte wählen Sie zuerst einen Fahrer aus, um die verfügbaren Umsatzoptionen zu laden.",
+    "no_revenues_hint": "Noch keine Umsatzeinträge vorhanden. Klicken Sie auf '+ Umsatz hinzufügen'.",
+    "calculation_preview": "Live-Vorschau",
+    "revenue_entry": "Umsatzeintrag",
+    "groups": {
+      "master_data": "Stammdaten",
+      "revenues": "Umsätze"
+    },
+    "fields": {
+      "driver": {
+        "label": "Fahrer",
+        "placeholder": "Fahrer auswählen"
+      },
+      "car": {
+        "label": "Fahrzeug",
+        "placeholder": "Fahrzeug auswählen"
+      },
+      "shift_start": {
+        "label": "Schichtbeginn",
+        "placeholder": "Datum & Uhrzeit auswählen"
+      },
+      "shift_end": {
+        "label": "Schichtende",
+        "placeholder": "Datum & Uhrzeit auswählen"
+      },
+      "odometer_start": {
+        "label": "Tachostand Beginn (km)",
+        "placeholder": "z.B. 45000"
+      },
+      "odometer_end": {
+        "label": "Tachostand Ende (km)",
+        "placeholder": "z.B. 45312"
+      },
+      "revenue_type": {
+        "label": "Umsatzart",
+        "placeholder": "Umsatzart auswählen"
+      },
+      "revenue": {
+        "label": "Gesamtbetrag (€)",
+        "placeholder": "0,00"
+      },
+      "trip_count": {
+        "label": "Anzahl Fahrten (N)",
+        "placeholder": "1"
+      },
+      "price_per_trip": {
+        "label": "Preis pro Fahrt (€)",
+        "placeholder": "0,00"
+      },
+      "weekly_revenue": {
+        "label": "Wöchentlicher Fixbeitrag (€)",
+        "placeholder": "0,00"
+      }
+    },
+    "actions": {
+      "add": "Neue Schicht erfassen",
+      "add_revenue": "+ Umsatz hinzufügen",
+      "view_details": "Details anzeigen"
+    },
+    "table": {
+      "id": "ID",
+      "date": "Datum",
+      "driver": "Fahrer",
+      "car": "Fahrzeug",
+      "km": "Gefahrene km",
+      "total_revenue": "Gesamtumsatz",
+      "driver_payout": "Fahrerlohn",
+      "company_share": "Firmenanteil",
+      "status": "Status",
+      "actions": "Aktionen",
+      "category": "Kategorie",
+      "details": "Details",
+      "revenue": "Umsatz",
+      "time": "Zeitraum",
+      "license_plate": "Kennzeichen"
+    },
+    "modals": {
+      "delete_confirm": {
+        "title": "Schicht löschen",
+        "message": "Möchten Sie diese Schicht wirklich löschen?"
+      }
+    },
+    "notifications": {
+      "create": {
+        "success": "Schicht erfolgreich erfasst"
+      },
+      "edit": {
+        "success": "Schicht erfolgreich aktualisiert"
+      },
+      "delete": {
+        "success": "Schicht erfolgreich gelöscht"
+      }
+    },
+    "weekly_settlement": {
+      "share_due_today": "Heute ist Zahltag / Abrechnungstag!",
+      "share_due_on": "Abrechnungstag: {{day}}",
+      "share_hint_today": "Für die gewählte Wochenpauschale ist heute der wöchentliche Firmenbeitrag fällig.",
+      "share_hint_other_day": "Der wöchentliche Beitrag wird am {{day}} abgerechnet."
     }
   }
 }

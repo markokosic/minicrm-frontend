@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
-import { Text } from '@mantine/core';
+import { Skeleton, Text } from '@mantine/core';
 
 type DataLoadingWrapperProps = {
   isLoading: boolean;
   error?: Error | null;
   isEmpty: boolean;
-  skeleton: ReactNode;
+  skeleton?: ReactNode;
   emptyFallback?: ReactNode;
   errorFallback?: ReactNode;
   children: ReactNode;
@@ -15,7 +15,7 @@ export const DataLoadingWrapper = ({
   isLoading,
   error,
   isEmpty,
-  skeleton,
+  skeleton = <Skeleton height={200} radius="md" />,
   emptyFallback = <Text>No data available.</Text>,
   errorFallback,
   children,

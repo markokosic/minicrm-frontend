@@ -23,19 +23,19 @@ export const DashboardSummary = ({ data, title }: DashboardSummaryProps) => {
       <SimpleGrid cols={{ base: 1, xs: 2, sm: 2, md: 4 }} spacing="md">
         <StatsCard
           title={t('app:reports.total_revenue')}
-          value={`${fmt.number(data.totalRevenue)} €`}
+          value={`${fmt.number(data.totalRevenue ?? 0)} €`}
         />
         <StatsCard
-          title={t('app:reports.total_kilometers')}
-          value={`${fmt.number(data.totalKm)} km`}
+          title={t('app:reports.total_company_share')}
+          value={`${fmt.number(data.companyShare ?? 0)} €`}
         />
         <StatsCard
-          title={t('app:dashboard.revenue_per_km')}
-          value={`${fmt.number(data.revenuePerKm)} €/km`}
+          title={t('app:reports.driver_share')}
+          value={`${fmt.number(data.driverShare ?? 0)} €`}
         />
         <StatsCard
-          title={t('app:dashboard.trip_count')}
-          value={data.tripCount}
+          title={t('app:reports.rides')}
+          value={data.entryCount ?? 0}
         />
       </SimpleGrid>
     </Stack>

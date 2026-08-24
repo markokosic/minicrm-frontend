@@ -11,7 +11,7 @@ import { DriverCardSkeleton } from './DriverCardSkeleton';
 
 export const DriversList = () => {
   const { page, pageable, setPage } = usePagination({ defaultSize: 25 });
-  const { data: response, isPending: isLoading, error } = useGetAllDrivers({ pageable });
+  const { data: response, isPending: isLoading, error } = useGetAllDrivers({ ...pageable });
 
   const pageData = response?.data;
   const content = pageData?.content ?? [];

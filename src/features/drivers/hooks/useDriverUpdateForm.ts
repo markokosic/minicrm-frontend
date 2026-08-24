@@ -3,10 +3,17 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Resolver, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { getGetAllDriversQueryKey, getGetDriverQueryKey, UpdateDriverMutationBody, useUpdateDriver } from '@/api/generated/endpoints/drivers/drivers';
+import {
+  getGetAllDriversForSelectQueryKey,
+  getGetAllDriversQueryKey,
+  getGetDriverQueryKey,
+  getGetDriverRevenueOptionsQueryKey,
+  UpdateDriverMutationBody,
+  useUpdateDriver,
+} from '@/api/generated/endpoints/drivers/drivers';
 import { DriverResponse } from '@/api/generated/model';
 import { getUpdateDriverSchema } from '../driver-schemas';
-
+import { getDriverUpdateFormDefaultValues } from '../utils/driver-form.utils';
 
 interface UseDriverUpdateFormProps {
   driver: DriverResponse;
@@ -14,7 +21,11 @@ interface UseDriverUpdateFormProps {
   onSuccess?: () => void;
 }
 
-export const useDriverUpdateForm = ({ driver, onCancel: _onCancel, onSuccess }: UseDriverUpdateFormProps) => {
+export const useDriverUpdateForm = ({
+  driver,
+  onCancel: _onCancel,
+  onSuccess,
+}: UseDriverUpdateFormProps) => {
   const { t } = useTranslation(['app', 'common', 'errors']);
   const queryClient = useQueryClient();
 
@@ -24,6 +35,8 @@ export const useDriverUpdateForm = ({ driver, onCancel: _onCancel, onSuccess }: 
         toast.success(t('app:drivers.notifications.edit.success'));
         queryClient.invalidateQueries({ queryKey: getGetDriverQueryKey(driver.id!) });
         queryClient.invalidateQueries({ queryKey: getGetAllDriversQueryKey() });
+        queryClient.invalidateQueries({ queryKey: getGetAllDriversForSelectQueryKey() });
+        queryClient.invalidateQueries({ queryKey: getGetDriverRevenueOptionsQueryKey(driver.id) });
         onSuccess?.();
       },
       onError: (error: unknown) => {
@@ -36,17 +49,11 @@ export const useDriverUpdateForm = ({ driver, onCancel: _onCancel, onSuccess }: 
   });
 
   const methods = useForm<UpdateDriverMutationBody>({
-    resolver: zodResolver(getUpdateDriverSchema(t)) as unknown as Resolver<UpdateDriverMutationBody>,
+    resolver: zodResolver(
+      getUpdateDriverSchema(t)
+    ) as unknown as Resolver<UpdateDriverMutationBody>,
     mode: 'onChange',
-    defaultValues: {
-      firstName: driver.firstName ?? '',
-      lastName: driver.lastName ?? '',
-      phone: driver.phone ?? '',
-      email: driver.email ?? '',
-      remunerationConfigs: driver.currentRemunerationConfigs
-        ? (driver.currentRemunerationConfigs as UpdateDriverMutationBody['remunerationConfigs'])
-        : [],
-    },
+    defaultValues: getDriverUpdateFormDefaultValues(driver),
   });
 
   const onSubmit = (data: UpdateDriverMutationBody) => {

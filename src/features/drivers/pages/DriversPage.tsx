@@ -42,3 +42,6 @@ export const DriversPage = () => {
     </PageLayout>
   );
 };
+
+export default DriversPage;
+

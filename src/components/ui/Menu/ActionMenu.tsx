@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, Fragment } from 'react';
 import { EllipsisVertical, LucideIcon } from 'lucide-react';
 import { Button, Menu, MenuItemProps, MenuProps } from '@mantine/core';
 
@@ -6,6 +6,8 @@ export interface Action extends MenuItemProps {
   label: string;
   icon: LucideIcon;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  isDanger?: boolean;
+  hasDivider?: boolean;
 }
 
 interface ActionMenuProps extends MenuProps {
@@ -18,6 +20,8 @@ export const ActionMenu = ({ actions, isRound, ...props }: ActionMenuProps) => {
     <Menu
       shadow="md"
       width={200}
+      withArrow
+      position="bottom-end"
       {...props}
     >
       <Menu.Target>
@@ -32,21 +36,30 @@ export const ActionMenu = ({ actions, isRound, ...props }: ActionMenuProps) => {
             },
           }}
           variant="light"
+          onClick={(e) => e.stopPropagation()}
         >
           <EllipsisVertical />
         </Button>
       </Menu.Target>
 
       <Menu.Dropdown>
-        {actions.map((action) => {
+        {actions.map((action, index) => {
+          const { isDanger, hasDivider, ...rest } = action;
           return (
-            <Menu.Item
-              key={action.label}
-              {...action}
-              leftSection={<action.icon size={14} />}
-            >
-              {action.label}
-            </Menu.Item>
+            <Fragment key={action.label}>
+              {(hasDivider || isDanger) && index > 0 && <Menu.Divider />}
+              <Menu.Item
+                {...rest}
+                color={isDanger ? 'red' : rest.color}
+                leftSection={<action.icon size={14} />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  action.onClick?.(e);
+                }}
+              >
+                {action.label}
+              </Menu.Item>
+            </Fragment>
           );
         })}
       </Menu.Dropdown>

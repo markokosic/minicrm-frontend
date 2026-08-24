@@ -7,6 +7,7 @@ import z from 'zod';
 import { ROUTES } from '@/config/routes';
 import { getRegisterFormSchema } from '@/features/auth/schema';
 import { useAuth } from '@/features/auth/hooks/useAuth';
+import { mapRegisterFormToMutationBody } from '../utils/auth-form.utils';
 
 type FormValues = z.infer<ReturnType<typeof getRegisterFormSchema>>;
 
@@ -34,13 +35,7 @@ export const useRegisterForm = () => {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     register(
       {
-        data: {
-          tenantName: data.tenantName,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          password: data.password,
-        },
+        data: mapRegisterFormToMutationBody(data),
       },
       {
         onSuccess: () => {

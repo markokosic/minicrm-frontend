@@ -21,10 +21,10 @@ export const useAuth = () => {
   const loginMutation = useLogin({
     mutation: {
       onSuccess: (response) => {
-        if (response.success && response.data?.user) {
+        if (response.success && response.data) {
           queryClient.setQueryData<ApiResponseUserResponse>(getMeQueryKey, {
             success: true,
-            data: response.data.user,
+            data: response.data,
             message: response.message,
           });
         }

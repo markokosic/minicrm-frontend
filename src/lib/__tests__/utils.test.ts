@@ -1,8 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
-import {  createFormatters, getNumberSeparators, getTimeDuration, mapFieldConfig } from '../utils';
+import type { TFunction } from 'i18next';
+import { createFormatters, getNumberSeparators, getTimeDuration, mapFieldConfig } from '../utils';
 
 describe('utils', () => {
-  
   describe('mapFieldConfig', () => {
     it('should map field config using translation function', () => {
       const mockT = vi.fn((key: string) => `translated_${key}`);
@@ -13,7 +13,7 @@ describe('utils', () => {
         placeholderKey: 'placeholders.test',
       };
 
-      const result = mapFieldConfig(field, mockT as unknown as import('i18next').TFunction);
+      const result = mapFieldConfig(field, mockT as unknown as TFunction);
 
       expect(result).toEqual({
         name: 'testName',

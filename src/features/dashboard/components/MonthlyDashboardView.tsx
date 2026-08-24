@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { Box, Center, Loader, SimpleGrid, Stack } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { RevenueAreaChart, ShareDonutChart, TripsBarChart } from '@/components/charts';
-import { DashboardSummary } from '@/features/reports/components/DashboardSummary';
-import { useGetDashboardSummary } from '@/features/reports/hooks/useGetDashboardSummary';
-import { useGetRevenueReport } from '@/features/reports/hooks/useGetRevenueReport';
+import {
+  DashboardSummary,
+  useGetDashboardSummary,
+  useGetRevenueReport,
+} from '@/features/reports';
 
 export interface MonthlyDashboardViewProps {
   year: number;
@@ -32,7 +34,7 @@ export const MonthlyDashboardView = ({ year, month }: MonthlyDashboardViewProps)
   const areaChartData =
     monthReport?.rows.map((row) => ({
       date: dayjs(row.date).format('DD.MM.'),
-      revenue: row.revenue,
+      revenue: row.revenue ?? 0,
       companyRemuneration: row.companyRemuneration,
       driverRemuneration: row.driverRemuneration,
     })) ?? [];
@@ -40,8 +42,7 @@ export const MonthlyDashboardView = ({ year, month }: MonthlyDashboardViewProps)
   const tripsChartData =
     monthReport?.rows.map((row) => ({
       label: dayjs(row.date).format('DD.MM.'),
-      trips: row.entryCount,
-      km: row.kilometersDriven,
+      trips: row.entryCount ?? 0,
     })) ?? [];
 
   if (isLoading) {
