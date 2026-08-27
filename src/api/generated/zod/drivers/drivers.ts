@@ -29,6 +29,7 @@ export const GetAllDriversResponse = zod.object({
   "data": zod.object({
   "content": zod.array(zod.object({
   "id": zod.int().describe('Unique identifier of the driver'),
+  "userId": zod.int().optional().describe('ID of the linked user account (if any)'),
   "firstName": zod.string().describe('First name of the driver'),
   "lastName": zod.string().describe('Last name of the driver'),
   "email": zod.string().describe('Email address'),
@@ -127,6 +128,7 @@ export const CreateDriverResponse = zod.object({
   "success": zod.boolean().optional(),
   "data": zod.object({
   "id": zod.int().describe('Unique identifier of the driver'),
+  "userId": zod.int().optional().describe('ID of the linked user account (if any)'),
   "firstName": zod.string().describe('First name of the driver'),
   "lastName": zod.string().describe('Last name of the driver'),
   "email": zod.string().describe('Email address'),
@@ -197,6 +199,16 @@ export const CreateDriverUserResponse = zod.object({
 })
 
 /**
+ * Deactivates and removes the login user account linked to this driver while keeping the driver profile intact.
+ * @summary Deactivate driver user account
+ */
+export const DeactivateDriverUserParams = zod.object({
+  "id": zod.int()
+})
+
+export const DeactivateDriverUserResponse = zod.void()
+
+/**
  * Fetches details of a specific driver.
  * @summary Get driver by ID
  */
@@ -208,6 +220,7 @@ export const GetDriverResponse = zod.object({
   "success": zod.boolean().optional(),
   "data": zod.object({
   "id": zod.int().describe('Unique identifier of the driver'),
+  "userId": zod.int().optional().describe('ID of the linked user account (if any)'),
   "firstName": zod.string().describe('First name of the driver'),
   "lastName": zod.string().describe('Last name of the driver'),
   "email": zod.string().describe('Email address'),
@@ -313,6 +326,7 @@ export const UpdateDriverResponse = zod.object({
   "success": zod.boolean().optional(),
   "data": zod.object({
   "id": zod.int().describe('Unique identifier of the driver'),
+  "userId": zod.int().optional().describe('ID of the linked user account (if any)'),
   "firstName": zod.string().describe('First name of the driver'),
   "lastName": zod.string().describe('Last name of the driver'),
   "email": zod.string().describe('Email address'),

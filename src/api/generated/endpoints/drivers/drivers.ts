@@ -480,6 +480,69 @@ export const useCreateDriverUser = <TError = ErrorType<ProblemDetail>,
       return useMutation(getCreateDriverUserMutationOptions(options), queryClient);
     }
     /**
+ * Deactivates and removes the login user account linked to this driver while keeping the driver profile intact.
+ * @summary Deactivate driver user account
+ */
+export const deactivateDriverUser = (
+    id: number,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<void>(
+      {url: `/api/drivers/${id}/user`, method: 'DELETE', signal
+    },
+      options);
+    }
+
+
+
+
+export const getDeactivateDriverUserMutationOptions = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deactivateDriverUser>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deactivateDriverUser>>, TError,{id: number}, TContext> => {
+
+const mutationKey = ['deactivateDriverUser'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deactivateDriverUser>>, {id: number}> = (props) => {
+          const {id} = props ?? {};
+
+          return  deactivateDriverUser(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeactivateDriverUserMutationResult = NonNullable<Awaited<ReturnType<typeof deactivateDriverUser>>>
+
+    export type DeactivateDriverUserMutationError = ErrorType<ProblemDetail>
+
+    /**
+ * @summary Deactivate driver user account
+ */
+export const useDeactivateDriverUser = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deactivateDriverUser>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deactivateDriverUser>>,
+        TError,
+        {id: number},
+        TContext
+      > => {
+      return useMutation(getDeactivateDriverUserMutationOptions(options), queryClient);
+    }
+    /**
  * Fetches details of a specific driver.
  * @summary Get driver by ID
  */

@@ -1219,6 +1219,40 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Deactivate driver user account",
+        "description": "Deactivates and removes the login user account linked to this driver while keeping the driver profile intact.",
+        "operationId": "deactivateDriverUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Driver user account deactivated successfully"
+          },
+          "404": {
+            "description": "Driver not found or has no active user account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/cars": {
@@ -3029,6 +3063,12 @@
             "format": "int64",
             "description": "Unique identifier of the driver",
             "example": 1
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID of the linked user account (if any)",
+            "example": 10
           },
           "firstName": {
             "type": "string",
