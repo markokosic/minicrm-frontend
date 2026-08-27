@@ -81,6 +81,11 @@ export const ROUTES = {
       },
     },
 
+    users: {
+      path: '/users',
+      getHref: () => '/users',
+    },
+
     settings: {
       path: '/settings',
       getHref: () => '/settings',

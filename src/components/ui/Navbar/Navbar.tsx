@@ -83,40 +83,68 @@ export const NavBar = () => {
       h="100%"
     >
       <Box>
-        <Box mb="md">
-          <Text
-            size="xs"
-            fw={700}
-            tt="uppercase"
-            c="dimmed"
-            style={{ letterSpacing: '0.06em' }}
-            px="xs"
-            mb="xs"
-          >
-            {t('common:general')}
-          </Text>
-          {createLinks(NAV_ITEMS.general)}
-        </Box>
+        {NAV_ITEMS.overview && NAV_ITEMS.overview.length > 0 && (
+          <Box mb="md">
+            <Text
+              size="xs"
+              fw={700}
+              tt="uppercase"
+              c="dimmed"
+              style={{ letterSpacing: '0.06em' }}
+              px="xs"
+              mb="xs"
+            >
+              {t('common:overview')}
+            </Text>
+            {createLinks(NAV_ITEMS.overview)}
+          </Box>
+        )}
 
-        <Divider
-          my="md"
-          color="gray.2"
-        />
+        {NAV_ITEMS.operations && NAV_ITEMS.operations.length > 0 && (
+          <>
+            <Divider
+              my="md"
+              color="gray.2"
+            />
+            <Box mb="md">
+              <Text
+                size="xs"
+                fw={700}
+                tt="uppercase"
+                c="dimmed"
+                style={{ letterSpacing: '0.06em' }}
+                px="xs"
+                mb="xs"
+              >
+                {t('common:operations')}
+              </Text>
+              {createLinks(NAV_ITEMS.operations)}
+            </Box>
+          </>
+        )}
 
-        <Box>
-          <Text
-            size="xs"
-            fw={700}
-            tt="uppercase"
-            c="dimmed"
-            style={{ letterSpacing: '0.06em' }}
-            px="xs"
-            mb="xs"
-          >
-            {t('common:support')}
-          </Text>
-          {createLinks(NAV_ITEMS.support)}
-        </Box>
+        {NAV_ITEMS.administration && NAV_ITEMS.administration.length > 0 && (
+          <>
+            <Divider
+              my="md"
+              color="gray.2"
+            />
+            <Box>
+              <Text
+                size="xs"
+                fw={700}
+                tt="uppercase"
+                c="dimmed"
+                style={{ letterSpacing: '0.06em' }}
+                px="xs"
+                mb="xs"
+              >
+                {t('common:administration')}
+              </Text>
+              {createLinks(NAV_ITEMS.administration)}
+            </Box>
+          </>
+        )}
       </Box>
 
       <Box pt="sm">

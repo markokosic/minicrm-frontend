@@ -11,7 +11,8 @@
     "revenues": "Revenues",
     "reports": "Reports",
     "flatrates": "Flat Rates",
-    "shifts": "Shifts"
+    "shifts": "Shifts",
+    "users": "Users"
   },
   "actions": {
     "edit": "Edit",
@@ -54,6 +55,9 @@
   "general": "General",
   "master_data": "Master Data",
   "support": "Support",
+  "overview": "Overview",
+  "operations": "Operations",
+  "administration": "Administration",
   "user": "User",
   "error": "Error",
   "info": "Info",
@@ -131,5 +135,16 @@
       "general_information": "General Information",
       "contact": "Contact"
     }
+  },
+  "roles": {
+    "OWNER": "Owner",
+    "ADMIN": "Administrator",
+    "BACKOFFICE": "Backoffice",
+    "DRIVER": "Driver",
+    "PRE_AUTH": "Pending"
+  },
+  "user_status": {
+    "active": "Active",
+    "pending_password_change": "Password Change Required"
   }
 }

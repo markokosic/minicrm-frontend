@@ -374,5 +374,9 @@
       "share_hint_today": "For the chosen weekly flat rate, the weekly company share is due today.",
       "share_hint_other_day": "The weekly share is settled on {{day}}."
     }
+  },
+  "users": {
+    "page_title": "Users",
+    "empty": "No users found."
   }
 }

@@ -23,6 +23,7 @@ const ShiftsPage = lazy(() => import('@/features/shifts/pages/ShiftsPage'));
 const CreateShiftPage = lazy(() => import('@/features/shifts/pages/CreateShiftPage'));
 const EditShiftPage = lazy(() => import('@/features/shifts/pages/EditShiftPage'));
 const ShiftViewPage = lazy(() => import('@/features/shifts/pages/ShiftViewPage'));
+const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'));
 
 const router = createBrowserRouter([
 
@@ -69,6 +70,9 @@ const router = createBrowserRouter([
       { path: ROUTES.app.shifts.create.path, element: <CreateShiftPage /> },
       { path: ROUTES.app.shifts.edit.path, element: <EditShiftPage /> },
       { path: ROUTES.app.shifts.view.path, element: <ShiftViewPage /> },
+
+      // USERS PAGE
+      { path: ROUTES.app.users.path, element: <UsersPage /> },
 
       // SETTINGS PAGE
       { path: ROUTES.app.settings.path, element: <SettingsPage /> },
