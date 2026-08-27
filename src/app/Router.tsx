@@ -12,7 +12,8 @@ const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPag
 const SettingsPage = lazy(() => import('@/features/settings/pages/SettingsPage'));
 const DriversPage = lazy(() => import('@/features/drivers/pages/DriversPage'));
 const DriverCreatePage = lazy(() => import('@/features/drivers/pages/DriverCreatePage'));
-const DriverPage = lazy(() => import('@/features/drivers/pages/DriverPage'));
+const DriverViewPage = lazy(() => import('@/features/drivers/pages/DriverViewPage'));
+const DriverEditPage = lazy(() => import('@/features/drivers/pages/DriverEditPage'));
 const CarsPage = lazy(() => import('@/features/cars/pages/CarsPage'));
 const CarCreatePage = lazy(() => import('@/features/cars/pages/CarCreatePage'));
 const CarPage = lazy(() => import('@/features/cars/pages/CarPage'));
@@ -51,7 +52,8 @@ const router = createBrowserRouter([
       // DRIVER PAGES
       { path: ROUTES.app.drivers.path, element: <DriversPage /> },
       { path: ROUTES.app.drivers.create.path, element: <DriverCreatePage /> },
-      { path: ROUTES.app.drivers.view.path, element: <DriverPage /> },
+      { path: ROUTES.app.drivers.view.path, element: <DriverViewPage /> },
+      { path: ROUTES.app.drivers.edit.path, element: <DriverEditPage /> },
 
       // CAR PAGES
       { path: ROUTES.app.cars.path, element: <CarsPage /> },

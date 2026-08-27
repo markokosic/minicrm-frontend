@@ -32,6 +32,11 @@ export const ROUTES = {
         getHref: (driverId: number | string) =>
           `/drivers/${driverId}`,
       },
+      edit: {
+        path: '/drivers/:driverId/edit',
+        getHref: (driverId: number | string) =>
+          `/drivers/${driverId}/edit`,
+      },
       create: {
         path: '/drivers/new',
         getHref: () => '/drivers/new',

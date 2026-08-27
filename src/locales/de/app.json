@@ -135,7 +135,23 @@
   "drivers": {
     "actions": {
       "add_driver": "Fahrer hinzufügen",
-      "view_driver": "Fahrer anzeigen"
+      "view_driver": "Fahrer anzeigen",
+      "activate_access": "Zugang aktivieren",
+      "edit_driver": "Fahrer bearbeiten"
+    },
+    "user_access_modal": {
+      "title": "App-Zugang für Fahrer aktivieren",
+      "description": "Erstellen Sie ein Benutzerkonto mit der Rolle Fahrer. Es wird ein temporäres Passwort generiert, das dem Fahrer mitgeteilt werden muss.",
+      "email_label": "Login-E-Mail-Adresse",
+      "email_description": "Standardmäßig wird die hinterlegte Fahrer-E-Mail verwendet.",
+      "submit_button": "Zugang erstellen",
+      "success_title": "App-Zugang erfolgreich erstellt!",
+      "success_hint": "Bitte notieren oder kopieren Sie das temporäre Passwort und geben Sie es dem Fahrer weiter.",
+      "temporary_password_label": "Temporäres Passwort",
+      "must_change_hint": "Der Fahrer wird beim ersten Login aufgefordert, ein neues Passwort festzulegen.",
+      "copy_button": "Passwort kopieren",
+      "copied": "Kopiert!",
+      "close": "Schließen"
     },
     "notifications": {
       "edit": {
@@ -153,6 +169,10 @@
       "subtitle": "Wählen Sie entweder einen freien Dienstnehmer oder einen Angestellten."
     },
     "modals": {
+      "delete_confirm": {
+        "title": "Fahrer löschen",
+        "message": "Möchten Sie diesen Fahrer wirklich löschen?"
+      },
       "switch_type": {
         "title": "Fahrertyp ändern?",
         "text": "Wenn Sie den Fahrertyp ändern, gehen alle eingegebenen Daten verloren. Möchten Sie fortfahren?",

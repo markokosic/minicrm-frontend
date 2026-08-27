@@ -1,7 +1,7 @@
 import { Eye, Trash2, Edit2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Badge, Group, Table } from '@mantine/core';
-import { ShiftResponse } from '@/api/generated/model';
+import { ShiftResponse, ShiftResponseStatus } from '@/api/generated/model';
 import { calculateShiftTotals, formatShiftDate, formatShiftTime } from '../utils/shift-calculations.utils';
 import { ActionMenu } from '@/components/ui/Menu/ActionMenu';
 import { createFormatters } from '@/lib/utils';
@@ -21,7 +21,11 @@ export const ShiftTableRow = ({ shift, actions }: ShiftTableRowProps) => {
     calculateShiftTotals(shift.revenues);
 
   const statusColor =
-    shift.status === 'APPROVED' ? 'green' : shift.status === 'PENDING' ? 'yellow' : 'red';
+    shift.status === ShiftResponseStatus.APPROVED
+      ? 'green'
+      : shift.status === ShiftResponseStatus.PENDING
+        ? 'yellow'
+        : 'red';
 
   const dateFormatted = formatShiftDate(shift.shiftStart);
   const timeFormatted = `${formatShiftTime(shift.shiftStart)} - ${formatShiftTime(shift.shiftEnd)}`;

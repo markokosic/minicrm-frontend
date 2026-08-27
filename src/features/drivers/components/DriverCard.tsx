@@ -1,7 +1,7 @@
 import { Badge, Card, Group, Stack, Text } from '@mantine/core';
 import { Mail, Phone, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { DriverResponse } from '@/api/generated/model';
+import { DriverResponse, DriverResponseStatus } from '@/api/generated/model';
 import { useRemunerationLabels, RemunerationModelType } from '@/features/remuneration';
 
 interface DriverCardProps {
@@ -12,7 +12,7 @@ export const DriverCard = ({ driver }: DriverCardProps) => {
   const { t } = useTranslation(['app', 'common']);
   const { getRemunerationLabel } = useRemunerationLabels();
 
-  const isStatusActive = driver.status === 'ACTIVE';
+  const isStatusActive = driver.status === DriverResponseStatus.ACTIVE;
 
   return (
     <Card

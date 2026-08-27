@@ -1,7 +1,7 @@
 import { CalendarDays, Car, Clock, Route, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Badge, Card, Divider, Group, SimpleGrid, Stack, Text } from '@mantine/core';
-import { ShiftResponse } from '@/api/generated/model';
+import { ShiftResponse, ShiftResponseStatus } from '@/api/generated/model';
 import {
   calculateShiftDuration,
   formatShiftDate,
@@ -16,7 +16,11 @@ export const ShiftViewMasterData = ({ shift }: ShiftViewMasterDataProps) => {
   const { t } = useTranslation(['app', 'common']);
 
   const statusColor =
-    shift.status === 'APPROVED' ? 'green' : shift.status === 'PENDING' ? 'yellow' : 'red';
+    shift.status === ShiftResponseStatus.APPROVED
+      ? 'green'
+      : shift.status === ShiftResponseStatus.PENDING
+        ? 'yellow'
+        : 'red';
 
   const shiftDuration = calculateShiftDuration(shift.shiftStart, shift.shiftEnd);
 

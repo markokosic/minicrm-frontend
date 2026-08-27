@@ -1,7 +1,7 @@
 import { Badge, Card, Group, Stack, Text } from '@mantine/core';
 import { Car as CarIcon, Gauge, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { CarResponse as Car } from '@/api/generated/model';
+import { CarResponse as Car, CarResponseStatus } from '@/api/generated/model';
 
 interface CarCardProps {
   car: Car;
@@ -10,7 +10,7 @@ interface CarCardProps {
 export const CarCard = ({ car }: CarCardProps) => {
   const { t } = useTranslation(['app', 'common']);
 
-  const isStatusActive = car.status === 'ACTIVE';
+  const isStatusActive = car.status === CarResponseStatus.ACTIVE;
 
   return (
     <Card
