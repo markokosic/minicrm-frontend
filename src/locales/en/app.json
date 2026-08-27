@@ -137,7 +137,12 @@
       "add_driver": "Add driver",
       "view_driver": "View driver",
       "activate_access": "Activate Access",
+      "deactivate_access": "Deactivate Access",
       "edit_driver": "Edit driver"
+    },
+    "status": {
+      "has_user": "App Access Active",
+      "no_user": "No App Access"
     },
     "user_access_modal": {
       "title": "Activate App Access for Driver",
@@ -162,6 +167,9 @@
       },
       "delete": {
         "success": "Driver deleted successfully"
+      },
+      "deactivate_user": {
+        "success": "App access deactivated successfully"
       }
     },
     "type_selection": {
@@ -172,6 +180,10 @@
       "delete_confirm": {
         "title": "Delete driver",
         "message": "Are you sure you want to delete this driver?"
+      },
+      "deactivate_user_confirm": {
+        "title": "Deactivate App Access",
+        "message": "Are you sure you want to deactivate app access for this driver? The linked user account will be deleted and the driver will no longer be able to log in."
       },
       "switch_type": {
         "title": "Change driver type?",

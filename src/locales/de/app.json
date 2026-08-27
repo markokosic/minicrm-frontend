@@ -137,7 +137,12 @@
       "add_driver": "Fahrer hinzufügen",
       "view_driver": "Fahrer anzeigen",
       "activate_access": "Zugang aktivieren",
+      "deactivate_access": "Zugang deaktivieren",
       "edit_driver": "Fahrer bearbeiten"
+    },
+    "status": {
+      "has_user": "App-Zugang aktiv",
+      "no_user": "Kein App-Zugang"
     },
     "user_access_modal": {
       "title": "App-Zugang für Fahrer aktivieren",
@@ -162,6 +167,9 @@
       },
       "delete": {
         "success": "Fahrer erfolgreich gelöscht"
+      },
+      "deactivate_user": {
+        "success": "App-Zugang erfolgreich deaktiviert"
       }
     },
     "type_selection": {
@@ -172,6 +180,10 @@
       "delete_confirm": {
         "title": "Fahrer löschen",
         "message": "Möchten Sie diesen Fahrer wirklich löschen?"
+      },
+      "deactivate_user_confirm": {
+        "title": "App-Zugang deaktivieren",
+        "message": "Möchten Sie den App-Zugang für diesen Fahrer wirklich deaktivieren? Das verknüpfte Benutzerkonto wird gelöscht und der Fahrer kann sich nicht mehr einloggen."
       },
       "switch_type": {
         "title": "Fahrertyp ändern?",

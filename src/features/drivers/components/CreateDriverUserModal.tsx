@@ -14,7 +14,13 @@ import {
 import { Check, Copy, KeyRound, ShieldCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
-import { useCreateDriverUser } from '@/api/generated/endpoints/drivers/drivers';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  getGetAllDriversQueryKey,
+  getGetDriverQueryKey,
+  useCreateDriverUser,
+} from '@/api/generated/endpoints/drivers/drivers';
+import { getGetAllUsersQueryKey } from '@/api/generated/endpoints/users/users';
 import { CreateUserResponse, DriverResponse } from '@/api/generated/model';
 
 interface CreateDriverUserModalProps {
@@ -29,6 +35,7 @@ export const CreateDriverUserModal = ({
   onClose,
 }: CreateDriverUserModalProps) => {
   const { t } = useTranslation(['app', 'common']);
+  const queryClient = useQueryClient();
   const [email, setEmail] = useState(driver.email || '');
   const [createdUser, setCreatedUser] = useState<CreateUserResponse | null>(null);
 
@@ -38,6 +45,9 @@ export const CreateDriverUserModal = ({
         if (response.data) {
           setCreatedUser(response.data);
           toast.success(t('app:drivers.user_access_modal.success_title'));
+          queryClient.invalidateQueries({ queryKey: getGetDriverQueryKey(driver.id) });
+          queryClient.invalidateQueries({ queryKey: getGetAllDriversQueryKey() });
+          queryClient.invalidateQueries({ queryKey: getGetAllUsersQueryKey() });
         }
       },
       onError: (error: unknown) => {

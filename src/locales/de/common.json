@@ -143,6 +143,14 @@
     "DRIVER": "Fahrer",
     "PRE_AUTH": "Ausstehend"
   },
+  "status": {
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "deleted": "Gelöscht",
+    "pending": "Ausstehend",
+    "approved": "Genehmigt",
+    "rejected": "Abgelehnt"
+  },
   "user_status": {
     "active": "Aktiv",
     "pending_password_change": "Passwortwechsel erforderlich"

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Group, Stack } from '@mantine/core';
-import { Edit2, KeyRound, Trash2 } from 'lucide-react';
+import { Edit2, KeyRound, Trash2, UserX } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
 import { useGetDriver } from '@/api/generated/endpoints/drivers/drivers';
@@ -11,6 +11,7 @@ import { ROUTES } from '@/config/routes';
 import { CreateDriverUserModal } from '../components/CreateDriverUserModal';
 import { DriverViewMasterData } from '../components/DriverViewMasterData';
 import { DriverViewRemuneration } from '../components/DriverViewRemuneration';
+import { useDeactivateDriverUserAction } from '../hooks/useDeactivateDriverUserAction';
 import { useDeleteDriverAction } from '../hooks/useDeleteDriverAction';
 
 export const DriverViewPage = () => {
@@ -22,6 +23,8 @@ export const DriverViewPage = () => {
   const { handleDelete } = useDeleteDriverAction({
     onSuccess: () => navigate(ROUTES.app.drivers.path),
   });
+
+  const { handleDeactivate, isDeactivating } = useDeactivateDriverUserAction();
 
   const { data: response, isPending: isLoading, error } = useGetDriver(Number(driverId), {
     query: {
@@ -37,12 +40,24 @@ export const DriverViewPage = () => {
       actions={
         driver && (
           <Group gap="sm">
-            <Button
-              leftSection={<KeyRound size={16} />}
-              onClick={() => setAccessModalOpened(true)}
-            >
-              {t('app:drivers.actions.activate_access')}
-            </Button>
+            {driver.userId ? (
+              <Button
+                leftSection={<UserX size={16} />}
+                color="red"
+                variant="light"
+                loading={isDeactivating}
+                onClick={() => handleDeactivate(driver)}
+              >
+                {t('app:drivers.actions.deactivate_access')}
+              </Button>
+            ) : (
+              <Button
+                leftSection={<KeyRound size={16} />}
+                onClick={() => setAccessModalOpened(true)}
+              >
+                {t('app:drivers.actions.activate_access')}
+              </Button>
+            )}
             <ActionMenu
               actions={[
                 {

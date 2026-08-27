@@ -15,6 +15,7 @@ export { CreateDriverUserModal } from './components/CreateDriverUserModal';
 // Hooks
 export { useDriverSelectOptions } from './hooks/useDriverOptions';
 export { useDeleteDriverAction } from './hooks/useDeleteDriverAction';
+export { useDeactivateDriverUserAction } from './hooks/useDeactivateDriverUserAction';
 
 // Schemas & Types
 export * from './driver-schemas';

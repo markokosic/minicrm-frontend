@@ -35,7 +35,7 @@ export const CarCard = ({ car }: CarCardProps) => {
                 color={isStatusActive ? 'green' : 'gray'}
                 size="xs"
               >
-                {isStatusActive ? t('common:status.active', 'Aktiv') : car.status}
+                {isStatusActive ? t('common:status.active') : car.status}
               </Badge>
             </Group>
           )}

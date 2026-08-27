@@ -143,6 +143,14 @@
     "DRIVER": "Driver",
     "PRE_AUTH": "Pending"
   },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "deleted": "Deleted",
+    "pending": "Pending",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
   "user_status": {
     "active": "Active",
     "pending_password_change": "Password Change Required"

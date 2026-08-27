@@ -31,13 +31,32 @@ export const DriverViewMasterData = ({ driver }: DriverViewMasterDataProps) => {
         >
           {t('common:master_data')}
         </Text>
-        <Badge
-          color={isStatusActive ? 'green' : 'gray'}
-          size="lg"
-          variant="light"
-        >
-          {isStatusActive ? t('common:user_status.active') : driver.status}
-        </Badge>
+        <Group gap="xs">
+          <Badge
+            color={isStatusActive ? 'green' : 'gray'}
+            size="lg"
+            variant="light"
+          >
+            {isStatusActive ? t('common:status.active') : driver.status}
+          </Badge>
+          {driver.userId ? (
+            <Badge
+              color="blue"
+              size="lg"
+              variant="light"
+            >
+              {t('app:drivers.status.has_user')}
+            </Badge>
+          ) : (
+            <Badge
+              color="gray"
+              size="lg"
+              variant="outline"
+            >
+              {t('app:drivers.status.no_user')}
+            </Badge>
+          )}
+        </Group>
       </Group>
 
       <Divider mb="lg" />
