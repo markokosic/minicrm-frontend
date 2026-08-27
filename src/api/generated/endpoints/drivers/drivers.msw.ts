@@ -14,6 +14,7 @@ import type {
 } from 'msw';
 
 import type {
+  ApiResponseCreateUserResponse,
   ApiResponseDriverResponse,
   ApiResponseListDriverRevenueOption,
   ApiResponseListDriverSelect,
@@ -22,6 +23,7 @@ import type {
 
 import {
   getCreateDriverResponseMock,
+  getCreateDriverUserResponseMock,
   getGetAllDriversForSelectResponseMock,
   getGetAllDriversResponseMock,
   getGetDriverResponseMock,
@@ -29,7 +31,7 @@ import {
   getUpdateDriverResponseMock
 } from './drivers.faker';
 
-export { getGetAllDriversResponseMock, getCreateDriverResponseMock, getGetDriverResponseMock, getUpdateDriverResponseMock, getGetDriverRevenueOptionsResponseMock, getGetAllDriversForSelectResponseMock } from './drivers.faker';
+export { getGetAllDriversResponseMock, getCreateDriverResponseMock, getCreateDriverUserResponseMock, getGetDriverResponseMock, getUpdateDriverResponseMock, getGetDriverRevenueOptionsResponseMock, getGetAllDriversForSelectResponseMock } from './drivers.faker';
 
 
 export const getGetAllDriversMockHandler = (overrideResponse?: ApiResponsePageResponseDriverResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ApiResponsePageResponseDriverResponse> | ApiResponsePageResponseDriverResponse), options?: RequestHandlerOptions) => {
@@ -51,6 +53,18 @@ export const getCreateDriverMockHandler = (overrideResponse?: ApiResponseDriverR
     return HttpResponse.json(overrideResponse !== undefined
     ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
     : getCreateDriverResponseMock(),
+      { status: 201
+      })
+  }, options)
+}
+
+export const getCreateDriverUserMockHandler = (overrideResponse?: ApiResponseCreateUserResponse | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<ApiResponseCreateUserResponse> | ApiResponseCreateUserResponse), options?: RequestHandlerOptions) => {
+  return http.post('*/api/drivers/:id/user', async (info: Parameters<Parameters<typeof http.post>[1]>[0]) => {
+
+
+    return HttpResponse.json(overrideResponse !== undefined
+    ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
+    : getCreateDriverUserResponseMock(),
       { status: 201
       })
   }, options)
@@ -126,6 +140,7 @@ export const getStopRemunerationConfigMockHandler = (overrideResponse?: void | (
 export const getDriversMock = () => [
   getGetAllDriversMockHandler(),
   getCreateDriverMockHandler(),
+  getCreateDriverUserMockHandler(),
   getGetDriverMockHandler(),
   getDeleteDriverMockHandler(),
   getUpdateDriverMockHandler(),

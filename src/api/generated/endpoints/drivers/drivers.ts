@@ -36,11 +36,13 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  ApiResponseCreateUserResponse,
   ApiResponseDriverResponse,
   ApiResponseListDriverRevenueOption,
   ApiResponseListDriverSelect,
   ApiResponsePageResponseDriverResponse,
   CreateDriverRequest,
+  CreateDriverUserRequest,
   GetAllDriversParams,
   ProblemDetail,
   UpdateDriverRequest
@@ -410,6 +412,72 @@ export const useCreateDriver = <TError = ErrorType<ProblemDetail>,
         TContext
       > => {
       return useMutation(getCreateDriverMutationOptions(options), queryClient);
+    }
+    /**
+ * Creates a login user account with ROLE_DRIVER and a temporary password, linked directly to this driver. If no email is supplied in the request body, the driver's contact email is used.
+ * @summary Create user account for driver
+ */
+export const createDriverUser = (
+    id: number,
+    createDriverUserRequest?: BodyType<CreateDriverUserRequest>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseCreateUserResponse>(
+      {url: `/api/drivers/${id}/user`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createDriverUserRequest, signal
+    },
+      options);
+    }
+
+
+
+
+export const getCreateDriverUserMutationOptions = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createDriverUser>>, TError,{id: number;data?: BodyType<CreateDriverUserRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createDriverUser>>, TError,{id: number;data?: BodyType<CreateDriverUserRequest>}, TContext> => {
+
+const mutationKey = ['createDriverUser'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createDriverUser>>, {id: number;data?: BodyType<CreateDriverUserRequest>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  createDriverUser(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateDriverUserMutationResult = NonNullable<Awaited<ReturnType<typeof createDriverUser>>>
+    export type CreateDriverUserMutationBody = BodyType<CreateDriverUserRequest> | undefined
+    export type CreateDriverUserMutationError = ErrorType<ProblemDetail>
+
+    /**
+ * @summary Create user account for driver
+ */
+export const useCreateDriverUser = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createDriverUser>>, TError,{id: number;data?: BodyType<CreateDriverUserRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createDriverUser>>,
+        TError,
+        {id: number;data?: BodyType<CreateDriverUserRequest>},
+        TContext
+      > => {
+      return useMutation(getCreateDriverUserMutationOptions(options), queryClient);
     }
     /**
  * Fetches details of a specific driver.

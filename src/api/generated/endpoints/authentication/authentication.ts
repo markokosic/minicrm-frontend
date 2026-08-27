@@ -40,6 +40,7 @@ import type {
   ApiResponseRegisterTenantResponse,
   ApiResponseUserResponse,
   ApiResponseVoid,
+  ChangePasswordRequest,
   LoginRequest,
   ProblemDetail,
   RegisterTenantRequest
@@ -260,6 +261,71 @@ export const useLogin = <TError = ErrorType<ProblemDetail>,
         TContext
       > => {
       return useMutation(getLoginMutationOptions(options), queryClient);
+    }
+    /**
+ * Allows an authenticated user to change their password by verifying their current password and providing a new password.
+ * @summary Change password
+ */
+export const changePassword = (
+    changePasswordRequest: BodyType<ChangePasswordRequest>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseUserResponse>(
+      {url: `/api/auth/change-password`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: changePasswordRequest, signal
+    },
+      options);
+    }
+
+
+
+
+export const getChangePasswordMutationOptions = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof changePassword>>, TError,{data: BodyType<ChangePasswordRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof changePassword>>, TError,{data: BodyType<ChangePasswordRequest>}, TContext> => {
+
+const mutationKey = ['changePassword'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof changePassword>>, {data: BodyType<ChangePasswordRequest>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  changePassword(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ChangePasswordMutationResult = NonNullable<Awaited<ReturnType<typeof changePassword>>>
+    export type ChangePasswordMutationBody = BodyType<ChangePasswordRequest>
+    export type ChangePasswordMutationError = ErrorType<ProblemDetail>
+
+    /**
+ * @summary Change password
+ */
+export const useChangePassword = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof changePassword>>, TError,{data: BodyType<ChangePasswordRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof changePassword>>,
+        TError,
+        {data: BodyType<ChangePasswordRequest>},
+        TContext
+      > => {
+      return useMutation(getChangePasswordMutationOptions(options), queryClient);
     }
     /**
  * Uses the HttpOnly refreshToken cookie to issue a new HttpOnly accessToken cookie.

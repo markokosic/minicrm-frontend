@@ -171,6 +171,32 @@ export const CreateDriverResponse = zod.object({
 })
 
 /**
+ * Creates a login user account with ROLE_DRIVER and a temporary password, linked directly to this driver. If no email is supplied in the request body, the driver's contact email is used.
+ * @summary Create user account for driver
+ */
+export const CreateDriverUserParams = zod.object({
+  "id": zod.int()
+})
+
+export const CreateDriverUserBody = zod.object({
+  "email": zod.email().optional().describe('Optional login email. If omitted, the driver\'s contact email is used.')
+}).describe('Request payload for creating a driver user account')
+
+export const CreateDriverUserResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.int().optional().describe('Unique identifier of the user'),
+  "firstName": zod.string().optional().describe('User\'s first name'),
+  "lastName": zod.string().optional().describe('User\'s last name'),
+  "email": zod.string().optional().describe('User\'s email address'),
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional().describe('User role'),
+  "mustChangePassword": zod.boolean().optional().describe('Whether the user must change their password on next login'),
+  "temporaryPassword": zod.string().optional().describe('One-time temporary password generated for the user')
+}).optional().describe('Response payload after creating a new user, containing the generated temporary password'),
+  "message": zod.string().optional()
+})
+
+/**
  * Fetches details of a specific driver.
  * @summary Get driver by ID
  */

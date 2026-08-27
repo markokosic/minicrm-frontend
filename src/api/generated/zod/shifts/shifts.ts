@@ -131,6 +131,84 @@ export const DeleteShiftResponse = zod.object({
 })
 
 /**
+ * Allows a driver to update their own shift as long as it is still in PENDING status.
+ * @summary Update my pending shift
+ */
+export const UpdateMyShiftParams = zod.object({
+  "id": zod.int()
+})
+
+
+
+
+export const UpdateMyShiftBody = zod.object({
+  "odometerStart": zod.number(),
+  "odometerEnd": zod.number(),
+  "shiftStart": zod.iso.datetime({"offset":true}),
+  "shiftEnd": zod.iso.datetime({"offset":true}),
+  "revenues": zod.array(zod.object({
+  "id": zod.int().optional().describe('ID of the existing revenue entry. If present, only amounts are updated (category is immutable). If omitted\/null, a new entry is created.'),
+  "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional().describe('Entry category (REGULAR, FLAT_RATE, WEEKLY). Required when adding a new entry (id is null). Ignored for existing entries.'),
+  "flatRateTypeId": zod.int().optional().describe('Flat rate type ID (optional for FLAT_RATE category when adding a new entry). Ignored for existing entries.'),
+  "revenue": zod.number().optional().describe('Direct revenue amount'),
+  "tripCount": zod.int().optional().describe('Number of trips'),
+  "pricePerTrip": zod.number().optional().describe('Price per trip')
+}).describe(' for updating existing or adding new revenue entries within a shift')).min(1)
+})
+
+export const UpdateMyShiftResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.int().optional(),
+  "driver": zod.object({
+  "id": zod.int().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional()
+}).optional(),
+  "car": zod.object({
+  "id": zod.int().optional(),
+  "licensePlate": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "model": zod.string().optional()
+}).optional(),
+  "odometerStart": zod.number().optional(),
+  "odometerEnd": zod.number().optional(),
+  "kilometersDriven": zod.number().optional(),
+  "shiftStart": zod.iso.datetime({"offset":true}).optional(),
+  "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
+  "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "revenues": zod.array(zod.object({
+  "id": zod.int().optional(),
+  "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
+  "flatRateTypeId": zod.int().optional(),
+  "flatRateTypeName": zod.string().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).optional(),
+  "isFlatRate": zod.boolean().optional(),
+  "revenue": zod.number().optional(),
+  "companyRemuneration": zod.number().optional(),
+  "driverRemuneration": zod.number().optional(),
+  "tripCount": zod.int().optional(),
+  "pricePerTrip": zod.number().optional()
+})).optional()
+}).optional(),
+  "message": zod.string().optional()
+})
+
+/**
+ * Allows a driver to delete their own shift as long as it is still in PENDING status.
+ * @summary Delete my pending shift
+ */
+export const DeleteMyShiftParams = zod.object({
+  "id": zod.int()
+})
+
+export const DeleteMyShiftResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.unknown().optional(),
+  "message": zod.string().optional()
+})
+
+/**
  * Fetches a paginated list of shifts filtered by driver or date range.
  * @summary Get all shifts
  */
@@ -221,6 +299,221 @@ export const CreateShiftBody = zod.object({
 })
 
 export const CreateShiftResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.int().optional(),
+  "driver": zod.object({
+  "id": zod.int().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional()
+}).optional(),
+  "car": zod.object({
+  "id": zod.int().optional(),
+  "licensePlate": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "model": zod.string().optional()
+}).optional(),
+  "odometerStart": zod.number().optional(),
+  "odometerEnd": zod.number().optional(),
+  "kilometersDriven": zod.number().optional(),
+  "shiftStart": zod.iso.datetime({"offset":true}).optional(),
+  "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
+  "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "revenues": zod.array(zod.object({
+  "id": zod.int().optional(),
+  "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
+  "flatRateTypeId": zod.int().optional(),
+  "flatRateTypeName": zod.string().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).optional(),
+  "isFlatRate": zod.boolean().optional(),
+  "revenue": zod.number().optional(),
+  "companyRemuneration": zod.number().optional(),
+  "driverRemuneration": zod.number().optional(),
+  "tripCount": zod.int().optional(),
+  "pricePerTrip": zod.number().optional()
+})).optional()
+}).optional(),
+  "message": zod.string().optional()
+})
+
+/**
+ * Sets the status of a shift to REJECTED.
+ * @summary Reject a shift
+ */
+export const RejectShiftParams = zod.object({
+  "id": zod.int()
+})
+
+export const RejectShiftResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.int().optional(),
+  "driver": zod.object({
+  "id": zod.int().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional()
+}).optional(),
+  "car": zod.object({
+  "id": zod.int().optional(),
+  "licensePlate": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "model": zod.string().optional()
+}).optional(),
+  "odometerStart": zod.number().optional(),
+  "odometerEnd": zod.number().optional(),
+  "kilometersDriven": zod.number().optional(),
+  "shiftStart": zod.iso.datetime({"offset":true}).optional(),
+  "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
+  "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "revenues": zod.array(zod.object({
+  "id": zod.int().optional(),
+  "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
+  "flatRateTypeId": zod.int().optional(),
+  "flatRateTypeName": zod.string().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).optional(),
+  "isFlatRate": zod.boolean().optional(),
+  "revenue": zod.number().optional(),
+  "companyRemuneration": zod.number().optional(),
+  "driverRemuneration": zod.number().optional(),
+  "tripCount": zod.int().optional(),
+  "pricePerTrip": zod.number().optional()
+})).optional()
+}).optional(),
+  "message": zod.string().optional()
+})
+
+/**
+ * Sets the status of a shift to APPROVED.
+ * @summary Approve a shift
+ */
+export const ApproveShiftParams = zod.object({
+  "id": zod.int()
+})
+
+export const ApproveShiftResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.int().optional(),
+  "driver": zod.object({
+  "id": zod.int().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional()
+}).optional(),
+  "car": zod.object({
+  "id": zod.int().optional(),
+  "licensePlate": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "model": zod.string().optional()
+}).optional(),
+  "odometerStart": zod.number().optional(),
+  "odometerEnd": zod.number().optional(),
+  "kilometersDriven": zod.number().optional(),
+  "shiftStart": zod.iso.datetime({"offset":true}).optional(),
+  "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
+  "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "revenues": zod.array(zod.object({
+  "id": zod.int().optional(),
+  "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
+  "flatRateTypeId": zod.int().optional(),
+  "flatRateTypeName": zod.string().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).optional(),
+  "isFlatRate": zod.boolean().optional(),
+  "revenue": zod.number().optional(),
+  "companyRemuneration": zod.number().optional(),
+  "driverRemuneration": zod.number().optional(),
+  "tripCount": zod.int().optional(),
+  "pricePerTrip": zod.number().optional()
+})).optional()
+}).optional(),
+  "message": zod.string().optional()
+})
+
+/**
+ * Fetches a paginated list of shifts for the currently authenticated driver.
+ * @summary Get my shifts
+ */
+export const getMyShiftsQueryPageDefault = 1;
+
+export const getMyShiftsQuerySizeDefault = 100;
+
+
+
+export const GetMyShiftsQueryParams = zod.object({
+  "page": zod.int().min(1).default(getMyShiftsQueryPageDefault).describe('Page number (1-indexed, minimum 1)'),
+  "size": zod.int().min(1).default(getMyShiftsQuerySizeDefault).describe('The size of the page to be returned'),
+  "sort": zod.array(zod.string()).optional().describe('Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.')
+})
+
+export const GetMyShiftsResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "content": zod.array(zod.object({
+  "id": zod.int().optional(),
+  "driver": zod.object({
+  "id": zod.int().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional()
+}).optional(),
+  "car": zod.object({
+  "id": zod.int().optional(),
+  "licensePlate": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "model": zod.string().optional()
+}).optional(),
+  "odometerStart": zod.number().optional(),
+  "odometerEnd": zod.number().optional(),
+  "kilometersDriven": zod.number().optional(),
+  "shiftStart": zod.iso.datetime({"offset":true}).optional(),
+  "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
+  "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "revenues": zod.array(zod.object({
+  "id": zod.int().optional(),
+  "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
+  "flatRateTypeId": zod.int().optional(),
+  "flatRateTypeName": zod.string().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).optional(),
+  "isFlatRate": zod.boolean().optional(),
+  "revenue": zod.number().optional(),
+  "companyRemuneration": zod.number().optional(),
+  "driverRemuneration": zod.number().optional(),
+  "tripCount": zod.int().optional(),
+  "pricePerTrip": zod.number().optional()
+})).optional()
+})).optional(),
+  "page": zod.int().optional(),
+  "size": zod.int().optional(),
+  "totalElements": zod.int().optional(),
+  "totalPages": zod.int().optional(),
+  "first": zod.boolean().optional(),
+  "last": zod.boolean().optional()
+}).optional(),
+  "message": zod.string().optional()
+})
+
+/**
+ * Logs a new shift for the currently authenticated driver.
+ * @summary Create my shift
+ */
+
+
+
+export const CreateMyShiftBody = zod.object({
+  "carId": zod.int(),
+  "odometerStart": zod.number(),
+  "odometerEnd": zod.number(),
+  "shiftStart": zod.iso.datetime({"offset":true}),
+  "shiftEnd": zod.iso.datetime({"offset":true}),
+  "revenues": zod.array(zod.object({
+  "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']),
+  "flatRateTypeId": zod.int().optional(),
+  "revenue": zod.number().optional(),
+  "tripCount": zod.int().optional(),
+  "pricePerTrip": zod.number().optional(),
+  "effectiveRevenue": zod.number().optional()
+})).min(1)
+})
+
+export const CreateMyShiftResponse = zod.object({
   "success": zod.boolean().optional(),
   "data": zod.object({
   "id": zod.int().optional(),

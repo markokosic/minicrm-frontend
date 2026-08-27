@@ -47,6 +47,184 @@
     }
   ],
   "paths": {
+    "/api/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user by ID",
+        "description": "Retrieves profile details of a specific system user.",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOUserResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user",
+        "description": "Updates profile details (first name, last name, roles) of a system user.",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOUserResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request payload or role assignment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - requires ADMIN or OWNER role",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete user",
+        "description": "Deletes a system user by their ID.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - requires ADMIN or OWNER role",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/shifts/{id}": {
       "get": {
         "tags": [
@@ -170,6 +348,130 @@
         }
       }
     },
+    "/api/shifts/my/{id}": {
+      "put": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Update my pending shift",
+        "description": "Allows a driver to update their own shift as long as it is still in PENDING status.",
+        "operationId": "updateMyShift",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateShiftRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Shift updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOShiftResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid shift data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Shift cannot be edited because it is already approved/rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Shift not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Delete my pending shift",
+        "description": "Allows a driver to delete their own shift as long as it is still in PENDING status.",
+        "operationId": "deleteMyShift",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shift deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOVoid"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Shift cannot be deleted because it is already approved/rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Shift not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/flat-rate-types/{id}": {
       "put": {
         "tags": [
@@ -235,6 +537,98 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponseDTOVoid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users",
+        "description": "Retrieves a list of all system users/administrators for the current tenant.",
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "Users list retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOListUserResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create user",
+        "description": "Creates a new system user for the current tenant with a generated temporary password. Defaults to mustChangePassword=true.",
+        "operationId": "createUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOCreateUserResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - requires ADMIN or OWNER role",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
                 }
               }
             }
@@ -338,6 +732,170 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateShiftRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Shift created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOShiftResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid shift data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/shifts/{id}/reject": {
+      "post": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Reject a shift",
+        "description": "Sets the status of a shift to REJECTED.",
+        "operationId": "rejectShift",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOShiftResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/shifts/{id}/approve": {
+      "post": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Approve a shift",
+        "description": "Sets the status of a shift to APPROVED.",
+        "operationId": "approveShift",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOShiftResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/shifts/my": {
+      "get": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Get my shifts",
+        "description": "Fetches a paginated list of shifts for the currently authenticated driver.",
+        "operationId": "getMyShifts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (1-indexed, minimum 1)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Driver shifts fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOPageResponseDTOShiftResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Create my shift",
+        "description": "Logs a new shift for the currently authenticated driver.",
+        "operationId": "createMyShift",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMyShiftRequestDTO"
               }
             }
           },
@@ -540,6 +1098,78 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/drivers/{id}/user": {
+      "post": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Create user account for driver",
+        "description": "Creates a login user account with ROLE_DRIVER and a temporary password, linked directly to this driver. If no email is supplied in the request body, the driver's contact email is used.",
+        "operationId": "createDriverUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDriverUserRequestDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Driver user account created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOCreateUserResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request payload",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Driver not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Driver already has a user account or email duplicate",
             "content": {
               "application/json": {
                 "schema": {
@@ -778,6 +1408,58 @@
           },
           "401": {
             "description": "Unauthorized - Bad credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/change-password": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Change password",
+        "description": "Allows an authenticated user to change their password by verifying their current password and providing a new password.",
+        "operationId": "changePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Password changed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOUserResponseDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Current password invalid, new password invalid, or same as current password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - No valid session found",
             "content": {
               "application/json": {
                 "schema": {
@@ -1125,135 +1807,6 @@
         }
       }
     },
-    "/api/users": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get all users",
-        "description": "Retrieves a list of all system users/administrators for the current tenant.",
-        "operationId": "getAllUsers",
-        "responses": {
-          "200": {
-            "description": "Users list retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseDTOListUserResponseDTO"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/users/{id}": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get user by ID",
-        "description": "Retrieves profile details of a specific system user.",
-        "operationId": "getUser",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User details retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponseDTOUserResponseDTO"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Delete user",
-        "description": "Deletes a system user by their ID.",
-        "operationId": "deleteUser",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "User deleted successfully"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/reports/revenue": {
       "get": {
         "tags": [
@@ -1479,6 +2032,28 @@
         }
       }
     },
+    "/api/cars/select": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Get all active cars for selection",
+        "description": "Fetches a lightweight list of active cars for selection dropdowns.",
+        "operationId": "getCarsForSelect",
+        "responses": {
+          "200": {
+            "description": "Cars list retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOListCarSummaryDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/refresh-token": {
       "get": {
         "tags": [
@@ -1611,6 +2186,121 @@
   },
   "components": {
     "schemas": {
+      "UpdateUserRequestDTO": {
+        "type": "object",
+        "description": "Request payload for updating an existing user",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address",
+            "example": "driver@example.com",
+            "minLength": 1
+          },
+          "firstName": {
+            "type": "string",
+            "description": "User's first name",
+            "example": "Max",
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "description": "User's last name",
+            "example": "Mustermann",
+            "minLength": 1
+          },
+          "roles": {
+            "type": "string",
+            "description": "User role",
+            "enum": [
+              "OWNER",
+              "ADMIN",
+              "DRIVER",
+              "BACKOFFICE",
+              "PRE_AUTH"
+            ],
+            "example": "ADMIN"
+          }
+        },
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "roles"
+        ]
+      },
+      "ProblemDetail": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "ApiResponseDTOUserResponseDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/UserResponseDTO"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "UserResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "string",
+            "enum": [
+              "OWNER",
+              "ADMIN",
+              "DRIVER",
+              "BACKOFFICE",
+              "PRE_AUTH"
+            ]
+          },
+          "mustChangePassword": {
+            "type": "boolean"
+          }
+        }
+      },
       "UpdateShiftRequestDTO": {
         "type": "object",
         "properties": {
@@ -1685,33 +2375,6 @@
             "type": "number",
             "description": "Price per trip",
             "example": 25
-          }
-        }
-      },
-      "ProblemDetail": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "format": "uri"
-          },
-          "title": {
-            "type": "string"
-          },
-          "status": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "detail": {
-            "type": "string"
-          },
-          "instance": {
-            "type": "string",
-            "format": "uri"
-          },
-          "properties": {
-            "type": "object",
-            "additionalProperties": {}
           }
         }
       },
@@ -1910,6 +2573,112 @@
           }
         }
       },
+      "CreateUserRequestDTO": {
+        "type": "object",
+        "description": "Request payload for creating a new user",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User's email address",
+            "example": "driver@example.com",
+            "minLength": 1
+          },
+          "firstName": {
+            "type": "string",
+            "description": "User's first name",
+            "example": "Max",
+            "minLength": 1
+          },
+          "lastName": {
+            "type": "string",
+            "description": "User's last name",
+            "example": "Mustermann",
+            "minLength": 1
+          },
+          "roles": {
+            "type": "string",
+            "description": "User role",
+            "enum": [
+              "OWNER",
+              "ADMIN",
+              "DRIVER",
+              "BACKOFFICE",
+              "PRE_AUTH"
+            ],
+            "example": "ADMIN"
+          }
+        },
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "roles"
+        ]
+      },
+      "ApiResponseDTOCreateUserResponseDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CreateUserResponseDTO"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateUserResponseDTO": {
+        "type": "object",
+        "description": "Response payload after creating a new user, containing the generated temporary password",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the user",
+            "example": 1
+          },
+          "firstName": {
+            "type": "string",
+            "description": "User's first name",
+            "example": "Max"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "User's last name",
+            "example": "Mustermann"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email address",
+            "example": "driver@example.com"
+          },
+          "roles": {
+            "type": "string",
+            "description": "User role",
+            "enum": [
+              "OWNER",
+              "ADMIN",
+              "DRIVER",
+              "BACKOFFICE",
+              "PRE_AUTH"
+            ],
+            "example": "DRIVER"
+          },
+          "mustChangePassword": {
+            "type": "boolean",
+            "description": "Whether the user must change their password on next login",
+            "example": true
+          },
+          "temporaryPassword": {
+            "type": "string",
+            "description": "One-time temporary password generated for the user",
+            "example": "aB3!k9Zq#m"
+          }
+        }
+      },
       "CreateShiftRequestDTO": {
         "type": "object",
         "properties": {
@@ -1992,6 +2761,44 @@
         },
         "required": [
           "entryCategory"
+        ]
+      },
+      "CreateMyShiftRequestDTO": {
+        "type": "object",
+        "properties": {
+          "carId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "odometerStart": {
+            "type": "number"
+          },
+          "odometerEnd": {
+            "type": "number"
+          },
+          "shiftStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shiftEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "revenues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateShiftRevenueEntryRequestDTO"
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "carId",
+          "odometerEnd",
+          "odometerStart",
+          "revenues",
+          "shiftEnd",
+          "shiftStart"
         ]
       },
       "CreateDriverRequestDTO": {
@@ -2392,6 +3199,18 @@
           }
         ]
       },
+      "CreateDriverUserRequestDTO": {
+        "type": "object",
+        "description": "Request payload for creating a driver user account",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Optional login email. If omitted, the driver's contact email is used.",
+            "example": "driver.login@taxi.com"
+          }
+        }
+      },
       "CreateCarRequestDTO": {
         "type": "object",
         "properties": {
@@ -2553,37 +3372,27 @@
           "password"
         ]
       },
-      "ApiResponseDTOUserResponseDTO": {
+      "ChangePasswordRequestDTO": {
         "type": "object",
+        "description": "Request payload for changing user password",
         "properties": {
-          "success": {
-            "type": "boolean"
+          "currentPassword": {
+            "type": "string",
+            "description": "Current password of the logged-in user",
+            "example": "oldPassword123",
+            "minLength": 1
           },
-          "data": {
-            "$ref": "#/components/schemas/UserResponseDTO"
-          },
-          "message": {
-            "type": "string"
+          "newPassword": {
+            "type": "string",
+            "description": "New password",
+            "example": "newSecurePassword123",
+            "minLength": 1
           }
-        }
-      },
-      "UserResponseDTO": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          }
-        }
+        },
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ]
       },
       "UpdateDriverRequestDTO": {
         "type": "object",
@@ -3103,6 +3912,23 @@
           },
           "last": {
             "type": "boolean"
+          }
+        }
+      },
+      "ApiResponseDTOListCarSummaryDTO": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CarSummaryDTO"
+            }
+          },
+          "message": {
+            "type": "string"
           }
         }
       },

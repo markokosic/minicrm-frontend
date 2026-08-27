@@ -39,8 +39,10 @@ import type {
   ApiResponsePageResponseShiftResponse,
   ApiResponseShiftResponse,
   ApiResponseVoid,
+  CreateMyShiftRequest,
   CreateShiftRequest,
   GetAllShiftsParams,
+  GetMyShiftsParams,
   ProblemDetail,
   UpdateShiftRequest
 } from '../../model';
@@ -472,6 +474,135 @@ export const useDeleteShift = <TError = ErrorType<unknown>,
       return useMutation(getDeleteShiftMutationOptions(options), queryClient);
     }
     /**
+ * Allows a driver to update their own shift as long as it is still in PENDING status.
+ * @summary Update my pending shift
+ */
+export const updateMyShift = (
+    id: number,
+    updateShiftRequest: BodyType<UpdateShiftRequest>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseShiftResponse>(
+      {url: `/api/shifts/my/${id}`, method: 'PUT',
+      headers: {'Content-Type': 'application/json', },
+      data: updateShiftRequest, signal
+    },
+      options);
+    }
+
+
+
+
+export const getUpdateMyShiftMutationOptions = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMyShift>>, TError,{id: number;data: BodyType<UpdateShiftRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateMyShift>>, TError,{id: number;data: BodyType<UpdateShiftRequest>}, TContext> => {
+
+const mutationKey = ['updateMyShift'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateMyShift>>, {id: number;data: BodyType<UpdateShiftRequest>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updateMyShift(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMyShiftMutationResult = NonNullable<Awaited<ReturnType<typeof updateMyShift>>>
+    export type UpdateMyShiftMutationBody = BodyType<UpdateShiftRequest>
+    export type UpdateMyShiftMutationError = ErrorType<ProblemDetail>
+
+    /**
+ * @summary Update my pending shift
+ */
+export const useUpdateMyShift = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMyShift>>, TError,{id: number;data: BodyType<UpdateShiftRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateMyShift>>,
+        TError,
+        {id: number;data: BodyType<UpdateShiftRequest>},
+        TContext
+      > => {
+      return useMutation(getUpdateMyShiftMutationOptions(options), queryClient);
+    }
+    /**
+ * Allows a driver to delete their own shift as long as it is still in PENDING status.
+ * @summary Delete my pending shift
+ */
+export const deleteMyShift = (
+    id: number,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseVoid>(
+      {url: `/api/shifts/my/${id}`, method: 'DELETE', signal
+    },
+      options);
+    }
+
+
+
+
+export const getDeleteMyShiftMutationOptions = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMyShift>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteMyShift>>, TError,{id: number}, TContext> => {
+
+const mutationKey = ['deleteMyShift'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteMyShift>>, {id: number}> = (props) => {
+          const {id} = props ?? {};
+
+          return  deleteMyShift(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteMyShiftMutationResult = NonNullable<Awaited<ReturnType<typeof deleteMyShift>>>
+
+    export type DeleteMyShiftMutationError = ErrorType<ProblemDetail>
+
+    /**
+ * @summary Delete my pending shift
+ */
+export const useDeleteMyShift = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMyShift>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteMyShift>>,
+        TError,
+        {id: number},
+        TContext
+      > => {
+      return useMutation(getDeleteMyShiftMutationOptions(options), queryClient);
+    }
+    /**
  * Fetches a paginated list of shifts filtered by driver or date range.
  * @summary Get all shifts
  */
@@ -812,4 +943,472 @@ export const useCreateShift = <TError = ErrorType<ProblemDetail>,
         TContext
       > => {
       return useMutation(getCreateShiftMutationOptions(options), queryClient);
+    }
+    /**
+ * Sets the status of a shift to REJECTED.
+ * @summary Reject a shift
+ */
+export const rejectShift = (
+    id: number,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseShiftResponse>(
+      {url: `/api/shifts/${id}/reject`, method: 'POST', signal
+    },
+      options);
+    }
+
+
+
+
+export const getRejectShiftMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rejectShift>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof rejectShift>>, TError,{id: number}, TContext> => {
+
+const mutationKey = ['rejectShift'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof rejectShift>>, {id: number}> = (props) => {
+          const {id} = props ?? {};
+
+          return  rejectShift(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RejectShiftMutationResult = NonNullable<Awaited<ReturnType<typeof rejectShift>>>
+
+    export type RejectShiftMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Reject a shift
+ */
+export const useRejectShift = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rejectShift>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof rejectShift>>,
+        TError,
+        {id: number},
+        TContext
+      > => {
+      return useMutation(getRejectShiftMutationOptions(options), queryClient);
+    }
+    /**
+ * Sets the status of a shift to APPROVED.
+ * @summary Approve a shift
+ */
+export const approveShift = (
+    id: number,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseShiftResponse>(
+      {url: `/api/shifts/${id}/approve`, method: 'POST', signal
+    },
+      options);
+    }
+
+
+
+
+export const getApproveShiftMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof approveShift>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof approveShift>>, TError,{id: number}, TContext> => {
+
+const mutationKey = ['approveShift'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof approveShift>>, {id: number}> = (props) => {
+          const {id} = props ?? {};
+
+          return  approveShift(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ApproveShiftMutationResult = NonNullable<Awaited<ReturnType<typeof approveShift>>>
+
+    export type ApproveShiftMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Approve a shift
+ */
+export const useApproveShift = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof approveShift>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof approveShift>>,
+        TError,
+        {id: number},
+        TContext
+      > => {
+      return useMutation(getApproveShiftMutationOptions(options), queryClient);
+    }
+    /**
+ * Fetches a paginated list of shifts for the currently authenticated driver.
+ * @summary Get my shifts
+ */
+export const getMyShifts = (
+    params?: GetMyShiftsParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponsePageResponseShiftResponse>(
+      {url: `/api/shifts/my`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetMyShiftsInfiniteQueryKey = (params?: GetMyShiftsParams,) => {
+    return [
+    'infinite', `/api/shifts/my`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+export const getGetMyShiftsQueryKey = (params?: GetMyShiftsParams,) => {
+    return [
+    `/api/shifts/my`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetMyShiftsInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(params?: GetMyShiftsParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyShiftsInfiniteQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyShifts>>> = ({ signal }) => getMyShifts(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyShiftsInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getMyShifts>>>
+export type GetMyShiftsInfiniteQueryError = ErrorType<unknown>
+
+
+export function useGetMyShiftsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetMyShiftsParams, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyShifts>>,
+          TError,
+          Awaited<ReturnType<typeof getMyShifts>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyShifts>>,
+          TError,
+          Awaited<ReturnType<typeof getMyShifts>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my shifts
+ */
+
+export function useGetMyShiftsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyShiftsInfiniteQueryOptions(params,options)
+
+  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyShiftsQueryOptions = <TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(params?: GetMyShiftsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyShiftsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyShifts>>> = ({ signal }) => getMyShifts(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyShiftsQueryResult = NonNullable<Awaited<ReturnType<typeof getMyShifts>>>
+export type GetMyShiftsQueryError = ErrorType<unknown>
+
+
+export function useGetMyShifts<TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetMyShiftsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyShifts>>,
+          TError,
+          Awaited<ReturnType<typeof getMyShifts>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShifts<TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyShifts>>,
+          TError,
+          Awaited<ReturnType<typeof getMyShifts>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShifts<TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my shifts
+ */
+
+export function useGetMyShifts<TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyShiftsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyShiftsSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(params?: GetMyShiftsParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyShiftsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyShifts>>> = ({ signal }) => getMyShifts(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyShiftsSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof getMyShifts>>>
+export type GetMyShiftsSuspenseQueryError = ErrorType<unknown>
+
+
+export function useGetMyShiftsSuspense<TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetMyShiftsParams, options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftsSuspense<TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftsSuspense<TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my shifts
+ */
+
+export function useGetMyShiftsSuspense<TData = Awaited<ReturnType<typeof getMyShifts>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyShiftsSuspenseQueryOptions(params,options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyShiftsSuspenseInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(params?: GetMyShiftsParams, options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyShiftsInfiniteQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyShifts>>> = ({ signal }) => getMyShifts(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyShiftsSuspenseInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getMyShifts>>>
+export type GetMyShiftsSuspenseInfiniteQueryError = ErrorType<unknown>
+
+
+export function useGetMyShiftsSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(
+ params: undefined |  GetMyShiftsParams, options: { query:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftsSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftsSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my shifts
+ */
+
+export function useGetMyShiftsSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShifts>>>, TError = ErrorType<unknown>>(
+ params?: GetMyShiftsParams, options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShifts>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyShiftsSuspenseInfiniteQueryOptions(params,options)
+
+  const query = useSuspenseInfiniteQuery(queryOptions, queryClient) as  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+/**
+ * Logs a new shift for the currently authenticated driver.
+ * @summary Create my shift
+ */
+export const createMyShift = (
+    createMyShiftRequest: BodyType<CreateMyShiftRequest>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseShiftResponse>(
+      {url: `/api/shifts/my`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createMyShiftRequest, signal
+    },
+      options);
+    }
+
+
+
+
+export const getCreateMyShiftMutationOptions = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMyShift>>, TError,{data: BodyType<CreateMyShiftRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createMyShift>>, TError,{data: BodyType<CreateMyShiftRequest>}, TContext> => {
+
+const mutationKey = ['createMyShift'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMyShift>>, {data: BodyType<CreateMyShiftRequest>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createMyShift(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateMyShiftMutationResult = NonNullable<Awaited<ReturnType<typeof createMyShift>>>
+    export type CreateMyShiftMutationBody = BodyType<CreateMyShiftRequest>
+    export type CreateMyShiftMutationError = ErrorType<ProblemDetail>
+
+    /**
+ * @summary Create my shift
+ */
+export const useCreateMyShift = <TError = ErrorType<ProblemDetail>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMyShift>>, TError,{data: BodyType<CreateMyShiftRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createMyShift>>,
+        TError,
+        {data: BodyType<CreateMyShiftRequest>},
+        TContext
+      > => {
+      return useMutation(getCreateMyShiftMutationOptions(options), queryClient);
     }

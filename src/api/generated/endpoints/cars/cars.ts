@@ -37,6 +37,7 @@ import type {
 
 import type {
   ApiResponseCarResponse,
+  ApiResponseListCarSummary,
   ApiResponsePageResponseCarResponse,
   CreateCarRequest,
   GetAllCarsParams,
@@ -814,3 +815,279 @@ export const useUpdateCar = <TError = ErrorType<ProblemDetail>,
       > => {
       return useMutation(getUpdateCarMutationOptions(options), queryClient);
     }
+    /**
+ * Fetches a lightweight list of active cars for selection dropdowns.
+ * @summary Get all active cars for selection
+ */
+export const getCarsForSelect = (
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseListCarSummary>(
+      {url: `/api/cars/select`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetCarsForSelectInfiniteQueryKey = () => {
+    return [
+    'infinite', `/api/cars/select`
+    ] as const;
+    }
+
+export const getGetCarsForSelectQueryKey = () => {
+    return [
+    `/api/cars/select`
+    ] as const;
+    }
+
+
+export const getGetCarsForSelectInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCarsForSelectInfiniteQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCarsForSelect>>> = ({ signal }) => getCarsForSelect(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetCarsForSelectInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getCarsForSelect>>>
+export type GetCarsForSelectInfiniteQueryError = ErrorType<unknown>
+
+
+export function useGetCarsForSelectInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCarsForSelect>>,
+          TError,
+          Awaited<ReturnType<typeof getCarsForSelect>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCarsForSelectInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCarsForSelect>>,
+          TError,
+          Awaited<ReturnType<typeof getCarsForSelect>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCarsForSelectInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get all active cars for selection
+ */
+
+export function useGetCarsForSelectInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetCarsForSelectInfiniteQueryOptions(options)
+
+  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetCarsForSelectQueryOptions = <TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCarsForSelectQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCarsForSelect>>> = ({ signal }) => getCarsForSelect(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetCarsForSelectQueryResult = NonNullable<Awaited<ReturnType<typeof getCarsForSelect>>>
+export type GetCarsForSelectQueryError = ErrorType<unknown>
+
+
+export function useGetCarsForSelect<TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCarsForSelect>>,
+          TError,
+          Awaited<ReturnType<typeof getCarsForSelect>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCarsForSelect<TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCarsForSelect>>,
+          TError,
+          Awaited<ReturnType<typeof getCarsForSelect>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCarsForSelect<TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get all active cars for selection
+ */
+
+export function useGetCarsForSelect<TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetCarsForSelectQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetCarsForSelectSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCarsForSelectQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCarsForSelect>>> = ({ signal }) => getCarsForSelect(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetCarsForSelectSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof getCarsForSelect>>>
+export type GetCarsForSelectSuspenseQueryError = ErrorType<unknown>
+
+
+export function useGetCarsForSelectSuspense<TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCarsForSelectSuspense<TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCarsForSelectSuspense<TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get all active cars for selection
+ */
+
+export function useGetCarsForSelectSuspense<TData = Awaited<ReturnType<typeof getCarsForSelect>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetCarsForSelectSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetCarsForSelectSuspenseInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCarsForSelectInfiniteQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCarsForSelect>>> = ({ signal }) => getCarsForSelect(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetCarsForSelectSuspenseInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getCarsForSelect>>>
+export type GetCarsForSelectSuspenseInfiniteQueryError = ErrorType<unknown>
+
+
+export function useGetCarsForSelectSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCarsForSelectSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCarsForSelectSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get all active cars for selection
+ */
+
+export function useGetCarsForSelectSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getCarsForSelect>>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getCarsForSelect>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetCarsForSelectSuspenseInfiniteQueryOptions(options)
+
+  const query = useSuspenseInfiniteQuery(queryOptions, queryClient) as  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
