@@ -73,12 +73,25 @@ export const DeleteUserParams = zod.object({
 export const DeleteUserResponse = zod.void()
 
 /**
- * Retrieves a list of all system users/administrators for the current tenant.
+ * Retrieves a paginated list of all system users/administrators for the current tenant.
  * @summary Get all users
  */
+export const getAllUsersQueryPageDefault = 1;
+
+export const getAllUsersQuerySizeDefault = 10;
+
+export const getAllUsersQuerySortDefault = [`lastName,ASC`, `id,ASC`];
+
+export const GetAllUsersQueryParams = zod.object({
+  "page": zod.int().min(1).default(getAllUsersQueryPageDefault).describe('Page number (1-indexed, minimum 1)'),
+  "size": zod.int().min(1).default(getAllUsersQuerySizeDefault).describe('The size of the page to be returned'),
+  "sort": zod.array(zod.string()).default(getAllUsersQuerySortDefault).describe('Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.')
+})
+
 export const GetAllUsersResponse = zod.object({
   "success": zod.boolean().optional(),
-  "data": zod.array(zod.object({
+  "data": zod.object({
+  "content": zod.array(zod.object({
   "id": zod.int().optional(),
   "firstName": zod.string().optional(),
   "lastName": zod.string().optional(),
@@ -86,6 +99,13 @@ export const GetAllUsersResponse = zod.object({
   "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional(),
   "mustChangePassword": zod.boolean().optional()
 })).optional(),
+  "page": zod.int().optional(),
+  "size": zod.int().optional(),
+  "totalElements": zod.int().optional(),
+  "totalPages": zod.int().optional(),
+  "first": zod.boolean().optional(),
+  "last": zod.boolean().optional()
+}).optional(),
   "message": zod.string().optional()
 })
 

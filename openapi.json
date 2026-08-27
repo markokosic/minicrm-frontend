@@ -550,15 +550,55 @@
           "Users"
         ],
         "summary": "Get all users",
-        "description": "Retrieves a list of all system users/administrators for the current tenant.",
+        "description": "Retrieves a paginated list of all system users/administrators for the current tenant.",
         "operationId": "getAllUsers",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number (1-indexed, minimum 1)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "The size of the page to be returned",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "default": [
+                "lastName,ASC",
+                "id,ASC"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Users list retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiResponseDTOListUserResponseDTO"
+                  "$ref": "#/components/schemas/ApiResponseDTOPageResponseDTOUserResponseDTO"
                 }
               }
             }
@@ -3459,20 +3499,50 @@
           }
         }
       },
-      "ApiResponseDTOListUserResponseDTO": {
+      "ApiResponseDTOPageResponseDTOUserResponseDTO": {
         "type": "object",
         "properties": {
           "success": {
             "type": "boolean"
           },
           "data": {
+            "$ref": "#/components/schemas/PageResponseDTOUserResponseDTO"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "PageResponseDTOUserResponseDTO": {
+        "type": "object",
+        "properties": {
+          "content": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/UserResponseDTO"
             }
           },
-          "message": {
-            "type": "string"
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
           }
         }
       },

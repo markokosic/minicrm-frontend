@@ -15,7 +15,7 @@ import type {
 
 import type {
   ApiResponseCreateUserResponse,
-  ApiResponseListUserResponse,
+  ApiResponsePageResponseUserResponse,
   ApiResponseUserResponse
 } from '../../model';
 
@@ -63,7 +63,7 @@ export const getDeleteUserMockHandler = (overrideResponse?: void | ((info: Param
   }, options)
 }
 
-export const getGetAllUsersMockHandler = (overrideResponse?: ApiResponseListUserResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ApiResponseListUserResponse> | ApiResponseListUserResponse), options?: RequestHandlerOptions) => {
+export const getGetAllUsersMockHandler = (overrideResponse?: ApiResponsePageResponseUserResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ApiResponsePageResponseUserResponse> | ApiResponsePageResponseUserResponse), options?: RequestHandlerOptions) => {
   return http.get('*/api/users', async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
 
 
