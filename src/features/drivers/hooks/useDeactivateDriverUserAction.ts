@@ -34,7 +34,7 @@ export const useDeactivateDriverUserAction = (options?: { onSuccess?: () => void
   });
 
   const handleDeactivate = (driver: DriverResponse) => {
-    if (!driver.id) return;
+    if (!driver.id) {return;}
     confirm({
       title: t('app:drivers.modals.deactivate_user_confirm.title'),
       children: t('app:drivers.modals.deactivate_user_confirm.message'),

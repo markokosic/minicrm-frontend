@@ -3,8 +3,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { z } from 'zod';
 import { ROUTES } from '@/config/routes';
+
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { getChangePasswordFormSchema } from '@/features/auth/schema';
 

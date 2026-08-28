@@ -24,9 +24,12 @@ export const ControlledPasswordInput = <
   rules,
   control,
   readOnly,
+  labelKey,
+  placeholderKey,
   ...props
-}: ControlledPasswordInputProps<TFieldValues, TName>) => {
+}: ControlledPasswordInputProps<TFieldValues, TName> & { labelKey?: string; placeholderKey?: string }) => {
   const { control: contextControl } = useFormContext<TFieldValues>();
+
 
   const {
     field: { value, onChange: fieldOnChange, ref, ...field },

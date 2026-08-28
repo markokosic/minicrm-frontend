@@ -22,9 +22,12 @@ export const ControlledTextInput = <
   rules,
   control,
   readOnly,
+  labelKey,
+  placeholderKey,
   ...props
-}: ControlledTextInputProps<TFieldValues, TName>) => {
+}: ControlledTextInputProps<TFieldValues, TName> & { labelKey?: string; placeholderKey?: string }) => {
   const { control: contextControl } = useFormContext<TFieldValues>();
+
 
   const {
     field: { value, onChange: fieldOnChange, ref, ...field },

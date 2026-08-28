@@ -12,12 +12,12 @@ import type { ApiResponseMeResponse } from '@/api/generated/model';
 const AUTH_STORAGE_KEY = 'auth_active';
 
 export const isClientAuthenticated = (): boolean => {
-  if (typeof window === 'undefined') return false;
+  if (typeof window === 'undefined') {return false;}
   return localStorage.getItem(AUTH_STORAGE_KEY) === 'true';
 };
 
 export const setClientAuthenticated = (authenticated: boolean) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {return;}
   if (authenticated) {
     localStorage.setItem(AUTH_STORAGE_KEY, 'true');
   } else {
@@ -72,7 +72,7 @@ export const useAuth = () => {
       onSuccess: (response) => {
         if (response.success) {
           queryClient.setQueryData<ApiResponseMeResponse>(getMeQueryKey, (old) => {
-            if (!old?.data) return old;
+            if (!old?.data) {return old;}
             return {
               ...old,
               data: {

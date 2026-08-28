@@ -10,7 +10,7 @@ export const useHasRole = (
     return true;
   }
 
-  const userRole = (user?.role ?? user?.roles) as UserResponseRoles | undefined;
+  const userRole = user?.role as UserResponseRoles | undefined;
 
   if (!userRole) {
     return false;
@@ -27,7 +27,7 @@ export const useHasRole = (
 
 export const useUserRole = () => {
   const { user } = useAuth();
-  const role = (user?.role ?? user?.roles) as UserResponseRoles | undefined;
+  const role = user?.role as UserResponseRoles | undefined;
   const mustChangePassword = Boolean(user?.mustChangePassword);
 
   return {

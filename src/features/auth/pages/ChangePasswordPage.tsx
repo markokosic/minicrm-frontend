@@ -11,7 +11,8 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import { Info, LogOut, ShieldCheck } from 'lucide-react';
+import { LogOut, ShieldCheck } from 'lucide-react';
+
 import { ROUTES } from '@/config/routes';
 import { ChangePasswordForm } from '@/features/auth/components/ChangePasswordForm';
 import { useAuth } from '@/features/auth/hooks/useAuth';
@@ -34,7 +35,8 @@ export const ChangePasswordPage = () => {
 
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(' ');
   const displayName = fullName || user?.email || '';
-  const userRole = (user?.role ?? user?.roles) as string | undefined;
+  const userRole = user?.role as string | undefined;
+
 
   return (
     <Paper

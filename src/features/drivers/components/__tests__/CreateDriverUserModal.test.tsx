@@ -24,7 +24,7 @@ describe('CreateDriverUserModal', () => {
     render(
       <CreateDriverUserModal
         driver={mockDriver}
-        opened={true}
+        opened
         onClose={vi.fn()}
       />,
       { wrapper: Wrapper }
@@ -41,7 +41,7 @@ describe('CreateDriverUserModal', () => {
     render(
       <CreateDriverUserModal
         driver={mockDriver}
-        opened={true}
+        opened
         onClose={vi.fn()}
       />,
       { wrapper: Wrapper }

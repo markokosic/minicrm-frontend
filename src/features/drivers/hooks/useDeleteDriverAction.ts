@@ -30,7 +30,7 @@ export const useDeleteDriverAction = (options?: { onSuccess?: () => void }) => {
   });
 
   const handleDelete = (driver: DriverResponse) => {
-    if (!driver.id) return;
+    if (!driver.id) {return;}
     confirm({
       title: t('app:drivers.modals.delete_confirm.title'),
       labels: {

@@ -11,7 +11,6 @@ export const ROLE_COLOR_MAP: Record<string, string> = {
   [UserResponseRoles.ADMIN]: 'indigo',
   [UserResponseRoles.BACKOFFICE]: 'teal',
   [UserResponseRoles.DRIVER]: 'cyan',
-  [UserResponseRoles.PRE_AUTH]: 'orange',
 };
 
 export const UserRoleBadge = ({
@@ -23,7 +22,7 @@ export const UserRoleBadge = ({
 }: UserRoleBadgeProps) => {
   const { t } = useTranslation('common');
 
-  if (!role) return null;
+  if (!role) {return null;}
 
   const color = ROLE_COLOR_MAP[role] ?? 'gray';
   const label = t(`roles.${role}`);
