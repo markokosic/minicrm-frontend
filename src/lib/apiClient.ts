@@ -17,16 +17,14 @@ api.interceptors.response.use(
     // eslint-disable-next-line no-console
     console.error('API call failed:', error);
     // Handle specific error cases
-    if (error.response.status === 401) {
-
-  
-      queryClient.clear();
-      // window.location.href = '/login';
-    } else if (error.response.status === 404) {
-      // Not found
+    if (error.response?.status === 401) {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('auth_active');
+      }
     }
     return Promise.reject(error);
   }
 );
+
 
 export { api };

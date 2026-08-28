@@ -13,9 +13,10 @@ import {
   Text,
   UnstyledButton,
 } from '@mantine/core';
-import { NAV_ITEMS, NavItem } from '@/config/navigation';
+import { NAV_ITEMS, NavItem } from '@/config/navigation.config';
 import { ROUTES } from '@/config/routes';
-import { useAuth } from '@/features/auth';
+import { isRouteAllowedForRole } from '@/config/routes.config';
+import { useAuth, useUserRole } from '@/features/auth';
 
 import classes from './Navbar.module.css';
 
@@ -24,6 +25,7 @@ export const NavBar = () => {
   const { t } = useTranslation(['common', 'app']);
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { role } = useUserRole();
 
   const handleLogout = () => {
     logout(undefined, {
@@ -43,6 +45,15 @@ export const NavBar = () => {
     }
     return currentPath === itemHref || currentPath.startsWith(`${itemHref}/`);
   };
+
+  const filterByRole = (items: NavItem[] = []) =>
+    items.filter((item) => isRouteAllowedForRole(item.path, role));
+
+
+
+  const overviewItems = filterByRole(NAV_ITEMS.overview);
+  const operationsItems = filterByRole(NAV_ITEMS.operations);
+  const administrationItems = filterByRole(NAV_ITEMS.administration);
 
   const createLinks = (data: NavItem[]) =>
     data.map((item) => {
@@ -65,7 +76,6 @@ export const NavBar = () => {
       );
     });
 
-
   const displayName = user?.firstName
     ? `${user.firstName} ${user.lastName ?? ''}`.trim()
     : user?.email ?? t('common:user');
@@ -83,7 +93,7 @@ export const NavBar = () => {
       h="100%"
     >
       <Box>
-        {NAV_ITEMS.overview && NAV_ITEMS.overview.length > 0 && (
+        {overviewItems.length > 0 && (
           <Box mb="md">
             <Text
               size="xs"
@@ -96,16 +106,18 @@ export const NavBar = () => {
             >
               {t('common:overview')}
             </Text>
-            {createLinks(NAV_ITEMS.overview)}
+            {createLinks(overviewItems)}
           </Box>
         )}
 
-        {NAV_ITEMS.operations && NAV_ITEMS.operations.length > 0 && (
+        {operationsItems.length > 0 && (
           <>
-            <Divider
-              my="md"
-              color="gray.2"
-            />
+            {overviewItems.length > 0 && (
+              <Divider
+                my="md"
+                color="gray.2"
+              />
+            )}
             <Box mb="md">
               <Text
                 size="xs"
@@ -118,17 +130,19 @@ export const NavBar = () => {
               >
                 {t('common:operations')}
               </Text>
-              {createLinks(NAV_ITEMS.operations)}
+              {createLinks(operationsItems)}
             </Box>
           </>
         )}
 
-        {NAV_ITEMS.administration && NAV_ITEMS.administration.length > 0 && (
+        {administrationItems.length > 0 && (
           <>
-            <Divider
-              my="md"
-              color="gray.2"
-            />
+            {(overviewItems.length > 0 || operationsItems.length > 0) && (
+              <Divider
+                my="md"
+                color="gray.2"
+              />
+            )}
             <Box>
               <Text
                 size="xs"
@@ -141,11 +155,12 @@ export const NavBar = () => {
               >
                 {t('common:administration')}
               </Text>
-              {createLinks(NAV_ITEMS.administration)}
+              {createLinks(administrationItems)}
             </Box>
           </>
         )}
       </Box>
+
 
       <Box pt="sm">
         <Divider

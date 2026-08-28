@@ -12,8 +12,12 @@ export const ROUTES = {
       path: '/login',
       getHref: () => '/login',
     },
-    
+    changePassword: {
+      path: '/change-password',
+      getHref: () => '/change-password',
+    },
   },
+
 
   app: {
     root: {
@@ -97,3 +101,5 @@ export const ROUTES = {
     },
   },
 } as const;
+
+

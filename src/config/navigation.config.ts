@@ -1,12 +1,12 @@
 import {
+  CalendarDays,
+  Car,
+  FileChartLine,
   House,
   LucideIcon,
   PersonStanding,
   Settings,
-  FileChartLine,
-  Car,
   Tag,
-  CalendarDays,
   Users,
 } from 'lucide-react';
 import { ROUTES } from './routes';
@@ -17,7 +17,6 @@ export interface NavItem {
   href: string;
   labelKey: string;
   icon: LucideIcon;
-  roles?: string[];
 }
 
 export const NAV_ITEMS: Record<string, NavItem[]> = {

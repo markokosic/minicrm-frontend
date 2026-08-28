@@ -4,16 +4,25 @@ import { ROUTES } from '@/config/routes';
 import { useAuth } from '@/features/auth';
 
 export const ProtectedRoute = () => {
-  const { user, isPending } = useAuth();
+  const { user, isAuthenticated, isPending } = useAuth();
 
   if (isPending) {
     return <AppLayout overlayVisible />;
   }
 
-  if (!user) {
+  if (!isAuthenticated || !user) {
     return (
       <Navigate
         to={ROUTES.auth.login.path}
+        replace
+      />
+    );
+  }
+
+  if (user.mustChangePassword) {
+    return (
+      <Navigate
+        to={ROUTES.auth.changePassword.path}
         replace
       />
     );

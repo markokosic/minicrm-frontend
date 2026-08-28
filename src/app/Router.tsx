@@ -1,92 +1,101 @@
-import { lazy } from 'react';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
+import { lazy, useMemo } from 'react';
+import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from 'react-router';
 import { MainErrorFallback } from '@/components/errors/MainErrorFallback';
-import { AuthLayout } from '@/components/layout/AuthLayout';
-import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
+import { AuthLayout, ProtectedRoute, PublicRoute } from '@/components/layout';
+import { UserResponseRoles } from '@/api/generated/model';
 import { ROUTES } from '@/config/routes';
+import { getRoutesForRole } from '@/config/routes.config';
+import { useUserRole } from '@/features/auth';
 
-// LAZY LOADED PAGES
+
+
+// AUTH PAGES
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
-const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
-const SettingsPage = lazy(() => import('@/features/settings/pages/SettingsPage'));
-const DriversPage = lazy(() => import('@/features/drivers/pages/DriversPage'));
-const DriverCreatePage = lazy(() => import('@/features/drivers/pages/DriverCreatePage'));
-const DriverViewPage = lazy(() => import('@/features/drivers/pages/DriverViewPage'));
-const DriverEditPage = lazy(() => import('@/features/drivers/pages/DriverEditPage'));
-const CarsPage = lazy(() => import('@/features/cars/pages/CarsPage'));
-const CarCreatePage = lazy(() => import('@/features/cars/pages/CarCreatePage'));
-const CarPage = lazy(() => import('@/features/cars/pages/CarPage'));
-const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
-const CreateNewFlatRatePage = lazy(() => import('@/features/flatrates/pages/CreateNewFlatRatePage'));
-const FlatRatesPage = lazy(() => import('@/features/flatrates/pages/FlatRatesPage'));
-const ShiftsPage = lazy(() => import('@/features/shifts/pages/ShiftsPage'));
-const CreateShiftPage = lazy(() => import('@/features/shifts/pages/CreateShiftPage'));
-const EditShiftPage = lazy(() => import('@/features/shifts/pages/EditShiftPage'));
-const ShiftViewPage = lazy(() => import('@/features/shifts/pages/ShiftViewPage'));
-const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'));
+const ChangePasswordPage = lazy(() => import('@/features/auth/pages/ChangePasswordPage'));
 
-const router = createBrowserRouter([
+export interface GetRoutesParams {
+  role?: UserResponseRoles;
+  mustChangePassword?: boolean;
+}
 
-  {
-    errorElement: <MainErrorFallback />,
-    element: <AuthLayout />,
-    children: [
+
+
+export const getRoutes = ({ role, mustChangePassword }: GetRoutesParams): RouteObject[] => {
+  if (mustChangePassword) {
+    return [
       {
-        path: ROUTES.auth.login.path,
-        element: <LoginPage />,
+        errorElement: <MainErrorFallback />,
+        element: <AuthLayout />,
+        children: [
+          {
+            path: ROUTES.auth.changePassword.path,
+            element: <ChangePasswordPage />,
+          },
+          {
+            path: '*',
+            element: (
+              <Navigate
+                to={ROUTES.auth.changePassword.path}
+                replace
+              />
+            ),
+          },
+        ],
       },
-      {
-        path: ROUTES.auth.register.path,
-        element: <RegisterPage />,
-      },
-    ],
-  },
+    ];
+  }
 
-  {
-    errorElement: <MainErrorFallback />,
-    element: <ProtectedRoute />,
-    children: [
-      { index: true, element: <Navigate to={ROUTES.app.dashboard.path} replace /> },
-      { path: ROUTES.app.dashboard.path, element: <DashboardPage /> },
-      // DRIVER PAGES
-      { path: ROUTES.app.drivers.path, element: <DriversPage /> },
-      { path: ROUTES.app.drivers.create.path, element: <DriverCreatePage /> },
-      { path: ROUTES.app.drivers.view.path, element: <DriverViewPage /> },
-      { path: ROUTES.app.drivers.edit.path, element: <DriverEditPage /> },
+  const protectedRoutes = getRoutesForRole(role);
 
-      // CAR PAGES
-      { path: ROUTES.app.cars.path, element: <CarsPage /> },
-      { path: ROUTES.app.cars.create.path, element: <CarCreatePage /> },
-      { path: ROUTES.app.cars.view.path, element: <CarPage /> },
+  return [
+    {
+      errorElement: <MainErrorFallback />,
+      element: <AuthLayout />,
+      children: [
+        {
+          element: <PublicRoute />,
+          children: [
+            {
+              path: ROUTES.auth.login.path,
+              element: <LoginPage />,
+            },
+            {
+              path: ROUTES.auth.register.path,
+              element: <RegisterPage />,
+            },
+          ],
+        },
+      ],
+    },
 
-      //REPORTS PAGES
-      { path: ROUTES.app.reports.path, element: <ReportPage /> },
-
-      // FLATRATE PAGES
-      { path: ROUTES.app.flatrates.path, element: <FlatRatesPage /> },
-      { path: ROUTES.app.flatrates.create.path, element: <CreateNewFlatRatePage /> },
-
-      // SHIFTS PAGES
-      { path: ROUTES.app.shifts.path, element: <ShiftsPage /> },
-      { path: ROUTES.app.shifts.create.path, element: <CreateShiftPage /> },
-      { path: ROUTES.app.shifts.edit.path, element: <EditShiftPage /> },
-      { path: ROUTES.app.shifts.view.path, element: <ShiftViewPage /> },
-
-      // USERS PAGE
-      { path: ROUTES.app.users.path, element: <UsersPage /> },
-
-      // SETTINGS PAGE
-      { path: ROUTES.app.settings.path, element: <SettingsPage /> },
-
-      // 404 NOT FOUND PAGE
-      { path: '*', element: <div>Not found</div> },
-    ],
-  },
-]);
-
-export const AppRouter = () => {
-  return <RouterProvider router={router} />;
+    {
+      errorElement: <MainErrorFallback />,
+      element: <ProtectedRoute />,
+      children: [
+        {
+          index: true,
+          element: (
+            <Navigate
+              to={ROUTES.app.dashboard.path}
+              replace
+            />
+          ),
+        },
+        ...protectedRoutes,
+        { path: '*', element: <div>Not found</div> },
+      ],
+    },
+  ];
 };
 
+export const AppRouter = () => {
+  const { role, mustChangePassword } = useUserRole();
 
+  const router = useMemo(() => {
+    const routes = getRoutes({ role, mustChangePassword });
+    return createBrowserRouter(routes);
+  }, [role, mustChangePassword]);
+
+  return <RouterProvider router={router} />;
+};
