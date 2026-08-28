@@ -4072,6 +4072,16 @@
           "email": {
             "type": "string"
           },
+          "roles": {
+            "type": "string",
+            "enum": [
+              "OWNER",
+              "ADMIN",
+              "DRIVER",
+              "BACKOFFICE",
+              "PRE_AUTH"
+            ]
+          },
           "tenantId": {
             "type": "integer",
             "format": "int64"

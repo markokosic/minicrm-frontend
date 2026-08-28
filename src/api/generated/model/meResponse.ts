@@ -5,12 +5,14 @@
  * API Documentation for MiniCRM Application
  * OpenAPI spec version: 1.0.0
  */
+import type { MeResponseRoles } from './meResponseRoles';
 
 export interface MeResponse {
   id?: number;
   firstName?: string;
   lastName?: string;
   email?: string;
+  roles?: MeResponseRoles;
   tenantId?: number;
   tenantName?: string;
 }

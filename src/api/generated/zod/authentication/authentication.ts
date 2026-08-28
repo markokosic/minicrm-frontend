@@ -121,6 +121,7 @@ export const GetMeResponse = zod.object({
   "firstName": zod.string().optional(),
   "lastName": zod.string().optional(),
   "email": zod.string().optional(),
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional(),
   "tenantId": zod.int().optional(),
   "tenantName": zod.string().optional()
 }).optional(),
