@@ -25,10 +25,27 @@
       "title": "Abmelden",
       "error": "Abmeldung fehlgeschlagen"
     },
+    "changePassword": {
+      "firstLogin": {
+        "greeting": "Hallo {{name}}",
+        "title": "Passwort festlegen",
+        "subtitle": "Bevor du starten kannst, musst du aus Sicherheitsgründen dein temporäres Passwort durch ein neues, persönliches Passwort ersetzen.",
+        "securityNotice": "Dieser Schritt ist bei deiner ersten Anmeldung einmalig erforderlich, um dein Konto zu schützen."
+      },
+      "reset": {
+        "title": "Neues Passwort festlegen",
+        "subtitle": "Bitte gib dein neues Passwort ein."
+      },
+      "submit": "Passwort speichern & fortfahren",
+      "success": "Passwort erfolgreich geändert",
+      "error": "Passwortänderung fehlgeschlagen",
+      "loggedInAs": "Angemeldet als"
+    },
     "account": {
       "existingAccount": "Bereits ein Konto?"
     }
   },
+
   "cars": {
     "licensePlate": {
       "label": "Kennzeichen",

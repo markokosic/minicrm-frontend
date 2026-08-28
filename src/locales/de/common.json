@@ -70,10 +70,19 @@
       "label": "Passwort",
       "placeholder": "Passwort eingeben"
     },
-    "confirmPassword": {
-      "label": "Passwort bestätigen",
-      "placeholder": "Passwort bestätigen"
+    "currentPassword": {
+      "label": "Aktuelles (temporäres) Passwort",
+      "placeholder": "Aktuelles Passwort eingeben"
     },
+    "newPassword": {
+      "label": "Neues Passwort",
+      "placeholder": "Neues Passwort eingeben"
+    },
+    "confirmPassword": {
+      "label": "Neues Passwort bestätigen",
+      "placeholder": "Neues Passwort bestätigen"
+    },
+
     "tenantName": {
       "label": "Workspace-Name",
       "placeholder": "Geben Sie Ihren Workspace-Namen ein"

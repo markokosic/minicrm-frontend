@@ -25,10 +25,27 @@
       "title": "Log out",
       "error": "Logout failed"
     },
+    "changePassword": {
+      "firstLogin": {
+        "greeting": "Hello {{name}}",
+        "title": "Set password",
+        "subtitle": "Before you can start, you need to replace your temporary password with a personal password for security reasons.",
+        "securityNotice": "This step is required once on your first login to protect your account."
+      },
+      "reset": {
+        "title": "Set new password",
+        "subtitle": "Please enter your new password."
+      },
+      "submit": "Save password & continue",
+      "success": "Password successfully changed",
+      "error": "Failed to change password",
+      "loggedInAs": "Logged in as"
+    },
     "account": {
       "existingAccount": "Already have an account?"
     }
   },
+
   "cars": {
     "licensePlate": {
       "label": "License Plate",

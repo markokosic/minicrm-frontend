@@ -13,6 +13,20 @@ export const AUTH_FORM_FIELDS = {
     type: 'password',
     autoComplete: 'current-password',
   },
+  currentPassword: {
+    name: 'currentPassword',
+    labelKey: 'form.currentPassword.label',
+    placeholderKey: 'form.currentPassword.placeholder',
+    type: 'password',
+    autoComplete: 'current-password',
+  },
+  newPassword: {
+    name: 'newPassword',
+    labelKey: 'form.newPassword.label',
+    placeholderKey: 'form.newPassword.placeholder',
+    type: 'password',
+    autoComplete: 'new-password',
+  },
   confirmPassword: {
     name: 'confirmPassword',
     labelKey: 'form.confirmPassword.label',
@@ -20,6 +34,7 @@ export const AUTH_FORM_FIELDS = {
     type: 'password',
     autoComplete: 'new-password',
   },
+
   tenantName: {
     name: 'tenantName',
     labelKey: 'form.tenantName.label',

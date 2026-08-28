@@ -70,10 +70,19 @@
       "label": "Password",
       "placeholder": "Enter password"
     },
-    "confirmPassword": {
-      "label": "Confirm password",
-      "placeholder": "Confirm password"
+    "currentPassword": {
+      "label": "Current (temporary) password",
+      "placeholder": "Enter current password"
     },
+    "newPassword": {
+      "label": "New password",
+      "placeholder": "Enter new password"
+    },
+    "confirmPassword": {
+      "label": "Confirm new password",
+      "placeholder": "Confirm new password"
+    },
+
     "tenantName": {
       "label": "Workspace Name",
       "placeholder": "Enter your workspace name"

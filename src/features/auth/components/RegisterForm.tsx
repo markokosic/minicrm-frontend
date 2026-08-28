@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Button, SimpleGrid, Stack } from '@mantine/core';
+import { ControlledPasswordInput } from '@/components/ui/ControlledPasswordInput/ControlledPasswordInput';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
 import { useRegisterForm } from '@/features/auth/hooks/useRegisterForm';
@@ -41,14 +42,14 @@ export const RegisterForm = () => {
           withAsterisk
         />
 
-        <ControlledTextInput
+        <ControlledPasswordInput
           {...AUTH_FORM_FIELDS.password}
           label={t(AUTH_FORM_FIELDS.password.labelKey)}
           placeholder={t(AUTH_FORM_FIELDS.password.placeholderKey)}
           withAsterisk
         />
 
-        <ControlledTextInput
+        <ControlledPasswordInput
           {...AUTH_FORM_FIELDS.confirmPassword}
           label={t(AUTH_FORM_FIELDS.confirmPassword.labelKey)}
           placeholder={t(AUTH_FORM_FIELDS.confirmPassword.placeholderKey)}
