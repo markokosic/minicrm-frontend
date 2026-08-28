@@ -2290,8 +2290,7 @@
               "OWNER",
               "ADMIN",
               "DRIVER",
-              "BACKOFFICE",
-              "PRE_AUTH"
+              "BACKOFFICE"
             ],
             "example": "ADMIN"
           }
@@ -2366,8 +2365,7 @@
               "OWNER",
               "ADMIN",
               "DRIVER",
-              "BACKOFFICE",
-              "PRE_AUTH"
+              "BACKOFFICE"
             ]
           },
           "mustChangePassword": {
@@ -2677,8 +2675,7 @@
               "OWNER",
               "ADMIN",
               "DRIVER",
-              "BACKOFFICE",
-              "PRE_AUTH"
+              "BACKOFFICE"
             ],
             "example": "ADMIN"
           }
@@ -2736,8 +2733,7 @@
               "OWNER",
               "ADMIN",
               "DRIVER",
-              "BACKOFFICE",
-              "PRE_AUTH"
+              "BACKOFFICE"
             ],
             "example": "DRIVER"
           },
@@ -4072,15 +4068,17 @@
           "email": {
             "type": "string"
           },
-          "roles": {
+          "role": {
             "type": "string",
             "enum": [
               "OWNER",
               "ADMIN",
               "DRIVER",
-              "BACKOFFICE",
-              "PRE_AUTH"
+              "BACKOFFICE"
             ]
+          },
+          "mustChangePassword": {
+            "type": "boolean"
           },
           "tenantId": {
             "type": "integer",

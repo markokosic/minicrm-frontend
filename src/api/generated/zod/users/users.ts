@@ -23,7 +23,7 @@ export const GetUserResponse = zod.object({
   "firstName": zod.string().optional(),
   "lastName": zod.string().optional(),
   "email": zod.string().optional(),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional(),
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).optional(),
   "mustChangePassword": zod.boolean().optional()
 }).optional(),
   "message": zod.string().optional()
@@ -46,7 +46,7 @@ export const UpdateUserBody = zod.object({
   "email": zod.email().min(1).describe('User\'s email address'),
   "firstName": zod.string().min(1).describe('User\'s first name'),
   "lastName": zod.string().min(1).describe('User\'s last name'),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).describe('User role')
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).describe('User role')
 }).describe('Request payload for updating an existing user')
 
 export const UpdateUserResponse = zod.object({
@@ -56,7 +56,7 @@ export const UpdateUserResponse = zod.object({
   "firstName": zod.string().optional(),
   "lastName": zod.string().optional(),
   "email": zod.string().optional(),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional(),
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).optional(),
   "mustChangePassword": zod.boolean().optional()
 }).optional(),
   "message": zod.string().optional()
@@ -96,7 +96,7 @@ export const GetAllUsersResponse = zod.object({
   "firstName": zod.string().optional(),
   "lastName": zod.string().optional(),
   "email": zod.string().optional(),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional(),
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).optional(),
   "mustChangePassword": zod.boolean().optional()
 })).optional(),
   "page": zod.int().optional(),
@@ -122,7 +122,7 @@ export const CreateUserBody = zod.object({
   "email": zod.email().min(1).describe('User\'s email address'),
   "firstName": zod.string().min(1).describe('User\'s first name'),
   "lastName": zod.string().min(1).describe('User\'s last name'),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).describe('User role')
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).describe('User role')
 }).describe('Request payload for creating a new user')
 
 export const CreateUserResponse = zod.object({
@@ -132,7 +132,7 @@ export const CreateUserResponse = zod.object({
   "firstName": zod.string().optional().describe('User\'s first name'),
   "lastName": zod.string().optional().describe('User\'s last name'),
   "email": zod.string().optional().describe('User\'s email address'),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional().describe('User role'),
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).optional().describe('User role'),
   "mustChangePassword": zod.boolean().optional().describe('Whether the user must change their password on next login'),
   "temporaryPassword": zod.string().optional().describe('One-time temporary password generated for the user')
 }).optional().describe('Response payload after creating a new user, containing the generated temporary password'),

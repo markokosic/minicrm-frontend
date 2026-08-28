@@ -17,5 +17,4 @@ export const CreateUserRequestRoles = {
   ADMIN: 'ADMIN',
   DRIVER: 'DRIVER',
   BACKOFFICE: 'BACKOFFICE',
-  PRE_AUTH: 'PRE_AUTH',
 } as const;

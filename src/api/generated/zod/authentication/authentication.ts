@@ -68,7 +68,7 @@ export const LoginResponse = zod.object({
   "firstName": zod.string().optional(),
   "lastName": zod.string().optional(),
   "email": zod.string().optional(),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional(),
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).optional(),
   "mustChangePassword": zod.boolean().optional()
 }).optional(),
   "message": zod.string().optional()
@@ -94,7 +94,7 @@ export const ChangePasswordResponse = zod.object({
   "firstName": zod.string().optional(),
   "lastName": zod.string().optional(),
   "email": zod.string().optional(),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional(),
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).optional(),
   "mustChangePassword": zod.boolean().optional()
 }).optional(),
   "message": zod.string().optional()
@@ -121,7 +121,8 @@ export const GetMeResponse = zod.object({
   "firstName": zod.string().optional(),
   "lastName": zod.string().optional(),
   "email": zod.string().optional(),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional(),
+  "role": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).optional(),
+  "mustChangePassword": zod.boolean().optional(),
   "tenantId": zod.int().optional(),
   "tenantName": zod.string().optional()
 }).optional(),

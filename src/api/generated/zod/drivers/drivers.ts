@@ -191,7 +191,7 @@ export const CreateDriverUserResponse = zod.object({
   "firstName": zod.string().optional().describe('User\'s first name'),
   "lastName": zod.string().optional().describe('User\'s last name'),
   "email": zod.string().optional().describe('User\'s email address'),
-  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE', 'PRE_AUTH']).optional().describe('User role'),
+  "roles": zod.enum(['OWNER', 'ADMIN', 'DRIVER', 'BACKOFFICE']).optional().describe('User role'),
   "mustChangePassword": zod.boolean().optional().describe('Whether the user must change their password on next login'),
   "temporaryPassword": zod.string().optional().describe('One-time temporary password generated for the user')
 }).optional().describe('Response payload after creating a new user, containing the generated temporary password'),

@@ -6,10 +6,10 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type UserResponseRoles = typeof UserResponseRoles[keyof typeof UserResponseRoles];
+export type MeResponseRole = typeof MeResponseRole[keyof typeof MeResponseRole];
 
 
-export const UserResponseRoles = {
+export const MeResponseRole = {
   OWNER: 'OWNER',
   ADMIN: 'ADMIN',
   DRIVER: 'DRIVER',

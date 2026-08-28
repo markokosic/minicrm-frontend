@@ -79,6 +79,7 @@ export * from './getRevenueReportGroupBy';
 export * from './getRevenueReportParams';
 export * from './loginRequest';
 export * from './meResponse';
+export * from './meResponseRole';
 export * from './meResponseRoles';
 export * from './pageResponseCarResponse';
 export * from './pageResponseDailyRevenueResponse';
