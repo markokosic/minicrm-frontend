@@ -4,14 +4,17 @@ import { ControlledPasswordInput } from '@/components/ui/ControlledPasswordInput
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
 import { useRegisterForm } from '@/features/auth/hooks/useRegisterForm';
-import { AUTH_FORM_FIELDS } from '../config/auth-form-fields';
+import { AUTH_FORM_FIELDS } from '../domain/auth-form-fields';
 
 export const RegisterForm = () => {
   const { t } = useTranslation(['common', 'app', 'errors']);
   const { methods, onSubmit, isPending } = useRegisterForm();
 
   return (
-    <Form methods={methods} onSubmit={onSubmit}>
+    <Form
+      methods={methods}
+      onSubmit={onSubmit}
+    >
       <Stack gap="sm">
         <ControlledTextInput
           {...AUTH_FORM_FIELDS.tenantName}
@@ -20,7 +23,10 @@ export const RegisterForm = () => {
           withAsterisk
         />
 
-        <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="sm">
+        <SimpleGrid
+          cols={{ base: 1, sm: 2 }}
+          spacing="sm"
+        >
           <ControlledTextInput
             {...AUTH_FORM_FIELDS.firstName}
             label={t(AUTH_FORM_FIELDS.firstName.labelKey)}
@@ -56,7 +62,12 @@ export const RegisterForm = () => {
           withAsterisk
         />
 
-        <Button mt="md" type="submit" fullWidth loading={isPending}>
+        <Button
+          mt="md"
+          type="submit"
+          fullWidth
+          loading={isPending}
+        >
           {t('app:auth.register.submit')}
         </Button>
       </Stack>

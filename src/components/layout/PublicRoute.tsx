@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router';
 import { ROUTES } from '@/config/routes';
-import { useAuth } from '@/features/auth';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 
 export const PublicRoute = () => {
   const { user, isAuthenticated, isPending } = useAuth();
@@ -11,9 +11,19 @@ export const PublicRoute = () => {
 
   if (isAuthenticated && user) {
     if (user.mustChangePassword) {
-      return <Navigate to={ROUTES.auth.changePassword.path} replace />;
+      return (
+        <Navigate
+          to={ROUTES.auth.changePassword.path}
+          replace
+        />
+      );
     }
-    return <Navigate to={ROUTES.app.dashboard.path} replace />;
+    return (
+      <Navigate
+        to={ROUTES.app.dashboard.path}
+        replace
+      />
+    );
   }
 
   return <Outlet />;

@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { UserResponseRoles } from '@/api/generated/model';
 import { MANAGEMENT_ROLES } from '@/common/constants';
 import { ROUTES } from '@/config/routes';
-import { AppRouteConfig } from '@/types/routes.types';
+import { AppRouteInterface } from '@/common/types/common-types';
 
 const AdminShiftsPage = lazy(() => import('./pages/admin/AdminShiftsPage'));
 const DriverShiftsPage = lazy(() => import('./pages/driver/DriverShiftsPage'));
@@ -13,7 +13,7 @@ const ShiftViewPage = lazy(() => import('./pages/admin/AdminViewShiftPage'));
 
 const { shifts } = ROUTES.app;
 
-export const shiftRoutes: AppRouteConfig[] = [
+export const shiftRoutes: AppRouteInterface[] = [
   // --- ÜBERSICHTEN (/shifts) ---
   {
     path: shifts.path,

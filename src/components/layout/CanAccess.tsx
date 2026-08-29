@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { UserResponseRoles } from '@/api/generated/model';
-import { useHasRole } from '@/features/auth';
+import { useHasRole } from '@/features/auth/hooks/useHasRole';
 
 export interface CanAccessProps {
   roles?: UserResponseRoles[] | UserResponseRoles;
@@ -17,3 +17,4 @@ export const CanAccess = ({
 
   return hasAccess ? <>{children}</> : <>{fallback}</>;
 };
+1

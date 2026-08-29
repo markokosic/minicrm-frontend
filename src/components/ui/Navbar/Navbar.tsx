@@ -16,8 +16,9 @@ import {
 import { isRouteAllowedForRole } from '@/common/routes.utils';
 import { NAV_ITEMS, NavItem } from '@/config/navigation.config';
 import { ROUTES } from '@/config/routes';
-import { useAuth, useUserRole } from '@/features/auth';
+import { useAuth} from '@/features/auth/hooks/useAuth';
 import classes from './Navbar.module.css';
+import { useUserRole } from '@/features/auth/hooks/useHasRole';
 
 export const NavBar = () => {
   const location = useLocation();

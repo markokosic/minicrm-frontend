@@ -2,7 +2,8 @@ import { ReactNode } from 'react';
 import { Navigate, Outlet } from 'react-router';
 import { UserResponseRoles } from '@/api/generated/model';
 import { ROUTES } from '@/config/routes';
-import { useAuth, useHasRole } from '@/features/auth';
+import { useAuth } from '@/features/auth/hooks/useAuth';
+import { useHasRole } from '@/features/auth/hooks/useHasRole';
 
 export interface RoleGuardProps {
   allowedRoles: UserResponseRoles[] | UserResponseRoles;

@@ -3,8 +3,8 @@ import { Button, Stack } from '@mantine/core';
 import { ControlledPasswordInput } from '@/components/ui/ControlledPasswordInput/ControlledPasswordInput';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { Form } from '@/components/ui/Form';
-import { AUTH_FORM_FIELDS } from '@/features/auth/config/auth-form-fields';
-import { useLoginForm } from '@/features/auth/hooks/useLoginForm';
+import { AUTH_FORM_FIELDS } from '../domain/auth-form-fields';
+import { useLoginForm } from '../hooks/useLoginForm';
 
 export const LoginForm = () => {
   const { t } = useTranslation(['common', 'app']);

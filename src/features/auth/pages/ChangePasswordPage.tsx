@@ -15,7 +15,7 @@ import { LogOut, ShieldCheck } from 'lucide-react';
 
 import { ROUTES } from '@/config/routes';
 import { ChangePasswordForm } from '@/features/auth/components/ChangePasswordForm';
-import { useAuth } from '@/features/auth/hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 
 export const ChangePasswordPage = () => {
   const { t } = useTranslation(['common', 'app']);

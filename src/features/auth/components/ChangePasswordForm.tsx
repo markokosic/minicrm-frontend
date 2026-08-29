@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { Button, Stack } from '@mantine/core';
 import { ControlledPasswordInput } from '@/components/ui/ControlledPasswordInput/ControlledPasswordInput';
 import { Form } from '@/components/ui/Form';
-import { AUTH_FORM_FIELDS } from '@/features/auth/config/auth-form-fields';
-import { useChangePasswordForm } from '@/features/auth/hooks/useChangePasswordForm';
+import { AUTH_FORM_FIELDS } from '../domain/auth-form-fields';
+import { useChangePasswordForm } from '../hooks/useChangePasswordForm';
 
 export interface ChangePasswordFormProps {
   submitLabelKey?: string;

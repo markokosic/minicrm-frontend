@@ -4,9 +4,8 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '@/config/routes';
-
-import { useAuth } from '@/features/auth/hooks/useAuth';
-import { getChangePasswordFormSchema } from '@/features/auth/schema';
+import { getChangePasswordFormSchema } from '../domain/auth-schemas';
+import { useAuth } from './useAuth';
 
 export interface UseChangePasswordFormOptions {
   onSuccess?: () => void;
