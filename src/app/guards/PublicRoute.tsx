@@ -2,6 +2,8 @@ import { Navigate, Outlet } from 'react-router';
 import { ROUTES } from '@/config/routes';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 
+import { getDefaultRouteForRole } from '../app-routes.config';
+
 export const PublicRoute = () => {
   const { user, isAuthenticated, isPending } = useAuth();
 
@@ -20,7 +22,7 @@ export const PublicRoute = () => {
     }
     return (
       <Navigate
-        to={ROUTES.app.dashboard.path}
+        to={getDefaultRouteForRole(user.role)}
         replace
       />
     );

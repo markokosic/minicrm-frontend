@@ -16,8 +16,7 @@ import {
 import { NAV_ITEMS, NavItem } from '@/config/navigation.config';
 import { ROUTES } from '@/config/routes';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import { useUserRole } from '@/features/auth/hooks/useHasRole';
-import { isRouteAllowedForRole } from '../routes.config';
+import { useUserRole } from '@/features/auth/hooks/useUserHasRole';
 import classes from './Navbar.module.css';
 
 export const NavBar = () => {
@@ -47,7 +46,12 @@ export const NavBar = () => {
   };
 
   const filterByRole = (items: NavItem[] = []) =>
-    items.filter((item) => isRouteAllowedForRole(item.path, role));
+    items.filter((item) => {
+      if (!item.roles || item.roles.length === 0) {
+        return true;
+      }
+      return role ? item.roles.includes(role) : false;
+    });
 
   const overviewItems = filterByRole(NAV_ITEMS.overview);
   const operationsItems = filterByRole(NAV_ITEMS.operations);

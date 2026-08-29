@@ -1,16 +1,15 @@
 import { lazy } from 'react';
+import type { RouteObject } from 'react-router';
 import { ROUTES } from '@/config/routes';
-import { MANAGEMENT_ROLES } from '@/shared/constants';
-import { AppRouteInterface } from '@/shared/types/common-types';
 
 const ReportPage = lazy(() => import('./pages/ReportPage'));
 
 const { reports } = ROUTES.app;
 
-export const reportRoutes: AppRouteInterface[] = [
+export const reportRoutes: RouteObject[] = [
   {
     path: reports.path,
     element: <ReportPage />,
-    roles: MANAGEMENT_ROLES,
   },
 ];
+

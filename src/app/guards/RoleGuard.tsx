@@ -3,7 +3,8 @@ import { Navigate, Outlet } from 'react-router';
 import { UserResponseRoles } from '@/api/generated/model';
 import { ROUTES } from '@/config/routes';
 import { useAuth } from '@/features/auth/hooks/useAuth';
-import { useHasRole } from '@/features/auth/hooks/useHasRole';
+import { useUserHasRole } from '@/features/auth/hooks/useUserHasRole';
+import { getDefaultRouteForRole } from '../app-routes.config';
 
 export interface RoleGuardProps {
   allowedRoles: UserResponseRoles[] | UserResponseRoles;
@@ -11,13 +12,9 @@ export interface RoleGuardProps {
   children?: ReactNode;
 }
 
-export const RoleGuard = ({
-  allowedRoles,
-  redirectTo = ROUTES.app.dashboard.path,
-  children,
-}: RoleGuardProps) => {
+export const RoleGuard = ({ allowedRoles, redirectTo, children }: RoleGuardProps) => {
   const { user, isPending } = useAuth();
-  const hasAccess = useHasRole(allowedRoles);
+  const hasAccess = useUserHasRole(allowedRoles);
 
   if (isPending) {
     return null;
@@ -33,9 +30,10 @@ export const RoleGuard = ({
   }
 
   if (!hasAccess) {
+    const target = redirectTo ?? getDefaultRouteForRole(user.role);
     return (
       <Navigate
-        to={redirectTo}
+        to={target}
         replace
       />
     );

@@ -1,9 +1,7 @@
 import { UserResponseRoles } from '@/api/generated/model';
 import { useAuth } from './useAuth';
 
-export const useHasRole = (
-  allowedRoles?: UserResponseRoles[] | UserResponseRoles
-): boolean => {
+export const useUserHasRole = (allowedRoles?: UserResponseRoles[] | UserResponseRoles): boolean => {
   const { user } = useAuth();
 
   if (!allowedRoles) {

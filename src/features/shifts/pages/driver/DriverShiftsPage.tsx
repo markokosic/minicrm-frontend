@@ -13,7 +13,7 @@ export const DriverShiftsPage = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const navigateToAddShift = () => {
-    navigate(ROUTES.app.shifts.create.path);
+    navigate(ROUTES.app.driver.shifts.create.path);
   };
 
   const desktopActions = !isMobile ? (

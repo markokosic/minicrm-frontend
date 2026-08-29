@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import i18n from '@/lib/i18n/i18n';
 import { getNumberSeparators } from '@/shared/utils';
-import classes from '../ControlledTextInput/ControlledTextInput.module.css';
+import classes from './ControlledTextInput.module.css';
 
 type ControlledNumberInputProps<
   TFieldValues extends FieldValues = FieldValues,

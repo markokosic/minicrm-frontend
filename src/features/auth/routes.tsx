@@ -1,13 +1,13 @@
 import { lazy } from 'react';
+import type { RouteObject } from 'react-router';
 import { ROUTES } from '@/config/routes';
-import { AppRouteInterface } from '../../shared/types/common-types';
 
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
 
 const { auth } = ROUTES;
 
-export const authRoutes: AppRouteInterface[] = [
+export const authRoutes: RouteObject[] = [
   {
     path: auth.login.path,
     element: <LoginPage />,
@@ -17,3 +17,4 @@ export const authRoutes: AppRouteInterface[] = [
     element: <RegisterPage />,
   },
 ];
+

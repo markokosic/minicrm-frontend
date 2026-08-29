@@ -1,16 +1,15 @@
 import { lazy } from 'react';
-import { UserResponseRoles } from '@/api/generated/model';
+import type { RouteObject } from 'react-router';
 import { ROUTES } from '@/config/routes';
-import { AppRouteInterface } from '@/shared/types/common-types';
 
 const UsersPage = lazy(() => import('./pages/UsersPage'));
 
 const { users } = ROUTES.app;
 
-export const userRoutes: AppRouteInterface[] = [
+export const userRoutes: RouteObject[] = [
   {
     path: users.path,
     element: <UsersPage />,
-    roles: [UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
   },
 ];
+

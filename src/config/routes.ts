@@ -24,6 +24,20 @@ export const ROUTES = {
       path: '/',
       getHref: () => '/',
     },
+    driver: {
+      dashboard: {
+        path: '/driver/dashboard',
+        getHref: () => '/driver/dashboard',
+      },
+      shifts: {
+        path: '/driver/shifts',
+        getHref: () => '/driver/shifts',
+        create: {
+          path: '/driver/shifts/new',
+          getHref: () => '/driver/shifts/new',
+        },
+      },
+    },
     dashboard: {
       path: '/dashboard',
       getHref: () => '/dashboard',
