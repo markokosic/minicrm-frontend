@@ -1,17 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import {
-  getGetAllShiftsQueryKey,
-  useCreateShift,
-} from '@/api/generated/endpoints/shifts/shifts';
-import { getCreateShiftSchema, CreateShiftFormValues } from '../shifts-schemas';
-import { transformShiftFormPayload } from '../utils/shift-calculations.utils';
-import { useQueryClient } from '@tanstack/react-query';
+import { getGetAllShiftsQueryKey, useCreateShift } from '@/api/generated/endpoints/shifts/shifts';
+import { transformShiftFormPayload } from '../../domain/shift-calculations';
+import { CreateShiftFormValues, getCreateShiftSchema } from '../../domain/shifts-schemas';
 
-export const useCreateShiftForm = () => {
+export const useAdminCreateShiftForm = () => {
   const queryClient = useQueryClient();
   const { t } = useTranslation(['app', 'common', 'errors']);
   const navigate = useNavigate();

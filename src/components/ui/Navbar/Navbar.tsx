@@ -13,11 +13,10 @@ import {
   Text,
   UnstyledButton,
 } from '@mantine/core';
+import { isRouteAllowedForRole } from '@/common/routes.utils';
 import { NAV_ITEMS, NavItem } from '@/config/navigation.config';
 import { ROUTES } from '@/config/routes';
-import { isRouteAllowedForRole } from '@/config/routes.config';
 import { useAuth, useUserRole } from '@/features/auth';
-
 import classes from './Navbar.module.css';
 
 export const NavBar = () => {
@@ -49,8 +48,6 @@ export const NavBar = () => {
   const filterByRole = (items: NavItem[] = []) =>
     items.filter((item) => isRouteAllowedForRole(item.path, role));
 
-
-
   const overviewItems = filterByRole(NAV_ITEMS.overview);
   const operationsItems = filterByRole(NAV_ITEMS.operations);
   const administrationItems = filterByRole(NAV_ITEMS.administration);
@@ -78,7 +75,7 @@ export const NavBar = () => {
 
   const displayName = user?.firstName
     ? `${user.firstName} ${user.lastName ?? ''}`.trim()
-    : user?.email ?? t('common:user');
+    : (user?.email ?? t('common:user'));
 
   const initials =
     user?.firstName && user?.lastName
@@ -161,7 +158,6 @@ export const NavBar = () => {
         )}
       </Box>
 
-
       <Box pt="sm">
         <Divider
           mb="md"
@@ -183,8 +179,15 @@ export const NavBar = () => {
               }}
               className="user-menu-btn"
             >
-              <Group justify="space-between" wrap="nowrap">
-                <Group gap="sm" wrap="nowrap" style={{ overflow: 'hidden' }}>
+              <Group
+                justify="space-between"
+                wrap="nowrap"
+              >
+                <Group
+                  gap="sm"
+                  wrap="nowrap"
+                  style={{ overflow: 'hidden' }}
+                >
                   <Avatar
                     color="blue"
                     radius="xl"

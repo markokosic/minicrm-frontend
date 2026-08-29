@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { SimpleGrid, Title, Stack } from '@mantine/core';
+import { SimpleGrid, Stack, Title } from '@mantine/core';
+import { createFormatters } from '@/common/utils';
 import { StatsCard } from '@/components/ui/StatsCard';
-import { createFormatters } from '@/lib/utils';
 import { DashboardSummaryData } from '../report-schema';
 
 type DashboardSummaryProps = {
@@ -18,9 +18,15 @@ export const DashboardSummary = ({ data, title }: DashboardSummaryProps) => {
   }
 
   return (
-    <Stack gap="md" mb="md">
+    <Stack
+      gap="md"
+      mb="md"
+    >
       <Title order={3}>{title}</Title>
-      <SimpleGrid cols={{ base: 1, xs: 2, sm: 2, md: 4 }} spacing="md">
+      <SimpleGrid
+        cols={{ base: 1, xs: 2, sm: 2, md: 4 }}
+        spacing="md"
+      >
         <StatsCard
           title={t('app:reports.total_revenue')}
           value={`${fmt.number(data.totalRevenue ?? 0)} €`}

@@ -3,21 +3,16 @@ import { Button, Stack } from '@mantine/core';
 import { Form } from '@/components/ui/Form';
 import { useCarSelectOptions } from '@/features/cars/hooks/useCarOptions';
 import { useDriverSelectOptions } from '@/features/drivers/hooks/useDriverOptions';
-import { useCreateShiftForm } from '../hooks/useCreateShiftForm';
+import { useAdminCreateShiftForm } from '@/features/shifts/hooks/admin/useAdminCreateShiftForm';
 import { ShiftMasterDataSection } from './ShiftMasterDataSection';
 import { ShiftRevenuesSection } from './ShiftRevenuesSection';
 
-export const CreateShiftForm = () => {
+export const AdminShiftForm = () => {
   const { t } = useTranslation(['app', 'common']);
   const { driverOptions, isLoading: isLoadingDrivers } = useDriverSelectOptions();
   const { carOptions, isLoading: isLoadingCars } = useCarSelectOptions();
 
-  const {
-    methods,
-    onSubmit,
-    isPending,
-    cancel,
-  } = useCreateShiftForm();
+  const { methods, onSubmit, isPending, cancel } = useAdminCreateShiftForm();
 
   return (
     <Form
@@ -25,7 +20,10 @@ export const CreateShiftForm = () => {
       onSubmit={onSubmit}
       formActions={
         <>
-          <Button variant="outline" onClick={cancel}>
+          <Button
+            variant="outline"
+            onClick={cancel}
+          >
             {t('common:actions.cancel')}
           </Button>
           <Button

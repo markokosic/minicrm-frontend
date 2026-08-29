@@ -1,7 +1,10 @@
-import { lazy, ReactNode } from 'react';
-import type { RouteObject } from 'react-router';
+import { lazy } from 'react';
 import { UserResponseRoles } from '@/api/generated/model';
+import { shiftRoutes } from '@/features/shifts/routes';
+import { AppRouteConfig } from '@/types/routes.types';
 import { ROUTES } from './routes';
+
+export type { AppRouteConfig };
 
 // LAZY LOADED PAGES
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
@@ -21,17 +24,7 @@ const CreateNewFlatRatePage = lazy(
   () => import('@/features/flatrates/pages/CreateNewFlatRatePage')
 );
 const FlatRatesPage = lazy(() => import('@/features/flatrates/pages/FlatRatesPage'));
-const ShiftsPage = lazy(() => import('@/features/shifts/pages/ShiftsPage'));
-const CreateShiftPage = lazy(() => import('@/features/shifts/pages/CreateShiftPage'));
-const EditShiftPage = lazy(() => import('@/features/shifts/pages/EditShiftPage'));
-const ShiftViewPage = lazy(() => import('@/features/shifts/pages/ShiftViewPage'));
 const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'));
-
-export interface AppRouteConfig {
-  path: string;
-  element: ReactNode;
-  roles?: UserResponseRoles[];
-}
 
 export const APP_ROUTES: AppRouteConfig[] = [
   // --- DASHBOARD ---
@@ -46,37 +39,8 @@ export const APP_ROUTES: AppRouteConfig[] = [
     roles: [UserResponseRoles.ADMIN, UserResponseRoles.OWNER, UserResponseRoles.BACKOFFICE],
   },
 
-  // --- SCHICHTEN ---
-  {
-    path: ROUTES.app.shifts.path,
-    element: <ShiftsPage />,
-    roles: [
-      UserResponseRoles.DRIVER,
-      UserResponseRoles.BACKOFFICE,
-      UserResponseRoles.ADMIN,
-      UserResponseRoles.OWNER,
-    ],
-  },
-  {
-    path: ROUTES.app.shifts.view.path,
-    element: <ShiftViewPage />,
-    roles: [
-      UserResponseRoles.DRIVER,
-      UserResponseRoles.BACKOFFICE,
-      UserResponseRoles.ADMIN,
-      UserResponseRoles.OWNER,
-    ],
-  },
-  {
-    path: ROUTES.app.shifts.create.path,
-    element: <CreateShiftPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
-  {
-    path: ROUTES.app.shifts.edit.path,
-    element: <EditShiftPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
+  // --- SCHICHTEN (MODUL) ---
+  ...shiftRoutes,
 
   // --- FAHRER-VERWALTUNG ---
   {
@@ -149,21 +113,3 @@ export const APP_ROUTES: AppRouteConfig[] = [
     element: <SettingsPage />,
   },
 ];
-
-export const isRouteAllowedForRole = (path: string, role?: UserResponseRoles): boolean => {
-  const matchingRoutes = APP_ROUTES.filter((r) => r.path === path);
-  if (matchingRoutes.length === 0) {return true;}
-
-  return matchingRoutes.some((r) => {
-    if (!r.roles || r.roles.length === 0) {return true;}
-    return role ? r.roles.includes(role) : false;
-  });
-};
-
-
-export const getRoutesForRole = (role?: UserResponseRoles): RouteObject[] => {
-  return APP_ROUTES.filter((route) => {
-    if (!route.roles || route.roles.length === 0) {return true;}
-    return role ? route.roles.includes(role) : false;
-  }).map(({ path, element }) => ({ path, element }));
-};

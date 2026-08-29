@@ -1,11 +1,11 @@
 import { renderHook } from '@testing-library/react';
 import { createTestAppWrapper } from '@/mocks/AppWrapper';
-import { useCreateShiftForm } from '../useCreateShiftForm';
+import { useAdminCreateShiftForm } from '../useAdminCreateShiftForm';
 
 describe('useCreateShiftForm Hook', () => {
   it('initializes form with default values', () => {
     const { Wrapper } = createTestAppWrapper();
-    const { result } = renderHook(() => useCreateShiftForm(), { wrapper: Wrapper });
+    const { result } = renderHook(() => useAdminCreateShiftForm(), { wrapper: Wrapper });
 
     expect(result.current.methods.getValues()).toEqual({
       driverId: undefined,

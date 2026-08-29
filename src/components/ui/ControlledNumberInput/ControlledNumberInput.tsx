@@ -9,8 +9,8 @@ import {
   NumberInput as $NumberInput,
   type NumberInputProps as $NumberInputProps,
 } from '@mantine/core';
+import { getNumberSeparators } from '@/common/utils';
 import i18n from '@/lib/i18n/i18n';
-import { getNumberSeparators } from '@/lib/utils';
 import classes from '../ControlledTextInput/ControlledTextInput.module.css';
 
 type ControlledNumberInputProps<

@@ -1,21 +1,24 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { useQueryClient } from '@tanstack/react-query';
-import { ShiftResponse } from '@/api/generated/model';
 import {
   getGetAllShiftsQueryKey,
   getGetShiftByIdQueryKey,
   useUpdateShift,
 } from '@/api/generated/endpoints/shifts/shifts';
+import { ShiftResponse } from '@/api/generated/model';
 import { ROUTES } from '@/config/routes';
-import { getCreateShiftSchema, UpdateShiftFormValues } from '../shifts-schemas';
 import {
   getRevenueOptionKey,
   transformUpdateShiftPayload,
-} from '../utils/shift-calculations.utils';
+} from '@/features/shifts/domain/shift-calculations';
+import {
+  getCreateShiftSchema,
+  UpdateShiftFormValues,
+} from '@/features/shifts/domain/shifts-schemas';
 
 export const useUpdateShiftForm = (shift: ShiftResponse) => {
   const queryClient = useQueryClient();
@@ -52,7 +55,9 @@ export const useUpdateShiftForm = (shift: ShiftResponse) => {
   const { mutate, isPending } = useUpdateShift({
     mutation: {
       onSuccess: () => {
-        toast.success(t('app:shifts.notifications.edit.success', 'Schicht erfolgreich aktualisiert'));
+        toast.success(
+          t('app:shifts.notifications.edit.success', 'Schicht erfolgreich aktualisiert')
+        );
         if (shift.id) {
           queryClient.invalidateQueries({ queryKey: getGetShiftByIdQueryKey(shift.id) });
         }
@@ -69,7 +74,9 @@ export const useUpdateShiftForm = (shift: ShiftResponse) => {
   });
 
   const onSubmit = (values: UpdateShiftFormValues) => {
-    if (!shift.id) {return;}
+    if (!shift.id) {
+      return;
+    }
     const payload = transformUpdateShiftPayload(values);
     mutate({ id: shift.id, data: payload });
   };
@@ -79,6 +86,8 @@ export const useUpdateShiftForm = (shift: ShiftResponse) => {
     onSubmit,
     isPending,
     cancel: () =>
-      shift.id ? navigate(ROUTES.app.shifts.view.getHref(shift.id)) : navigate(ROUTES.app.shifts.path),
+      shift.id
+        ? navigate(ROUTES.app.shifts.view.getHref(shift.id))
+        : navigate(ROUTES.app.shifts.path),
   };
 };

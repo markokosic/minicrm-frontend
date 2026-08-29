@@ -1,12 +1,9 @@
+import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import {
-  getGetAllShiftsQueryKey,
-  useDeleteShift,
-} from '@/api/generated/endpoints/shifts/shifts';
+import { getGetAllShiftsQueryKey, useDeleteShift } from '@/api/generated/endpoints/shifts/shifts';
 import { ShiftResponse } from '@/api/generated/model';
 import { useConfirmModal } from '@/common/hooks/useConfirmModal';
-import { useQueryClient } from '@tanstack/react-query';
 
 export const useDeleteShiftAction = (options?: { onSuccess?: () => void }) => {
   const { t } = useTranslation(['app', 'common', 'errors']);
@@ -30,7 +27,9 @@ export const useDeleteShiftAction = (options?: { onSuccess?: () => void }) => {
   });
 
   const handleDelete = (shift: ShiftResponse) => {
-    if (!shift.id) {return;}
+    if (!shift.id) {
+      return;
+    }
     confirm({
       title: t('app:shifts.modals.delete_confirm.title'),
       labels: {

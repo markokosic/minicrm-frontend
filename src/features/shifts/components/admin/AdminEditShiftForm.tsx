@@ -1,18 +1,18 @@
 import { useTranslation } from 'react-i18next';
 import { Button, Stack } from '@mantine/core';
+import { ShiftResponse } from '@/api/generated/model';
 import { Form } from '@/components/ui/Form';
 import { useCarSelectOptions } from '@/features/cars/hooks/useCarOptions';
 import { useDriverSelectOptions } from '@/features/drivers/hooks/useDriverOptions';
-import { ShiftResponse } from '@/api/generated/model';
-import { useUpdateShiftForm } from '../hooks/useUpdateShiftForm';
+import { useUpdateShiftForm } from '../../hooks/admin/useAdminUpdateShiftForm';
 import { ShiftMasterDataSection } from './ShiftMasterDataSection';
 import { ShiftRevenuesSection } from './ShiftRevenuesSection';
 
-interface EditShiftFormProps {
+interface AdminEditShiftFormProps {
   shift: ShiftResponse;
 }
 
-export const EditShiftForm = ({ shift }: EditShiftFormProps) => {
+export const AdminEditShiftForm = ({ shift }: AdminEditShiftFormProps) => {
   const { t } = useTranslation(['app', 'common']);
   const { driverOptions, isLoading: isLoadingDrivers } = useDriverSelectOptions();
   const { carOptions, isLoading: isLoadingCars } = useCarSelectOptions();
@@ -25,7 +25,10 @@ export const EditShiftForm = ({ shift }: EditShiftFormProps) => {
       onSubmit={onSubmit}
       formActions={
         <>
-          <Button variant="outline" onClick={cancel}>
+          <Button
+            variant="outline"
+            onClick={cancel}
+          >
             {t('common:actions.cancel')}
           </Button>
           <Button

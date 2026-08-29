@@ -1,25 +1,29 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 import { Paper, Stack, Text } from '@mantine/core';
 import { useGetAllShifts } from '@/api/generated/endpoints/shifts/shifts';
 import { usePagination } from '@/common/hooks/usePagination';
 import { AppPagination } from '@/components/ui/AppPagination';
 import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
 import { ROUTES } from '@/config/routes';
-import { useDeleteShiftAction } from '../hooks/useDeleteShiftAction';
-import { useShiftFilters } from '../hooks/useShiftFilters';
+import { useDeleteShiftAction } from '../../hooks/admin/useDeleteShiftAction';
+import { useShiftFilters } from '../../hooks/shared/useShiftFilters';
+import { ShiftsListSkeleton } from '../shared/ShiftsListSkeleton';
 import { ShiftFilters } from './ShiftFilters';
-import { ShiftsListSkeleton } from './ShiftsListSkeleton';
-import { ShiftsTable } from './ShiftsTable';
-import { useNavigate } from 'react-router';
+import { ShiftManagementTable } from './ShiftManagementTable';
 
-export const ShiftsList = () => {
+export const AdminShiftsList = () => {
   const { t } = useTranslation(['app', 'common']);
   const { page, size, setPage } = usePagination({ defaultSize: 25 });
   const { driverId, dateFrom, dateTo } = useShiftFilters();
 
   const navigate = useNavigate();
 
-  const { data: response, isLoading, error } = useGetAllShifts({
+  const {
+    data: response,
+    isLoading,
+    error,
+  } = useGetAllShifts({
     page,
     size,
     driverId,
@@ -48,12 +52,20 @@ export const ShiftsList = () => {
         isEmpty={isEmpty}
         skeleton={<ShiftsListSkeleton />}
         emptyFallback={
-          <Paper withBorder p="xl" radius="md" ta="center">
+          <Paper
+            withBorder
+            p="xl"
+            radius="md"
+            ta="center"
+          >
             <Text c="dimmed">{t('app:shifts.empty')}</Text>
           </Paper>
         }
       >
-        <ShiftsTable shifts={shifts} actions={actions} />
+        <ShiftManagementTable
+          shifts={shifts}
+          actions={actions}
+        />
 
         <AppPagination
           page={page}

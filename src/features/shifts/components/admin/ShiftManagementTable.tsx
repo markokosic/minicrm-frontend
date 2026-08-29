@@ -1,20 +1,14 @@
 import { Paper, Table } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { ShiftResponse } from '@/api/generated/model';
-import { ShiftTableRow } from './ShiftTableRow';
+import { ShiftActions, ShiftTableRow } from './ShiftTableRow';
 
-export interface ShiftActions {
-  onViewDetails: (shift: ShiftResponse) => void;
-  onEdit?: (shift: ShiftResponse) => void;
-  onDelete: (shift: ShiftResponse) => void;
-}
-
-interface ShiftsTableProps {
+export interface ShiftManagementTableProps {
   shifts: ShiftResponse[];
   actions: ShiftActions;
 }
 
-export const ShiftsTable = ({ shifts, actions }: ShiftsTableProps) => {
+export const ShiftManagementTable = ({ shifts, actions }: ShiftManagementTableProps) => {
   const { t } = useTranslation(['app', 'common']);
 
   return (

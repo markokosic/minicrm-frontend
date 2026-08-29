@@ -4,7 +4,7 @@ import { ActionIcon, Alert, Group, NumberInput, Paper, SimpleGrid, Text } from '
 import { DriverRevenueOption, DriverRevenueOptionEntryCategory } from '@/api/generated/model';
 import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
 import { FormSelect } from '@/components/ui/ControlledSelect/ControlledSelect';
-import { useShiftRevenueRow } from '../hooks/useShiftRevenueRow';
+import { useShiftRevenueRow } from '../../hooks/admin/useShiftRevenueRow';
 
 interface ShiftRevenueRowProps {
   index: number;
@@ -54,11 +54,12 @@ export const ShiftRevenueRow = ({ index, revenueOptions, onRemove }: ShiftRevenu
       <SimpleGrid
         cols={{
           base: 1,
-          sm: rowValues.entryCategory === DriverRevenueOptionEntryCategory.FLAT_RATE 
-            ? 4 
-            : rowValues.entryCategory === DriverRevenueOptionEntryCategory.WEEKLY
-            ? 3
-            : 2,
+          sm:
+            rowValues.entryCategory === DriverRevenueOptionEntryCategory.FLAT_RATE
+              ? 4
+              : rowValues.entryCategory === DriverRevenueOptionEntryCategory.WEEKLY
+                ? 3
+                : 2,
         }}
         spacing="md"
       >
@@ -134,7 +135,10 @@ export const ShiftRevenueRow = ({ index, revenueOptions, onRemove }: ShiftRevenu
           color={isWeeklyPaymentToday ? 'red' : 'blue'}
           title={
             isWeeklyPaymentToday
-              ? t('app:shifts.weekly_settlement.share_due_today', 'Heute ist Zahltag / Abrechnungstag!')
+              ? t(
+                  'app:shifts.weekly_settlement.share_due_today',
+                  'Heute ist Zahltag / Abrechnungstag!'
+                )
               : t('app:shifts.weekly_settlement.share_due_on', {
                   day: weekdayName,
                   defaultValue: `Abrechnungstag: ${weekdayName}`,

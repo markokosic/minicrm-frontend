@@ -6,7 +6,7 @@ import {
   calculateFlatRateTotal,
   checkWeeklySettlement,
   getRevenueOptionKey,
-} from '../utils/shift-calculations.utils';
+} from '@/features/shifts/domain/shift-calculations';
 
 export const useShiftRevenueRow = (index: number, revenueOptions: DriverRevenueOption[]) => {
   const { t } = useTranslation(['app', 'common']);
@@ -23,14 +23,13 @@ export const useShiftRevenueRow = (index: number, revenueOptions: DriverRevenueO
   }));
 
   if (rowValues.optionKey && !comboboxData.some((c) => c.value === rowValues.optionKey)) {
-    const fallbackLabel =
-      rowValues.flatRateTypeName
-        ? `${rowValues.flatRateTypeName} (${t('app:reports.categories.FLAT_RATE', 'Pauschale')})`
-        : rowValues.entryCategory === 'REGULAR'
+    const fallbackLabel = rowValues.flatRateTypeName
+      ? `${rowValues.flatRateTypeName} (${t('app:reports.categories.FLAT_RATE', 'Pauschale')})`
+      : rowValues.entryCategory === 'REGULAR'
         ? t('app:reports.categories.REGULAR', 'Regulär')
         : rowValues.entryCategory === 'WEEKLY'
-        ? t('app:reports.categories.WEEKLY', 'Wöchentlich')
-        : rowValues.entryCategory || t('app:shifts.table.revenue', 'Umsatz');
+          ? t('app:reports.categories.WEEKLY', 'Wöchentlich')
+          : rowValues.entryCategory || t('app:shifts.table.revenue', 'Umsatz');
 
     comboboxData.push({
       label: fallbackLabel,
@@ -48,11 +47,15 @@ export const useShiftRevenueRow = (index: number, revenueOptions: DriverRevenueO
     }
     previousOptionKeyRef.current = optionKey;
 
-    if (!optionKey) {return;}
+    if (!optionKey) {
+      return;
+    }
     const matched = revenueOptions.find(
       (opt) => getRevenueOptionKey(opt.entryCategory, opt.flatRateTypeId) === optionKey
     );
-    if (!matched) {return;}
+    if (!matched) {
+      return;
+    }
 
     setValue(`${fieldPrefix}.entryCategory`, matched.entryCategory);
 
@@ -67,7 +70,10 @@ export const useShiftRevenueRow = (index: number, revenueOptions: DriverRevenueO
       setValue(`${fieldPrefix}.tripCount`, undefined);
       setValue(`${fieldPrefix}.pricePerTrip`, undefined);
       setValue(`${fieldPrefix}.revenue`, 0);
-      setValue(`${fieldPrefix}.companyRemuneration`, isWeeklyPaymentToday ? (matched.defaultPrice ?? 0) : undefined);
+      setValue(
+        `${fieldPrefix}.companyRemuneration`,
+        isWeeklyPaymentToday ? (matched.defaultPrice ?? 0) : undefined
+      );
     } else {
       setValue(`${fieldPrefix}.flatRateTypeId`, null);
       setValue(`${fieldPrefix}.tripCount`, undefined);

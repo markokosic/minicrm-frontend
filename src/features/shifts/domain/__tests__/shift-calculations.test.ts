@@ -8,7 +8,7 @@ import {
   getRevenueOptionKey,
   transformShiftFormPayload,
   transformUpdateShiftPayload,
-} from '../shift-calculations.utils';
+} from '@/features/shifts/domain/shift-calculations';
 
 describe('shift-calculations.utils', () => {
   describe('getRevenueOptionKey', () => {
@@ -107,7 +107,7 @@ describe('shift-calculations.utils', () => {
         ],
       };
 
-        const payload = transformShiftFormPayload(values);
+      const payload = transformShiftFormPayload(values);
       expect(payload.driverId).toBe(10);
       expect(payload.carId).toBe(5);
       expect(payload.revenues).toHaveLength(2);

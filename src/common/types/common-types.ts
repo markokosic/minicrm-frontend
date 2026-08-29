@@ -1,3 +1,6 @@
+import { ReactNode } from 'react';
+import { UserResponseRoles } from '@/api/generated/model';
+
 export type TenantId = number;
 
 export interface FormFieldConfig {
@@ -23,7 +26,6 @@ export interface FormFieldConfig {
 
 export type FormFieldsGroupConfig = Record<string, Record<string, FormFieldConfig>>;
 
-
 export interface PageResponse<T> {
   content: T[];
   page: number;
@@ -32,4 +34,10 @@ export interface PageResponse<T> {
   totalPages: number;
   first: boolean;
   last: boolean;
+}
+
+export interface AppRouteInterface {
+  path: string;
+  element: ReactNode;
+  roles?: UserResponseRoles[];
 }

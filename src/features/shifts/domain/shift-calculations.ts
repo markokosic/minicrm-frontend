@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { CreateShiftRequest, ShiftRevenueEntryResponse, UpdateShiftRequest } from '@/api/generated/model';
-import { ShiftRevenueFormRow } from '../shifts-schemas';
+import { ShiftRevenueFormRow } from './shifts-schemas';
 
 dayjs.extend(isoWeek);
 

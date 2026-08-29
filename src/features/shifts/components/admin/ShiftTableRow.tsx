@@ -1,12 +1,21 @@
-import { Eye, Trash2, Edit2 } from 'lucide-react';
+import { Edit2, Eye, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Badge, Group, Table } from '@mantine/core';
-import { ShiftResponse, ShiftResponseStatus } from '@/api/generated/model';
-import { calculateShiftTotals, formatShiftDate, formatShiftTime } from '../utils/shift-calculations.utils';
+import { Group, Table } from '@mantine/core';
+import { ShiftResponse } from '@/api/generated/model';
+import { createFormatters } from '@/common/utils';
 import { ActionMenu } from '@/components/ui/Menu/ActionMenu';
-import { createFormatters } from '@/lib/utils';
+import {
+  calculateShiftTotals,
+  formatShiftDate,
+  formatShiftTime,
+} from '../../domain/shift-calculations';
+import { ShiftStatusBadge } from '../shared/ShiftStatusBadge';
 
-import { ShiftActions } from './ShiftsTable';
+export interface ShiftActions {
+  onViewDetails: (shift: ShiftResponse) => void;
+  onEdit?: (shift: ShiftResponse) => void;
+  onDelete: (shift: ShiftResponse) => void;
+}
 
 interface ShiftTableRowProps {
   shift: ShiftResponse;
@@ -17,15 +26,9 @@ export const ShiftTableRow = ({ shift, actions }: ShiftTableRowProps) => {
   const { t, i18n } = useTranslation(['app', 'common']);
   const fmt = createFormatters(i18n.language);
 
-  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } =
-    calculateShiftTotals(shift.revenues);
-
-  const statusColor =
-    shift.status === ShiftResponseStatus.APPROVED
-      ? 'green'
-      : shift.status === ShiftResponseStatus.PENDING
-        ? 'yellow'
-        : 'red';
+  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } = calculateShiftTotals(
+    shift.revenues
+  );
 
   const dateFormatted = formatShiftDate(shift.shiftStart);
   const timeFormatted = `${formatShiftTime(shift.shiftStart)} - ${formatShiftTime(shift.shiftEnd)}`;
@@ -48,22 +51,35 @@ export const ShiftTableRow = ({ shift, actions }: ShiftTableRowProps) => {
       <Table.Td>
         {shift.kilometersDriven !== undefined ? `${shift.kilometersDriven} km` : '-'}
       </Table.Td>
-      <Table.Td style={{ textAlign: 'right' }} fw={600}>
+      <Table.Td
+        style={{ textAlign: 'right' }}
+        fw={600}
+      >
         {fmt.number(totalRevenue)} €
       </Table.Td>
-      <Table.Td style={{ textAlign: 'right' }} c="teal">
+      <Table.Td
+        style={{ textAlign: 'right' }}
+        c="teal"
+      >
         {fmt.number(totalDriverRemuneration)} €
       </Table.Td>
-      <Table.Td style={{ textAlign: 'right' }} c="indigo">
+      <Table.Td
+        style={{ textAlign: 'right' }}
+        c="indigo"
+      >
         {fmt.number(totalCompanyRemuneration)} €
       </Table.Td>
       <Table.Td>
-        <Badge color={statusColor} variant="light">
-          {shift.status}
-        </Badge>
+        <ShiftStatusBadge status={shift.status} />
       </Table.Td>
-      <Table.Td style={{ textAlign: 'right' }} onClick={(e) => e.stopPropagation()}>
-        <Group gap="xs" justify="flex-end">
+      <Table.Td
+        style={{ textAlign: 'right' }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Group
+          gap="xs"
+          justify="flex-end"
+        >
           <ActionMenu
             actions={[
               {

@@ -4,12 +4,12 @@ import { Grid, Paper, Text, TextInput } from '@mantine/core';
 import { ControlledDateTimePicker } from '@/components/ui/ControlledDatePicker/ControlledDateTimePicker';
 import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
 import { FormSelect } from '@/components/ui/ControlledSelect/ControlledSelect';
+import { CarOption } from '@/features/cars/utils/car-options.utils';
+import { DriverOption } from '@/features/drivers/utils/driver-options.utils';
 import {
   calculateKilometersDriven,
   calculateShiftDuration,
-} from '../utils/shift-calculations.utils';
-import { DriverOption } from '@/features/drivers/utils/driver-options.utils';
-import { CarOption } from '@/features/cars/utils/car-options.utils';
+} from '../../domain/shift-calculations';
 
 interface ShiftMasterDataSectionProps {
   driverOptions: DriverOption[];

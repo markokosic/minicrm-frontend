@@ -1,3 +1,5 @@
+import { UserResponseRoles } from '../api/generated/model';
+
 export const DAYS_OF_THE_WEEK = [
   { value: 1, label: 'common:days.monday' },
   { value: 2, label: 'common:days.tuesday' },
@@ -9,3 +11,9 @@ export const DAYS_OF_THE_WEEK = [
 ] as const;
 
 export type DayOfWeek = (typeof DAYS_OF_THE_WEEK)[number];
+
+export const MANAGEMENT_ROLES = [
+  UserResponseRoles.ADMIN,
+  UserResponseRoles.OWNER,
+  UserResponseRoles.BACKOFFICE,
+];

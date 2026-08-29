@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Button, Group, Paper, Stack, Text } from '@mantine/core';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useGetDriverRevenueOptions } from '@/api/generated/endpoints/drivers/drivers';
-import { ShiftRevenueRow } from './ShiftRevenueRow';
 import { DriverRevenueOptionEntryCategory } from '@/api/generated/model';
-import { getRevenueOptionKey } from '../utils/shift-calculations.utils';
+import { getRevenueOptionKey } from '../../domain/shift-calculations';
+import { ShiftRevenueRow } from './ShiftRevenueRow';
 
 export const ShiftRevenuesSection = () => {
   const { t } = useTranslation(['app', 'common']);
@@ -48,7 +48,6 @@ export const ShiftRevenuesSection = () => {
   }, [selectedDriverId, remove]);
 
   const handleAddRevenue = () => {
-    // 1. Fallback: Keine Umsatz-Optionen verfügbar
     if (!revenueOptions.length) {
       return append({
         optionKey: 'REGULAR',
@@ -70,7 +69,6 @@ export const ShiftRevenuesSection = () => {
       });
     }
 
-    // 3. Normaler Umsatz (REGULAR / WEEKLY) anfügen
     append({
       ...baseRevenue,
       revenue: 0,

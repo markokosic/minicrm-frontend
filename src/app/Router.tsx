@@ -1,27 +1,23 @@
 import { lazy, useMemo } from 'react';
 import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from 'react-router';
+import { UserResponseRoles } from '@/api/generated/model';
+import { getRoutesForRole } from '@/common/routes.utils';
 import { MainErrorFallback } from '@/components/errors/MainErrorFallback';
 import { AuthLayout, ProtectedRoute, PublicRoute } from '@/components/layout';
-import { UserResponseRoles } from '@/api/generated/model';
 import { ROUTES } from '@/config/routes';
-import { getRoutesForRole } from '@/config/routes.config';
 import { useUserRole } from '@/features/auth';
-
-
 
 // AUTH PAGES
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
 const ChangePasswordPage = lazy(() => import('@/features/auth/pages/ChangePasswordPage'));
 
-export interface GetRoutesParams {
+interface GetRoutesParams {
   role?: UserResponseRoles;
   mustChangePassword?: boolean;
 }
 
-
-
-export const getRoutes = ({ role, mustChangePassword }: GetRoutesParams): RouteObject[] => {
+const getRoutes = ({ role, mustChangePassword }: GetRoutesParams): RouteObject[] => {
   if (mustChangePassword) {
     return [
       {
@@ -99,3 +95,5 @@ export const AppRouter = () => {
 
   return <RouterProvider router={router} />;
 };
+
+export default AppRouter;

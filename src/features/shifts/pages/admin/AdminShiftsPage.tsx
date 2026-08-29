@@ -6,9 +6,9 @@ import { useMediaQuery } from '@mantine/hooks';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { FloatingActionButton } from '@/components/ui/Button';
 import { ROUTES } from '@/config/routes';
-import { ShiftsList } from '../components/ShiftsList';
+import { AdminShiftsList } from '../../components/admin/AdminShiftsList';
 
-export const ShiftsPage = () => {
+export const AdminShiftsPage = () => {
   const { t } = useTranslation(['app', 'common']);
   const navigate = useNavigate();
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -18,7 +18,10 @@ export const ShiftsPage = () => {
   };
 
   const desktopActions = !isMobile ? (
-    <Button leftSection={<Plus size={18} />} onClick={navigateToAddShift}>
+    <Button
+      leftSection={<Plus size={18} />}
+      onClick={navigateToAddShift}
+    >
       {t('app:shifts.actions.add')}
     </Button>
   ) : null;
@@ -29,7 +32,7 @@ export const ShiftsPage = () => {
       showBack={false}
       actions={desktopActions}
     >
-      <ShiftsList />
+      <AdminShiftsList />
       {isMobile && (
         <FloatingActionButton onClick={navigateToAddShift}>
           <Plus size={24} />
@@ -39,4 +42,4 @@ export const ShiftsPage = () => {
   );
 };
 
-export default ShiftsPage;
+export default AdminShiftsPage;
