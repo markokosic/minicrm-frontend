@@ -12,7 +12,7 @@ import {
   useUpdateDriver,
 } from '@/api/generated/endpoints/drivers/drivers';
 import { DriverResponse } from '@/api/generated/model';
-import { getUpdateDriverSchema } from '../driver-schemas';
+import { getUpdateDriverSchema } from '../domain/drivers-schemas';
 import { getDriverUpdateFormDefaultValues } from '../utils/driver-form.utils';
 
 interface UseDriverUpdateFormProps {

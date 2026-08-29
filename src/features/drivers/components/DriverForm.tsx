@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Paper, Stack, Text } from '@mantine/core';
 import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
 import { FieldGroup } from '@/components/ui/Form';
-import { DRIVERS_FORM_FIELDS } from '../config/drivers-form-fields';
+import { DRIVERS_FORM_FIELDS } from '../domain/drivers-form-fields';
 import { DriverFormRemunerationConfigRow } from './DriverFormRemunerationConfigRow';
 
 export const DriverForm = () => {

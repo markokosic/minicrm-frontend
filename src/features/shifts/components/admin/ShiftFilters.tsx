@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ActionIcon, Group, Paper, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useUrlFilters } from '@/common/hooks/useUrlFilters';
-import { useDriverSelectOptions } from '@/features/drivers';
+import { useDriverSelectOptions } from '@/features/drivers/hooks/useDriverOptions';
 
 export const ShiftFilters = () => {
   const { t } = useTranslation(['app', 'common']);

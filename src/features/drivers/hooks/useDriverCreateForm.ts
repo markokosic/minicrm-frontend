@@ -11,7 +11,7 @@ import {
   useCreateDriver,
 } from '@/api/generated/endpoints/drivers/drivers';
 import { ROUTES } from '@/config/routes';
-import { getCreateDriverSchema } from '../driver-schemas';
+import { getCreateDriverSchema } from '../domain/drivers-schemas';
 
 
 export const useDriverCreateForm = () => {

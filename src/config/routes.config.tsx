@@ -3,15 +3,12 @@ import { UserResponseRoles } from '@/api/generated/model';
 import { AppRouteInterface } from '@/common/types/common-types';
 import { carRoutes } from '@/features/cars/routes';
 import { dashboardRoutes } from '@/features/dashboard/routes';
+import { driverRoutes } from '@/features/drivers/routes';
 import { shiftRoutes } from '@/features/shifts/routes';
 import { ROUTES } from './routes';
 
 // LAZY LOADED PAGES
 const SettingsPage = lazy(() => import('@/features/settings/pages/SettingsPage'));
-const DriversPage = lazy(() => import('@/features/drivers/pages/DriversPage'));
-const DriverCreatePage = lazy(() => import('@/features/drivers/pages/DriverCreatePage'));
-const DriverViewPage = lazy(() => import('@/features/drivers/pages/DriverViewPage'));
-const DriverEditPage = lazy(() => import('@/features/drivers/pages/DriverEditPage'));
 const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
 const CreateNewFlatRatePage = lazy(
   () => import('@/features/flatrates/pages/CreateNewFlatRatePage')
@@ -29,27 +26,8 @@ export const APP_ROUTES: AppRouteInterface[] = [
   // --- FUHRPARK / FAHRZEUGE (MODUL) ---
   ...carRoutes,
 
-  // --- FAHRER-VERWALTUNG ---
-  {
-    path: ROUTES.app.drivers.path,
-    element: <DriversPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
-  {
-    path: ROUTES.app.drivers.create.path,
-    element: <DriverCreatePage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
-  {
-    path: ROUTES.app.drivers.view.path,
-    element: <DriverViewPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
-  {
-    path: ROUTES.app.drivers.edit.path,
-    element: <DriverEditPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
+  // --- FAHRER-VERWALTUNG (MODUL) ---
+  ...driverRoutes,
 
   // --- BERICHTE ---
   {

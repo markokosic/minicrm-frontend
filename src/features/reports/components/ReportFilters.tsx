@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Group, Select, Stack } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { useDriverSelectOptions } from '@/features/drivers';
+import { useDriverSelectOptions } from '@/features/drivers/hooks/useDriverOptions';
 import { RevenueReportParams } from '../report-schema';
 
 type ReportFiltersProps = {
