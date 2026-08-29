@@ -1,11 +1,12 @@
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { Button, Card, Stack, Text, Title } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+import { ROUTES } from '@/config/routes';
 import { PageLayout } from '@/shared/components/layout/PageLayout';
 import { FloatingActionButton } from '@/shared/components/ui/FloatingActionButton';
-import { ROUTES } from '@/config/routes';
+import { DriverShiftsList } from '../../components/driver/DriverShiftsList';
 
 export const DriverShiftsPage = () => {
   const { t } = useTranslation(['common', 'app']);
@@ -28,14 +29,7 @@ export const DriverShiftsPage = () => {
       showBack={false}
       actions={desktopActions}
     >
-      <Stack gap="lg" pb="xl">
-        <Card withBorder radius="md" p="xl">
-          <Title order={2}>{t('common:navigation.shifts')}</Title>
-          <Text c="dimmed" mt="xs">
-            Schichten
-          </Text>
-        </Card>
-      </Stack>
+      <DriverShiftsList />
 
       {isMobile && (
         <FloatingActionButton onClick={navigateToAddShift}>
@@ -47,3 +41,4 @@ export const DriverShiftsPage = () => {
 };
 
 export default DriverShiftsPage;
+
