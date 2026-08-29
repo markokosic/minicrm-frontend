@@ -1,5 +1,3 @@
-import { lazy } from 'react';
-import { UserResponseRoles } from '@/api/generated/model';
 import { AppRouteInterface } from '@/common/types/common-types';
 import { carRoutes } from '@/features/cars/routes';
 import { dashboardRoutes } from '@/features/dashboard/routes';
@@ -8,10 +6,7 @@ import { flatrateRoutes } from '@/features/flatrates/routes';
 import { reportRoutes } from '@/features/reports/routes';
 import { settingsRoutes } from '@/features/settings/routes';
 import { shiftRoutes } from '@/features/shifts/routes';
-import { ROUTES } from './routes';
-
-// LAZY LOADED PAGES
-const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'));
+import { userRoutes } from '@/features/users/routes';
 
 export const APP_ROUTES: AppRouteInterface[] = [
   // --- DASHBOARD (MODUL) ---
@@ -32,12 +27,8 @@ export const APP_ROUTES: AppRouteInterface[] = [
   // --- BERICHTE (MODUL) ---
   ...reportRoutes,
 
-  // --- BENUTZERVERWALTUNG ---
-  {
-    path: ROUTES.app.users.path,
-    element: <UsersPage />,
-    roles: [UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
+  // --- BENUTZERVERWALTUNG (MODUL) ---
+  ...userRoutes,
 
   // --- EINSTELLUNGEN (MODUL - Für alle Rollen offen) ---
   ...settingsRoutes,
