@@ -6,11 +6,11 @@ import { dashboardRoutes } from '@/features/dashboard/routes';
 import { driverRoutes } from '@/features/drivers/routes';
 import { flatrateRoutes } from '@/features/flatrates/routes';
 import { reportRoutes } from '@/features/reports/routes';
+import { settingsRoutes } from '@/features/settings/routes';
 import { shiftRoutes } from '@/features/shifts/routes';
 import { ROUTES } from './routes';
 
 // LAZY LOADED PAGES
-const SettingsPage = lazy(() => import('@/features/settings/pages/SettingsPage'));
 const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'));
 
 export const APP_ROUTES: AppRouteInterface[] = [
@@ -39,9 +39,6 @@ export const APP_ROUTES: AppRouteInterface[] = [
     roles: [UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
   },
 
-  // --- EINSTELLUNGEN (Für alle Rollen offen) ---
-  {
-    path: ROUTES.app.settings.path,
-    element: <SettingsPage />,
-  },
+  // --- EINSTELLUNGEN (MODUL - Für alle Rollen offen) ---
+  ...settingsRoutes,
 ];
