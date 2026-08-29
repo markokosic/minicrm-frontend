@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { RemunerationModelType } from '../remuneration-types';
+import { RemunerationModelType } from '../domain/remuneration-types';
 import {
   buildRemunerationTypeOptions,
   getRemunerationLabelText,
@@ -22,4 +22,3 @@ export const useRemunerationLabels = () => {
     remunerationTypeOptions,
   };
 };
-

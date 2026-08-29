@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next';
 import { z } from 'zod';
-import { RemunerationModelType } from '@/features/remuneration/remuneration-types';
+import { RemunerationModelType } from './remuneration-types';
 
 export const getRemunerationSchema = (t: TFunction) =>
   z.discriminatedUnion('remunerationModelType', [

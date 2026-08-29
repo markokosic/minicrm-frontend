@@ -1,4 +1,4 @@
-import { RemunerationModelType } from '../remuneration-types';
+import { RemunerationModelType } from '../domain/remuneration-types';
 
 export const i18nDriverRemunerationConfigMap: Record<RemunerationModelType, string> = {
   [RemunerationModelType.PERCENTAGE_SHARE]: 'percentageShare',

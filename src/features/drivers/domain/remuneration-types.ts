@@ -16,4 +16,3 @@ export type FlatRateRemunerationConfig = {
   flatRateTypeId?: number | null;
   flatRateTypeName?: string | null;
 };
-

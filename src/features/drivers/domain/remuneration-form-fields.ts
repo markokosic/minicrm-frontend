@@ -1,4 +1,4 @@
-import { RemunerationModelType } from '../remuneration-types';
+import { RemunerationModelType } from './remuneration-types';
 
 export const REMUNERATION_FORM_FIELDS = {
   type: {

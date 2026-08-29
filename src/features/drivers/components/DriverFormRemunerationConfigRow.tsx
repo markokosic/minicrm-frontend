@@ -7,11 +7,9 @@ import { useGetActiveFlatRateTypes } from '@/api/generated/endpoints/flat-rate-t
 import { DAYS_OF_THE_WEEK } from '@/common/constants';
 import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
 import { ComboboxOption, ControlledCombobox } from '@/components/ui/ControlledSelect/ControlledCombobox';
-import {
-  REMUNERATION_FORM_FIELDS,
-  RemunerationModelType,
-  useRemunerationLabels,
-} from '@/features/remuneration';
+import { REMUNERATION_FORM_FIELDS } from '../domain/remuneration-form-fields';
+import { RemunerationModelType } from '../domain/remuneration-types';
+import { useRemunerationLabels } from '../hooks/useRemunerationLabels';
 
 type DriverFormRemunerationConfigRowType = {
   index: number;

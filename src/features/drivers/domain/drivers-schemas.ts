@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next';
 import { z } from 'zod';
-import { getRemunerationSchema } from '@/features/remuneration/remuneration-schemas';
+import { getRemunerationSchema } from './remuneration-schemas';
 
 export const getCreateDriverSchema = (t: TFunction) =>
   z.object({

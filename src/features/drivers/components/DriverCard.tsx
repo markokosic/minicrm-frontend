@@ -1,8 +1,8 @@
 import { Badge, Card, Group, Stack, Text } from '@mantine/core';
 import { Mail, Phone, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { DriverResponse, DriverResponseStatus } from '@/api/generated/model';
-import { useRemunerationLabels, RemunerationModelType } from '@/features/remuneration';
+import { RemunerationModelType } from '../domain/remuneration-types';
+import { useRemunerationLabels } from '../hooks/useRemunerationLabels';
 
 interface DriverCardProps {
   driver: DriverResponse;
