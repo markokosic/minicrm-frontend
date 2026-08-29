@@ -4,16 +4,13 @@ import { AppRouteInterface } from '@/common/types/common-types';
 import { carRoutes } from '@/features/cars/routes';
 import { dashboardRoutes } from '@/features/dashboard/routes';
 import { driverRoutes } from '@/features/drivers/routes';
+import { flatrateRoutes } from '@/features/flatrates/routes';
 import { shiftRoutes } from '@/features/shifts/routes';
 import { ROUTES } from './routes';
 
 // LAZY LOADED PAGES
 const SettingsPage = lazy(() => import('@/features/settings/pages/SettingsPage'));
 const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
-const CreateNewFlatRatePage = lazy(
-  () => import('@/features/flatrates/pages/CreateNewFlatRatePage')
-);
-const FlatRatesPage = lazy(() => import('@/features/flatrates/pages/FlatRatesPage'));
 const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'));
 
 export const APP_ROUTES: AppRouteInterface[] = [
@@ -29,22 +26,13 @@ export const APP_ROUTES: AppRouteInterface[] = [
   // --- FAHRER-VERWALTUNG (MODUL) ---
   ...driverRoutes,
 
+  // --- PAUSCHALEN / FLATRATES (MODUL) ---
+  ...flatrateRoutes,
+
   // --- BERICHTE ---
   {
     path: ROUTES.app.reports.path,
     element: <ReportPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
-
-  // --- PAUSCHALEN / FLATRATES ---
-  {
-    path: ROUTES.app.flatrates.path,
-    element: <FlatRatesPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
-  {
-    path: ROUTES.app.flatrates.create.path,
-    element: <CreateNewFlatRatePage />,
     roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
   },
 

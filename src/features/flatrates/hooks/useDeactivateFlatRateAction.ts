@@ -1,7 +1,6 @@
+import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { useQueryClient } from '@tanstack/react-query';
-import { Text } from '@mantine/core';
 import {
   getGetActiveFlatRateTypesQueryKey,
   getGetAllFlatRateTypesQueryKey,
@@ -35,11 +34,7 @@ export const useDeactivateFlatRateAction = () => {
     if (!flatRate.id) {return;}
     confirm({
       title: t('app:flatrate.modals.deactivate_confirm.title'),
-      children: (
-        <Text size="sm">
-          {t('app:flatrate.modals.deactivate_confirm.message')}
-        </Text>
-      ),
+      children: t('app:flatrate.modals.deactivate_confirm.message'),
       labels: {
         confirm: t('app:flatrate.modals.deactivate_confirm.confirm'),
         cancel: t('common:actions.cancel'),
