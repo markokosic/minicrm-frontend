@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { useGetDriver } from '@/api/generated/endpoints/drivers/drivers';
-import { PageLayout } from '@/components/layout/PageLayout';
-import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
+import { PageLayout } from '@/shared/components/layout/PageLayout';
+import { DataLoadingWrapper } from '@/shared/components/ui/DataLoadingWrapper';
 import { DriverUpdateForm } from '../components/DriverUpdateForm';
 
 export const DriverEditPage = () => {

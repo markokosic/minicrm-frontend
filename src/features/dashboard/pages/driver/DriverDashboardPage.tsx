@@ -1,6 +1,6 @@
 import { Card, Stack, Text, Title } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { PageLayout } from '@/components/layout/PageLayout';
+import { PageLayout } from '@/shared/components/layout/PageLayout';
 
 export const DriverDashboardPage = () => {
   const { t } = useTranslation(['common']);

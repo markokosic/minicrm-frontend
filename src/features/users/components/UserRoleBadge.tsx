@@ -6,7 +6,7 @@ export interface UserRoleBadgeProps extends Omit<BadgeProps, 'children'> {
   role?: UserResponseRoles | string;
 }
 
-export const ROLE_COLOR_MAP: Record<string, string> = {
+const ROLE_COLOR_MAP: Record<string, string> = {
   [UserResponseRoles.OWNER]: 'violet',
   [UserResponseRoles.ADMIN]: 'indigo',
   [UserResponseRoles.BACKOFFICE]: 'teal',

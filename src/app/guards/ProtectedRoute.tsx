@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router';
-import { AppLayout } from '@/components/layout';
+import { AppLayout } from '../layout/AppLayout';
 import { ROUTES } from '@/config/routes';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 

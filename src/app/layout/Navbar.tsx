@@ -17,7 +17,7 @@ import { NAV_ITEMS, NavItem } from '@/config/navigation.config';
 import { ROUTES } from '@/config/routes';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useUserRole } from '@/features/auth/hooks/useHasRole';
-import { isRouteAllowedForRole } from '@/shared/routes.utils';
+import { isRouteAllowedForRole } from '../routes.config';
 import classes from './Navbar.module.css';
 
 export const NavBar = () => {

@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Button, Card, Stack, Text } from '@mantine/core';
-import { ControlledDateTimePicker } from '@/components/ui/ControlledDatePicker/ControlledDateTimePicker';
-import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
-import { FormSelect } from '@/components/ui/ControlledSelect/ControlledSelect';
-import { Form } from '@/components/ui/Form';
+import { ControlledDateTimePicker } from '@/shared/components/forms/ControlledDateTimePicker';
+import { ControlledNumberInput } from '@/shared/components/forms/ControlledNumberInput';
+import { FormSelect } from '@/shared/components/forms/ControlledSelect';
+import { Form } from '@/shared/components/forms/Form';
 import { useCarSelectOptions } from '@/features/cars/hooks/useCarOptions';
 import { useAdminCreateShiftForm } from '../../hooks/admin/useAdminCreateShiftForm';
 

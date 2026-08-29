@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { createTestAppWrapper } from '@/mocks/AppWrapper';
 import { ShiftResponse } from '@/api/generated/model';
-import { EditShiftForm } from '../EditShiftForm';
+import { AdminEditShiftForm } from '../admin/AdminEditShiftForm';
 
 class MockResizeObserver {
   observe = vi.fn();
@@ -38,7 +38,7 @@ describe('EditShiftForm Component', () => {
   it('renders edit shift form with disabled driver and car fields and existing revenue row', () => {
     const { Wrapper } = createTestAppWrapper();
 
-    render(<EditShiftForm shift={mockShift} />, { wrapper: Wrapper });
+    render(<AdminEditShiftForm shift={mockShift} />, { wrapper: Wrapper });
 
     // Check driver and car comboboxes exist and are disabled
     const driverInput = screen.getByRole('combobox', { name: /fahrer|driver/i });
@@ -78,7 +78,7 @@ describe('EditShiftForm Component', () => {
       ],
     };
 
-    render(<EditShiftForm shift={mixedShift} />, { wrapper: Wrapper });
+    render(<AdminEditShiftForm shift={mixedShift} />, { wrapper: Wrapper });
 
     expect(screen.getByText(/City Taxi/i)).toBeInTheDocument();
   });

@@ -48,3 +48,4 @@ const Form = <T extends FieldValues>({
 };
 
 export { Form };
+export { FieldGroup } from './FieldGroup';

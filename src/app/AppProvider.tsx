@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { MantineProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { ModalsProvider } from '@mantine/modals';
-import { MainErrorFallback } from '@/components/errors/MainErrorFallback';
+import { MainErrorFallback } from '@/shared/components/feedback/MainErrorFallback';
 import { theme } from '@/config/theme';
 import queryClient from '@/lib/queryClient';
 

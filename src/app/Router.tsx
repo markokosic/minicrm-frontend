@@ -1,12 +1,14 @@
 import { lazy, useMemo } from 'react';
 import { createBrowserRouter, Navigate, RouteObject, RouterProvider } from 'react-router';
 import { UserResponseRoles } from '@/api/generated/model';
-import { MainErrorFallback } from '@/components/errors/MainErrorFallback';
-import { AuthLayout, ProtectedRoute, PublicRoute } from '@/components/layout';
+import { MainErrorFallback } from '@/shared/components/feedback/MainErrorFallback';
+import { AuthLayout } from './layout/AuthLayout';
+import { ProtectedRoute } from './guards/ProtectedRoute';
+import { PublicRoute } from './guards/PublicRoute';
 import { ROUTES } from '@/config/routes';
 import { useUserRole } from '@/features/auth/hooks/useHasRole';
 import { authRoutes } from '@/features/auth/routes';
-import { getRoutesForRole } from '@/shared/routes.utils';
+import { getRoutesForRole } from './app-routes.config';
 
 const ChangePasswordPage = lazy(() => import('@/features/auth/pages/ChangePasswordPage'));
 

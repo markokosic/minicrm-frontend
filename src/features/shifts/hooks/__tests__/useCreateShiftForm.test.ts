@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { createTestAppWrapper } from '@/mocks/AppWrapper';
-import { useAdminCreateShiftForm } from '../useAdminCreateShiftForm';
+import { useAdminCreateShiftForm } from '../admin/useAdminCreateShiftForm';
 
 describe('useCreateShiftForm Hook', () => {
   it('initializes form with default values', () => {

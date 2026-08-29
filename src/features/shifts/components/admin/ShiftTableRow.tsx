@@ -2,7 +2,7 @@ import { Edit2, Eye, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Group, Table } from '@mantine/core';
 import { ShiftResponse } from '@/api/generated/model';
-import { ActionMenu } from '@/components/ui/Menu/ActionMenu';
+import { ActionMenu } from '@/shared/components/ui/ActionMenu';
 import { createFormatters } from '@/shared/utils';
 import {
   calculateShiftTotals,

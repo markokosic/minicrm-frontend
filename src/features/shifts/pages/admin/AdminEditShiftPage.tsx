@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { useGetShiftById } from '@/api/generated/endpoints/shifts/shifts';
-import { PageLayout } from '@/components/layout/PageLayout';
-import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
+import { PageLayout } from '@/shared/components/layout/PageLayout';
+import { DataLoadingWrapper } from '@/shared/components/ui/DataLoadingWrapper';
 import { AdminEditShiftForm } from '../../components/admin/AdminEditShiftForm';
 
 export const AdminEditShiftPage = () => {

@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Button, SimpleGrid, Stack } from '@mantine/core';
-import { ControlledPasswordInput } from '@/components/ui/ControlledPasswordInput/ControlledPasswordInput';
-import { ControlledTextInput } from '@/components/ui/ControlledTextInput/ControlledTextInput';
-import { Form } from '@/components/ui/Form';
+import { ControlledPasswordInput } from '@/shared/components/forms/ControlledPasswordInput';
+import { ControlledTextInput } from '@/shared/components/forms/ControlledTextInput';
+import { Form } from '@/shared/components/forms/Form';
 import { useRegisterForm } from '@/features/auth/hooks/useRegisterForm';
 import { AUTH_FORM_FIELDS } from '../domain/auth-form-fields';
 

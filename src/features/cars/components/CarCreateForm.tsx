@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Box, Button } from '@mantine/core';
-import { Form } from '@/components/ui/Form';
+import { Form } from '@/shared/components/forms/Form';
 import { useCarCreateForm } from '../hooks/useCarCreateForm';
 import { CarForm } from './CarForm';
 

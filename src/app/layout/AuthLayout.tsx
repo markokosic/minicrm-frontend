@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router';
 import { Box, Container, Group, Loader, Text, ThemeIcon } from '@mantine/core';
 import { Car } from 'lucide-react';
-import { LanguagePicker } from '@/components/ui/LanguagePicker';
+import { LanguagePicker } from '@/shared/components/ui/LanguagePicker';
 
 const AuthLayout = () => {
   return (

@@ -1,9 +1,9 @@
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Grid, Paper, Text, TextInput } from '@mantine/core';
-import { ControlledDateTimePicker } from '@/components/ui/ControlledDatePicker/ControlledDateTimePicker';
-import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
-import { FormSelect } from '@/components/ui/ControlledSelect/ControlledSelect';
+import { ControlledDateTimePicker } from '@/shared/components/forms/ControlledDateTimePicker';
+import { ControlledNumberInput } from '@/shared/components/forms/ControlledNumberInput';
+import { FormSelect } from '@/shared/components/forms/ControlledSelect';
 import { CarOption } from '@/features/cars/utils/car-options.utils';
 import { DriverOption } from '@/features/drivers/utils/driver-options.utils';
 import {

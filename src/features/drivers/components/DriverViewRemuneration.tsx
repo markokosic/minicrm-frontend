@@ -1,6 +1,7 @@
 import { Badge, Card, Divider, Group, SimpleGrid, Stack, Text } from '@mantine/core';
 import { Coins, Percent, Receipt, Tag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { DriverResponse } from '@/api/generated/model';
 import { RemunerationModelType } from '../domain/remuneration-types';
 import { useRemunerationLabels } from '../hooks/useRemunerationLabels';
 

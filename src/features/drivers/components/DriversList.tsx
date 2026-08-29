@@ -1,9 +1,9 @@
 import { Box, Flex, Stack } from '@mantine/core';
 import { useGetAllDrivers } from '@/api/generated/endpoints/drivers/drivers';
 import { DriverResponse } from '@/api/generated/model';
-import { AppLink } from '@/components/ui/AppLink';
-import { AppPagination } from '@/components/ui/AppPagination';
-import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
+import { AppLink } from '@/shared/components/ui/AppLink';
+import { AppPagination } from '@/shared/components/ui/AppPagination';
+import { DataLoadingWrapper } from '@/shared/components/ui/DataLoadingWrapper';
 import { ROUTES } from '@/config/routes';
 import { usePagination } from '@/shared/hooks/usePagination';
 import { DriverCard } from './DriverCard';

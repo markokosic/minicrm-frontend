@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Button, Stack } from '@mantine/core';
-import { ControlledPasswordInput } from '@/components/ui/ControlledPasswordInput/ControlledPasswordInput';
-import { Form } from '@/components/ui/Form';
+import { ControlledPasswordInput } from '@/shared/components/forms/ControlledPasswordInput';
+import { Form } from '@/shared/components/forms/Form';
 import { AUTH_FORM_FIELDS } from '../domain/auth-form-fields';
 import { useChangePasswordForm } from '../hooks/useChangePasswordForm';
 

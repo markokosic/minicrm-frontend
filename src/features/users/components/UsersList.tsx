@@ -1,8 +1,8 @@
 import { Box, Flex, Stack } from '@mantine/core';
 import { useGetAllUsers } from '@/api/generated/endpoints/users/users';
 import { UserResponse } from '@/api/generated/model';
-import { AppPagination } from '@/components/ui/AppPagination';
-import { DataLoadingWrapper } from '@/components/ui/DataLoadingWrapper';
+import { AppPagination } from '@/shared/components/ui/AppPagination';
+import { DataLoadingWrapper } from '@/shared/components/ui/DataLoadingWrapper';
 import { usePagination } from '@/shared/hooks/usePagination';
 import { UserCard } from './UserCard';
 import { UserCardSkeleton } from './UserCardSkeleton';

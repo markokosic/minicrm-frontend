@@ -1,7 +1,7 @@
 import { Calendar, CalendarDays } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Stack, Tabs } from '@mantine/core';
-import { PageLayout } from '@/components/layout/PageLayout';
+import { PageLayout } from '@/shared/components/layout/PageLayout';
 import { useUrlFilters } from '@/shared/hooks/useUrlFilters';
 import { MonthlyDashboardView } from '../../components/admin/MonthlyDashboardView';
 import { YearlyDashboardView } from '../../components/admin/YearlyDashboardView';

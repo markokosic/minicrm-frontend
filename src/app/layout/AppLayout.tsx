@@ -3,7 +3,7 @@ import { Outlet } from 'react-router';
 import { AppShell, Box, Burger, Group, LoadingOverlay, Text, ThemeIcon } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Car } from 'lucide-react';
-import { NavBar } from '@/components/ui/Navbar/Navbar';
+import { NavBar } from './Navbar';
 
 type AppLayoutProps = {
   overlayVisible: boolean;

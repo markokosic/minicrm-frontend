@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Button, Stack } from '@mantine/core';
-import { Form } from '@/components/ui/Form';
+import { Form } from '@/shared/components/forms/Form';
 import { useCarSelectOptions } from '@/features/cars/hooks/useCarOptions';
 import { useDriverSelectOptions } from '@/features/drivers/hooks/useDriverOptions';
 import { useAdminCreateShiftForm } from '@/features/shifts/hooks/admin/useAdminCreateShiftForm';

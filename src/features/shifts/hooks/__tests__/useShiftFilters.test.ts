@@ -4,7 +4,7 @@ import { useShiftFilters } from '../shared/useShiftFilters';
 
 const mockGetFilter = vi.fn();
 
-vi.mock('@/common/hooks/useUrlFilters', () => ({
+vi.mock('@/shared/hooks/useUrlFilters', () => ({
   useUrlFilters: () => ({
     getFilter: mockGetFilter,
   }),

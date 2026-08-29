@@ -2,8 +2,8 @@ import { Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ActionIcon, Alert, Group, NumberInput, Paper, SimpleGrid, Text } from '@mantine/core';
 import { DriverRevenueOption, DriverRevenueOptionEntryCategory } from '@/api/generated/model';
-import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
-import { FormSelect } from '@/components/ui/ControlledSelect/ControlledSelect';
+import { ControlledNumberInput } from '@/shared/components/forms/ControlledNumberInput';
+import { FormSelect } from '@/shared/components/forms/ControlledSelect';
 import { useShiftRevenueRow } from '../../hooks/admin/useShiftRevenueRow';
 
 interface ShiftRevenueRowProps {
