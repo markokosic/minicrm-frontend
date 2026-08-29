@@ -13,12 +13,12 @@ import {
   Text,
   UnstyledButton,
 } from '@mantine/core';
-import { isRouteAllowedForRole } from '@/common/routes.utils';
 import { NAV_ITEMS, NavItem } from '@/config/navigation.config';
 import { ROUTES } from '@/config/routes';
-import { useAuth} from '@/features/auth/hooks/useAuth';
-import classes from './Navbar.module.css';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useUserRole } from '@/features/auth/hooks/useHasRole';
+import { isRouteAllowedForRole } from '@/shared/routes.utils';
+import classes from './Navbar.module.css';
 
 export const NavBar = () => {
   const location = useLocation();

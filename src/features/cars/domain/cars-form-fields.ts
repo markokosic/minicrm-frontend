@@ -1,4 +1,4 @@
-import { FormFieldsGroupConfig } from '@/common/types/common-types';
+import { FormFieldsGroupConfig } from '@/shared/types/common-types';
 
 export const CARS_FORM_FIELDS = {
   common: {

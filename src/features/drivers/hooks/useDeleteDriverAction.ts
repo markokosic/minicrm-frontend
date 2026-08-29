@@ -6,7 +6,7 @@ import {
   useDeleteDriver,
 } from '@/api/generated/endpoints/drivers/drivers';
 import { DriverResponse } from '@/api/generated/model';
-import { useConfirmModal } from '@/common/hooks/useConfirmModal';
+import { useConfirmModal } from '@/shared/hooks/useConfirmModal';
 
 export const useDeleteDriverAction = (options?: { onSuccess?: () => void }) => {
   const { t } = useTranslation(['app', 'common', 'errors']);
@@ -30,7 +30,9 @@ export const useDeleteDriverAction = (options?: { onSuccess?: () => void }) => {
   });
 
   const handleDelete = (driver: DriverResponse) => {
-    if (!driver.id) {return;}
+    if (!driver.id) {
+      return;
+    }
     confirm({
       title: t('app:drivers.modals.delete_confirm.title'),
       labels: {

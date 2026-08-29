@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Badge, Card, Flex, Group, Paper, Stack, Text } from '@mantine/core';
 import { ShiftRevenueEntryResponse } from '@/api/generated/model';
-import { createFormatters } from '@/common/utils';
+import { createFormatters } from '@/shared/utils';
 
 interface ShiftViewRevenuesProps {
   revenues?: ShiftRevenueEntryResponse[] | null;

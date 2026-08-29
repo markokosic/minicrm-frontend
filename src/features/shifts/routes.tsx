@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 import { UserResponseRoles } from '@/api/generated/model';
-import { MANAGEMENT_ROLES } from '@/common/constants';
 import { ROUTES } from '@/config/routes';
-import { AppRouteInterface } from '@/common/types/common-types';
+import { MANAGEMENT_ROLES } from '@/shared/constants';
+import { AppRouteInterface } from '@/shared/types/common-types';
 
 const AdminShiftsPage = lazy(() => import('./pages/admin/AdminShiftsPage'));
 const DriverShiftsPage = lazy(() => import('./pages/driver/DriverShiftsPage'));

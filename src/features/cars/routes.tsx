@@ -1,7 +1,7 @@
 import { lazy } from 'react';
-import { MANAGEMENT_ROLES } from '@/common/constants';
-import { AppRouteInterface } from '@/common/types/common-types';
 import { ROUTES } from '@/config/routes';
+import { MANAGEMENT_ROLES } from '@/shared/constants';
+import { AppRouteInterface } from '@/shared/types/common-types';
 
 const CarsPage = lazy(() => import('./pages/CarsPage'));
 const CarCreatePage = lazy(() => import('./pages/CarCreatePage'));

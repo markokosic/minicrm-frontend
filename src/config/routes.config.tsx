@@ -1,4 +1,3 @@
-import { AppRouteInterface } from '@/common/types/common-types';
 import { carRoutes } from '@/features/cars/routes';
 import { dashboardRoutes } from '@/features/dashboard/routes';
 import { driverRoutes } from '@/features/drivers/routes';
@@ -7,6 +6,7 @@ import { reportRoutes } from '@/features/reports/routes';
 import { settingsRoutes } from '@/features/settings/routes';
 import { shiftRoutes } from '@/features/shifts/routes';
 import { userRoutes } from '@/features/users/routes';
+import { AppRouteInterface } from '@/shared/types/common-types';
 
 export const APP_ROUTES: AppRouteInterface[] = [
   // --- DASHBOARD (MODUL) ---

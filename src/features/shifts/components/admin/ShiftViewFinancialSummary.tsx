@@ -1,7 +1,7 @@
 import { Banknote, Building2, Wallet } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Group, Paper, SimpleGrid, Text, ThemeIcon } from '@mantine/core';
-import { createFormatters } from '@/common/utils';
+import { createFormatters } from '@/shared/utils';
 
 interface ShiftViewFinancialSummaryProps {
   totalRevenue: number;

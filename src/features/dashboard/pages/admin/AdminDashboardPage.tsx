@@ -1,8 +1,8 @@
 import { Calendar, CalendarDays } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Stack, Tabs } from '@mantine/core';
-import { useUrlFilters } from '@/common/hooks/useUrlFilters';
 import { PageLayout } from '@/components/layout/PageLayout';
+import { useUrlFilters } from '@/shared/hooks/useUrlFilters';
 import { MonthlyDashboardView } from '../../components/admin/MonthlyDashboardView';
 import { YearlyDashboardView } from '../../components/admin/YearlyDashboardView';
 
@@ -27,7 +27,10 @@ export const AdminDashboardPage = () => {
       title={t('common:navigation.dashboard')}
       showBack={false}
     >
-      <Stack gap="lg" pb="xl">
+      <Stack
+        gap="lg"
+        pb="xl"
+      >
         <Tabs
           value={activeTab}
           onChange={handleTabChange}
@@ -49,11 +52,20 @@ export const AdminDashboardPage = () => {
             </Tabs.Tab>
           </Tabs.List>
 
-          <Tabs.Panel value="month" pt="lg">
-            <MonthlyDashboardView year={year} month={month} />
+          <Tabs.Panel
+            value="month"
+            pt="lg"
+          >
+            <MonthlyDashboardView
+              year={year}
+              month={month}
+            />
           </Tabs.Panel>
 
-          <Tabs.Panel value="year" pt="lg">
+          <Tabs.Panel
+            value="year"
+            pt="lg"
+          >
             <YearlyDashboardView year={year} />
           </Tabs.Panel>
         </Tabs>

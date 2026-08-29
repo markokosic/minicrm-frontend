@@ -4,9 +4,12 @@ import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ActionIcon, Box, Group, SimpleGrid, Stack, Text } from '@mantine/core';
 import { useGetActiveFlatRateTypes } from '@/api/generated/endpoints/flat-rate-types/flat-rate-types';
-import { DAYS_OF_THE_WEEK } from '@/common/constants';
 import { ControlledNumberInput } from '@/components/ui/ControlledNumberInput/ControlledNumberInput';
-import { ComboboxOption, ControlledCombobox } from '@/components/ui/ControlledSelect/ControlledCombobox';
+import {
+  ComboboxOption,
+  ControlledCombobox,
+} from '@/components/ui/ControlledSelect/ControlledCombobox';
+import { DAYS_OF_THE_WEEK } from '@/shared/constants';
 import { REMUNERATION_FORM_FIELDS } from '../domain/remuneration-form-fields';
 import { RemunerationModelType } from '../domain/remuneration-types';
 import { useRemunerationLabels } from '../hooks/useRemunerationLabels';
@@ -82,8 +85,14 @@ export const DriverFormRemunerationConfigRow = ({
       }}
     >
       <Stack gap="sm">
-        <Group justify="space-between" align="center">
-          <Text fw={600} size="sm">
+        <Group
+          justify="space-between"
+          align="center"
+        >
+          <Text
+            fw={600}
+            size="sm"
+          >
             {t('app:remuneration.driver_remuneration')} #{index + 1}
           </Text>
           <ActionIcon
@@ -104,7 +113,10 @@ export const DriverFormRemunerationConfigRow = ({
         />
 
         {selectedType === RemunerationModelType.PERCENTAGE_SHARE && (
-          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+          <SimpleGrid
+            cols={{ base: 1, sm: 2 }}
+            spacing="md"
+          >
             <ControlledNumberInput
               min={0}
               suffix="€"
@@ -131,7 +143,10 @@ export const DriverFormRemunerationConfigRow = ({
         )}
 
         {selectedType === RemunerationModelType.WEEKLY_FIXED_RATE && (
-          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+          <SimpleGrid
+            cols={{ base: 1, sm: 2 }}
+            spacing="md"
+          >
             <ControlledNumberInput
               min={0}
               suffix="€"
@@ -153,7 +168,10 @@ export const DriverFormRemunerationConfigRow = ({
         )}
 
         {selectedType === RemunerationModelType.FLAT_RATE && (
-          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+          <SimpleGrid
+            cols={{ base: 1, sm: 2 }}
+            spacing="md"
+          >
             <ControlledNumberInput
               min={0}
               suffix="€"

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { SimpleGrid, Stack, Title } from '@mantine/core';
-import { createFormatters } from '@/common/utils';
 import { StatsCard } from '@/components/ui/StatsCard';
+import { createFormatters } from '@/shared/utils';
 import { DashboardSummaryData } from '../report-schema';
 
 type DashboardSummaryProps = {

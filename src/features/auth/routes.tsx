@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { ROUTES } from '@/config/routes';
-import { AppRouteInterface } from '../../common/types/common-types';
+import { AppRouteInterface } from '../../shared/types/common-types';
 
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));

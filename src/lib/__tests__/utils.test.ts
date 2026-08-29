@@ -5,7 +5,7 @@ import {
   getNumberSeparators,
   getTimeDuration,
   mapFieldConfig,
-} from '../../common/utils';
+} from '../../shared/utils';
 
 describe('utils', () => {
   describe('mapFieldConfig', () => {

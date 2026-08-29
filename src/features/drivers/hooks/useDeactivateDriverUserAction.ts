@@ -8,7 +8,7 @@ import {
 } from '@/api/generated/endpoints/drivers/drivers';
 import { getGetAllUsersQueryKey } from '@/api/generated/endpoints/users/users';
 import { DriverResponse } from '@/api/generated/model';
-import { useConfirmModal } from '@/common/hooks/useConfirmModal';
+import { useConfirmModal } from '@/shared/hooks/useConfirmModal';
 
 export const useDeactivateDriverUserAction = (options?: { onSuccess?: () => void }) => {
   const { t } = useTranslation(['app', 'common', 'errors']);
@@ -34,7 +34,9 @@ export const useDeactivateDriverUserAction = (options?: { onSuccess?: () => void
   });
 
   const handleDeactivate = (driver: DriverResponse) => {
-    if (!driver.id) {return;}
+    if (!driver.id) {
+      return;
+    }
     confirm({
       title: t('app:drivers.modals.deactivate_user_confirm.title'),
       children: t('app:drivers.modals.deactivate_user_confirm.message'),

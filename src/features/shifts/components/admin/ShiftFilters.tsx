@@ -3,8 +3,8 @@ import { X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ActionIcon, Group, Paper, Select } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { useUrlFilters } from '@/common/hooks/useUrlFilters';
 import { useDriverSelectOptions } from '@/features/drivers/hooks/useDriverOptions';
+import { useUrlFilters } from '@/shared/hooks/useUrlFilters';
 
 export const ShiftFilters = () => {
   const { t } = useTranslation(['app', 'common']);

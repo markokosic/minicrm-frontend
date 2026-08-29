@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useUrlFilters } from '@/common/hooks/useUrlFilters';
+import { useUrlFilters } from '@/shared/hooks/useUrlFilters';
 
 export interface ParsedShiftFilters {
   driverId: number | undefined;

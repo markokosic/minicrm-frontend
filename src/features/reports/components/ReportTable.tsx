@@ -2,8 +2,8 @@ import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { Anchor, ScrollArea, Table } from '@mantine/core';
-import { createFormatters } from '@/common/utils';
 import { ROUTES } from '@/config/routes';
+import { createFormatters } from '@/shared/utils';
 import { GroupBy, RevenueReportData, RevenueReportRow } from '../domain/reports-schemas';
 import { EntryCategoryBadge } from './EntryCategoryBadge';
 

@@ -7,7 +7,7 @@ import {
   useDeactivateFlatRateType,
 } from '@/api/generated/endpoints/flat-rate-types/flat-rate-types';
 import { FlatRateTypeResponse } from '@/api/generated/model';
-import { useConfirmModal } from '@/common/hooks/useConfirmModal';
+import { useConfirmModal } from '@/shared/hooks/useConfirmModal';
 
 export const useDeactivateFlatRateAction = () => {
   const queryClient = useQueryClient();
@@ -31,7 +31,9 @@ export const useDeactivateFlatRateAction = () => {
   });
 
   const handleDeactivate = (flatRate: FlatRateTypeResponse) => {
-    if (!flatRate.id) {return;}
+    if (!flatRate.id) {
+      return;
+    }
     confirm({
       title: t('app:flatrate.modals.deactivate_confirm.title'),
       children: t('app:flatrate.modals.deactivate_confirm.message'),

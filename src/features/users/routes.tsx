@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { UserResponseRoles } from '@/api/generated/model';
-import { AppRouteInterface } from '@/common/types/common-types';
 import { ROUTES } from '@/config/routes';
+import { AppRouteInterface } from '@/shared/types/common-types';
 
 const UsersPage = lazy(() => import('./pages/UsersPage'));
 
