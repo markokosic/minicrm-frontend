@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Stack, Tabs } from '@mantine/core';
 import { useUrlFilters } from '@/common/hooks/useUrlFilters';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { MonthlyDashboardView } from '../components/MonthlyDashboardView';
-import { YearlyDashboardView } from '../components/YearlyDashboardView';
+import { MonthlyDashboardView } from '../../components/admin/MonthlyDashboardView';
+import { YearlyDashboardView } from '../../components/admin/YearlyDashboardView';
 
-const DashboardPage = () => {
+export const AdminDashboardPage = () => {
   const { t } = useTranslation(['app', 'common']);
   const { getFilter, setFilter } = useUrlFilters();
 
@@ -62,4 +62,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default AdminDashboardPage;

@@ -1,15 +1,12 @@
 import { lazy } from 'react';
 import { UserResponseRoles } from '@/api/generated/model';
+import { AppRouteInterface } from '@/common/types/common-types';
 import { carRoutes } from '@/features/cars/routes';
+import { dashboardRoutes } from '@/features/dashboard/routes';
 import { shiftRoutes } from '@/features/shifts/routes';
-import { AppRouteInterface } from '../common/types/common-types';
 import { ROUTES } from './routes';
 
 // LAZY LOADED PAGES
-const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
-const DriverDashboardPage = lazy(
-  () => import('@/features/driver-dashboard/pages/DriverDashboardPage')
-);
 const SettingsPage = lazy(() => import('@/features/settings/pages/SettingsPage'));
 const DriversPage = lazy(() => import('@/features/drivers/pages/DriversPage'));
 const DriverCreatePage = lazy(() => import('@/features/drivers/pages/DriverCreatePage'));
@@ -23,17 +20,8 @@ const FlatRatesPage = lazy(() => import('@/features/flatrates/pages/FlatRatesPag
 const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'));
 
 export const APP_ROUTES: AppRouteInterface[] = [
-  // --- DASHBOARD ---
-  {
-    path: ROUTES.app.dashboard.path,
-    element: <DriverDashboardPage />,
-    roles: [UserResponseRoles.DRIVER],
-  },
-  {
-    path: ROUTES.app.dashboard.path,
-    element: <DashboardPage />,
-    roles: [UserResponseRoles.ADMIN, UserResponseRoles.OWNER, UserResponseRoles.BACKOFFICE],
-  },
+  // --- DASHBOARD (MODUL) ---
+  ...dashboardRoutes,
 
   // --- SCHICHTEN (MODUL) ---
   ...shiftRoutes,
