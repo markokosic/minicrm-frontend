@@ -5,12 +5,12 @@ import { carRoutes } from '@/features/cars/routes';
 import { dashboardRoutes } from '@/features/dashboard/routes';
 import { driverRoutes } from '@/features/drivers/routes';
 import { flatrateRoutes } from '@/features/flatrates/routes';
+import { reportRoutes } from '@/features/reports/routes';
 import { shiftRoutes } from '@/features/shifts/routes';
 import { ROUTES } from './routes';
 
 // LAZY LOADED PAGES
 const SettingsPage = lazy(() => import('@/features/settings/pages/SettingsPage'));
-const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
 const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'));
 
 export const APP_ROUTES: AppRouteInterface[] = [
@@ -29,12 +29,8 @@ export const APP_ROUTES: AppRouteInterface[] = [
   // --- PAUSCHALEN / FLATRATES (MODUL) ---
   ...flatrateRoutes,
 
-  // --- BERICHTE ---
-  {
-    path: ROUTES.app.reports.path,
-    element: <ReportPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
+  // --- BERICHTE (MODUL) ---
+  ...reportRoutes,
 
   // --- BENUTZERVERWALTUNG ---
   {

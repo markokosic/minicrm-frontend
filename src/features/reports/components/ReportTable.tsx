@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { Anchor, ScrollArea, Table } from '@mantine/core';
 import { createFormatters } from '@/common/utils';
 import { ROUTES } from '@/config/routes';
-import { GroupBy, RevenueReportData, RevenueReportRow } from '../report-schema';
+import { GroupBy, RevenueReportData, RevenueReportRow } from '../domain/reports-schemas';
 import { EntryCategoryBadge } from './EntryCategoryBadge';
 
 type ReportTableProps = {

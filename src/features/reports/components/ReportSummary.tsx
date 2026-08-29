@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { SimpleGrid } from '@mantine/core';
 import { createFormatters } from '@/common/utils';
 import { StatsCard } from '@/components/ui/StatsCard';
-import { RevenueReportData } from '../report-schema';
+import { RevenueReportData } from '../domain/reports-schemas';
 
 type ReportSummaryProps = {
   data: RevenueReportData | undefined;

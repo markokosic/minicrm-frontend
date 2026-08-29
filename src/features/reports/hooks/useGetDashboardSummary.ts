@@ -1,5 +1,5 @@
 import { useGetDashboardReport } from '@/api/generated/endpoints/reports/reports';
-import { DashboardSummaryData, DashboardSummaryParams } from '../report-schema';
+import { DashboardSummaryData, DashboardSummaryParams } from '../domain/reports-schemas';
 
 export const useGetDashboardSummary = (params: DashboardSummaryParams) => {
   return useGetDashboardReport<DashboardSummaryData>(params, {

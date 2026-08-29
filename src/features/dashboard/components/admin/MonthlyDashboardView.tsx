@@ -3,11 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Box, Center, Loader, SimpleGrid, Stack } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { RevenueAreaChart, ShareDonutChart, TripsBarChart } from '@/components/charts';
-import {
-  DashboardSummary,
-  useGetDashboardSummary,
-  useGetRevenueReport,
-} from '@/features/reports';
+import { DashboardSummary } from '@/features/reports/components/DashboardSummary';
+import { useGetDashboardSummary } from '@/features/reports/hooks/useGetDashboardSummary';
+import { useGetRevenueReport } from '@/features/reports/hooks/useGetRevenueReport';
 
 export interface MonthlyDashboardViewProps {
   year: number;
