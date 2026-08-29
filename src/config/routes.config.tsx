@@ -1,10 +1,9 @@
 import { lazy } from 'react';
 import { UserResponseRoles } from '@/api/generated/model';
+import { carRoutes } from '@/features/cars/routes';
 import { shiftRoutes } from '@/features/shifts/routes';
-import { AppRouteConfig } from '@/types/routes.types';
+import { AppRouteInterface } from '../common/types/common-types';
 import { ROUTES } from './routes';
-
-export type { AppRouteConfig };
 
 // LAZY LOADED PAGES
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
@@ -16,9 +15,6 @@ const DriversPage = lazy(() => import('@/features/drivers/pages/DriversPage'));
 const DriverCreatePage = lazy(() => import('@/features/drivers/pages/DriverCreatePage'));
 const DriverViewPage = lazy(() => import('@/features/drivers/pages/DriverViewPage'));
 const DriverEditPage = lazy(() => import('@/features/drivers/pages/DriverEditPage'));
-const CarsPage = lazy(() => import('@/features/cars/pages/CarsPage'));
-const CarCreatePage = lazy(() => import('@/features/cars/pages/CarCreatePage'));
-const CarPage = lazy(() => import('@/features/cars/pages/CarPage'));
 const ReportPage = lazy(() => import('@/features/reports/pages/ReportPage'));
 const CreateNewFlatRatePage = lazy(
   () => import('@/features/flatrates/pages/CreateNewFlatRatePage')
@@ -26,7 +22,7 @@ const CreateNewFlatRatePage = lazy(
 const FlatRatesPage = lazy(() => import('@/features/flatrates/pages/FlatRatesPage'));
 const UsersPage = lazy(() => import('@/features/users/pages/UsersPage'));
 
-export const APP_ROUTES: AppRouteConfig[] = [
+export const APP_ROUTES: AppRouteInterface[] = [
   // --- DASHBOARD ---
   {
     path: ROUTES.app.dashboard.path,
@@ -41,6 +37,9 @@ export const APP_ROUTES: AppRouteConfig[] = [
 
   // --- SCHICHTEN (MODUL) ---
   ...shiftRoutes,
+
+  // --- FUHRPARK / FAHRZEUGE (MODUL) ---
+  ...carRoutes,
 
   // --- FAHRER-VERWALTUNG ---
   {
@@ -61,23 +60,6 @@ export const APP_ROUTES: AppRouteConfig[] = [
   {
     path: ROUTES.app.drivers.edit.path,
     element: <DriverEditPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
-
-  // --- FUHRPARK / FAHRZEUGE ---
-  {
-    path: ROUTES.app.cars.path,
-    element: <CarsPage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
-  {
-    path: ROUTES.app.cars.create.path,
-    element: <CarCreatePage />,
-    roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
-  },
-  {
-    path: ROUTES.app.cars.view.path,
-    element: <CarPage />,
     roles: [UserResponseRoles.BACKOFFICE, UserResponseRoles.ADMIN, UserResponseRoles.OWNER],
   },
 
