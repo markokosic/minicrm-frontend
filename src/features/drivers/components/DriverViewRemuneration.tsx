@@ -109,14 +109,14 @@ export const DriverViewRemuneration = ({ driver }: DriverViewRemunerationProps) 
                           </Text>
                         </Group>
                       )}
-                      {'flatRateFee' in config && config.flatRateFee !== undefined && (
+                      {'driverFlatRatePayoutPerShift' in config && config.driverFlatRatePayoutPerShift !== undefined && (
                         <Group gap="xs" c="dimmed">
                           <Coins size={16} />
                           <Text size="sm">
-                            {t('common:form.flatRateFee.label')}:
+                            {t('common:form.driverFlatRatePayoutPerShift.label')}:
                           </Text>
                           <Text fw={600} size="sm" c="dark">
-                            {config.flatRateFee} €
+                            {config.driverFlatRatePayoutPerShift} €
                           </Text>
                         </Group>
                       )}

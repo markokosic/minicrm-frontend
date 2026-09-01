@@ -51,10 +51,10 @@ export const REMUNERATION_FORM_FIELDS = {
   },
 
   flatRate: {
-    flatRateFee: {
-      name: 'flatRateFee',
-      labelKey: 'common:form.flatRateFee.label',
-      placeholderKey: 'common:form.flatRateFee.placeholder',
+    driverFlatRatePayoutPerShift: {
+      name: 'driverFlatRatePayoutPerShift',
+      labelKey: 'common:form.driverFlatRatePayoutPerShift.label',
+      placeholderKey: 'common:form.driverFlatRatePayoutPerShift.placeholder',
       type: 'number',
     },
     flatRateTypeId: {

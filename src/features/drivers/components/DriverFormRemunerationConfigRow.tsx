@@ -175,9 +175,9 @@ export const DriverFormRemunerationConfigRow = ({
             <ControlledNumberInput
               min={0}
               suffix="€"
-              name={`${namePrefix}.${REMUNERATION_FORM_FIELDS.flatRate.flatRateFee.name}`}
-              label={t(REMUNERATION_FORM_FIELDS.flatRate.flatRateFee.labelKey)}
-              placeholder={t(REMUNERATION_FORM_FIELDS.flatRate.flatRateFee.placeholderKey)}
+              name={`${namePrefix}.${REMUNERATION_FORM_FIELDS.flatRate.driverFlatRatePayoutPerShift.name}`}
+              label={t(REMUNERATION_FORM_FIELDS.flatRate.driverFlatRatePayoutPerShift.labelKey)}
+              placeholder={t(REMUNERATION_FORM_FIELDS.flatRate.driverFlatRatePayoutPerShift.placeholderKey)}
             />
             <ControlledCombobox
               name={`${namePrefix}.${REMUNERATION_FORM_FIELDS.flatRate.flatRateTypeId.name}`}

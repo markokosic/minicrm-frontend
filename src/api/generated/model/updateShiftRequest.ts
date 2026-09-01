@@ -8,6 +8,7 @@
 import type { UpdateShiftRevenueEntryRequest } from './updateShiftRevenueEntryRequest';
 
 export interface UpdateShiftRequest {
+  carId?: number;
   odometerStart: number;
   odometerEnd: number;
   shiftStart: string;

@@ -12,7 +12,7 @@ export type WeeklyFixedRemunerationConfig = {
 
 export type FlatRateRemunerationConfig = {
   remunerationModelType: RemunerationModelType.FLAT_RATE;
-  flatRateFee: number;
+  driverFlatRatePayoutPerShift: number;
   flatRateTypeId?: number | null;
   flatRateTypeName?: string | null;
 };

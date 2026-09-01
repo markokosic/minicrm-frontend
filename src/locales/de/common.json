@@ -131,7 +131,7 @@
       "label": "Abrechnungstag",
       "placeholder": "Wählen Sie einen Wochentag aus oder geben Sie einen ein"
     },
-    "flatRateFee": {
+    "driverFlatRatePayoutPerShift": {
       "label": "Pauschale pro Schicht (€)",
       "placeholder": "Geben Sie die Pauschale pro Schicht ein (€)"
     },

@@ -43,9 +43,11 @@ export const GetAllDriversResponse = zod.object({
   "validUntil": zod.iso.date().optional(),
   "current": zod.boolean().optional(),
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "flatRateFee": zod.number().optional(),
+  "driverFlatRatePayoutPerShift": zod.number().optional(),
   "flatRateTypeId": zod.int().optional(),
-  "flatRateTypeName": zod.string().optional()
+  "flatRateTypeName": zod.string().optional(),
+  "flatRateCode": zod.string().optional(),
+  "defaultPrice": zod.number().optional()
 })),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
@@ -107,7 +109,7 @@ export const CreateDriverBody = zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "flatRateFee": zod.number(),
+  "driverFlatRatePayoutPerShift": zod.number(),
   "flatRateTypeId": zod.int().optional()
 })),zod.object({
   "remunerationModelType": zod.string()
@@ -142,9 +144,11 @@ export const CreateDriverResponse = zod.object({
   "validUntil": zod.iso.date().optional(),
   "current": zod.boolean().optional(),
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "flatRateFee": zod.number().optional(),
+  "driverFlatRatePayoutPerShift": zod.number().optional(),
   "flatRateTypeId": zod.int().optional(),
-  "flatRateTypeName": zod.string().optional()
+  "flatRateTypeName": zod.string().optional(),
+  "flatRateCode": zod.string().optional(),
+  "defaultPrice": zod.number().optional()
 })),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
@@ -234,9 +238,11 @@ export const GetDriverResponse = zod.object({
   "validUntil": zod.iso.date().optional(),
   "current": zod.boolean().optional(),
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "flatRateFee": zod.number().optional(),
+  "driverFlatRatePayoutPerShift": zod.number().optional(),
   "flatRateTypeId": zod.int().optional(),
-  "flatRateTypeName": zod.string().optional()
+  "flatRateTypeName": zod.string().optional(),
+  "flatRateCode": zod.string().optional(),
+  "defaultPrice": zod.number().optional()
 })),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
@@ -305,7 +311,7 @@ export const UpdateDriverBody = zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "flatRateFee": zod.number(),
+  "driverFlatRatePayoutPerShift": zod.number(),
   "flatRateTypeId": zod.int().optional()
 })),zod.object({
   "remunerationModelType": zod.string()
@@ -340,9 +346,11 @@ export const UpdateDriverResponse = zod.object({
   "validUntil": zod.iso.date().optional(),
   "current": zod.boolean().optional(),
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "flatRateFee": zod.number().optional(),
+  "driverFlatRatePayoutPerShift": zod.number().optional(),
   "flatRateTypeId": zod.int().optional(),
-  "flatRateTypeName": zod.string().optional()
+  "flatRateTypeName": zod.string().optional(),
+  "flatRateCode": zod.string().optional(),
+  "defaultPrice": zod.number().optional()
 })),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
@@ -384,7 +392,8 @@ export const GetDriverRevenueOptionsResponse = zod.object({
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
   "flatRateTypeId": zod.int().optional(),
   "label": zod.string().optional(),
-  "defaultPrice": zod.number().optional()
+  "defaultPrice": zod.number().optional(),
+  "driverFlatRatePayoutPerShift": zod.number().optional()
 })).optional(),
   "message": zod.string().optional()
 })
@@ -398,6 +407,76 @@ export const GetAllDriversForSelectResponse = zod.object({
   "data": zod.array(zod.object({
   "id": zod.int().optional(),
   "fullName": zod.string().optional()
+})).optional(),
+  "message": zod.string().optional()
+})
+
+/**
+ * Retrieves profile and remuneration configurations for the currently authenticated driver.
+ * @summary Get my driver profile
+ */
+export const GetMyDriverProfileResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.int().describe('Unique identifier of the driver'),
+  "userId": zod.int().optional().describe('ID of the linked user account (if any)'),
+  "firstName": zod.string().describe('First name of the driver'),
+  "lastName": zod.string().describe('Last name of the driver'),
+  "email": zod.string().describe('Email address'),
+  "phone": zod.string().describe('Phone number'),
+  "status": zod.enum(['ACTIVE', 'DELETED']).describe('Current employment status'),
+  "currentRemunerationConfigs": zod.array(zod.union([zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.int().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "driverFlatRatePayoutPerShift": zod.number().optional(),
+  "flatRateTypeId": zod.int().optional(),
+  "flatRateTypeName": zod.string().optional(),
+  "flatRateCode": zod.string().optional(),
+  "defaultPrice": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.int().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "driverRevenueSharePercentage": zod.number().optional(),
+  "minDriverPayout": zod.number().optional()
+})),zod.object({
+  "remunerationModelType": zod.string()
+}).and(zod.object({
+  "id": zod.int().optional(),
+  "validFrom": zod.iso.date().optional(),
+  "validUntil": zod.iso.date().optional(),
+  "current": zod.boolean().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
+  "weeklyFixedCompanySettlement": zod.number().optional(),
+  "settlementDay": zod.int().optional()
+}))])).describe('Current remuneration configuration'),
+  "createdAt": zod.iso.datetime({"offset":true}).describe('Timestamp when the driver was created'),
+  "updatedAt": zod.iso.datetime({"offset":true}).describe('Timestamp of the last update')
+}).optional().describe('Response object representing a driver in the system'),
+  "message": zod.string().optional()
+})
+
+/**
+ * Fetches the list of selectable revenue categories and flat rate options for the currently authenticated driver.
+ * @summary Get my selectable revenue options
+ */
+export const GetMyRevenueOptionsResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.array(zod.object({
+  "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
+  "flatRateTypeId": zod.int().optional(),
+  "label": zod.string().optional(),
+  "defaultPrice": zod.number().optional(),
+  "driverFlatRatePayoutPerShift": zod.number().optional()
 })).optional(),
   "message": zod.string().optional()
 })

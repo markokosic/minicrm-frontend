@@ -12,7 +12,7 @@ describe('driver-form.utils', () => {
       currentRemunerationConfigs: [
         {
           remunerationModelType: 'FLAT_RATE' as const,
-          flatRateFee: 50,
+          driverFlatRatePayoutPerShift: 50,
         },
       ],
     };
@@ -25,7 +25,7 @@ describe('driver-form.utils', () => {
       remunerationConfigs: [
         {
           remunerationModelType: 'FLAT_RATE',
-          flatRateFee: 50,
+          driverFlatRatePayoutPerShift: 50,
         },
       ],
     });

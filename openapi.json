@@ -349,6 +349,47 @@
       }
     },
     "/api/shifts/my/{id}": {
+      "get": {
+        "tags": [
+          "Shifts"
+        ],
+        "summary": "Get my shift by ID",
+        "description": "Fetches details of a specific shift belonging to the currently authenticated driver.",
+        "operationId": "getMyShiftById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shift fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOShiftResponseDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Shift not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
       "put": {
         "tags": [
           "Shifts"
@@ -2106,6 +2147,90 @@
         }
       }
     },
+    "/api/drivers/my": {
+      "get": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Get my driver profile",
+        "description": "Retrieves profile and remuneration configurations for the currently authenticated driver.",
+        "operationId": "getMyDriverProfile",
+        "responses": {
+          "200": {
+            "description": "Driver profile fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTODriverResponseDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Driver not found for current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/drivers/my/revenue-options": {
+      "get": {
+        "tags": [
+          "Drivers"
+        ],
+        "summary": "Get my selectable revenue options",
+        "description": "Fetches the list of selectable revenue categories and flat rate options for the currently authenticated driver.",
+        "operationId": "getMyRevenueOptions",
+        "responses": {
+          "200": {
+            "description": "Revenue options fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseDTOListDriverRevenueOptionDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Driver not found for current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/cars/select": {
       "get": {
         "tags": [
@@ -2376,6 +2501,10 @@
       "UpdateShiftRequestDTO": {
         "type": "object",
         "properties": {
+          "carId": {
+            "type": "integer",
+            "format": "int64"
+          },
           "odometerStart": {
             "type": "number"
           },
@@ -2943,7 +3072,7 @@
                   "FLAT_RATE"
                 ]
               },
-              "flatRateFee": {
+              "driverFlatRatePayoutPerShift": {
                 "type": "number"
               },
               "flatRateTypeId": {
@@ -2954,7 +3083,7 @@
           }
         ],
         "required": [
-          "flatRateFee",
+          "driverFlatRatePayoutPerShift",
           "remunerationModelType"
         ]
       },
@@ -3165,7 +3294,7 @@
                   "FLAT_RATE"
                 ]
               },
-              "flatRateFee": {
+              "driverFlatRatePayoutPerShift": {
                 "type": "number"
               },
               "flatRateTypeId": {
@@ -3174,6 +3303,12 @@
               },
               "flatRateTypeName": {
                 "type": "string"
+              },
+              "flatRateCode": {
+                "type": "string"
+              },
+              "defaultPrice": {
+                "type": "number"
               }
             }
           }
@@ -3941,6 +4076,9 @@
             "type": "string"
           },
           "defaultPrice": {
+            "type": "number"
+          },
+          "driverFlatRatePayoutPerShift": {
             "type": "number"
           }
         }

@@ -65,6 +65,7 @@ export const UpdateShiftParams = zod.object({
 
 
 export const UpdateShiftBody = zod.object({
+  "carId": zod.int().optional(),
   "odometerStart": zod.number(),
   "odometerEnd": zod.number(),
   "shiftStart": zod.iso.datetime({"offset":true}),
@@ -131,6 +132,52 @@ export const DeleteShiftResponse = zod.object({
 })
 
 /**
+ * Fetches details of a specific shift belonging to the currently authenticated driver.
+ * @summary Get my shift by ID
+ */
+export const GetMyShiftByIdParams = zod.object({
+  "id": zod.int()
+})
+
+export const GetMyShiftByIdResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "data": zod.object({
+  "id": zod.int().optional(),
+  "driver": zod.object({
+  "id": zod.int().optional(),
+  "firstName": zod.string().optional(),
+  "lastName": zod.string().optional()
+}).optional(),
+  "car": zod.object({
+  "id": zod.int().optional(),
+  "licensePlate": zod.string().optional(),
+  "brand": zod.string().optional(),
+  "model": zod.string().optional()
+}).optional(),
+  "odometerStart": zod.number().optional(),
+  "odometerEnd": zod.number().optional(),
+  "kilometersDriven": zod.number().optional(),
+  "shiftStart": zod.iso.datetime({"offset":true}).optional(),
+  "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
+  "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "revenues": zod.array(zod.object({
+  "id": zod.int().optional(),
+  "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
+  "flatRateTypeId": zod.int().optional(),
+  "flatRateTypeName": zod.string().optional(),
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).optional(),
+  "isFlatRate": zod.boolean().optional(),
+  "revenue": zod.number().optional(),
+  "companyRemuneration": zod.number().optional(),
+  "driverRemuneration": zod.number().optional(),
+  "tripCount": zod.int().optional(),
+  "pricePerTrip": zod.number().optional()
+})).optional()
+}).optional(),
+  "message": zod.string().optional()
+})
+
+/**
  * Allows a driver to update their own shift as long as it is still in PENDING status.
  * @summary Update my pending shift
  */
@@ -142,6 +189,7 @@ export const UpdateMyShiftParams = zod.object({
 
 
 export const UpdateMyShiftBody = zod.object({
+  "carId": zod.int().optional(),
   "odometerStart": zod.number(),
   "odometerEnd": zod.number(),
   "shiftStart": zod.iso.datetime({"offset":true}),

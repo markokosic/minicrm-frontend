@@ -28,10 +28,12 @@ import {
   getGetAllDriversResponseMock,
   getGetDriverResponseMock,
   getGetDriverRevenueOptionsResponseMock,
+  getGetMyDriverProfileResponseMock,
+  getGetMyRevenueOptionsResponseMock,
   getUpdateDriverResponseMock
 } from './drivers.faker';
 
-export { getGetAllDriversResponseMock, getCreateDriverResponseMock, getCreateDriverUserResponseMock, getGetDriverResponseMock, getUpdateDriverResponseMock, getGetDriverRevenueOptionsResponseMock, getGetAllDriversForSelectResponseMock } from './drivers.faker';
+export { getGetAllDriversResponseMock, getCreateDriverResponseMock, getCreateDriverUserResponseMock, getGetDriverResponseMock, getUpdateDriverResponseMock, getGetDriverRevenueOptionsResponseMock, getGetAllDriversForSelectResponseMock, getGetMyDriverProfileResponseMock, getGetMyRevenueOptionsResponseMock } from './drivers.faker';
 
 
 export const getGetAllDriversMockHandler = (overrideResponse?: ApiResponsePageResponseDriverResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ApiResponsePageResponseDriverResponse> | ApiResponsePageResponseDriverResponse), options?: RequestHandlerOptions) => {
@@ -138,6 +140,30 @@ export const getGetAllDriversForSelectMockHandler = (overrideResponse?: ApiRespo
   }, options)
 }
 
+export const getGetMyDriverProfileMockHandler = (overrideResponse?: ApiResponseDriverResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ApiResponseDriverResponse> | ApiResponseDriverResponse), options?: RequestHandlerOptions) => {
+  return http.get('*/api/drivers/my', async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+
+
+    return HttpResponse.json(overrideResponse !== undefined
+    ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
+    : getGetMyDriverProfileResponseMock(),
+      { status: 200
+      })
+  }, options)
+}
+
+export const getGetMyRevenueOptionsMockHandler = (overrideResponse?: ApiResponseListDriverRevenueOption | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<ApiResponseListDriverRevenueOption> | ApiResponseListDriverRevenueOption), options?: RequestHandlerOptions) => {
+  return http.get('*/api/drivers/my/revenue-options', async (info: Parameters<Parameters<typeof http.get>[1]>[0]) => {
+
+
+    return HttpResponse.json(overrideResponse !== undefined
+    ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse)
+    : getGetMyRevenueOptionsResponseMock(),
+      { status: 200
+      })
+  }, options)
+}
+
 export const getStopRemunerationConfigMockHandler = (overrideResponse?: void | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<void> | void), options?: RequestHandlerOptions) => {
   return http.delete('*/api/drivers/:id/remuneration-configs/:configId', async (info: Parameters<Parameters<typeof http.delete>[1]>[0]) => {
   if (typeof overrideResponse === 'function') {await overrideResponse(info); }
@@ -157,5 +183,7 @@ export const getDriversMock = () => [
   getUpdateDriverMockHandler(),
   getGetDriverRevenueOptionsMockHandler(),
   getGetAllDriversForSelectMockHandler(),
+  getGetMyDriverProfileMockHandler(),
+  getGetMyRevenueOptionsMockHandler(),
   getStopRemunerationConfigMockHandler()
 ]

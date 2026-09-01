@@ -59,7 +59,7 @@
     "settlementDay": {
       "invalid": "Bitte wählen Sie einen Abrechnungstag aus."
     },
-    "flatRateFee": {
+    "driverFlatRatePayoutPerShift": {
       "invalid": "Bitte geben Sie einen gültigen Betrag ein (Minimum 0)."
     }
   },

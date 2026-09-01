@@ -30,9 +30,9 @@ export const getRemunerationSchema = (t: TFunction) =>
     }),
     z.object({
       remunerationModelType: z.literal(RemunerationModelType.FLAT_RATE),
-      flatRateFee: z
-        .number({ error: t('errors:driver.flatRateFee.invalid') })
-        .min(0, t('errors:driver.flatRateFee.invalid')),
+      driverFlatRatePayoutPerShift: z
+        .number({ error: t('errors:driver.driverFlatRatePayoutPerShift.invalid') })
+        .min(0, t('errors:driver.driverFlatRatePayoutPerShift.invalid')),
       flatRateTypeId: z.number().nullable().optional(),
     }),
   ]);

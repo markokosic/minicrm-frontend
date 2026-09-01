@@ -1500,6 +1500,558 @@ export function useGetAllDriversForSelectSuspenseInfinite<TData = InfiniteData<A
 
 
 /**
+ * Retrieves profile and remuneration configurations for the currently authenticated driver.
+ * @summary Get my driver profile
+ */
+export const getMyDriverProfile = (
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseDriverResponse>(
+      {url: `/api/drivers/my`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetMyDriverProfileInfiniteQueryKey = () => {
+    return [
+    'infinite', `/api/drivers/my`
+    ] as const;
+    }
+
+export const getGetMyDriverProfileQueryKey = () => {
+    return [
+    `/api/drivers/my`
+    ] as const;
+    }
+
+
+export const getGetMyDriverProfileInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyDriverProfileInfiniteQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyDriverProfile>>> = ({ signal }) => getMyDriverProfile(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyDriverProfileInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getMyDriverProfile>>>
+export type GetMyDriverProfileInfiniteQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyDriverProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>(
+  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyDriverProfile>>,
+          TError,
+          Awaited<ReturnType<typeof getMyDriverProfile>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyDriverProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyDriverProfile>>,
+          TError,
+          Awaited<ReturnType<typeof getMyDriverProfile>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyDriverProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my driver profile
+ */
+
+export function useGetMyDriverProfileInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyDriverProfileInfiniteQueryOptions(options)
+
+  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyDriverProfileQueryOptions = <TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyDriverProfileQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyDriverProfile>>> = ({ signal }) => getMyDriverProfile(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyDriverProfileQueryResult = NonNullable<Awaited<ReturnType<typeof getMyDriverProfile>>>
+export type GetMyDriverProfileQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyDriverProfile<TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyDriverProfile>>,
+          TError,
+          Awaited<ReturnType<typeof getMyDriverProfile>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyDriverProfile<TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyDriverProfile>>,
+          TError,
+          Awaited<ReturnType<typeof getMyDriverProfile>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyDriverProfile<TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my driver profile
+ */
+
+export function useGetMyDriverProfile<TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyDriverProfileQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyDriverProfileSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>( options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyDriverProfileQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyDriverProfile>>> = ({ signal }) => getMyDriverProfile(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyDriverProfileSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof getMyDriverProfile>>>
+export type GetMyDriverProfileSuspenseQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyDriverProfileSuspense<TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>(
+  options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyDriverProfileSuspense<TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyDriverProfileSuspense<TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my driver profile
+ */
+
+export function useGetMyDriverProfileSuspense<TData = Awaited<ReturnType<typeof getMyDriverProfile>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyDriverProfileSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyDriverProfileSuspenseInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>( options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyDriverProfileInfiniteQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyDriverProfile>>> = ({ signal }) => getMyDriverProfile(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyDriverProfileSuspenseInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getMyDriverProfile>>>
+export type GetMyDriverProfileSuspenseInfiniteQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyDriverProfileSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>(
+  options: { query:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyDriverProfileSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyDriverProfileSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my driver profile
+ */
+
+export function useGetMyDriverProfileSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyDriverProfile>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyDriverProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyDriverProfileSuspenseInfiniteQueryOptions(options)
+
+  const query = useSuspenseInfiniteQuery(queryOptions, queryClient) as  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+/**
+ * Fetches the list of selectable revenue categories and flat rate options for the currently authenticated driver.
+ * @summary Get my selectable revenue options
+ */
+export const getMyRevenueOptions = (
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseListDriverRevenueOption>(
+      {url: `/api/drivers/my/revenue-options`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetMyRevenueOptionsInfiniteQueryKey = () => {
+    return [
+    'infinite', `/api/drivers/my/revenue-options`
+    ] as const;
+    }
+
+export const getGetMyRevenueOptionsQueryKey = () => {
+    return [
+    `/api/drivers/my/revenue-options`
+    ] as const;
+    }
+
+
+export const getGetMyRevenueOptionsInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>( options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyRevenueOptionsInfiniteQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyRevenueOptions>>> = ({ signal }) => getMyRevenueOptions(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyRevenueOptionsInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getMyRevenueOptions>>>
+export type GetMyRevenueOptionsInfiniteQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyRevenueOptionsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>(
+  options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyRevenueOptions>>,
+          TError,
+          Awaited<ReturnType<typeof getMyRevenueOptions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyRevenueOptionsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyRevenueOptions>>,
+          TError,
+          Awaited<ReturnType<typeof getMyRevenueOptions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyRevenueOptionsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my selectable revenue options
+ */
+
+export function useGetMyRevenueOptionsInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyRevenueOptionsInfiniteQueryOptions(options)
+
+  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyRevenueOptionsQueryOptions = <TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyRevenueOptionsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyRevenueOptions>>> = ({ signal }) => getMyRevenueOptions(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyRevenueOptionsQueryResult = NonNullable<Awaited<ReturnType<typeof getMyRevenueOptions>>>
+export type GetMyRevenueOptionsQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyRevenueOptions<TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyRevenueOptions>>,
+          TError,
+          Awaited<ReturnType<typeof getMyRevenueOptions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyRevenueOptions<TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyRevenueOptions>>,
+          TError,
+          Awaited<ReturnType<typeof getMyRevenueOptions>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyRevenueOptions<TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my selectable revenue options
+ */
+
+export function useGetMyRevenueOptions<TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyRevenueOptionsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyRevenueOptionsSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>( options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyRevenueOptionsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyRevenueOptions>>> = ({ signal }) => getMyRevenueOptions(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyRevenueOptionsSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof getMyRevenueOptions>>>
+export type GetMyRevenueOptionsSuspenseQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyRevenueOptionsSuspense<TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>(
+  options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyRevenueOptionsSuspense<TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyRevenueOptionsSuspense<TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my selectable revenue options
+ */
+
+export function useGetMyRevenueOptionsSuspense<TData = Awaited<ReturnType<typeof getMyRevenueOptions>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyRevenueOptionsSuspenseQueryOptions(options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyRevenueOptionsSuspenseInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>( options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyRevenueOptionsInfiniteQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyRevenueOptions>>> = ({ signal }) => getMyRevenueOptions(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyRevenueOptionsSuspenseInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getMyRevenueOptions>>>
+export type GetMyRevenueOptionsSuspenseInfiniteQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyRevenueOptionsSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>(
+  options: { query:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyRevenueOptionsSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyRevenueOptionsSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my selectable revenue options
+ */
+
+export function useGetMyRevenueOptionsSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyRevenueOptions>>>, TError = ErrorType<ProblemDetail>>(
+  options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyRevenueOptions>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyRevenueOptionsSuspenseInfiniteQueryOptions(options)
+
+  const query = useSuspenseInfiniteQuery(queryOptions, queryClient) as  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+/**
  * Deactivates a specific remuneration configuration for a driver.
  * @summary Stop remuneration configuration
  */

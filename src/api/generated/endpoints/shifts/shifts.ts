@@ -474,6 +474,282 @@ export const useDeleteShift = <TError = ErrorType<unknown>,
       return useMutation(getDeleteShiftMutationOptions(options), queryClient);
     }
     /**
+ * Fetches details of a specific shift belonging to the currently authenticated driver.
+ * @summary Get my shift by ID
+ */
+export const getMyShiftById = (
+    id: number,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ApiResponseShiftResponse>(
+      {url: `/api/shifts/my/${id}`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetMyShiftByIdInfiniteQueryKey = (id: number,) => {
+    return [
+    'infinite', `/api/shifts/my/${id}`
+    ] as const;
+    }
+
+export const getGetMyShiftByIdQueryKey = (id: number,) => {
+    return [
+    `/api/shifts/my/${id}`
+    ] as const;
+    }
+
+
+export const getGetMyShiftByIdInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(id: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyShiftByIdInfiniteQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyShiftById>>> = ({ signal }) => getMyShiftById(id, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyShiftByIdInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getMyShiftById>>>
+export type GetMyShiftByIdInfiniteQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyShiftByIdInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options: { query:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyShiftById>>,
+          TError,
+          Awaited<ReturnType<typeof getMyShiftById>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftByIdInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyShiftById>>,
+          TError,
+          Awaited<ReturnType<typeof getMyShiftById>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftByIdInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my shift by ID
+ */
+
+export function useGetMyShiftByIdInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyShiftByIdInfiniteQueryOptions(id,options)
+
+  const query = useInfiniteQuery(queryOptions, queryClient) as  UseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyShiftByIdQueryOptions = <TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyShiftByIdQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyShiftById>>> = ({ signal }) => getMyShiftById(id, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyShiftByIdQueryResult = NonNullable<Awaited<ReturnType<typeof getMyShiftById>>>
+export type GetMyShiftByIdQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyShiftById<TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyShiftById>>,
+          TError,
+          Awaited<ReturnType<typeof getMyShiftById>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftById<TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyShiftById>>,
+          TError,
+          Awaited<ReturnType<typeof getMyShiftById>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftById<TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my shift by ID
+ */
+
+export function useGetMyShiftById<TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyShiftByIdQueryOptions(id,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyShiftByIdSuspenseQueryOptions = <TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(id: number, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyShiftByIdQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyShiftById>>> = ({ signal }) => getMyShiftById(id, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyShiftByIdSuspenseQueryResult = NonNullable<Awaited<ReturnType<typeof getMyShiftById>>>
+export type GetMyShiftByIdSuspenseQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyShiftByIdSuspense<TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options: { query:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftByIdSuspense<TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftByIdSuspense<TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my shift by ID
+ */
+
+export function useGetMyShiftByIdSuspense<TData = Awaited<ReturnType<typeof getMyShiftById>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseSuspenseQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyShiftByIdSuspenseQueryOptions(id,options)
+
+  const query = useSuspenseQuery(queryOptions, queryClient) as  UseSuspenseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+export const getGetMyShiftByIdSuspenseInfiniteQueryOptions = <TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(id: number, options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyShiftByIdInfiniteQueryKey(id);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyShiftById>>> = ({ signal }) => getMyShiftById(id, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyShiftByIdSuspenseInfiniteQueryResult = NonNullable<Awaited<ReturnType<typeof getMyShiftById>>>
+export type GetMyShiftByIdSuspenseInfiniteQueryError = ErrorType<ProblemDetail>
+
+
+export function useGetMyShiftByIdSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options: { query:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftByIdSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyShiftByIdSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get my shift by ID
+ */
+
+export function useGetMyShiftByIdSuspenseInfinite<TData = InfiniteData<Awaited<ReturnType<typeof getMyShiftById>>>, TError = ErrorType<ProblemDetail>>(
+ id: number, options?: { query?:Partial<UseSuspenseInfiniteQueryOptions<Awaited<ReturnType<typeof getMyShiftById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyShiftByIdSuspenseInfiniteQueryOptions(id,options)
+
+  const query = useSuspenseInfiniteQuery(queryOptions, queryClient) as  UseSuspenseInfiniteQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+/**
  * Allows a driver to update their own shift as long as it is still in PENDING status.
  * @summary Update my pending shift
  */

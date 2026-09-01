@@ -131,7 +131,7 @@
       "label": "Settlement Day",
       "placeholder": "Select or enter a day of the week"
     },
-    "flatRateFee": {
+    "driverFlatRatePayoutPerShift": {
       "label": "Flat rate per trip (€)",
       "placeholder": "Enter flat rate per trip (€)"
     },
