@@ -60,7 +60,7 @@ export const DriverShiftsList = () => {
 
   const handleCardClick = (shiftId?: number) => {
     if (shiftId) {
-      navigate(ROUTES.app.shifts.view.getHref(shiftId));
+      navigate(ROUTES.app.driver.shifts.view.getHref(shiftId));
     }
   };
 

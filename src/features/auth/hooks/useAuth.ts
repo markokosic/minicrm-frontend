@@ -39,9 +39,10 @@ export const useAuth = () => {
     },
   });
 
-  // If the query fails with an auth error, clean up the local session flag
+  // If the query fails with an auth error, clean up the local session flag and clear cache
   if (hasSession && getMeQuery.isError) {
     setClientAuthenticated(false);
+    queryClient.clear();
   }
 
   const loginMutation = useLogin({
@@ -89,17 +90,18 @@ export const useAuth = () => {
 
   const registerMutation = useRegister();
 
+  const handleClearSession = () => {
+    setClientAuthenticated(false);
+    queryClient.clear();
+  };
+
   const logoutMutation = useLogout({
     mutation: {
       onSuccess: () => {
-        setClientAuthenticated(false);
-        queryClient.setQueryData(getMeQueryKey, null);
-        queryClient.removeQueries({ queryKey: getMeQueryKey });
+        handleClearSession();
       },
       onError: () => {
-        setClientAuthenticated(false);
-        queryClient.setQueryData(getMeQueryKey, null);
-        queryClient.removeQueries({ queryKey: getMeQueryKey });
+        handleClearSession();
       },
     },
   });

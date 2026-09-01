@@ -36,6 +36,14 @@ export const ROUTES = {
           path: '/driver/shifts/new',
           getHref: () => '/driver/shifts/new',
         },
+        view: {
+          path: '/driver/shifts/:shiftId',
+          getHref: (shiftId: number | string) => `/driver/shifts/${shiftId}`,
+        },
+        edit: {
+          path: '/driver/shifts/:shiftId/edit',
+          getHref: (shiftId: number | string) => `/driver/shifts/${shiftId}/edit`,
+        },
       },
     },
     dashboard: {

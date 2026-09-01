@@ -3,16 +3,21 @@ import { Button, Stack } from '@mantine/core';
 import { useGetMyDriverProfile } from '@/api/generated/endpoints/drivers/drivers';
 import {
   FlatRateRemunerationResponse,
+  ShiftResponse,
   WeeklyFixedRateRemunerationResponse,
 } from '@/api/generated/model';
-import { Form } from '@/shared/components/forms/Form';
 import { useCarSelectOptions } from '@/features/cars/hooks/useCarOptions';
-import { useDriverCreateShiftForm } from '../../hooks/driver/useDriverCreateShiftForm';
+import { Form } from '@/shared/components/forms/Form';
+import { useDriverUpdateShiftForm } from '../../hooks/driver/useDriverUpdateShiftForm';
 import { DriverShiftMasterDataCard } from './DriverShiftMasterDataCard';
 import { DriverShiftFlatRateOption, DriverShiftRevenuesCard } from './DriverShiftRevenuesCard';
 import { DriverWeeklyRentCard } from './DriverWeeklyRentCard';
 
-export const DriverShiftQuickForm = () => {
+interface DriverShiftEditFormProps {
+  shift: ShiftResponse;
+}
+
+export const DriverShiftEditForm = ({ shift }: DriverShiftEditFormProps) => {
   const { t } = useTranslation(['app', 'common']);
   const { carOptions, isLoading: isLoadingCars } = useCarSelectOptions();
   const { data: driverResponse } = useGetMyDriverProfile();
@@ -43,7 +48,7 @@ export const DriverShiftQuickForm = () => {
     defaultPrice: c.defaultPrice,
   }));
 
-  const { methods, onSubmit, isPending, cancel } = useDriverCreateShiftForm();
+  const { methods, onSubmit, isPending, cancel } = useDriverUpdateShiftForm({ shift });
 
   return (
     <Form
@@ -62,7 +67,7 @@ export const DriverShiftQuickForm = () => {
             loading={isPending}
             disabled={isPending}
           >
-            {t('common:actions.save', 'Schicht speichern')}
+            {t('common:actions.save', 'Änderungen speichern')}
           </Button>
         </>
       }

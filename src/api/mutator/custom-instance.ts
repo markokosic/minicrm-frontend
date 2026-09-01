@@ -15,9 +15,10 @@ AXIOS_INSTANCE.interceptors.response.use(
   },
   (error) => {
     // eslint-disable-next-line no-console
-    console.error('API call failed:', error);
     if (error.response?.status === 401) {
-
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('auth_active');
+      }
       queryClient.clear();
       
       const publicPaths = ['/login', '/register'];

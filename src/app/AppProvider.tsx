@@ -30,7 +30,8 @@ const AppProvider = ({ children: app }: AppProviderProps) => {
               <ModalsProvider>
                 {app}
                 <Toaster position="top-center" />
-                {showDevtools && <ReactQueryDevtools initialIsOpen={false} />}
+                {showDevtools && <ReactQueryDevtools initialIsOpen={false}   buttonPosition="bottom-left"
+  position="bottom" />}
               </ModalsProvider>
             </DatesProvider>
           </Suspense>
