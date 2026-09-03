@@ -13,5 +13,6 @@ export interface CreateShiftRevenueEntryRequest {
   revenue?: number;
   tripCount?: number;
   pricePerTrip?: number;
+  weeklyDriverRent?: number;
   effectiveRevenue?: number;
 }

@@ -20,4 +20,5 @@ export interface ShiftRevenueEntryResponse {
   driverRemuneration?: number;
   tripCount?: number;
   pricePerTrip?: number;
+  weeklyDriverRent?: number;
 }

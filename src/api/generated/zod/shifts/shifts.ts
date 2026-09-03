@@ -54,7 +54,8 @@ export const GetShiftByIdResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 }).optional(),
   "message": zod.string().optional()
@@ -83,7 +84,8 @@ export const UpdateShiftBody = zod.object({
   "flatRateTypeId": zod.int().optional().describe('Flat rate type ID (optional for FLAT_RATE category when adding a new entry). Ignored for existing entries.'),
   "revenue": zod.number().optional().describe('Direct revenue amount'),
   "tripCount": zod.int().optional().describe('Number of trips'),
-  "pricePerTrip": zod.number().optional().describe('Price per trip')
+  "pricePerTrip": zod.number().optional().describe('Price per trip'),
+  "weeklyDriverRent": zod.number().optional().describe('Weekly rent paid by driver (for WEEKLY category). Mandatory for weekly drivers, but can be 0.')
 }).describe(' for updating existing or adding new revenue entries within a shift')).min(1)
 })
 
@@ -126,7 +128,8 @@ export const UpdateShiftResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 }).optional(),
   "message": zod.string().optional()
@@ -192,7 +195,8 @@ export const GetMyShiftByIdResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 }).optional(),
   "message": zod.string().optional()
@@ -221,7 +225,8 @@ export const UpdateMyShiftBody = zod.object({
   "flatRateTypeId": zod.int().optional().describe('Flat rate type ID (optional for FLAT_RATE category when adding a new entry). Ignored for existing entries.'),
   "revenue": zod.number().optional().describe('Direct revenue amount'),
   "tripCount": zod.int().optional().describe('Number of trips'),
-  "pricePerTrip": zod.number().optional().describe('Price per trip')
+  "pricePerTrip": zod.number().optional().describe('Price per trip'),
+  "weeklyDriverRent": zod.number().optional().describe('Weekly rent paid by driver (for WEEKLY category). Mandatory for weekly drivers, but can be 0.')
 }).describe(' for updating existing or adding new revenue entries within a shift')).min(1)
 })
 
@@ -264,7 +269,8 @@ export const UpdateMyShiftResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 }).optional(),
   "message": zod.string().optional()
@@ -343,7 +349,8 @@ export const GetAllShiftsResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 })).optional(),
   "page": zod.int().optional(),
@@ -377,6 +384,7 @@ export const CreateShiftBody = zod.object({
   "revenue": zod.number().optional(),
   "tripCount": zod.int().optional(),
   "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional(),
   "effectiveRevenue": zod.number().optional()
 })).min(1)
 })
@@ -420,7 +428,8 @@ export const CreateShiftResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 }).optional(),
   "message": zod.string().optional()
@@ -473,7 +482,8 @@ export const RejectShiftResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 }).optional(),
   "message": zod.string().optional()
@@ -526,7 +536,8 @@ export const ApproveShiftResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 }).optional(),
   "message": zod.string().optional()
@@ -588,7 +599,8 @@ export const GetMyShiftsResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 })).optional(),
   "page": zod.int().optional(),
@@ -620,6 +632,7 @@ export const CreateMyShiftBody = zod.object({
   "revenue": zod.number().optional(),
   "tripCount": zod.int().optional(),
   "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional(),
   "effectiveRevenue": zod.number().optional()
 })).min(1)
 })
@@ -663,7 +676,8 @@ export const CreateMyShiftResponse = zod.object({
   "companyRemuneration": zod.number().optional(),
   "driverRemuneration": zod.number().optional(),
   "tripCount": zod.int().optional(),
-  "pricePerTrip": zod.number().optional()
+  "pricePerTrip": zod.number().optional(),
+  "weeklyDriverRent": zod.number().optional()
 })).optional()
 }).optional(),
   "message": zod.string().optional()
