@@ -9,6 +9,7 @@ import type { CarSummary } from './carSummary';
 import type { DriverSummary } from './driverSummary';
 import type { ShiftResponseStatus } from './shiftResponseStatus';
 import type { ShiftRevenueEntryResponse } from './shiftRevenueEntryResponse';
+import type { ShiftSettlementResponse } from './shiftSettlementResponse';
 
 export interface ShiftResponse {
   id?: number;
@@ -20,5 +21,6 @@ export interface ShiftResponse {
   shiftStart?: string;
   shiftEnd?: string;
   status?: ShiftResponseStatus;
+  settlement?: ShiftSettlementResponse;
   revenues?: ShiftRevenueEntryResponse[];
 }

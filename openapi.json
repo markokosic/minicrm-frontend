@@ -2664,6 +2664,9 @@
               "REJECTED"
             ]
           },
+          "settlement": {
+            "$ref": "#/components/schemas/ShiftSettlementResponseDTO"
+          },
           "revenues": {
             "type": "array",
             "items": {
@@ -2720,6 +2723,37 @@
           },
           "pricePerTrip": {
             "type": "number"
+          }
+        }
+      },
+      "ShiftSettlementResponseDTO": {
+        "type": "object",
+        "description": "Shift settlement snapshot containing totals for revenue, driver remuneration, and company share",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalRevenue": {
+            "type": "number",
+            "description": "Total revenue earned in the shift in EUR",
+            "example": 350
+          },
+          "driverRemuneration": {
+            "type": "number",
+            "description": "Total remuneration paid to driver in EUR",
+            "example": 157.5
+          },
+          "companyRemuneration": {
+            "type": "number",
+            "description": "Total retained by company in EUR",
+            "example": 192.5
+          },
+          "settledAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when settlement was finalized",
+            "example": "2025-05-10T16:00"
           }
         }
       },
@@ -3097,24 +3131,32 @@
             "properties": {
               "remunerationModelType": {
                 "type": "string",
+                "description": "Remuneration model type",
                 "enum": [
                   "PERCENTAGE_SHARE",
                   "WEEKLY_FIXED_RATE",
                   "FLAT_RATE"
-                ]
+                ],
+                "example": "PERCENTAGE_SHARE"
               },
               "minDriverPayout": {
-                "type": "number"
+                "type": "number",
+                "description": "Minimum guaranteed driver payout per shift in EUR",
+                "example": 50
               },
               "driverRevenueSharePercentage": {
                 "type": "number",
+                "description": "Revenue share factor (e.g. 0.4500 for 45% or 45.0)",
+                "example": 0.45,
                 "maximum": 100,
                 "minimum": 0
               }
             }
           }
         ],
+        "description": "Request payload for percentage share remuneration model",
         "required": [
+          "driverRevenueSharePercentage",
           "remunerationModelType"
         ]
       },
@@ -3346,14 +3388,19 @@
                 ]
               },
               "driverRevenueSharePercentage": {
-                "type": "number"
+                "type": "number",
+                "description": "Revenue share factor (e.g. 0.4500 for 45%)",
+                "example": 0.45
               },
               "minDriverPayout": {
-                "type": "number"
+                "type": "number",
+                "description": "Minimum guaranteed driver payout per shift in EUR",
+                "example": 50
               }
             }
           }
-        ]
+        ],
+        "description": "Response object for percentage share remuneration model"
       },
       "RemunerationConfigResponseDTO": {
         "discriminator": {

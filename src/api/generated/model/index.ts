@@ -103,6 +103,7 @@ export * from './shiftResponseStatus';
 export * from './shiftRevenueEntryResponse';
 export * from './shiftRevenueEntryResponseEntryCategory';
 export * from './shiftRevenueEntryResponseRemunerationModelType';
+export * from './shiftSettlementResponse';
 export * from './updateCarRequest';
 export * from './updateDriverRequest';
 export * from './updateShiftRequest';

@@ -36,6 +36,13 @@ export const GetShiftByIdResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
@@ -101,6 +108,13 @@ export const UpdateShiftResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
@@ -160,6 +174,13 @@ export const GetMyShiftByIdResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
@@ -225,6 +246,13 @@ export const UpdateMyShiftResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
@@ -297,6 +325,13 @@ export const GetAllShiftsResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
@@ -367,6 +402,13 @@ export const CreateShiftResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
@@ -413,6 +455,13 @@ export const RejectShiftResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
@@ -459,6 +508,13 @@ export const ApproveShiftResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
@@ -514,6 +570,13 @@ export const GetMyShiftsResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),
@@ -582,6 +645,13 @@ export const CreateMyShiftResponse = zod.object({
   "shiftStart": zod.iso.datetime({"offset":true}).optional(),
   "shiftEnd": zod.iso.datetime({"offset":true}).optional(),
   "status": zod.enum(['PENDING', 'APPROVED', 'REJECTED']).optional(),
+  "settlement": zod.object({
+  "id": zod.int().optional(),
+  "totalRevenue": zod.number().optional().describe('Total revenue earned in the shift in EUR'),
+  "driverRemuneration": zod.number().optional().describe('Total remuneration paid to driver in EUR'),
+  "companyRemuneration": zod.number().optional().describe('Total retained by company in EUR'),
+  "settledAt": zod.iso.datetime({"offset":true}).optional().describe('Timestamp when settlement was finalized')
+}).optional().describe('Shift settlement snapshot containing totals for revenue, driver remuneration, and company share'),
   "revenues": zod.array(zod.object({
   "id": zod.int().optional(),
   "entryCategory": zod.enum(['REGULAR', 'FLAT_RATE', 'WEEKLY']).optional(),

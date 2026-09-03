@@ -56,9 +56,9 @@ export const GetAllDriversResponse = zod.object({
   "validUntil": zod.iso.date().optional(),
   "current": zod.boolean().optional(),
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "driverRevenueSharePercentage": zod.number().optional(),
-  "minDriverPayout": zod.number().optional()
-})),zod.object({
+  "driverRevenueSharePercentage": zod.number().optional().describe('Revenue share factor (e.g. 0.4500 for 45%)'),
+  "minDriverPayout": zod.number().optional().describe('Minimum guaranteed driver payout per shift in EUR')
+})).describe('Response object for percentage share remuneration model'),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
   "id": zod.int().optional(),
@@ -114,10 +114,10 @@ export const CreateDriverBody = zod.object({
 })),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
-  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "minDriverPayout": zod.number().optional(),
-  "driverRevenueSharePercentage": zod.number().min(createDriverBodyRemunerationConfigsItemTwoTwoDriverRevenueSharePercentageMin).max(createDriverBodyRemunerationConfigsItemTwoTwoDriverRevenueSharePercentageMax).optional()
-})),zod.object({
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).describe('Remuneration model type'),
+  "minDriverPayout": zod.number().optional().describe('Minimum guaranteed driver payout per shift in EUR'),
+  "driverRevenueSharePercentage": zod.number().min(createDriverBodyRemunerationConfigsItemTwoTwoDriverRevenueSharePercentageMin).max(createDriverBodyRemunerationConfigsItemTwoTwoDriverRevenueSharePercentageMax).describe('Revenue share factor (e.g. 0.4500 for 45% or 45.0)')
+})).describe('Request payload for percentage share remuneration model'),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
@@ -157,9 +157,9 @@ export const CreateDriverResponse = zod.object({
   "validUntil": zod.iso.date().optional(),
   "current": zod.boolean().optional(),
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "driverRevenueSharePercentage": zod.number().optional(),
-  "minDriverPayout": zod.number().optional()
-})),zod.object({
+  "driverRevenueSharePercentage": zod.number().optional().describe('Revenue share factor (e.g. 0.4500 for 45%)'),
+  "minDriverPayout": zod.number().optional().describe('Minimum guaranteed driver payout per shift in EUR')
+})).describe('Response object for percentage share remuneration model'),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
   "id": zod.int().optional(),
@@ -251,9 +251,9 @@ export const GetDriverResponse = zod.object({
   "validUntil": zod.iso.date().optional(),
   "current": zod.boolean().optional(),
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "driverRevenueSharePercentage": zod.number().optional(),
-  "minDriverPayout": zod.number().optional()
-})),zod.object({
+  "driverRevenueSharePercentage": zod.number().optional().describe('Revenue share factor (e.g. 0.4500 for 45%)'),
+  "minDriverPayout": zod.number().optional().describe('Minimum guaranteed driver payout per shift in EUR')
+})).describe('Response object for percentage share remuneration model'),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
   "id": zod.int().optional(),
@@ -316,10 +316,10 @@ export const UpdateDriverBody = zod.object({
 })),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
-  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "minDriverPayout": zod.number().optional(),
-  "driverRevenueSharePercentage": zod.number().min(updateDriverBodyRemunerationConfigsItemTwoTwoDriverRevenueSharePercentageMin).max(updateDriverBodyRemunerationConfigsItemTwoTwoDriverRevenueSharePercentageMax).optional()
-})),zod.object({
+  "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']).describe('Remuneration model type'),
+  "minDriverPayout": zod.number().optional().describe('Minimum guaranteed driver payout per shift in EUR'),
+  "driverRevenueSharePercentage": zod.number().min(updateDriverBodyRemunerationConfigsItemTwoTwoDriverRevenueSharePercentageMin).max(updateDriverBodyRemunerationConfigsItemTwoTwoDriverRevenueSharePercentageMax).describe('Revenue share factor (e.g. 0.4500 for 45% or 45.0)')
+})).describe('Request payload for percentage share remuneration model'),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
@@ -359,9 +359,9 @@ export const UpdateDriverResponse = zod.object({
   "validUntil": zod.iso.date().optional(),
   "current": zod.boolean().optional(),
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "driverRevenueSharePercentage": zod.number().optional(),
-  "minDriverPayout": zod.number().optional()
-})),zod.object({
+  "driverRevenueSharePercentage": zod.number().optional().describe('Revenue share factor (e.g. 0.4500 for 45%)'),
+  "minDriverPayout": zod.number().optional().describe('Minimum guaranteed driver payout per shift in EUR')
+})).describe('Response object for percentage share remuneration model'),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
   "id": zod.int().optional(),
@@ -446,9 +446,9 @@ export const GetMyDriverProfileResponse = zod.object({
   "validUntil": zod.iso.date().optional(),
   "current": zod.boolean().optional(),
   "remunerationModelType": zod.enum(['PERCENTAGE_SHARE', 'WEEKLY_FIXED_RATE', 'FLAT_RATE']),
-  "driverRevenueSharePercentage": zod.number().optional(),
-  "minDriverPayout": zod.number().optional()
-})),zod.object({
+  "driverRevenueSharePercentage": zod.number().optional().describe('Revenue share factor (e.g. 0.4500 for 45%)'),
+  "minDriverPayout": zod.number().optional().describe('Minimum guaranteed driver payout per shift in EUR')
+})).describe('Response object for percentage share remuneration model'),zod.object({
   "remunerationModelType": zod.string()
 }).and(zod.object({
   "id": zod.int().optional(),
