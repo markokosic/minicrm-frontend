@@ -23,7 +23,7 @@ export const DriverShiftCard = ({ shift, onClick }: DriverShiftCardProps) => {
   const dateFormatted = formatShiftDate(shift.shiftStart);
   const timeFormatted = `${formatShiftTime(shift.shiftStart)} - ${formatShiftTime(shift.shiftEnd)}`;
   const duration = calculateShiftDuration(shift.shiftStart, shift.shiftEnd);
-  const totals = calculateShiftTotals(shift.revenues);
+  const totals = calculateShiftTotals(shift);
 
   return (
     <Card

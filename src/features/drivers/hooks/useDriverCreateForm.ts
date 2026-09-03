@@ -14,6 +14,8 @@ import { ROUTES } from '@/config/routes';
 import { getCreateDriverSchema } from '../domain/drivers-schemas';
 
 
+import { normalizeRemunerationConfigForPayload } from '../utils/driver-form.utils';
+
 export const useDriverCreateForm = () => {
   const { t } = useTranslation(['app', 'common', 'errors']);
   const navigate = useNavigate();
@@ -54,7 +56,7 @@ export const useDriverCreateForm = () => {
   });
 
   const onSubmit = (data: CreateDriverMutationBody) => {
-    mutate({ data });
+    mutate({ data: normalizeRemunerationConfigForPayload(data) });
   };
 
   return {

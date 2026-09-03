@@ -1,6 +1,14 @@
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
-import { CreateShiftRequest, ShiftRevenueEntryResponse, UpdateShiftRequest } from '@/api/generated/model';
+import {
+  CreateShiftRequest,
+  CreateShiftRevenueEntryRequest,
+  ShiftResponse,
+  ShiftRevenueEntryResponse,
+  ShiftSettlementResponse,
+  UpdateShiftRequest,
+  UpdateShiftRevenueEntryRequest,
+} from '@/api/generated/model';
 import { ShiftRevenueFormRow } from './shifts-schemas';
 
 dayjs.extend(isoWeek);
@@ -105,11 +113,47 @@ export const calculateFlatRateTotal = (
 
 /**
  * Computes aggregated revenue, driver remuneration, and company share for a shift.
+ * Uses the backend settlement snapshot if available, otherwise aggregates entries.
  */
 export const calculateShiftTotals = (
-  revenues?: ShiftRevenueEntryResponse[] | null
+  revenuesOrShift?: ShiftRevenueEntryResponse[] | ShiftResponse | null,
+  settlementOverride?: ShiftSettlementResponse | null
 ): ShiftTotalsResult => {
-  if (!revenues || revenues.length === 0) {
+  if (!revenuesOrShift) {
+    return {
+      totalRevenue: 0,
+      totalDriverRemuneration: 0,
+      totalCompanyRemuneration: 0,
+    };
+  }
+
+  // If a full ShiftResponse object is passed
+  if (
+    typeof revenuesOrShift === 'object' &&
+    !Array.isArray(revenuesOrShift) &&
+    ('settlement' in revenuesOrShift || 'revenues' in revenuesOrShift)
+  ) {
+    const shift = revenuesOrShift as ShiftResponse;
+    if (shift.settlement) {
+      return {
+        totalRevenue: shift.settlement.totalRevenue ?? 0,
+        totalDriverRemuneration: shift.settlement.driverRemuneration ?? 0,
+        totalCompanyRemuneration: shift.settlement.companyRemuneration ?? 0,
+      };
+    }
+    return calculateShiftTotals(shift.revenues);
+  }
+
+  if (settlementOverride) {
+    return {
+      totalRevenue: settlementOverride.totalRevenue ?? 0,
+      totalDriverRemuneration: settlementOverride.driverRemuneration ?? 0,
+      totalCompanyRemuneration: settlementOverride.companyRemuneration ?? 0,
+    };
+  }
+
+  const revenues = revenuesOrShift as ShiftRevenueEntryResponse[];
+  if (!Array.isArray(revenues) || revenues.length === 0) {
     return {
       totalRevenue: 0,
       totalDriverRemuneration: 0,
@@ -160,20 +204,40 @@ export const formatShiftTime = (dateString?: string | null, locale = 'de-DE'): s
  * Transforms form values into CreateShiftRequest payload for API submission.
  */
 export const transformShiftFormPayload = (values: any): CreateShiftRequest => {
-  const formattedRevenues = values.revenues.map((r: ShiftRevenueFormRow) => {
-    if (r.entryCategory === 'FLAT_RATE') {
+  const formattedRevenues: CreateShiftRevenueEntryRequest[] = values.revenues.map(
+    (r: ShiftRevenueFormRow) => {
+      if (r.entryCategory === 'WEEKLY') {
+        const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
+        return {
+          entryCategory: 'WEEKLY',
+          weeklyDriverRent: rent,
+          revenue: rent,
+        };
+      }
+      if (r.entryCategory === 'FLAT_RATE') {
+        const entry: CreateShiftRevenueEntryRequest = {
+          entryCategory: 'FLAT_RATE',
+          flatRateTypeId: r.flatRateTypeId ? Number(r.flatRateTypeId) : undefined,
+        };
+        if (
+          r.tripCount !== undefined &&
+          r.tripCount !== null &&
+          r.pricePerTrip !== undefined &&
+          r.pricePerTrip !== null
+        ) {
+          entry.tripCount = Number(r.tripCount);
+          entry.pricePerTrip = Number(r.pricePerTrip);
+        } else {
+          entry.revenue = Number(r.revenue || 0);
+        }
+        return entry;
+      }
       return {
-        entryCategory: 'FLAT_RATE' as const,
-        flatRateTypeId: r.flatRateTypeId,
-        tripCount: Number(r.tripCount || 1),
-        pricePerTrip: Number(r.pricePerTrip || 0),
+        entryCategory: r.entryCategory,
+        revenue: Number(r.revenue || 0),
       };
     }
-    return {
-      entryCategory: r.entryCategory,
-      revenue: Number(r.revenue || 0),
-    };
-  });
+  );
 
   return {
     driverId: Number(values.driverId),
@@ -191,36 +255,76 @@ export const transformShiftFormPayload = (values: any): CreateShiftRequest => {
  * Transforms form values into UpdateShiftRequest payload for PUT /api/shifts/{id}.
  */
 export const transformUpdateShiftPayload = (values: any): UpdateShiftRequest => {
-  const formattedRevenues = values.revenues.map((r: ShiftRevenueFormRow) => {
-    if (r.id) {
-      if (r.entryCategory === 'FLAT_RATE') {
+  const formattedRevenues: UpdateShiftRevenueEntryRequest[] = values.revenues.map(
+    (r: ShiftRevenueFormRow) => {
+      if (r.id) {
+        if (r.entryCategory === 'WEEKLY') {
+          const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
+          return {
+            id: r.id,
+            weeklyDriverRent: rent,
+            revenue: rent,
+          };
+        }
+        if (
+          r.entryCategory === 'FLAT_RATE' &&
+          r.tripCount !== undefined &&
+          r.tripCount !== null &&
+          r.pricePerTrip !== undefined &&
+          r.pricePerTrip !== null
+        ) {
+          return {
+            id: r.id,
+            tripCount: Number(r.tripCount),
+            pricePerTrip: Number(r.pricePerTrip),
+          };
+        }
         return {
           id: r.id,
-          tripCount: Number(r.tripCount || 1),
-          pricePerTrip: Number(r.pricePerTrip || 0),
+          revenue: Number(r.revenue || 0),
         };
       }
+
+      if (r.entryCategory === 'WEEKLY') {
+        const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
+        return {
+          id: null as any,
+          entryCategory: 'WEEKLY',
+          weeklyDriverRent: rent,
+          revenue: rent,
+        };
+      }
+
+      if (r.entryCategory === 'FLAT_RATE') {
+        const entry: UpdateShiftRevenueEntryRequest = {
+          id: null as any,
+          entryCategory: 'FLAT_RATE',
+          flatRateTypeId: r.flatRateTypeId ? Number(r.flatRateTypeId) : undefined,
+        };
+        if (
+          r.tripCount !== undefined &&
+          r.tripCount !== null &&
+          r.pricePerTrip !== undefined &&
+          r.pricePerTrip !== null
+        ) {
+          entry.tripCount = Number(r.tripCount);
+          entry.pricePerTrip = Number(r.pricePerTrip);
+        } else {
+          entry.revenue = Number(r.revenue || 0);
+        }
+        return entry;
+      }
+
       return {
-        id: r.id,
+        id: null as any,
+        entryCategory: r.entryCategory,
         revenue: Number(r.revenue || 0),
       };
     }
-
-    if (r.entryCategory === 'FLAT_RATE') {
-      return {
-        entryCategory: 'FLAT_RATE' as const,
-        flatRateTypeId: r.flatRateTypeId ?? undefined,
-        tripCount: Number(r.tripCount || 1),
-        pricePerTrip: Number(r.pricePerTrip || 0),
-      };
-    }
-    return {
-      entryCategory: r.entryCategory,
-      revenue: Number(r.revenue || 0),
-    };
-  });
+  );
 
   return {
+    carId: values.carId ? Number(values.carId) : undefined,
     odometerStart: Number(values.odometerStart),
     odometerEnd: Number(values.odometerEnd),
     shiftStart: dayjs(values.shiftStart).toISOString(),

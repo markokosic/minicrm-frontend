@@ -26,9 +26,8 @@ export const ShiftTableRow = ({ shift, actions }: ShiftTableRowProps) => {
   const { t, i18n } = useTranslation(['app', 'common']);
   const fmt = createFormatters(i18n.language);
 
-  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } = calculateShiftTotals(
-    shift.revenues
-  );
+  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } =
+    calculateShiftTotals(shift);
 
   const dateFormatted = formatShiftDate(shift.shiftStart);
   const timeFormatted = `${formatShiftTime(shift.shiftStart)} - ${formatShiftTime(shift.shiftEnd)}`;

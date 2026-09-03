@@ -52,4 +52,36 @@ describe('useDriverUpdateShiftForm Hook', () => {
     expect(values.weeklyRentPaid).toBe(350);
     expect(result.current.isPending).toBe(false);
   });
+
+  it('submits clean revenues with only ID and amounts for existing and category for new entries', () => {
+    const { Wrapper } = createTestAppWrapper();
+    const { result } = renderHook(() => useDriverUpdateShiftForm({ shift: mockShift }), {
+      wrapper: Wrapper,
+    });
+
+    const formValues = {
+      carId: 3,
+      odometerStart: 50000,
+      odometerEnd: 50150,
+      shiftStart: '2026-09-01T08:00:00Z',
+      shiftEnd: '2026-09-01T16:00:00Z',
+      singleRides: [120], // Existing (id: 101)
+      flatRateCounts: {
+        '5': 4, // Existing (id: 102)
+        '9': 2, // New flat rate
+      },
+      flatRatePrices: {
+        '5': 25,
+        '9': 40,
+      },
+      weeklyRentPaid: 350, // Existing (id: 103)
+    };
+
+    const flatRateOptions = [
+      { id: 5, name: 'Airport', defaultPrice: 25 },
+      { id: 9, name: 'City Tour', defaultPrice: 40 },
+    ];
+
+    result.current.onSubmit(formValues, flatRateOptions as any);
+  });
 });

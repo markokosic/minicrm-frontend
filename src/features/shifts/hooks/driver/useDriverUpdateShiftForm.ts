@@ -49,7 +49,7 @@ export const useDriverUpdateShiftForm = ({ shift }: UseDriverUpdateShiftFormProp
 
   // Extract weekly company share paid
   const weeklyRevenue = shift.revenues?.find((r) => r.entryCategory === 'WEEKLY');
-  const initialWeeklyRentPaid = weeklyRevenue?.revenue ?? undefined;
+  const initialWeeklyRentPaid = weeklyRevenue?.weeklyDriverRent ?? weeklyRevenue?.revenue ?? undefined;
 
   const methods = useForm<DriverCreateShiftFormValues>({
     resolver: zodResolver(getDriverCreateShiftSchema(t)) as any,
@@ -105,11 +105,18 @@ export const useDriverUpdateShiftForm = ({ shift }: UseDriverUpdateShiftFormProp
     // 1. Cash single rides
     if (regularSum > 0) {
       const existingRegular = shift.revenues?.find((r) => r.entryCategory === 'REGULAR');
-      revenues.push({
-        id: existingRegular?.id,
-        entryCategory: 'REGULAR',
-        revenue: Math.round(regularSum * 100) / 100,
-      });
+      if (existingRegular?.id) {
+        revenues.push({
+          id: existingRegular.id,
+          revenue: Math.round(regularSum * 100) / 100,
+        });
+      } else {
+        revenues.push({
+          id: null as any,
+          entryCategory: 'REGULAR',
+          revenue: Math.round(regularSum * 100) / 100,
+        });
+      }
     }
 
     // 2. Flat rate entries with tripCount > 0
@@ -130,24 +137,42 @@ export const useDriverUpdateShiftForm = ({ shift }: UseDriverUpdateShiftFormProp
           : (values.flatRatePrices && values.flatRatePrices[key]) ?? 0;
 
       if (count && count > 0 && price > 0) {
-        revenues.push({
-          id: existingFlat?.id,
-          entryCategory: 'FLAT_RATE',
-          flatRateTypeId: flatType?.id,
-          tripCount: count,
-          pricePerTrip: price,
-        });
+        if (existingFlat?.id) {
+          revenues.push({
+            id: existingFlat.id,
+            tripCount: count,
+            pricePerTrip: price,
+          });
+        } else {
+          revenues.push({
+            id: null as any,
+            entryCategory: 'FLAT_RATE',
+            flatRateTypeId: flatType?.id,
+            tripCount: count,
+            pricePerTrip: price,
+          });
+        }
       }
     });
 
-    // 3. Weekly rent paid (if entered)
-    if (values.weeklyRentPaid && Number(values.weeklyRentPaid) > 0) {
+    // 3. Weekly rent paid (if entered or provided)
+    if (values.weeklyRentPaid !== undefined && values.weeklyRentPaid !== null && !isNaN(Number(values.weeklyRentPaid))) {
+      const rentAmount = Number(values.weeklyRentPaid);
       const existingWeekly = shift.revenues?.find((r) => r.entryCategory === 'WEEKLY');
-      revenues.push({
-        id: existingWeekly?.id,
-        entryCategory: 'WEEKLY',
-        revenue: Number(values.weeklyRentPaid),
-      });
+      if (existingWeekly?.id) {
+        revenues.push({
+          id: existingWeekly.id,
+          weeklyDriverRent: rentAmount,
+          revenue: rentAmount,
+        });
+      } else {
+        revenues.push({
+          id: null as any,
+          entryCategory: 'WEEKLY',
+          weeklyDriverRent: rentAmount,
+          revenue: rentAmount,
+        });
+      }
     }
 
     if (revenues.length === 0) {

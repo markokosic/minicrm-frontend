@@ -35,9 +35,8 @@ export const AdminViewShiftPage = () => {
 
   const shiftResponse = response?.data;
 
-  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } = calculateShiftTotals(
-    shiftResponse?.revenues || []
-  );
+  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } =
+    calculateShiftTotals(shiftResponse);
 
   return (
     <PageLayout

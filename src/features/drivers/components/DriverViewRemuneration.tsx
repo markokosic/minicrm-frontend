@@ -78,7 +78,13 @@ export const DriverViewRemuneration = ({ driver }: DriverViewRemunerationProps) 
                             {t('common:form.driverRevenueSharePercentage.label')}:
                           </Text>
                           <Text fw={600} size="sm" c="dark">
-                            {config.driverRevenueSharePercentage}%
+                            {config.driverRevenueSharePercentage !== undefined &&
+                            config.driverRevenueSharePercentage !== null
+                              ? `${(config.driverRevenueSharePercentage <= 1
+                                  ? config.driverRevenueSharePercentage * 100
+                                  : config.driverRevenueSharePercentage
+                                ).toFixed(2).replace(/\.?0+$/, '')} %`
+                              : '-'}
                           </Text>
                         </Group>
                       )}

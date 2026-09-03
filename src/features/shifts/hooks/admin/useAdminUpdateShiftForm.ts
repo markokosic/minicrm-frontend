@@ -34,7 +34,7 @@ export const useUpdateShiftForm = (shift: ShiftResponse) => {
     revenue: rev.revenue,
     tripCount: rev.tripCount,
     pricePerTrip: rev.pricePerTrip,
-    companyRemuneration: rev.companyRemuneration,
+    weeklyDriverRent: rev.weeklyDriverRent ?? (rev.entryCategory === 'WEEKLY' ? rev.revenue : null),
   }));
 
   const methods = useForm<UpdateShiftFormValues>({

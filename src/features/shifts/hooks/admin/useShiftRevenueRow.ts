@@ -64,22 +64,22 @@ export const useShiftRevenueRow = (index: number, revenueOptions: DriverRevenueO
       setValue(`${fieldPrefix}.tripCount`, 1);
       setValue(`${fieldPrefix}.pricePerTrip`, matched.defaultPrice ?? 0);
       setValue(`${fieldPrefix}.revenue`, undefined);
-      setValue(`${fieldPrefix}.companyRemuneration`, undefined);
+      setValue(`${fieldPrefix}.weeklyDriverRent`, undefined);
     } else if (matched.entryCategory === DriverRevenueOptionEntryCategory.WEEKLY) {
       setValue(`${fieldPrefix}.flatRateTypeId`, null);
       setValue(`${fieldPrefix}.tripCount`, undefined);
       setValue(`${fieldPrefix}.pricePerTrip`, undefined);
-      setValue(`${fieldPrefix}.revenue`, 0);
+      setValue(`${fieldPrefix}.revenue`, undefined);
       setValue(
-        `${fieldPrefix}.companyRemuneration`,
-        isWeeklyPaymentToday ? (matched.defaultPrice ?? 0) : undefined
+        `${fieldPrefix}.weeklyDriverRent`,
+        isWeeklyPaymentToday ? (matched.defaultPrice ?? 0) : 0
       );
     } else {
       setValue(`${fieldPrefix}.flatRateTypeId`, null);
       setValue(`${fieldPrefix}.tripCount`, undefined);
       setValue(`${fieldPrefix}.pricePerTrip`, undefined);
       setValue(`${fieldPrefix}.revenue`, 0);
-      setValue(`${fieldPrefix}.companyRemuneration`, undefined);
+      setValue(`${fieldPrefix}.weeklyDriverRent`, undefined);
     }
   }, [optionKey, revenueOptions, setValue, fieldPrefix, isWeeklyPaymentToday]);
 

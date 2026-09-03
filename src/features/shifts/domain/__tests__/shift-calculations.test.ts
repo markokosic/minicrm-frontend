@@ -69,6 +69,23 @@ describe('shift-calculations.utils', () => {
       });
     });
 
+    it('prefers settlement snapshot if present on shift object', () => {
+      const shift = {
+        id: 1,
+        settlement: {
+          totalRevenue: 500,
+          driverRemuneration: 225,
+          companyRemuneration: 275,
+        },
+        revenues: [{ revenue: 100, driverRemuneration: 45, companyRemuneration: 55 }],
+      };
+      expect(calculateShiftTotals(shift as any)).toEqual({
+        totalRevenue: 500,
+        totalDriverRemuneration: 225,
+        totalCompanyRemuneration: 275,
+      });
+    });
+
     it('returns zeros for empty or null array', () => {
       expect(calculateShiftTotals(null)).toEqual({
         totalRevenue: 0,
@@ -141,19 +158,54 @@ describe('shift-calculations.utils', () => {
       expect(payload.odometerStart).toBe(45000);
       expect(payload.odometerEnd).toBe(45200);
       expect(payload.revenues).toHaveLength(4);
-      // Existing regular
+      // Existing regular: only id & amount
       expect(payload.revenues[0]).toEqual({ id: 99, revenue: 150 });
-      // Existing flat rate
+      // Existing flat rate: only id & tripCount/pricePerTrip
       expect(payload.revenues[1]).toEqual({ id: 100, tripCount: 3, pricePerTrip: 50 });
-      // New regular
-      expect(payload.revenues[2]).toEqual({ entryCategory: 'REGULAR', revenue: 80 });
-      // New flat rate
+      // New regular: id: null, category & amount
+      expect(payload.revenues[2]).toEqual({ id: null, entryCategory: 'REGULAR', revenue: 80 });
+      // New flat rate: id: null, category, flatRateTypeId & tripCount/pricePerTrip
       expect(payload.revenues[3]).toEqual({
+        id: null,
         entryCategory: 'FLAT_RATE',
         flatRateTypeId: 2,
         tripCount: 1,
         pricePerTrip: 100,
       });
+    });
+
+    it('strips all calculation/response fields like companyRemuneration and driverRemuneration', () => {
+      const values = {
+        odometerStart: 1000,
+        odometerEnd: 1100,
+        shiftStart: '2026-08-13T06:00',
+        shiftEnd: '2026-08-13T14:00',
+        revenues: [
+          {
+            id: 12,
+            entryCategory: 'REGULAR',
+            revenue: 200,
+            driverRemuneration: 90,
+            companyRemuneration: 110,
+            remunerationModelType: 'PERCENTAGE_SHARE',
+            isFlatRate: false,
+            flatRateTypeName: 'Normal',
+            optionKey: 'REGULAR',
+          },
+        ],
+      };
+
+      const payload = transformUpdateShiftPayload(values);
+      expect(payload.revenues[0]).toEqual({
+        id: 12,
+        revenue: 200,
+      });
+      expect(payload.revenues[0]).not.toHaveProperty('companyRemuneration');
+      expect(payload.revenues[0]).not.toHaveProperty('driverRemuneration');
+      expect(payload.revenues[0]).not.toHaveProperty('remunerationModelType');
+      expect(payload.revenues[0]).not.toHaveProperty('isFlatRate');
+      expect(payload.revenues[0]).not.toHaveProperty('flatRateTypeName');
+      expect(payload.revenues[0]).not.toHaveProperty('optionKey');
     });
   });
 });

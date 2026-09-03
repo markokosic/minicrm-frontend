@@ -34,9 +34,8 @@ export const DriverViewShiftPage = () => {
   const shift = response?.data;
   const isPendingStatus = shift?.status === 'PENDING';
 
-  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } = calculateShiftTotals(
-    shift?.revenues || []
-  );
+  const { totalRevenue, totalDriverRemuneration, totalCompanyRemuneration } =
+    calculateShiftTotals(shift);
 
   const actions =
     shift && isPendingStatus ? (

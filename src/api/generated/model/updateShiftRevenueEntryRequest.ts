@@ -23,4 +23,6 @@ export interface UpdateShiftRevenueEntryRequest {
   tripCount?: number;
   /** Price per trip */
   pricePerTrip?: number;
+  /** Weekly rent paid by driver (for WEEKLY category). Mandatory for weekly drivers, but can be 0. */
+  weeklyDriverRent?: number;
 }

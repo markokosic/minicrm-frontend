@@ -325,7 +325,7 @@ export const DriverShiftRevenuesCard = ({
                         color="gray"
                         size="sm"
                         h={38}
-                        minWidth={38}
+                        miw={38}
                         px={10}
                         radius="md"
                         disabled={count < 5}
@@ -372,7 +372,7 @@ export const DriverShiftRevenuesCard = ({
                         color="blue"
                         size="sm"
                         h={38}
-                        minWidth={38}
+                        miw={38}
                         px={10}
                         radius="md"
                         onClick={() => handleFlatRateCountChange(key, 5)}

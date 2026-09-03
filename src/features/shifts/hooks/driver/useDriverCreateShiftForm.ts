@@ -93,11 +93,13 @@ export const useDriverCreateShiftForm = () => {
       }
     });
 
-    // 3. Weekly rent paid (if entered)
-    if (values.weeklyRentPaid && Number(values.weeklyRentPaid) > 0) {
+    // 3. Weekly rent paid (if entered or provided)
+    if (values.weeklyRentPaid !== undefined && values.weeklyRentPaid !== null && !isNaN(Number(values.weeklyRentPaid))) {
+      const rentAmount = Number(values.weeklyRentPaid);
       revenues.push({
         entryCategory: 'WEEKLY',
-        revenue: Number(values.weeklyRentPaid),
+        weeklyDriverRent: rentAmount,
+        revenue: rentAmount,
       });
     }
 

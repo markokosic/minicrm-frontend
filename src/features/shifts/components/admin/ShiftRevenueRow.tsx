@@ -98,24 +98,14 @@ export const ShiftRevenueRow = ({ index, revenueOptions, onRemove }: ShiftRevenu
             />
           </>
         ) : rowValues.entryCategory === DriverRevenueOptionEntryCategory.WEEKLY ? (
-          <>
-            <ControlledNumberInput
-              name={`${fieldPrefix}.revenue`}
-              label={t('app:shifts.fields.revenue.label')}
-              placeholder="0,00"
-              min={0}
-              decimalScale={2}
-              suffix=" €"
-            />
-            <ControlledNumberInput
-              name={`${fieldPrefix}.companyRemuneration`}
-              label={t('app:shifts.fields.weekly_revenue.label', 'Wöchentlicher Fixbeitrag (€)')}
-              placeholder="0,00"
-              min={0}
-              decimalScale={2}
-              suffix=" €"
-            />
-          </>
+          <ControlledNumberInput
+            name={`${fieldPrefix}.weeklyDriverRent`}
+            label={t('app:shifts.fields.weekly_rent.label', 'Wöchentliche Miete an Firma (€)')}
+            placeholder="0,00"
+            min={0}
+            decimalScale={2}
+            suffix=" €"
+          />
         ) : (
           <ControlledNumberInput
             name={`${fieldPrefix}.revenue`}

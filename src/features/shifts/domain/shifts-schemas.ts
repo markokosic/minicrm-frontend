@@ -10,7 +10,7 @@ export interface ShiftRevenueFormRow {
   revenue?: number | null;
   tripCount?: number | null;
   pricePerTrip?: number | null;
-  companyRemuneration?: number | null;
+  weeklyDriverRent?: number | null;
 }
 
 export const getCreateShiftSchema = (t: TFunction) =>
@@ -45,7 +45,7 @@ export const getCreateShiftSchema = (t: TFunction) =>
             revenue: z.number().optional().nullable(),
             tripCount: z.number().optional().nullable(),
             pricePerTrip: z.number().optional().nullable(),
-            companyRemuneration: z.number().optional().nullable(),
+            weeklyDriverRent: z.number().optional().nullable(),
           })
         )
         .min(1, t('errors:shifts.revenues.min', 'Mindestens ein Umsatzeintrag erforderlich')),
