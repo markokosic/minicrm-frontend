@@ -164,8 +164,8 @@ export const calculateShiftTotals = (
   return revenues.reduce(
     (acc, r) => ({
       totalRevenue: acc.totalRevenue + (r.revenue || 0),
-      totalDriverRemuneration: acc.totalDriverRemuneration + (r.driverRemuneration || 0),
-      totalCompanyRemuneration: acc.totalCompanyRemuneration + (r.companyRemuneration || 0),
+      totalDriverRemuneration: 0,
+      totalCompanyRemuneration: 0,
     }),
     { totalRevenue: 0, totalDriverRemuneration: 0, totalCompanyRemuneration: 0 }
   );
@@ -204,40 +204,50 @@ export const formatShiftTime = (dateString?: string | null, locale = 'de-DE'): s
  * Transforms form values into CreateShiftRequest payload for API submission.
  */
 export const transformShiftFormPayload = (values: any): CreateShiftRequest => {
-  const formattedRevenues: CreateShiftRevenueEntryRequest[] = values.revenues.map(
-    (r: ShiftRevenueFormRow) => {
-      if (r.entryCategory === 'WEEKLY') {
-        const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
-        return {
-          entryCategory: 'WEEKLY',
-          weeklyDriverRent: rent,
-          revenue: rent,
-        };
-      }
-      if (r.entryCategory === 'FLAT_RATE') {
-        const entry: CreateShiftRevenueEntryRequest = {
-          entryCategory: 'FLAT_RATE',
-          flatRateTypeId: r.flatRateTypeId ? Number(r.flatRateTypeId) : undefined,
-        };
-        if (
-          r.tripCount !== undefined &&
-          r.tripCount !== null &&
-          r.pricePerTrip !== undefined &&
-          r.pricePerTrip !== null
-        ) {
-          entry.tripCount = Number(r.tripCount);
-          entry.pricePerTrip = Number(r.pricePerTrip);
-        } else {
-          entry.revenue = Number(r.revenue || 0);
-        }
-        return entry;
-      }
-      return {
-        entryCategory: r.entryCategory,
-        revenue: Number(r.revenue || 0),
-      };
+  let weeklyDriverRent: number | undefined = undefined;
+  const formattedRevenues: CreateShiftRevenueEntryRequest[] = [];
+
+  for (const r of values.revenues || []) {
+    if (r.entryCategory === 'WEEKLY') {
+      const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
+      weeklyDriverRent = rent;
+      continue;
     }
-  );
+    if (r.entryCategory === 'FLAT_RATE') {
+      const entry: CreateShiftRevenueEntryRequest = {
+        entryCategory: 'FLAT_RATE',
+        flatRateTypeId: r.flatRateTypeId ? Number(r.flatRateTypeId) : undefined,
+      };
+      if (
+        r.tripCount !== undefined &&
+        r.tripCount !== null &&
+        r.pricePerTrip !== undefined &&
+        r.pricePerTrip !== null
+      ) {
+        entry.tripCount = Number(r.tripCount);
+        entry.pricePerTrip = Number(r.pricePerTrip);
+      } else {
+        entry.revenue = Number(r.revenue || 0);
+      }
+      formattedRevenues.push(entry);
+    } else {
+      formattedRevenues.push({
+        entryCategory: 'REGULAR',
+        revenue: Number(r.revenue || 0),
+      });
+    }
+  }
+
+  if (values.weeklyDriverRent !== undefined && values.weeklyDriverRent !== null && !isNaN(Number(values.weeklyDriverRent))) {
+    weeklyDriverRent = Number(values.weeklyDriverRent);
+  }
+
+  if (formattedRevenues.length === 0 && weeklyDriverRent !== undefined) {
+    formattedRevenues.push({
+      entryCategory: 'REGULAR',
+      revenue: 0,
+    });
+  }
 
   return {
     driverId: Number(values.driverId),
@@ -247,6 +257,7 @@ export const transformShiftFormPayload = (values: any): CreateShiftRequest => {
     shiftStart: dayjs(values.shiftStart).toISOString(),
     shiftEnd: dayjs(values.shiftEnd).toISOString(),
     status: values.status || 'APPROVED',
+    weeklyDriverRent,
     revenues: formattedRevenues,
   };
 };
@@ -255,46 +266,36 @@ export const transformShiftFormPayload = (values: any): CreateShiftRequest => {
  * Transforms form values into UpdateShiftRequest payload for PUT /api/shifts/{id}.
  */
 export const transformUpdateShiftPayload = (values: any): UpdateShiftRequest => {
-  const formattedRevenues: UpdateShiftRevenueEntryRequest[] = values.revenues.map(
-    (r: ShiftRevenueFormRow) => {
-      if (r.id) {
-        if (r.entryCategory === 'WEEKLY') {
-          const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
-          return {
-            id: r.id,
-            weeklyDriverRent: rent,
-            revenue: rent,
-          };
-        }
-        if (
-          r.entryCategory === 'FLAT_RATE' &&
-          r.tripCount !== undefined &&
-          r.tripCount !== null &&
-          r.pricePerTrip !== undefined &&
-          r.pricePerTrip !== null
-        ) {
-          return {
-            id: r.id,
-            tripCount: Number(r.tripCount),
-            pricePerTrip: Number(r.pricePerTrip),
-          };
-        }
-        return {
+  let weeklyDriverRent: number | undefined = undefined;
+  const formattedRevenues: UpdateShiftRevenueEntryRequest[] = [];
+
+  for (const r of values.revenues || []) {
+    if (r.entryCategory === 'WEEKLY') {
+      const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
+      weeklyDriverRent = rent;
+      continue;
+    }
+
+    if (r.id) {
+      if (
+        r.entryCategory === 'FLAT_RATE' &&
+        r.tripCount !== undefined &&
+        r.tripCount !== null &&
+        r.pricePerTrip !== undefined &&
+        r.pricePerTrip !== null
+      ) {
+        formattedRevenues.push({
+          id: r.id,
+          tripCount: Number(r.tripCount),
+          pricePerTrip: Number(r.pricePerTrip),
+        });
+      } else {
+        formattedRevenues.push({
           id: r.id,
           revenue: Number(r.revenue || 0),
-        };
+        });
       }
-
-      if (r.entryCategory === 'WEEKLY') {
-        const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
-        return {
-          id: null as any,
-          entryCategory: 'WEEKLY',
-          weeklyDriverRent: rent,
-          revenue: rent,
-        };
-      }
-
+    } else {
       if (r.entryCategory === 'FLAT_RATE') {
         const entry: UpdateShiftRevenueEntryRequest = {
           id: null as any,
@@ -312,16 +313,27 @@ export const transformUpdateShiftPayload = (values: any): UpdateShiftRequest => 
         } else {
           entry.revenue = Number(r.revenue || 0);
         }
-        return entry;
+        formattedRevenues.push(entry);
+      } else {
+        formattedRevenues.push({
+          id: null as any,
+          entryCategory: 'REGULAR',
+          revenue: Number(r.revenue || 0),
+        });
       }
-
-      return {
-        id: null as any,
-        entryCategory: r.entryCategory,
-        revenue: Number(r.revenue || 0),
-      };
     }
-  );
+  }
+
+  if (values.weeklyDriverRent !== undefined && values.weeklyDriverRent !== null && !isNaN(Number(values.weeklyDriverRent))) {
+    weeklyDriverRent = Number(values.weeklyDriverRent);
+  }
+
+  if (formattedRevenues.length === 0 && weeklyDriverRent !== undefined) {
+    formattedRevenues.push({
+      entryCategory: 'REGULAR',
+      revenue: 0,
+    });
+  }
 
   return {
     carId: values.carId ? Number(values.carId) : undefined,
@@ -329,6 +341,7 @@ export const transformUpdateShiftPayload = (values: any): UpdateShiftRequest => 
     odometerEnd: Number(values.odometerEnd),
     shiftStart: dayjs(values.shiftStart).toISOString(),
     shiftEnd: dayjs(values.shiftEnd).toISOString(),
+    weeklyDriverRent,
     revenues: formattedRevenues,
   };
 };

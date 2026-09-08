@@ -16,6 +16,7 @@ export interface CreateShiftRequest {
   shiftStart: string;
   shiftEnd: string;
   status?: CreateShiftRequestStatus;
+  weeklyDriverRent?: number;
   /** @minItems 1 */
   revenues: CreateShiftRevenueEntryRequest[];
 }

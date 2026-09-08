@@ -21,6 +21,7 @@ export interface ShiftResponse {
   shiftStart?: string;
   shiftEnd?: string;
   status?: ShiftResponseStatus;
+  weeklyDriverRent?: number;
   settlement?: ShiftSettlementResponse;
   revenues?: ShiftRevenueEntryResponse[];
 }

@@ -13,6 +13,7 @@ export interface UpdateShiftRequest {
   odometerEnd: number;
   shiftStart: string;
   shiftEnd: string;
+  weeklyDriverRent?: number;
   /** @minItems 1 */
   revenues: UpdateShiftRevenueEntryRequest[];
 }

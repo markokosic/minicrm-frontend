@@ -879,7 +879,7 @@ export const useDeleteMyShift = <TError = ErrorType<ProblemDetail>,
       return useMutation(getDeleteMyShiftMutationOptions(options), queryClient);
     }
     /**
- * Fetches a paginated list of shifts filtered by driver or date range.
+ * Fetches a paginated list of shifts filtered by driver, status or date range.
  * @summary Get all shifts
  */
 export const getAllShifts = (

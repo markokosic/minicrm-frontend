@@ -15,7 +15,7 @@ export type CreatePercentageShareRemunerationConfig = Omit<CreateRemunerationReq
   /** Remuneration model type */
   remunerationModelType: CreatePercentageShareRemunerationConfigRemunerationModelType;
   /** Minimum guaranteed driver payout per shift in EUR */
-  minDriverPayout?: number;
+  minDriverPayoutPerShift?: number;
   /**
      * Revenue share factor (e.g. 0.4500 for 45% or 45.0)
      * @minimum 0

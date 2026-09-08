@@ -72,6 +72,7 @@ export * from './getAllCarsParams';
 export * from './getAllDailyRevenuesParams';
 export * from './getAllDriversParams';
 export * from './getAllShiftsParams';
+export * from './getAllShiftsStatus';
 export * from './getAllUsersParams';
 export * from './getDashboardReportParams';
 export * from './getMyShiftsParams';

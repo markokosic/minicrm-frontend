@@ -13,6 +13,7 @@ export interface CreateMyShiftRequest {
   odometerEnd: number;
   shiftStart: string;
   shiftEnd: string;
+  weeklyDriverRent?: number;
   /** @minItems 1 */
   revenues: CreateShiftRevenueEntryRequest[];
 }
