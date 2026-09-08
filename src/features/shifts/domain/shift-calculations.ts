@@ -5,11 +5,11 @@ import {
   CreateShiftRevenueEntryRequest,
   ShiftResponse,
   ShiftRevenueEntryResponse,
+  ShiftRevenueEntryResponseEntryCategory,
   ShiftSettlementResponse,
   UpdateShiftRequest,
   UpdateShiftRevenueEntryRequest,
 } from '@/api/generated/model';
-import { ShiftRevenueFormRow } from './shifts-schemas';
 
 dayjs.extend(isoWeek);
 
@@ -38,10 +38,10 @@ export const getRevenueOptionKey = (
   entryCategory?: string | null,
   flatRateTypeId?: number | null
 ): string => {
-  if (entryCategory === 'FLAT_RATE') {
+  if (entryCategory === ShiftRevenueEntryResponseEntryCategory.FLAT_RATE) {
     return `FLAT_RATE_${flatRateTypeId ?? 'none'}`;
   }
-  return entryCategory || 'REGULAR';
+  return entryCategory || ShiftRevenueEntryResponseEntryCategory.REGULAR;
 };
 
 /**
@@ -200,148 +200,229 @@ export const formatShiftTime = (dateString?: string | null, locale = 'de-DE'): s
       });
 };
 
-/**
- * Transforms form values into CreateShiftRequest payload for API submission.
- */
-export const transformShiftFormPayload = (values: any): CreateShiftRequest => {
-  let weeklyDriverRent: number | undefined = undefined;
-  const formattedRevenues: CreateShiftRevenueEntryRequest[] = [];
+export interface DriverShiftFlatRateOption {
+  id?: number;
+  name?: string;
+  defaultPrice?: number;
+}
 
-  for (const r of values.revenues || []) {
-    if (r.entryCategory === 'WEEKLY') {
-      const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
-      weeklyDriverRent = rent;
+
+const extractWeeklyRent = (weeklyRentPaid?: number | null): number | undefined => {
+  if (weeklyRentPaid !== undefined && weeklyRentPaid !== null && !isNaN(Number(weeklyRentPaid))) {
+    return Number(weeklyRentPaid);
+  }
+  return undefined;
+};
+
+/**
+ * Extracts QuickForm values (singleRides, flatRateCounts, etc.) from a ShiftResponse
+ */
+export const extractFormValuesFromShift = (shift: ShiftResponse) => {
+  const regularRevenues = shift.revenues?.filter((r) => r.entryCategory === ShiftRevenueEntryResponseEntryCategory.REGULAR) || [];
+  const singleRides = regularRevenues.map((r) => r.revenue ?? 0).filter((v) => v > 0);
+
+  const flatRateCounts: Record<string, number> = {};
+  const flatRatePrices: Record<string, number> = {};
+  
+  shift.revenues
+    ?.filter((r) => r.entryCategory === ShiftRevenueEntryResponseEntryCategory.FLAT_RATE)
+    .forEach((r, idx) => {
+      const key = r.flatRateTypeId ? String(r.flatRateTypeId) : `custom_${idx}`;
+      if (r.tripCount) {
+        flatRateCounts[key] = r.tripCount;
+      }
+      if (r.pricePerTrip) {
+        flatRatePrices[key] = r.pricePerTrip;
+      }
+    });
+
+  const weeklyRentPaid =
+    shift.weeklyDriverRent ??
+    shift.revenues?.find((r) => r.entryCategory === ShiftRevenueEntryResponseEntryCategory.WEEKLY)?.revenue ??
+    undefined;
+
+  return {
+    singleRides,
+    flatRateCounts,
+    flatRatePrices,
+    weeklyRentPaid,
+  };
+};
+
+/**
+ * Transforms form values into API request payload.
+ * Used for both Admin (CreateShiftRequest) and Driver (CreateMyShiftRequest).
+ */
+export const transformShiftFormPayload = (
+  values: any,
+  flatRateTypes: DriverShiftFlatRateOption[] = []
+): any => {
+  const weeklyDriverRent = extractWeeklyRent(values.weeklyRentPaid);
+  const revenues: CreateShiftRevenueEntryRequest[] = [];
+
+  // 1. Regular Revenues
+  const singleRides: number[] = values.singleRides || [];
+  singleRides
+    .map(Number)
+    .filter((num) => !isNaN(num) && num > 0)
+    .forEach((num) => {
+      revenues.push({
+        entryCategory: ShiftRevenueEntryResponseEntryCategory.REGULAR,
+        revenue: Math.round(num * 100) / 100,
+      });
+    });
+
+  // 2. Flat Rate Revenues
+  const flatRateCounts: Record<string, number> = values.flatRateCounts || {};
+  const flatRatePrices: Record<string, number> = values.flatRatePrices || {};
+  
+  for (const [key, count] of Object.entries(flatRateCounts)) {
+    if (!count || count <= 0) {
       continue;
     }
-    if (r.entryCategory === 'FLAT_RATE') {
-      const entry: CreateShiftRevenueEntryRequest = {
-        entryCategory: 'FLAT_RATE',
-        flatRateTypeId: r.flatRateTypeId ? Number(r.flatRateTypeId) : undefined,
-      };
-      if (
-        r.tripCount !== undefined &&
-        r.tripCount !== null &&
-        r.pricePerTrip !== undefined &&
-        r.pricePerTrip !== null
-      ) {
-        entry.tripCount = Number(r.tripCount);
-        entry.pricePerTrip = Number(r.pricePerTrip);
-      } else {
-        entry.revenue = Number(r.revenue || 0);
-      }
-      formattedRevenues.push(entry);
-    } else {
-      formattedRevenues.push({
-        entryCategory: 'REGULAR',
-        revenue: Number(r.revenue || 0),
+    const typeId = isNaN(Number(key)) ? undefined : Number(key);
+    const flatType = flatRateTypes.find(
+      (f, idx) =>
+        (f.id !== undefined && f.id === typeId) || (f.id === undefined && `custom_${idx}` === key)
+    );
+    const price =
+      flatType?.defaultPrice !== undefined && flatType?.defaultPrice !== null
+        ? flatType.defaultPrice
+        : flatRatePrices[key] ?? 0;
+
+    if (price > 0) {
+      revenues.push({
+        entryCategory: ShiftRevenueEntryResponseEntryCategory.FLAT_RATE,
+        flatRateTypeId: flatType?.id,
+        tripCount: count,
+        pricePerTrip: price,
       });
     }
   }
 
-  if (values.weeklyDriverRent !== undefined && values.weeklyDriverRent !== null && !isNaN(Number(values.weeklyDriverRent))) {
-    weeklyDriverRent = Number(values.weeklyDriverRent);
-  }
-
-  if (formattedRevenues.length === 0 && weeklyDriverRent !== undefined) {
-    formattedRevenues.push({
-      entryCategory: 'REGULAR',
+  // 3. Fallback for Weekly Rent only
+  if (revenues.length === 0 && weeklyDriverRent !== undefined) {
+    revenues.push({
+      entryCategory: ShiftRevenueEntryResponseEntryCategory.REGULAR,
       revenue: 0,
     });
   }
 
-  return {
-    driverId: Number(values.driverId),
+  const payload: any = {
     carId: Number(values.carId),
     odometerStart: Number(values.odometerStart),
     odometerEnd: Number(values.odometerEnd),
     shiftStart: dayjs(values.shiftStart).toISOString(),
     shiftEnd: dayjs(values.shiftEnd).toISOString(),
-    status: values.status || 'APPROVED',
     weeklyDriverRent,
-    revenues: formattedRevenues,
+    revenues,
   };
+
+  if (values.driverId) {
+    payload.driverId = Number(values.driverId);
+  }
+
+  return payload;
 };
 
 /**
  * Transforms form values into UpdateShiftRequest payload for PUT /api/shifts/{id}.
+ * Also reusable for Driver update (UpdateMyShift).
  */
-export const transformUpdateShiftPayload = (values: any): UpdateShiftRequest => {
-  let weeklyDriverRent: number | undefined = undefined;
-  const formattedRevenues: UpdateShiftRevenueEntryRequest[] = [];
+export const transformUpdateShiftPayload = (
+  values: any,
+  flatRateTypes: DriverShiftFlatRateOption[] = [],
+  existingRevenues: ShiftRevenueEntryResponse[] = []
+): any => {
+  const weeklyDriverRent = extractWeeklyRent(values.weeklyRentPaid);
+  const revenues: UpdateShiftRevenueEntryRequest[] = [];
+  
+  const existingRegulars = existingRevenues.filter(
+    (r) => r.entryCategory === ShiftRevenueEntryResponseEntryCategory.REGULAR
+  );
 
-  for (const r of values.revenues || []) {
-    if (r.entryCategory === 'WEEKLY') {
-      const rent = Number(r.weeklyDriverRent ?? r.revenue ?? 0);
-      weeklyDriverRent = rent;
+  // 1. Regular Revenues
+  const singleRides: number[] = values.singleRides || [];
+  singleRides
+    .map(Number)
+    .filter((num) => !isNaN(num) && num > 0)
+    .forEach((num, index) => {
+      const rounded = Math.round(num * 100) / 100;
+      if (index < existingRegulars.length && existingRegulars[index].id) {
+        revenues.push({
+          id: existingRegulars[index].id,
+          revenue: rounded,
+        });
+      } else {
+        revenues.push({
+          id: null,
+          entryCategory: ShiftRevenueEntryResponseEntryCategory.REGULAR,
+          revenue: rounded,
+        });
+      }
+    });
+
+  // 2. Flat Rate Revenues
+  const flatRateCounts: Record<string, number> = values.flatRateCounts || {};
+  const flatRatePrices: Record<string, number> = values.flatRatePrices || {};
+
+  for (const [key, count] of Object.entries(flatRateCounts)) {
+    if (!count || count <= 0) {
       continue;
     }
+    const typeId = isNaN(Number(key)) ? undefined : Number(key);
+    const flatType = flatRateTypes.find(
+      (f, idx) =>
+        (f.id !== undefined && f.id === typeId) || (f.id === undefined && `custom_${idx}` === key)
+    );
+    const price =
+      flatType?.defaultPrice !== undefined && flatType?.defaultPrice !== null
+        ? flatType.defaultPrice
+        : flatRatePrices[key] ?? 0;
 
-    if (r.id) {
-      if (
-        r.entryCategory === 'FLAT_RATE' &&
-        r.tripCount !== undefined &&
-        r.tripCount !== null &&
-        r.pricePerTrip !== undefined &&
-        r.pricePerTrip !== null
-      ) {
-        formattedRevenues.push({
-          id: r.id,
-          tripCount: Number(r.tripCount),
-          pricePerTrip: Number(r.pricePerTrip),
+    if (price > 0) {
+      const existingFlat = existingRevenues.find(
+        (r) =>
+          r.entryCategory === ShiftRevenueEntryResponseEntryCategory.FLAT_RATE &&
+          ((typeId !== undefined && r.flatRateTypeId === typeId) || (!typeId && !r.flatRateTypeId))
+      );
+
+      if (existingFlat?.id) {
+        revenues.push({
+          id: existingFlat.id,
+          tripCount: count,
+          pricePerTrip: price,
         });
       } else {
-        formattedRevenues.push({
-          id: r.id,
-          revenue: Number(r.revenue || 0),
-        });
-      }
-    } else {
-      if (r.entryCategory === 'FLAT_RATE') {
-        const entry: UpdateShiftRevenueEntryRequest = {
-          id: null as any,
-          entryCategory: 'FLAT_RATE',
-          flatRateTypeId: r.flatRateTypeId ? Number(r.flatRateTypeId) : undefined,
-        };
-        if (
-          r.tripCount !== undefined &&
-          r.tripCount !== null &&
-          r.pricePerTrip !== undefined &&
-          r.pricePerTrip !== null
-        ) {
-          entry.tripCount = Number(r.tripCount);
-          entry.pricePerTrip = Number(r.pricePerTrip);
-        } else {
-          entry.revenue = Number(r.revenue || 0);
-        }
-        formattedRevenues.push(entry);
-      } else {
-        formattedRevenues.push({
-          id: null as any,
-          entryCategory: 'REGULAR',
-          revenue: Number(r.revenue || 0),
+        revenues.push({
+          id: null,
+          entryCategory: ShiftRevenueEntryResponseEntryCategory.FLAT_RATE,
+          flatRateTypeId: flatType?.id,
+          tripCount: count,
+          pricePerTrip: price,
         });
       }
     }
   }
 
-  if (values.weeklyDriverRent !== undefined && values.weeklyDriverRent !== null && !isNaN(Number(values.weeklyDriverRent))) {
-    weeklyDriverRent = Number(values.weeklyDriverRent);
-  }
-
-  if (formattedRevenues.length === 0 && weeklyDriverRent !== undefined) {
-    formattedRevenues.push({
-      entryCategory: 'REGULAR',
+  // 3. Fallback for Weekly Rent only
+  if (revenues.length === 0 && weeklyDriverRent !== undefined) {
+    revenues.push({
+      id: null,
+      entryCategory: ShiftRevenueEntryResponseEntryCategory.REGULAR,
       revenue: 0,
     });
   }
 
-  return {
+  const payload: any = {
     carId: values.carId ? Number(values.carId) : undefined,
     odometerStart: Number(values.odometerStart),
     odometerEnd: Number(values.odometerEnd),
     shiftStart: dayjs(values.shiftStart).toISOString(),
     shiftEnd: dayjs(values.shiftEnd).toISOString(),
     weeklyDriverRent,
-    revenues: formattedRevenues,
+    revenues,
   };
+
+  return payload;
 };

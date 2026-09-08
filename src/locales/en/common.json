@@ -119,6 +119,10 @@
       "label": "Minimal driver payout (€)",
       "placeholder": "Please enter minimal payout in €"
     },
+    "minDriverPayoutPerShift": {
+      "label": "Minimal payout per shift (€)",
+      "placeholder": "Please enter minimal payout per shift in €"
+    },
     "driverRevenueSharePercentage": {
       "label": "Driver share percentage (%)",
       "placeholder": "Please enter a percentage value"

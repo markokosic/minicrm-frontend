@@ -2,11 +2,14 @@ import { useTranslation } from 'react-i18next';
 import { Button, Stack } from '@mantine/core';
 import { ShiftResponse } from '@/api/generated/model';
 import { Form } from '@/shared/components/forms/Form';
-import { useCarSelectOptions } from '@/features/cars/hooks/useCarOptions';
-import { useDriverSelectOptions } from '@/features/drivers/hooks/useDriverOptions';
-import { useUpdateShiftForm } from '../../hooks/admin/useAdminUpdateShiftForm';
+import { useAdminUpdateShiftForm } from '../../hooks/admin/useAdminUpdateShiftForm';
+import { DriverShiftFlatRateOption } from '../../domain/shift-calculations';
 import { ShiftMasterDataSection } from './ShiftMasterDataSection';
 import { ShiftRevenuesSection } from './ShiftRevenuesSection';
+import { mapCarsToOptions } from '@/features/cars/utils/car-options.utils';
+import { mapDriversToOptions } from '@/features/drivers/utils/driver-options.utils';
+import { RemunerationModelType } from '@/features/drivers/domain/remuneration-types';
+import { extractShiftFlatRateOptions } from '../../utils/shift-options.utils';
 
 interface AdminEditShiftFormProps {
   shift: ShiftResponse;
@@ -14,15 +17,32 @@ interface AdminEditShiftFormProps {
 
 export const AdminEditShiftForm = ({ shift }: AdminEditShiftFormProps) => {
   const { t } = useTranslation(['app', 'common']);
-  const { driverOptions, isLoading: isLoadingDrivers } = useDriverSelectOptions();
-  const { carOptions, isLoading: isLoadingCars } = useCarSelectOptions();
 
-  const { methods, onSubmit, isPending, cancel } = useUpdateShiftForm(shift);
+  const { methods, onSubmit, isPending, cancel } = useAdminUpdateShiftForm(shift);
+
+  const selectedDriverId = shift.driver?.id;
+
+  const driverOptions = mapDriversToOptions(shift.driver);
+  const carOptions = mapCarsToOptions(shift.car);
+
+  const flatRateOptions: DriverShiftFlatRateOption[] = extractShiftFlatRateOptions(
+    shift.revenues,
+    t('app:flatrate.general', 'Pauschalfahrt')
+  );
+
+  const appliedConfigs = shift.appliedRemunerationConfigs || [];
+  const weeklyConfig = appliedConfigs.find(
+    (c) => c.remunerationModelType === RemunerationModelType.WEEKLY_FIXED_RATE
+  );
+
+  const finalHasWeeklyConfig = Boolean(weeklyConfig);
+  const finalWeeklyConfig = weeklyConfig;
+  const finalHasCashRides = true; // Cash rides are always adjustable in edit mode
 
   return (
     <Form
       methods={methods as any}
-      onSubmit={onSubmit}
+      onSubmit={(values: any) => onSubmit(values, flatRateOptions)}
       formActions={
         <>
           <Button
@@ -45,13 +65,20 @@ export const AdminEditShiftForm = ({ shift }: AdminEditShiftFormProps) => {
         <ShiftMasterDataSection
           driverOptions={driverOptions}
           carOptions={carOptions}
-          isLoadingDrivers={isLoadingDrivers}
-          isLoadingCars={isLoadingCars}
+          isLoadingDrivers={false}
+          isLoadingCars={false}
           isEdit
         />
 
-        <ShiftRevenuesSection />
+        <ShiftRevenuesSection
+          driverSelected={Boolean(selectedDriverId)}
+          flatRateOptions={flatRateOptions}
+          hasCashRides={finalHasCashRides}
+          hasWeeklyConfig={finalHasWeeklyConfig}
+          weeklyConfig={finalWeeklyConfig}
+        />
       </Stack>
     </Form>
   );
 };
+

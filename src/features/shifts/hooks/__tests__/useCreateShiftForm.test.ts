@@ -14,8 +14,10 @@ describe('useCreateShiftForm Hook', () => {
       shiftEnd: '',
       odometerStart: undefined,
       odometerEnd: undefined,
-      status: 'APPROVED',
-      revenues: [],
+      singleRides: [],
+      flatRateCounts: {},
+      flatRatePrices: {},
+      weeklyRentPaid: undefined,
     });
     expect(result.current.isPending).toBe(false);
   });

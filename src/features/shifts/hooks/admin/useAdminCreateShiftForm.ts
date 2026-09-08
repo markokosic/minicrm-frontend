@@ -5,7 +5,10 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { getGetAllShiftsQueryKey, useCreateShift } from '@/api/generated/endpoints/shifts/shifts';
-import { transformShiftFormPayload } from '../../domain/shift-calculations';
+import {
+  DriverShiftFlatRateOption,
+  transformShiftFormPayload,
+} from '../../domain/shift-calculations';
 import { CreateShiftFormValues, getCreateShiftSchema } from '../../domain/shifts-schemas';
 
 export const useAdminCreateShiftForm = () => {
@@ -23,8 +26,10 @@ export const useAdminCreateShiftForm = () => {
       shiftEnd: '',
       odometerStart: undefined as unknown as number,
       odometerEnd: undefined as unknown as number,
-      status: 'APPROVED',
-      revenues: [],
+      singleRides: [],
+      flatRateCounts: {},
+      flatRatePrices: {},
+      weeklyRentPaid: undefined as unknown as number,
     },
   });
 
@@ -44,8 +49,22 @@ export const useAdminCreateShiftForm = () => {
     },
   });
 
-  const onSubmit = (values: CreateShiftFormValues) => {
-    const payload = transformShiftFormPayload(values);
+  const onSubmit = (
+    values: CreateShiftFormValues,
+    flatRateTypes: DriverShiftFlatRateOption[] = []
+  ) => {
+    const payload = transformShiftFormPayload(values, flatRateTypes);
+
+    if (payload.revenues.length === 0) {
+      toast.error(
+        t(
+          'app:shifts.errors.at_least_one_revenue',
+          'Bitte mindestens eine Cash Fahrt oder Pauschale erfassen'
+        )
+      );
+      return;
+    }
+
     mutate({ data: payload });
   };
 

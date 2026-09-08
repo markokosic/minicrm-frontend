@@ -77,7 +77,7 @@ export const DriverViewShiftPage = () => {
               totalDriverRemuneration={totalDriverRemuneration}
               totalCompanyRemuneration={totalCompanyRemuneration}
             />
-            <ShiftViewRevenues revenues={shift.revenues} />
+            <ShiftViewRevenues shift={shift} />
           </Stack>
         )}
       </DataLoadingWrapper>

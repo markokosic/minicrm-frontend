@@ -45,7 +45,6 @@
       "existingAccount": "Bereits ein Konto?"
     }
   },
-
   "cars": {
     "licensePlate": {
       "label": "Kennzeichen",
@@ -224,7 +223,7 @@
     "shift_id": "Schicht-ID",
     "category": "Kategorie",
     "categories": {
-      "REGULAR": "Regulär",
+      "REGULAR": "Cash Fahrten",
       "FLAT_RATE": "Pauschale",
       "WEEKLY": "Wöchentlich"
     },
@@ -327,10 +326,12 @@
     "select_driver_hint": "Bitte wählen Sie zuerst einen Fahrer aus, um die verfügbaren Umsatzoptionen zu laden.",
     "no_revenues_hint": "Noch keine Umsatzeinträge vorhanden. Klicken Sie auf '+ Umsatz hinzufügen'.",
     "calculation_preview": "Live-Vorschau",
+    "regular_rides": "Cash Fahrten",
     "revenue_entry": "Umsatzeintrag",
     "groups": {
       "master_data": "Stammdaten",
-      "revenues": "Umsätze"
+      "revenues": "Umsätze",
+      "company_share": "Firmenanteil"
     },
     "fields": {
       "driver": {
@@ -422,7 +423,11 @@
       "share_due_on": "Abrechnungstag: {{day}}",
       "share_hint_today": "Für die gewählte Wochenpauschale ist heute der wöchentliche Firmenbeitrag fällig.",
       "share_hint_other_day": "Der wöchentliche Beitrag wird am {{day}} abgerechnet."
-    }
+    },
+    "sum_cash_rides": "Summe Cash Fahrten:",
+    "flat_rate_rides": "Pauschalfahrten",
+    "sum_flat_rate_rides": "Summe Pauschalfahrten:",
+    "sum_company_share": "Summe Firmenanteil:"
   },
   "users": {
     "page_title": "Benutzer",

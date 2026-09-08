@@ -1,9 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Button, Stack } from '@mantine/core';
-import { useGetMyDriverProfile } from '@/api/generated/endpoints/drivers/drivers';
 import {
-  FlatRateRemunerationResponse,
   ShiftResponse,
+  ShiftRevenueEntryResponseEntryCategory,
   WeeklyFixedRateRemunerationResponse,
 } from '@/api/generated/model';
 import { useCarSelectOptions } from '@/features/cars/hooks/useCarOptions';
@@ -12,6 +11,8 @@ import { useDriverUpdateShiftForm } from '../../hooks/driver/useDriverUpdateShif
 import { DriverShiftMasterDataCard } from './DriverShiftMasterDataCard';
 import { DriverShiftFlatRateOption, DriverShiftRevenuesCard } from './DriverShiftRevenuesCard';
 import { DriverWeeklyRentCard } from './DriverWeeklyRentCard';
+import { RemunerationModelType } from '@/features/drivers/domain/remuneration-types';
+import { extractShiftFlatRateOptions } from '../../utils/shift-options.utils';
 
 interface DriverShiftEditFormProps {
   shift: ShiftResponse;
@@ -20,34 +21,24 @@ interface DriverShiftEditFormProps {
 export const DriverShiftEditForm = ({ shift }: DriverShiftEditFormProps) => {
   const { t } = useTranslation(['app', 'common']);
   const { carOptions, isLoading: isLoadingCars } = useCarSelectOptions();
-  const { data: driverResponse } = useGetMyDriverProfile();
 
-  const remunerationConfigs = driverResponse?.data?.currentRemunerationConfigs || [];
-
-  const percentageConfig = remunerationConfigs.find(
-    (c) => c.remunerationModelType === 'PERCENTAGE_SHARE'
-  );
-
-  const weeklyConfig = remunerationConfigs.find(
-    (c) => c.remunerationModelType === 'WEEKLY_FIXED_RATE'
+  const appliedConfigs = shift.appliedRemunerationConfigs || [];
+  const weeklyConfig = appliedConfigs.find(
+    (c) => c.remunerationModelType === RemunerationModelType.WEEKLY_FIXED_RATE
   ) as WeeklyFixedRateRemunerationResponse | undefined;
 
-  const flatRateConfigs = remunerationConfigs.filter(
-    (c) => c.remunerationModelType === 'FLAT_RATE'
-  ) as FlatRateRemunerationResponse[];
-
-  // Cash Fahrten available if driver has percentage share or weekly fixed rate (or fallback if empty)
-  const hasCashRides = Boolean(
-    percentageConfig || weeklyConfig || remunerationConfigs.length === 0
+  const hasWeeklyConfig = Boolean(
+    weeklyConfig || shift.weeklyDriverRent != null || (shift.revenues || []).some(
+      (r) => r.entryCategory === ShiftRevenueEntryResponseEntryCategory.WEEKLY
+    )
   );
-  const hasWeeklyConfig = Boolean(weeklyConfig);
 
-  const flatRateOptions: DriverShiftFlatRateOption[] = flatRateConfigs.map((c) => ({
-    id: c.flatRateTypeId,
-    name: c.flatRateTypeName || t('app:flatrate.general', 'Pauschalfahrt'),
-    defaultPrice: c.defaultPrice,
-  }));
+  const flatRateOptions: DriverShiftFlatRateOption[] = extractShiftFlatRateOptions(
+    shift.revenues,
+    t('app:flatrate.general', 'Pauschalfahrt')
+  );
 
+  const hasCashRides = true; // Cash rides are always editable for historical shifts
   const { methods, onSubmit, isPending, cancel } = useDriverUpdateShiftForm({ shift });
 
   return (

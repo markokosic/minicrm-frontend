@@ -19,10 +19,10 @@ export const REMUNERATION_FORM_FIELDS = {
   },
 
   percentageShare: {
-    minDriverPayout: {
-      name: 'minDriverPayout',
-      labelKey: 'common:form.minDriverPayout.label',
-      placeholderKey: 'common:form.minDriverPayout.placeholder',
+    minDriverPayoutPerShift: {
+      name: 'minDriverPayoutPerShift',
+      labelKey: 'common:form.minDriverPayoutPerShift.label',
+      placeholderKey: 'common:form.minDriverPayoutPerShift.placeholder',
       type: 'number',
     },
 

@@ -45,7 +45,6 @@
       "existingAccount": "Already have an account?"
     }
   },
-
   "cars": {
     "licensePlate": {
       "label": "License Plate",
@@ -224,7 +223,7 @@
     "shift_id": "Shift ID",
     "category": "Category",
     "categories": {
-      "REGULAR": "Regular",
+      "REGULAR": "Cash Rides",
       "FLAT_RATE": "Flat Rate",
       "WEEKLY": "Weekly"
     },
@@ -327,10 +326,12 @@
     "select_driver_hint": "Please select a driver first to load available revenue options.",
     "no_revenues_hint": "No revenue entries added yet. Click '+ Add Revenue'.",
     "calculation_preview": "Live Preview",
+    "regular_rides": "Cash Rides",
     "revenue_entry": "Revenue Entry",
     "groups": {
       "master_data": "Master Data",
-      "revenues": "Revenues"
+      "revenues": "Revenues",
+      "company_share": "Company Share"
     },
     "fields": {
       "driver": {
@@ -422,7 +423,11 @@
       "share_due_on": "Settlement day: {{day}}",
       "share_hint_today": "For the chosen weekly flat rate, the weekly company share is due today.",
       "share_hint_other_day": "The weekly share is settled on {{day}}."
-    }
+    },
+    "sum_cash_rides": "Total Cash Rides:",
+    "flat_rate_rides": "Flat Rate Rides",
+    "sum_flat_rate_rides": "Total Flat Rate Rides:",
+    "sum_company_share": "Total Company Share:"
   },
   "users": {
     "page_title": "Users",

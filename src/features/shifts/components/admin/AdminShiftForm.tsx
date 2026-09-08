@@ -1,9 +1,11 @@
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Stack } from '@mantine/core';
 import { Form } from '@/shared/components/forms/Form';
 import { useCarSelectOptions } from '@/features/cars/hooks/useCarOptions';
 import { useDriverSelectOptions } from '@/features/drivers/hooks/useDriverOptions';
 import { useAdminCreateShiftForm } from '@/features/shifts/hooks/admin/useAdminCreateShiftForm';
+import { useDriverRemunerationConfig } from '@/features/shifts/hooks/useDriverRemunerationConfig';
 import { ShiftMasterDataSection } from './ShiftMasterDataSection';
 import { ShiftRevenuesSection } from './ShiftRevenuesSection';
 
@@ -14,10 +16,39 @@ export const AdminShiftForm = () => {
 
   const { methods, onSubmit, isPending, cancel } = useAdminCreateShiftForm();
 
+  const selectedDriverId = methods.watch('driverId');
+  const numericDriverId =
+    selectedDriverId !== undefined && selectedDriverId !== null && selectedDriverId !== ''
+      ? Number(selectedDriverId)
+      : undefined;
+
+  const previousDriverIdRef = useRef<number | undefined>(numericDriverId);
+
+  useEffect(() => {
+    if (
+      previousDriverIdRef.current !== undefined &&
+      previousDriverIdRef.current !== numericDriverId
+    ) {
+      methods.setValue('singleRides', [], { shouldValidate: true });
+      methods.setValue('flatRateCounts', {}, { shouldValidate: true });
+      methods.setValue('flatRatePrices', {}, { shouldValidate: true });
+      methods.setValue('weeklyRentPaid', undefined, { shouldValidate: true });
+    }
+    previousDriverIdRef.current = numericDriverId;
+  }, [numericDriverId, methods]);
+
+  const {
+    flatRateOptions,
+    hasCashRides,
+    hasWeeklyConfig,
+    weeklyConfig,
+    isLoading: isLoadingDriverConfig,
+  } = useDriverRemunerationConfig(numericDriverId);
+
   return (
     <Form
       methods={methods as any}
-      onSubmit={onSubmit}
+      onSubmit={(values: any) => onSubmit(values, flatRateOptions)}
       formActions={
         <>
           <Button
@@ -44,7 +75,14 @@ export const AdminShiftForm = () => {
           isLoadingCars={isLoadingCars}
         />
 
-        <ShiftRevenuesSection />
+        <ShiftRevenuesSection
+          driverSelected={Boolean(numericDriverId)}
+          flatRateOptions={flatRateOptions}
+          hasCashRides={hasCashRides}
+          hasWeeklyConfig={hasWeeklyConfig}
+          weeklyConfig={weeklyConfig}
+          isLoading={isLoadingDriverConfig}
+        />
       </Stack>
     </Form>
   );

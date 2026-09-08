@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -11,9 +10,13 @@ import {
   getGetMyShiftsQueryKey,
   useUpdateMyShift,
 } from '@/api/generated/endpoints/shifts/shifts';
-import { ShiftResponse, UpdateShiftRevenueEntryRequest } from '@/api/generated/model';
+import { ShiftResponse } from '@/api/generated/model';
 import { ROUTES } from '@/config/routes';
 import { DriverShiftFlatRateOption } from '../../components/driver/DriverShiftRevenuesCard';
+import {
+  extractFormValuesFromShift,
+  transformUpdateShiftPayload,
+} from '../../domain/shift-calculations';
 import {
   DriverCreateShiftFormValues,
   getDriverCreateShiftSchema,
@@ -28,28 +31,7 @@ export const useDriverUpdateShiftForm = ({ shift }: UseDriverUpdateShiftFormProp
   const { t } = useTranslation(['app', 'common', 'errors']);
   const navigate = useNavigate();
 
-  // Extract initial single rides
-  const regularRevenues = shift.revenues?.filter((r) => r.entryCategory === 'REGULAR') || [];
-  const initialSingleRides = regularRevenues.map((r) => r.revenue ?? 0).filter((v) => v > 0);
-
-  // Extract initial flat rate counts & prices
-  const initialFlatRateCounts: Record<string, number> = {};
-  const initialFlatRatePrices: Record<string, number> = {};
-  shift.revenues
-    ?.filter((r) => r.entryCategory === 'FLAT_RATE')
-    .forEach((r, idx) => {
-      const key = r.flatRateTypeId ? String(r.flatRateTypeId) : `custom_${idx}`;
-      if (r.tripCount) {
-        initialFlatRateCounts[key] = r.tripCount;
-      }
-      if (r.pricePerTrip) {
-        initialFlatRatePrices[key] = r.pricePerTrip;
-      }
-    });
-
-  // Extract weekly company share paid
-  const weeklyRevenue = shift.revenues?.find((r) => r.entryCategory === 'WEEKLY');
-  const initialWeeklyRentPaid = weeklyRevenue?.weeklyDriverRent ?? weeklyRevenue?.revenue ?? undefined;
+  const extractedValues = extractFormValuesFromShift(shift);
 
   const methods = useForm<DriverCreateShiftFormValues>({
     resolver: zodResolver(getDriverCreateShiftSchema(t)) as any,
@@ -60,10 +42,7 @@ export const useDriverUpdateShiftForm = ({ shift }: UseDriverUpdateShiftFormProp
       shiftEnd: shift.shiftEnd ?? '',
       odometerStart: shift.odometerStart ?? (undefined as unknown as number),
       odometerEnd: shift.odometerEnd ?? (undefined as unknown as number),
-      singleRides: initialSingleRides,
-      flatRateCounts: initialFlatRateCounts,
-      flatRatePrices: initialFlatRatePrices,
-      weeklyRentPaid: initialWeeklyRentPaid,
+      ...extractedValues,
     },
   });
 
@@ -93,93 +72,19 @@ export const useDriverUpdateShiftForm = ({ shift }: UseDriverUpdateShiftFormProp
     },
   });
 
-  const handleSubmitWithFlatRates = (
+  const onSubmit = (
     values: DriverCreateShiftFormValues,
     flatRateTypes: DriverShiftFlatRateOption[]
   ) => {
     if (!shift.id) return;
 
-    const regularSum = values.singleRides.reduce((acc, val) => acc + val, 0);
-    const revenues: UpdateShiftRevenueEntryRequest[] = [];
+    const payload = transformUpdateShiftPayload(values, flatRateTypes, shift.revenues || []);
 
-    // 1. Cash single rides
-    if (regularSum > 0) {
-      const existingRegular = shift.revenues?.find((r) => r.entryCategory === 'REGULAR');
-      if (existingRegular?.id) {
-        revenues.push({
-          id: existingRegular.id,
-          revenue: Math.round(regularSum * 100) / 100,
-        });
-      } else {
-        revenues.push({
-          id: null as any,
-          entryCategory: 'REGULAR',
-          revenue: Math.round(regularSum * 100) / 100,
-        });
-      }
-    }
-
-    // 2. Flat rate entries with tripCount > 0
-    Object.entries(values.flatRateCounts || {}).forEach(([key, count]) => {
-      const typeId = isNaN(Number(key)) ? undefined : Number(key);
-      const flatType = flatRateTypes.find(
-        (f, idx) =>
-          (f.id !== undefined && f.id === typeId) || (f.id === undefined && `custom_${idx}` === key)
-      );
-      const existingFlat = shift.revenues?.find(
-        (r) =>
-          r.entryCategory === 'FLAT_RATE' &&
-          ((typeId !== undefined && r.flatRateTypeId === typeId) || (!typeId && !r.flatRateTypeId))
-      );
-      const price =
-        flatType?.defaultPrice !== undefined && flatType?.defaultPrice !== null
-          ? flatType.defaultPrice
-          : (values.flatRatePrices && values.flatRatePrices[key]) ?? 0;
-
-      if (count && count > 0 && price > 0) {
-        if (existingFlat?.id) {
-          revenues.push({
-            id: existingFlat.id,
-            tripCount: count,
-            pricePerTrip: price,
-          });
-        } else {
-          revenues.push({
-            id: null as any,
-            entryCategory: 'FLAT_RATE',
-            flatRateTypeId: flatType?.id,
-            tripCount: count,
-            pricePerTrip: price,
-          });
-        }
-      }
-    });
-
-    // 3. Weekly rent paid (if entered or provided)
-    if (values.weeklyRentPaid !== undefined && values.weeklyRentPaid !== null && !isNaN(Number(values.weeklyRentPaid))) {
-      const rentAmount = Number(values.weeklyRentPaid);
-      const existingWeekly = shift.revenues?.find((r) => r.entryCategory === 'WEEKLY');
-      if (existingWeekly?.id) {
-        revenues.push({
-          id: existingWeekly.id,
-          weeklyDriverRent: rentAmount,
-          revenue: rentAmount,
-        });
-      } else {
-        revenues.push({
-          id: null as any,
-          entryCategory: 'WEEKLY',
-          weeklyDriverRent: rentAmount,
-          revenue: rentAmount,
-        });
-      }
-    }
-
-    if (revenues.length === 0) {
+    if (payload.revenues.length === 0) {
       toast.error(
         t(
           'app:shifts.errors.at_least_one_revenue',
-          'Bitte mindestens eine Cash Fahrt, Pauschale oder Firmenanteil erfassen'
+          'Bitte mindestens eine Cash Fahrt oder Pauschale erfassen'
         )
       );
       return;
@@ -187,20 +92,13 @@ export const useDriverUpdateShiftForm = ({ shift }: UseDriverUpdateShiftFormProp
 
     mutate({
       id: shift.id,
-      data: {
-        carId: Number(values.carId),
-        odometerStart: Number(values.odometerStart),
-        odometerEnd: Number(values.odometerEnd),
-        shiftStart: dayjs(values.shiftStart).toISOString(),
-        shiftEnd: dayjs(values.shiftEnd).toISOString(),
-        revenues,
-      },
+      data: payload,
     });
   };
 
   return {
     methods,
-    onSubmit: handleSubmitWithFlatRates,
+    onSubmit,
     isPending,
     cancel: () =>
       shift.id

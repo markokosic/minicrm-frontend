@@ -6,7 +6,7 @@ export const getRemunerationSchema = (t: TFunction) =>
   z.discriminatedUnion('remunerationModelType', [
     z.object({
       remunerationModelType: z.literal(RemunerationModelType.PERCENTAGE_SHARE),
-      minDriverPayout: z
+      minDriverPayoutPerShift: z
         .number({ error: t('errors:driver.dailyMinPayout.invalid') })
         .min(0, t('errors:driver.dailyMinPayout.invalid'))
         .optional()

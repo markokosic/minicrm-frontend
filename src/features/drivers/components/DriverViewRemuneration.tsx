@@ -2,6 +2,7 @@ import { Badge, Card, Divider, Group, SimpleGrid, Stack, Text } from '@mantine/c
 import { Coins, Percent, Receipt, Tag } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { DriverResponse } from '@/api/generated/model';
+import { createFormatters } from '@/shared/utils';
 import { RemunerationModelType } from '../domain/remuneration-types';
 import { useRemunerationLabels } from '../hooks/useRemunerationLabels';
 
@@ -10,7 +11,8 @@ interface DriverViewRemunerationProps {
 }
 
 export const DriverViewRemuneration = ({ driver }: DriverViewRemunerationProps) => {
-  const { t } = useTranslation(['app', 'common']);
+  const { t, i18n } = useTranslation(['app', 'common']);
+  const fmt = createFormatters(i18n.language);
   const { getRemunerationLabel } = useRemunerationLabels();
 
   const configs = driver.currentRemunerationConfigs || [];
@@ -88,14 +90,14 @@ export const DriverViewRemuneration = ({ driver }: DriverViewRemunerationProps) 
                           </Text>
                         </Group>
                       )}
-                      {'minDriverPayout' in config && config.minDriverPayout !== undefined && (
+                      {'minDriverPayoutPerShift' in config && config.minDriverPayoutPerShift != null && (
                         <Group gap="xs" c="dimmed">
                           <Coins size={16} />
                           <Text size="sm">
-                            {t('common:form.minDriverPayout.label')}:
+                            {t('common:form.minDriverPayoutPerShift.label')}:
                           </Text>
                           <Text fw={600} size="sm" c="dark">
-                            {config.minDriverPayout} €
+                            {fmt.number(config.minDriverPayoutPerShift)} €
                           </Text>
                         </Group>
                       )}
@@ -115,14 +117,14 @@ export const DriverViewRemuneration = ({ driver }: DriverViewRemunerationProps) 
                           </Text>
                         </Group>
                       )}
-                      {'driverFlatRatePayoutPerShift' in config && config.driverFlatRatePayoutPerShift !== undefined && (
+                      {'driverFlatRatePayoutPerShift' in config && config.driverFlatRatePayoutPerShift != null && (
                         <Group gap="xs" c="dimmed">
                           <Coins size={16} />
                           <Text size="sm">
                             {t('common:form.driverFlatRatePayoutPerShift.label')}:
                           </Text>
                           <Text fw={600} size="sm" c="dark">
-                            {config.driverFlatRatePayoutPerShift} €
+                            {fmt.number(config.driverFlatRatePayoutPerShift)} €
                           </Text>
                         </Group>
                       )}
@@ -131,14 +133,14 @@ export const DriverViewRemuneration = ({ driver }: DriverViewRemunerationProps) 
 
                   {type === RemunerationModelType.WEEKLY_FIXED_RATE && (
                     <>
-                      {'weeklyFixedCompanySettlement' in config && (
+                      {'weeklyFixedCompanySettlement' in config && config.weeklyFixedCompanySettlement != null && (
                         <Group gap="xs" c="dimmed">
                           <Coins size={16} />
                           <Text size="sm">
                             {t('common:form.weeklyFixedCompanySettlement.label')}:
                           </Text>
                           <Text fw={600} size="sm" c="dark">
-                            {config.weeklyFixedCompanySettlement} €
+                            {fmt.number(config.weeklyFixedCompanySettlement)} €
                           </Text>
                         </Group>
                       )}

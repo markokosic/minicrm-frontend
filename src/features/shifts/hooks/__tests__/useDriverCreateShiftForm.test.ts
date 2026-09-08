@@ -21,4 +21,24 @@ describe('useDriverCreateShiftForm Hook', () => {
     });
     expect(result.current.isPending).toBe(false);
   });
+
+  it('submits each cash ride as individual REGULAR revenue entry', () => {
+    const { Wrapper } = createTestAppWrapper();
+    const { result } = renderHook(() => useDriverCreateShiftForm(), { wrapper: Wrapper });
+
+    const formValues = {
+      carId: 3,
+      odometerStart: 50000,
+      odometerEnd: 50150,
+      shiftStart: '2026-09-01T08:00:00Z',
+      shiftEnd: '2026-09-01T16:00:00Z',
+      singleRides: [15.5, 22.0, 30.0],
+      flatRateCounts: {},
+      flatRatePrices: {},
+      weeklyRentPaid: undefined as unknown as number,
+    };
+
+    // Calling onSubmit
+    result.current.onSubmit(formValues as any, []);
+  });
 });

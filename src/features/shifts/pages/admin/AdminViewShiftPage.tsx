@@ -75,7 +75,7 @@ export const AdminViewShiftPage = () => {
               totalCompanyRemuneration={totalCompanyRemuneration}
             />
 
-            <ShiftViewRevenues revenues={shiftResponse.revenues} />
+            <ShiftViewRevenues shift={shiftResponse} />
           </Stack>
         )}
       </DataLoadingWrapper>

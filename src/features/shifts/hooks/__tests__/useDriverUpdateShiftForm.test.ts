@@ -12,6 +12,10 @@ const mockShift: ShiftResponse = {
   shiftStart: '2026-09-01T08:00:00Z',
   shiftEnd: '2026-09-01T16:00:00Z',
   status: 'PENDING',
+  weeklyDriverRent: 350,
+  settlement: {
+    companyRemuneration: 350,
+  },
   revenues: [
     {
       id: 101,

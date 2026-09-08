@@ -12,7 +12,8 @@ import {
 import { ShiftResponse } from '@/api/generated/model';
 import { ROUTES } from '@/config/routes';
 import {
-  getRevenueOptionKey,
+  DriverShiftFlatRateOption,
+  extractFormValuesFromShift,
   transformUpdateShiftPayload,
 } from '@/features/shifts/domain/shift-calculations';
 import {
@@ -20,22 +21,12 @@ import {
   UpdateShiftFormValues,
 } from '@/features/shifts/domain/shifts-schemas';
 
-export const useUpdateShiftForm = (shift: ShiftResponse) => {
+export const useAdminUpdateShiftForm = (shift: ShiftResponse) => {
   const queryClient = useQueryClient();
   const { t } = useTranslation(['app', 'common', 'errors']);
   const navigate = useNavigate();
 
-  const formattedRevenues = (shift.revenues || []).map((rev) => ({
-    id: rev.id,
-    optionKey: getRevenueOptionKey(rev.entryCategory, rev.flatRateTypeId),
-    entryCategory: rev.entryCategory as 'REGULAR' | 'FLAT_RATE' | 'WEEKLY',
-    flatRateTypeId: rev.flatRateTypeId ?? null,
-    flatRateTypeName: rev.flatRateTypeName,
-    revenue: rev.revenue,
-    tripCount: rev.tripCount,
-    pricePerTrip: rev.pricePerTrip,
-    weeklyDriverRent: rev.weeklyDriverRent ?? (rev.entryCategory === 'WEEKLY' ? rev.revenue : null),
-  }));
+  const extractedValues = extractFormValuesFromShift(shift);
 
   const methods = useForm<UpdateShiftFormValues>({
     resolver: zodResolver(getCreateShiftSchema(t)) as any,
@@ -47,8 +38,7 @@ export const useUpdateShiftForm = (shift: ShiftResponse) => {
       shiftEnd: shift.shiftEnd || '',
       odometerStart: shift.odometerStart as number,
       odometerEnd: shift.odometerEnd as number,
-      status: shift.status || 'APPROVED',
-      revenues: formattedRevenues,
+      ...extractedValues,
     },
   });
 
@@ -73,11 +63,25 @@ export const useUpdateShiftForm = (shift: ShiftResponse) => {
     },
   });
 
-  const onSubmit = (values: UpdateShiftFormValues) => {
+  const onSubmit = (
+    values: UpdateShiftFormValues,
+    flatRateTypes: DriverShiftFlatRateOption[] = []
+  ) => {
     if (!shift.id) {
       return;
     }
-    const payload = transformUpdateShiftPayload(values);
+    const payload = transformUpdateShiftPayload(values, flatRateTypes, shift.revenues || []);
+
+    if (payload.revenues.length === 0) {
+      toast.error(
+        t(
+          'app:shifts.errors.at_least_one_revenue',
+          'Bitte mindestens eine Cash Fahrt oder Pauschale erfassen'
+        )
+      );
+      return;
+    }
+
     mutate({ id: shift.id, data: payload });
   };
 

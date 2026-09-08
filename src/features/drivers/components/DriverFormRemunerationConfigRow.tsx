@@ -38,6 +38,29 @@ export const DriverFormRemunerationConfigRow = ({
     name: `${namePrefix}.flatRateTypeId`,
   });
 
+  const allConfigs = useWatch({
+    name: 'remunerationConfigs',
+  }) as Array<{ remunerationModelType?: string }> | undefined;
+
+  const hasPercentageElsewhere = (allConfigs || []).some(
+    (c, i) => i !== index && c?.remunerationModelType === RemunerationModelType.PERCENTAGE_SHARE
+  );
+  const hasWeeklyElsewhere = (allConfigs || []).some(
+    (c, i) => i !== index && c?.remunerationModelType === RemunerationModelType.WEEKLY_FIXED_RATE
+  );
+
+  const availableRemunerationTypes = useMemo(() => {
+    return remunerationTypes.filter((opt) => {
+      if (opt.value === RemunerationModelType.PERCENTAGE_SHARE && hasWeeklyElsewhere) {
+        return false;
+      }
+      if (opt.value === RemunerationModelType.WEEKLY_FIXED_RATE && hasPercentageElsewhere) {
+        return false;
+      }
+      return true;
+    });
+  }, [remunerationTypes, hasPercentageElsewhere, hasWeeklyElsewhere]);
+
   const dayOptions = DAYS_OF_THE_WEEK.map((day) => ({
     value: day.value,
     label: t(day.label),
@@ -109,7 +132,7 @@ export const DriverFormRemunerationConfigRow = ({
           name={`${namePrefix}.remunerationModelType`}
           label={t(REMUNERATION_FORM_FIELDS.type.labelKey)}
           placeholder={t(REMUNERATION_FORM_FIELDS.type.placeholderKey)}
-          data={remunerationTypes}
+          data={availableRemunerationTypes}
         />
 
         {selectedType === RemunerationModelType.PERCENTAGE_SHARE && (
@@ -120,10 +143,10 @@ export const DriverFormRemunerationConfigRow = ({
             <ControlledNumberInput
               min={0}
               suffix="€"
-              name={`${namePrefix}.${REMUNERATION_FORM_FIELDS.percentageShare.minDriverPayout.name}`}
-              label={t(REMUNERATION_FORM_FIELDS.percentageShare.minDriverPayout.labelKey)}
+              name={`${namePrefix}.${REMUNERATION_FORM_FIELDS.percentageShare.minDriverPayoutPerShift.name}`}
+              label={t(REMUNERATION_FORM_FIELDS.percentageShare.minDriverPayoutPerShift.labelKey)}
               placeholder={t(
-                REMUNERATION_FORM_FIELDS.percentageShare.minDriverPayout.placeholderKey
+                REMUNERATION_FORM_FIELDS.percentageShare.minDriverPayoutPerShift.placeholderKey
               )}
             />
             <ControlledNumberInput

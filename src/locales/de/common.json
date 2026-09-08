@@ -119,6 +119,10 @@
       "label": "Minimale Fahrer-Auszahlung (€)",
       "placeholder": "Bitte geben Sie die minimale Auszahlung in € ein"
     },
+    "minDriverPayoutPerShift": {
+      "label": "Minimale Auszahlung pro Schicht (€)",
+      "placeholder": "Bitte geben Sie die minimale Auszahlung pro Schicht in € ein"
+    },
     "driverRevenueSharePercentage": {
       "label": "Fahreranteil (%)",
       "placeholder": "Bitte geben Sie einen Prozentwert ein"

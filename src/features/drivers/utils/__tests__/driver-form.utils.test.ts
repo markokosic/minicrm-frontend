@@ -40,7 +40,7 @@ describe('driver-form.utils', () => {
       {
         remunerationModelType: 'PERCENTAGE_SHARE' as const,
         driverRevenueSharePercentage: 0.45,
-        minDriverPayout: 50,
+        minDriverPayoutPerShift: 50,
       },
     ];
 
@@ -56,7 +56,7 @@ describe('driver-form.utils', () => {
         {
           remunerationModelType: 'PERCENTAGE_SHARE' as const,
           driverRevenueSharePercentage: 45,
-          minDriverPayout: 50,
+          minDriverPayoutPerShift: 50,
         },
       ],
     };

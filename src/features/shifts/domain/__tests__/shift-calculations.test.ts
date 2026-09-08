@@ -57,12 +57,26 @@ describe('shift-calculations.utils', () => {
   });
 
   describe('calculateShiftTotals', () => {
-    it('sums revenues, driverRemuneration, and companyRemuneration', () => {
+    it('sums revenues when only revenue entries are provided without settlement', () => {
       const revenues = [
-        { revenue: 100, driverRemuneration: 60, companyRemuneration: 40 },
-        { revenue: 200, driverRemuneration: 120, companyRemuneration: 80 },
+        { revenue: 100 },
+        { revenue: 200 },
       ];
       expect(calculateShiftTotals(revenues as any)).toEqual({
+        totalRevenue: 300,
+        totalDriverRemuneration: 0,
+        totalCompanyRemuneration: 0,
+      });
+    });
+
+    it('uses settlementOverride when provided', () => {
+      const revenues = [{ revenue: 300 }];
+      const settlement = {
+        totalRevenue: 300,
+        driverRemuneration: 180,
+        companyRemuneration: 120,
+      };
+      expect(calculateShiftTotals(revenues as any, settlement as any)).toEqual({
         totalRevenue: 300,
         totalDriverRemuneration: 180,
         totalCompanyRemuneration: 120,
@@ -118,16 +132,19 @@ describe('shift-calculations.utils', () => {
         shiftStart: '2026-08-13T06:00',
         shiftEnd: '2026-08-13T14:00',
         status: 'APPROVED',
-        revenues: [
-          { entryCategory: 'REGULAR', revenue: 120 },
-          { entryCategory: 'FLAT_RATE', flatRateTypeId: 3, tripCount: 2, pricePerTrip: 150 },
-        ],
+        singleRides: [120],
+        flatRateCounts: { '3': 2 },
       };
+      const flatRateTypes = [{ id: 3, name: 'Airport', defaultPrice: 150 }];
 
-      const payload = transformShiftFormPayload(values);
+      const payload = transformShiftFormPayload(values, flatRateTypes);
       expect(payload.driverId).toBe(10);
       expect(payload.carId).toBe(5);
       expect(payload.revenues).toHaveLength(2);
+      expect(payload.revenues[0]).toEqual({
+        entryCategory: 'REGULAR',
+        revenue: 120,
+      });
       expect(payload.revenues[1]).toEqual({
         entryCategory: 'FLAT_RATE',
         flatRateTypeId: 3,
@@ -146,24 +163,30 @@ describe('shift-calculations.utils', () => {
         odometerEnd: 45200,
         shiftStart: '2026-08-13T06:00',
         shiftEnd: '2026-08-13T14:00',
-        revenues: [
-          { id: 99, entryCategory: 'REGULAR', revenue: 150 },
-          { id: 100, entryCategory: 'FLAT_RATE', tripCount: 3, pricePerTrip: 50 },
-          { entryCategory: 'REGULAR', revenue: 80 },
-          { entryCategory: 'FLAT_RATE', flatRateTypeId: 2, tripCount: 1, pricePerTrip: 100 },
-        ],
+        singleRides: [150, 80],
+        flatRateCounts: { '1': 3, '2': 1 },
       };
+      const flatRateTypes = [
+        { id: 1, defaultPrice: 50 },
+        { id: 2, defaultPrice: 100 },
+      ];
+      const existingRevenues = [
+        { id: 99, entryCategory: 'REGULAR', revenue: 150 },
+        { id: 100, entryCategory: 'FLAT_RATE', flatRateTypeId: 1, tripCount: 3, pricePerTrip: 50 },
+      ] as any;
 
-      const payload = transformUpdateShiftPayload(values);
+      const payload = transformUpdateShiftPayload(values, flatRateTypes, existingRevenues);
       expect(payload.odometerStart).toBe(45000);
       expect(payload.odometerEnd).toBe(45200);
       expect(payload.revenues).toHaveLength(4);
+      
       // Existing regular: only id & amount
       expect(payload.revenues[0]).toEqual({ id: 99, revenue: 150 });
-      // Existing flat rate: only id & tripCount/pricePerTrip
-      expect(payload.revenues[1]).toEqual({ id: 100, tripCount: 3, pricePerTrip: 50 });
       // New regular: id: null, category & amount
-      expect(payload.revenues[2]).toEqual({ id: null, entryCategory: 'REGULAR', revenue: 80 });
+      expect(payload.revenues[1]).toEqual({ id: null, entryCategory: 'REGULAR', revenue: 80 });
+      
+      // Existing flat rate: only id & tripCount/pricePerTrip
+      expect(payload.revenues[2]).toEqual({ id: 100, tripCount: 3, pricePerTrip: 50 });
       // New flat rate: id: null, category, flatRateTypeId & tripCount/pricePerTrip
       expect(payload.revenues[3]).toEqual({
         id: null,
@@ -174,38 +197,34 @@ describe('shift-calculations.utils', () => {
       });
     });
 
-    it('strips all calculation/response fields like companyRemuneration and driverRemuneration', () => {
+    it('only includes necessary fields and drops extra calculations for existing regular entries', () => {
       const values = {
         odometerStart: 1000,
         odometerEnd: 1100,
         shiftStart: '2026-08-13T06:00',
         shiftEnd: '2026-08-13T14:00',
-        revenues: [
-          {
-            id: 12,
-            entryCategory: 'REGULAR',
-            revenue: 200,
-            driverRemuneration: 90,
-            companyRemuneration: 110,
-            remunerationModelType: 'PERCENTAGE_SHARE',
-            isFlatRate: false,
-            flatRateTypeName: 'Normal',
-            optionKey: 'REGULAR',
-          },
-        ],
+        singleRides: [200],
       };
+      
+      const existingRevenues = [
+        {
+          id: 12,
+          entryCategory: 'REGULAR',
+          revenue: 200,
+          driverRemuneration: 90,
+          companyRemuneration: 110,
+          remunerationModelType: 'PERCENTAGE_SHARE',
+          isFlatRate: false,
+          flatRateTypeName: 'Normal',
+          optionKey: 'REGULAR',
+        },
+      ] as any;
 
-      const payload = transformUpdateShiftPayload(values);
+      const payload = transformUpdateShiftPayload(values, [], existingRevenues);
       expect(payload.revenues[0]).toEqual({
         id: 12,
         revenue: 200,
       });
-      expect(payload.revenues[0]).not.toHaveProperty('companyRemuneration');
-      expect(payload.revenues[0]).not.toHaveProperty('driverRemuneration');
-      expect(payload.revenues[0]).not.toHaveProperty('remunerationModelType');
-      expect(payload.revenues[0]).not.toHaveProperty('isFlatRate');
-      expect(payload.revenues[0]).not.toHaveProperty('flatRateTypeName');
-      expect(payload.revenues[0]).not.toHaveProperty('optionKey');
     });
   });
 });

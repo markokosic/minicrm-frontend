@@ -6,14 +6,26 @@ export interface CarOption {
   id?: number;
 }
 
-export const formatCarLabel = (car: CarResponse | CarSummary): string => {
+export type AnyCar = CarResponse | CarSummary;
+
+export const formatCarLabel = (car: AnyCar): string => {
   return `${car.licensePlate || ''} ${car.model || ''} ${car.brand || ''}`.trim();
 };
 
-export const mapCarsToOptions = (cars: (CarResponse | CarSummary)[]): CarOption[] => {
-  return cars.map((car) => ({
-    value: car.id !== undefined && car.id !== null ? String(car.id) : '',
-    label: formatCarLabel(car),
-    id: car.id,
-  }));
+export const mapCarsToOptions = (
+  cars?: AnyCar | (AnyCar | null | undefined)[] | null
+): CarOption[] => {
+  if (!cars) {
+    return [];
+  }
+  const list = Array.isArray(cars) ? cars : [cars];
+
+  return list
+    .filter((car): car is AnyCar => car != null && car.id != null)
+    .map((car) => ({
+      value: String(car.id),
+      label: formatCarLabel(car),
+      id: car.id,
+    }));
 };
+

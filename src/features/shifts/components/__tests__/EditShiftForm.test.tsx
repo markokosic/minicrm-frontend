@@ -19,13 +19,16 @@ const mockShift: ShiftResponse = {
   shiftStart: '2026-08-13T06:00:00Z',
   shiftEnd: '2026-08-13T14:00:00Z',
   status: 'APPROVED',
+  settlement: {
+    revenue: 250,
+    driverRemuneration: 150,
+    companyRemuneration: 100,
+  },
   revenues: [
     {
       id: 101,
       entryCategory: 'REGULAR',
       revenue: 250,
-      driverRemuneration: 150,
-      companyRemuneration: 100,
     },
   ],
 };
