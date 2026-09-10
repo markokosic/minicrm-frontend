@@ -42,7 +42,7 @@ export const AdminEditShiftForm = ({ shift }: AdminEditShiftFormProps) => {
   return (
     <Form
       methods={methods as any}
-      onSubmit={(values: any) => onSubmit(values, flatRateOptions)}
+      onSubmit={(values: any) => onSubmit(values, flatRateOptions, finalHasWeeklyConfig)}
       formActions={
         <>
           <Button

@@ -65,20 +65,25 @@ export const useAdminUpdateShiftForm = (shift: ShiftResponse) => {
 
   const onSubmit = (
     values: UpdateShiftFormValues,
-    flatRateTypes: DriverShiftFlatRateOption[] = []
+    flatRateTypes: DriverShiftFlatRateOption[] = [],
+    hasWeeklyConfig: boolean = false
   ) => {
     if (!shift.id) {
       return;
     }
+    
+    if (hasWeeklyConfig && (values.weeklyRentPaid === undefined || values.weeklyRentPaid === null || String(values.weeklyRentPaid) === '')) {
+      methods.setError('weeklyRentPaid', {
+        type: 'manual',
+        message: t('app:shifts.errors.weekly_rent_required'),
+      });
+      return;
+    }
+
     const payload = transformUpdateShiftPayload(values, flatRateTypes, shift.revenues || []);
 
     if (payload.revenues.length === 0) {
-      toast.error(
-        t(
-          'app:shifts.errors.at_least_one_revenue',
-          'Bitte mindestens eine Cash Fahrt oder Pauschale erfassen'
-        )
-      );
+      toast.error(t('app:shifts.errors.at_least_one_revenue'));
       return;
     }
 

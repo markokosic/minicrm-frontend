@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Alert, Card, Stack, Text } from '@mantine/core';
+import { Alert, Card, Stack } from '@mantine/core';
 import { ControlledNumberInput } from '@/shared/components/forms/ControlledNumberInput';
 import { checkWeeklySettlement } from '../../domain/shift-calculations';
 
@@ -24,10 +24,10 @@ export const DriverWeeklyRentCard = ({
   const { isWeeklyPaymentToday, weekdayName } = checkWeeklySettlement(shiftStart, settlementDay);
 
   useEffect(() => {
-    if (isWeeklyPaymentToday && defaultRentPrice !== undefined && defaultRentPrice !== null) {
+    if (defaultRentPrice !== undefined && defaultRentPrice !== null) {
       const current = getValues('weeklyRentPaid');
       if (current === undefined || current === null || current === '') {
-        setValue('weeklyRentPaid', defaultRentPrice, { shouldValidate: true });
+        setValue('weeklyRentPaid', isWeeklyPaymentToday ? defaultRentPrice : 0, { shouldValidate: true });
       }
     }
   }, [isWeeklyPaymentToday, defaultRentPrice, getValues, setValue]);
@@ -40,13 +40,6 @@ export const DriverWeeklyRentCard = ({
       shadow="xs"
     >
       <Stack gap="sm">
-        <Text
-          fw={700}
-          size="sm"
-        >
-          {t('app:revenues.fields.weekly_company_share', 'Wöchentlicher Firmenanteil')}
-        </Text>
-
         {isWeeklyPaymentToday && (
           <Alert
             color="orange"
@@ -67,6 +60,7 @@ export const DriverWeeklyRentCard = ({
           decimalScale={2}
           suffix=" €"
           inputMode="decimal"
+          withAsterisk
         />
       </Stack>
     </Card>

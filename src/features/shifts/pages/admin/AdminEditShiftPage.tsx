@@ -23,7 +23,7 @@ export const AdminEditShiftPage = () => {
 
   return (
     <PageLayout
-      title={`${t('app:shifts.edit_page_title', 'Schicht bearbeiten')} #${shiftId}`}
+      title={`${t('app:shifts.edit_page_title')} #${shiftId}`}
       showBack
     >
       <DataLoadingWrapper

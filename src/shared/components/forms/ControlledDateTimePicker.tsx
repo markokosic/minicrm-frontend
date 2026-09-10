@@ -41,6 +41,11 @@ export const ControlledDateTimePicker = <
       value={value ? new Date(value) : null}
       onChange={onChange}
       valueFormat="DD.MM.YYYY HH:mm"
+      timeFormat="HH:mm"
+      timeInputProps={{
+        'aria-label': 'Uhrzeit',
+        // Optional: you can add onFocus to select all or prevent jump, but native browser behavior drives this.
+      }}
       error={fieldState.error?.message}
     />
   );

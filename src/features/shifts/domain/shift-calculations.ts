@@ -312,8 +312,8 @@ export const transformShiftFormPayload = (
     carId: Number(values.carId),
     odometerStart: Number(values.odometerStart),
     odometerEnd: Number(values.odometerEnd),
-    shiftStart: dayjs(values.shiftStart).toISOString(),
-    shiftEnd: dayjs(values.shiftEnd).toISOString(),
+    shiftStart: dayjs(values.shiftStart).format('YYYY-MM-DDTHH:mm:ss'),
+    shiftEnd: dayjs(values.shiftEnd).format('YYYY-MM-DDTHH:mm:ss'),
     weeklyDriverRent,
     revenues,
   };
@@ -418,8 +418,8 @@ export const transformUpdateShiftPayload = (
     carId: values.carId ? Number(values.carId) : undefined,
     odometerStart: Number(values.odometerStart),
     odometerEnd: Number(values.odometerEnd),
-    shiftStart: dayjs(values.shiftStart).toISOString(),
-    shiftEnd: dayjs(values.shiftEnd).toISOString(),
+    shiftStart: dayjs(values.shiftStart).format('YYYY-MM-DDTHH:mm:ss'),
+    shiftEnd: dayjs(values.shiftEnd).format('YYYY-MM-DDTHH:mm:ss'),
     weeklyDriverRent,
     revenues,
   };

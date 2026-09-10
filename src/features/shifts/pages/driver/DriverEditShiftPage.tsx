@@ -1,7 +1,7 @@
 import { AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router';
-import { Alert, Button, Paper, Stack, Text } from '@mantine/core';
+import { Alert, Button, Paper, Stack } from '@mantine/core';
 import { useGetMyShiftById } from '@/api/generated/endpoints/shifts/shifts';
 import { ROUTES } from '@/config/routes';
 import { PageLayout } from '@/shared/components/layout/PageLayout';
@@ -28,7 +28,7 @@ export const DriverEditShiftPage = () => {
 
   return (
     <PageLayout
-      title={`${t('app:shifts.edit_page_title', 'Schicht bearbeiten')} #${shiftId}`}
+      title={`${t('app:shifts.edit_page_title')} #${shiftId}`}
       showBack
     >
       <DataLoadingWrapper
@@ -50,14 +50,11 @@ export const DriverEditShiftPage = () => {
             >
               <Alert
                 icon={<AlertCircle size={20} />}
-                title={t('app:shifts.errors.cannot_edit_title', 'Bearbeitung nicht möglich')}
+                title={t('app:shifts.errors.cannot_edit_title')}
                 color="orange"
                 radius="md"
               >
-                {t(
-                  'app:shifts.errors.cannot_edit_non_pending',
-                  'Diese Schicht befindet sich nicht mehr im Status "Ausstehend" und kann daher nicht mehr bearbeitet werden.'
-                )}
+                {t('app:shifts.errors.cannot_edit_non_pending')}
               </Alert>
               <Button
                 variant="light"

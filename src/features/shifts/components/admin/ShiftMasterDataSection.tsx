@@ -1,4 +1,6 @@
-import { useWatch } from 'react-hook-form';
+import { useEffect, useRef } from 'react';
+import dayjs from 'dayjs';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Grid, Paper, Text, TextInput } from '@mantine/core';
 import { ControlledDateTimePicker } from '@/shared/components/forms/ControlledDateTimePicker';
@@ -28,12 +30,26 @@ export const ShiftMasterDataSection = ({
 }: ShiftMasterDataSectionProps) => {
   const { t } = useTranslation(['app', 'common']);
 
+  const { setValue } = useFormContext();
   const [odometerStart, odometerEnd, shiftStart, shiftEnd] = useWatch({
     name: ['odometerStart', 'odometerEnd', 'shiftStart', 'shiftEnd', 'driverId'],
   });
 
   const calculatedKm = calculateKilometersDriven(odometerStart, odometerEnd);
   const calculatedDuration = calculateShiftDuration(shiftStart, shiftEnd);
+
+  const previousShiftStartRef = useRef<string | undefined>(undefined);
+
+  // When shiftStart is selected, automatically prefill shiftEnd with +12 hours
+  useEffect(() => {
+    if (shiftStart && shiftStart !== previousShiftStartRef.current) {
+      const start = dayjs(shiftStart);
+      if (start.isValid()) {
+        setValue('shiftEnd', start.add(12, 'hour').format('YYYY-MM-DDTHH:mm:ss'), { shouldValidate: true });
+      }
+      previousShiftStartRef.current = shiftStart;
+    }
+  }, [shiftStart, setValue]);
 
   return (
     <Paper

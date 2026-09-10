@@ -32,7 +32,7 @@ export const DriverShiftMasterDataCard = ({
     if (shiftStart && shiftStart !== previousShiftStartRef.current) {
       const start = dayjs(shiftStart);
       if (start.isValid()) {
-        setValue('shiftEnd', start.add(12, 'hour').toISOString(), { shouldValidate: true });
+        setValue('shiftEnd', start.add(12, 'hour').format('YYYY-MM-DDTHH:mm:ss'), { shouldValidate: true });
       }
       previousShiftStartRef.current = shiftStart;
     }

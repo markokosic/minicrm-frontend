@@ -44,7 +44,7 @@ export const DriverShiftEditForm = ({ shift }: DriverShiftEditFormProps) => {
   return (
     <Form
       methods={methods as any}
-      onSubmit={(values: any) => onSubmit(values, flatRateOptions)}
+      onSubmit={(values: any) => onSubmit(values, flatRateOptions, hasWeeklyConfig)}
       formActions={
         <>
           <Button

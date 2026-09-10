@@ -82,7 +82,7 @@ export const ShiftViewRevenues = ({ shift }: ShiftViewRevenuesProps) => {
 
       {flatRateRevenues.length > 0 && (
         <Stack gap="md">
-          <Text fw={600} size="lg">{t('app:shifts.flat_rate_rides', 'Pauschalfahrten')}</Text>
+          <Text fw={600} size="lg">{t('app:shifts.city_taxi_rides')}</Text>
           {flatRateRevenues.map((rev, idx) => (
             <Card key={rev.id || idx} withBorder radius="md" shadow="sm" p="md">
               <Flex direction={{ base: 'column', sm: 'row' }} gap="md" justify="space-between" align={{ base: 'flex-start', sm: 'center' }}>
@@ -93,7 +93,7 @@ export const ShiftViewRevenues = ({ shift }: ShiftViewRevenuesProps) => {
                     </Badge>
                   </Group>
                   <Text c="dimmed" size="sm">
-                    {rev.tripCount || 1} {t('app:dashboard.trip_count', 'Fahrten')} ×{' '}
+                    {rev.tripCount || 1} {t('app:dashboard.trip_count')} ×{' '}
                     {rev.pricePerTrip ? fmt.number(rev.pricePerTrip) : '0,00'} €
                   </Text>
                 </Stack>
@@ -104,7 +104,7 @@ export const ShiftViewRevenues = ({ shift }: ShiftViewRevenuesProps) => {
             </Card>
           ))}
           <Group justify="flex-end" px="sm" mt="xs">
-            <Text c="dimmed" tt="uppercase" fw={500} size="sm">{t('app:shifts.sum_flat_rate_rides', 'Summe Pauschalfahrten:')}</Text>
+            <Text c="dimmed" tt="uppercase" fw={500} size="sm">{t('app:shifts.sum_city_taxi_rides')}</Text>
             <Text fw={700} size="xl">{fmt.number(sumFlatRate)} €</Text>
           </Group>
           <Divider variant="dashed" />
@@ -126,17 +126,17 @@ export const ShiftViewRevenues = ({ shift }: ShiftViewRevenuesProps) => {
 
       {isWeekly && (
         <Stack gap="md">
-          <Text fw={600} size="lg">{t('app:shifts.groups.company_share', 'Firmenanteil')}</Text>
+          <Text fw={600} size="lg">{t('app:shifts.groups.company_share')}</Text>
           <Card withBorder radius="md" shadow="sm" p="md">
             <Flex direction={{ base: 'column', sm: 'row' }} gap="md" justify="space-between" align={{ base: 'flex-start', sm: 'center' }}>
               <Stack gap="xs">
                 <Group gap="sm">
                   <Badge variant="light" color="grape" size="lg">
-                    {t('app:remuneration.weekly_fixed_rate', 'Wöchentlicher Firmenanteil')}
+                    {t('app:remuneration.weekly_fixed_rate')}
                   </Badge>
                 </Group>
                 <Text c="dimmed" size="sm">
-                  {t('app:shifts.fields.weeklyDriverRentDescription', 'Wird für diese Schicht fällig')}
+                  {t('app:shifts.weekly_settlement.share_hint_today')}
                 </Text>
               </Stack>
               <Text fw={600} size="lg">
@@ -147,7 +147,7 @@ export const ShiftViewRevenues = ({ shift }: ShiftViewRevenuesProps) => {
             </Flex>
           </Card>
           <Group justify="flex-end" px="sm" mt="xs">
-            <Text c="dimmed" tt="uppercase" fw={500} size="sm">{t('app:shifts.sum_company_share', 'Summe Firmenanteil:')}</Text>
+            <Text c="dimmed" tt="uppercase" fw={500} size="sm">{t('app:shifts.sum_company_share')}</Text>
             <Text fw={700} size="xl">
               {shift.weeklyDriverRent !== undefined && shift.weeklyDriverRent !== null
                   ? fmt.number(shift.weeklyDriverRent)

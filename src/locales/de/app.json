@@ -214,6 +214,7 @@
       "weeklyFixedRate": "Wöchentlicher Festsatz",
       "flatRate": "Pauschalfahrt"
     },
+    "weekly_fixed_rate": "Wöchentlicher Firmenanteil",
     "driver_remuneration": "Fahrervergütung",
     "add_driver_remuneration_config": "Fahrervergütung hinzufügen"
   },
@@ -427,7 +428,15 @@
     "sum_cash_rides": "Summe Cash Fahrten:",
     "flat_rate_rides": "Pauschalfahrten",
     "sum_flat_rate_rides": "Summe Pauschalfahrten:",
-    "sum_company_share": "Summe Firmenanteil:"
+    "city_taxi_rides": "CityTaxi Fahrten",
+    "sum_city_taxi_rides": "Summe CityTaxi Fahrten:",
+    "sum_company_share": "Summe Firmenanteil:",
+    "errors": {
+      "weekly_rent_required": "Bitte geben Sie den Firmenanteil an (kann auch 0 sein)",
+      "at_least_one_revenue": "Bitte mindestens eine Cash Fahrt oder Pauschale erfassen",
+      "cannot_edit_title": "Bearbeitung nicht möglich",
+      "cannot_edit_non_pending": "Diese Schicht befindet sich nicht mehr im Status \"Ausstehend\" und kann daher nicht mehr bearbeitet werden."
+    }
   },
   "users": {
     "page_title": "Benutzer",
